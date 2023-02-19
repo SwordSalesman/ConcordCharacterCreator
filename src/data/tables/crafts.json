@@ -1,0 +1,821 @@
+[
+  {
+    "name": "Escape Route",
+    "function": "Once per day you may cast the Shackle spell as if you knew it for no mana.",
+    "type": "Weapon: One Handed",
+    "rarity": "Expert",
+    "materials": 7
+  },
+  {
+    "name": "Apprentices Reliquary",
+    "function": "Members of a Sect dedicated to this cornerstone may transfer mana to each other. This requires contact and spending one point of personal mana. This allows the transfer of one mana after five seconds of roleplay. If performed during a Conflux, the reliquary must be present on the Conflux.",
+    "type": "Reliquary",
+    "rarity": "Expert",
+    "materials": 12
+  },
+  {
+    "name": "Barbarians Brutalizer",
+    "function": "You may call Fracture or Knockback or use Mighty Blow with this weapon.",
+    "type": "Weapon: Great Weapon",
+    "rarity": "Expert",
+    "materials": 7
+  },
+  {
+    "name": "Battlemages Vestment of Control",
+    "function": "Twice per day you may cast the Silence spell for no mana. You must already know the Silence Spell to do this.",
+    "type": "Armour: Medium",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Battlemages Vestment of Force",
+    "function": "Twice per day you may cast the Knockback spell for no mana. You must already know the Knockback spell to do this.",
+    "type": "Armour: Medium",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Bending Reed Blades",
+    "function": "You may spend one energy to call Fracture or Shackle with these weapons.",
+    "type": "Weapon: Pair: One Handed",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Blazesap Striker",
+    "function": "While bonded to a character with a Naval Investment, if that investment takes the ‘Support the Fleet’ action, it will function as if it were two tiers higher.",
+    "type": "Talisman: Tool",
+    "rarity": "Expert",
+    "materials": 11
+  },
+  {
+    "name": "Bloodslick Banner",
+    "function": "Members of a band bonded to this banner may empower one character through the sacrifice of hitpoints. Once per day members of this band may grasp the banner and speak their oath. Characters who do this may then reduce their maximum hit points by one for the remainder of the day. One character may then raise their maximum hit points by an amount equal to the sacrificed hitpoints for the remainder of the day. For every three hitpoints gained this way, that character also gains 1 Maximum Energy for the remainder of the day.",
+    "type": "Banner",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Broadleaf Spear",
+    "function": "You may spend one energy to call Knockback with this weapon.",
+    "type": "Weapon: Spear",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Magehunters Call",
+    "function": "Once per day you may cast the Silence spell as if you knew it for no mana.",
+    "type": "Weapon: One Handed",
+    "rarity": "Expert",
+    "materials": 7
+  },
+  {
+    "name": "Conqueror's Halberd",
+    "function": "You may spend energy to call Shackle or Fracture with this weapon.",
+    "type": "Weapon: Polearm",
+    "rarity": "Expert",
+    "materials": 7
+  },
+  {
+    "name": "Dawns Pestle",
+    "function": "When preparing potions you may spend two Beggars Root as one Rackoric or two Rackoric as one Beggars Root. You may only do this once per preparation.",
+    "type": "Talisman: Tool",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Opportunists Call",
+    "function": "Once per day you may call Fracture with no energy cost.",
+    "type": "Weapon: One Handed",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Enduring Shield",
+    "function": "You gain two ranks of the Deathless Skill.",
+    "type": "Talisman: Shield",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Elementalists Garb",
+    "function": "This armour does not inhibit the casting of spells by a mage, as if they had the Battlemage skill.",
+    "type": "Armour: Medium",
+    "rarity": "Expert",
+    "materials": 11
+  },
+  {
+    "name": "Thunderous Awe",
+    "function": "Once per day you may cast the Stun spell as if you knew it for no mana.",
+    "type": "Weapon: One Handed",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Eves Mortar",
+    "function": "When preparing potions you may spend two Green Sunleaf as one Stonestem or two Stonestem as one Green Sunleaf. You may only do this once per preparation.",
+    "type": "Talisman: Tool",
+    "rarity": "Expert",
+    "materials": 9
+  },
+  {
+    "name": "Treacheries Kiss",
+    "function": "Once per day you may cast the Venom spell as if you knew it for no mana.",
+    "type": "Weapon: One Handed",
+    "rarity": "Expert",
+    "materials": 7
+  },
+  {
+    "name": "Gray Wizards Robe",
+    "function": "You gain one additional hitpoint. Requires the Magus skill.",
+    "type": "Armour: Clothes",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Guardian Mage Staff",
+    "function": "Twice per day you may cast the Stun spell as if you knew it for no mana. You are immune to the Magic Stun effect. Requires the Magus skill",
+    "type": "Weapon: Polearm",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Mage Legion Standard",
+    "function": "All members of the warband bonded to this banner gain one Personal Mana.",
+    "type": "Banner",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Windborn",
+    "function": "Once per day you may cast the Knockback spell as if you knew it for no mana.",
+    "type": "Weapon: One Handed",
+    "rarity": "Expert",
+    "materials": 9
+  },
+  {
+    "name": "Manticore Hide Armour",
+    "function": "You gain one additional hitpoint.",
+    "type": "Armour: Medium",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Nightmare Hide Armour",
+    "function": "You gain two ranks of the Deathless skill.",
+    "type": "Armour: Medium",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Clerics Mace",
+    "function": "You may cast or swift cast the heal spell as if you knew it.",
+    "type": "Weapon: One Handed",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Phial of the Sun",
+    "function": "Once per day when using the Surgeon skill you may decant some liquid from this phial and use it as if it were one herb of your choice. This may not be used for the crafting of potions.",
+    "type": "Talisman: Tool",
+    "rarity": "Expert",
+    "materials": 8
+  },
+  {
+    "name": "Prime Hunters Bow",
+    "function": "You gain one level of Divine Lore: Arcadian",
+    "type": "Weapon: Bow",
+    "rarity": "Expert",
+    "materials": 7
+  },
+  {
+    "name": "Strikers Hand",
+    "function": "You may cast the knockback spell as if you knew it.",
+    "type": "Weapon: One Handed",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Rootwarder",
+    "function": "Twice per day you may cast the Shackle spell as if you knew it for no mana. You are immune to the Magic Shackle effect. Requires the Magus skill.",
+    "type": "Weapon: Polearm",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Scorpions Barb",
+    "function": "Twice per day you may cast the Venom spell as if you knew it for no mana. You are immune to the Magic Venom effect. Requires the Magus skill",
+    "type": "Weapon: Polearm",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Scouts Bow",
+    "function": "You gain two ranks of Deathless",
+    "type": "Weapon: Bow",
+    "rarity": "Expert",
+    "materials": 7
+  },
+  {
+    "name": "Skirmishers Aketon",
+    "function": "You gain one additional hitpoint.",
+    "type": "Armour: Light",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Slayers Banner",
+    "function": "A warband that fights under this banner will draw additional attention from Elite and Monstrous enemy units so long as they are acting aggressively.",
+    "type": "Banner",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Survivors Platemail",
+    "function": "You may ignore the roleplay effects of a single traumatic wound until the end of the battle.",
+    "type": "Armour: Heavy",
+    "rarity": "Expert",
+    "materials": 10
+  },
+  {
+    "name": "Tail of the Beast",
+    "function": "You may spend one energy to make the Shackle or Venom call with this weapon.",
+    "type": "Weapon: Polearm",
+    "rarity": "Expert",
+    "materials": 9
+  },
+  {
+    "name": "Tacticians Demand",
+    "function": "You may cast the empower spell as if you knew it.",
+    "type": "Weapon: One Handed",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Arch Priests Blade",
+    "function": "As long as you know any of the Heal, Purify or Mend Limb spells, Twice per day you may cast the Heal, Purify and Mend Limb spells simultaneously for a cost of one mana or two mana if swift cast.",
+    "type": "Weapon: One Handed",
+    "rarity": "Masterwork",
+    "materials": 17
+  },
+  {
+    "name": "Wayfarers Pyx",
+    "function": "Once per day, when the sect that is bonded to this reliquary is performing a ceremony, its magnitude is reduced by two.",
+    "type": "Reliquary",
+    "rarity": "Expert",
+    "materials": 12
+  },
+  {
+    "name": "Blade of Peace",
+    "function": "You may cast the Heal, Mend Limb and Purify spells as if you knew them.",
+    "type": "Weapon: One Handed",
+    "rarity": "Masterwork",
+    "materials": 19
+  },
+  {
+    "name": "Blade of War",
+    "function": "You may cast the Knockback, Stun, Damage and Venom spells as if you knew them.",
+    "type": "Weapon: One Handed",
+    "rarity": "Masterwork",
+    "materials": 15
+  },
+  {
+    "name": "Artisans Oil",
+    "function": "A character with the Artisan skill can roleplay applying the oil to a shield or weapon affected by the Break call. After which the Artisans oil is consumed but the item is returned to normal function.\nThe roleplay is interrupted if you or the item are struck or if you engage in combat or move faster than a walking pace. The oil is not consumed in this circumstance but the roleplay must begin again.\nArtisan's oil is unique in requiring quite mundane ingredients. It requires 8 Keys worth of goods to make and is made in batches of 3. Artisan's oil still requires time to craft, as such is crafted like any other Artisans craft. All Artisans can make Artisans Oil.",
+    "type": "Special",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Battleplate",
+    "function": "You gain one additional hitpoint.",
+    "type": "Armour: Heavy",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Bonebreaker",
+    "function": "You may spend one energy to call Fracture or use the Mighty Blow effect with this weapon.",
+    "type": "Weapon: Great Weapon",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Boulders Staff",
+    "function": "You may cast the stun spell as if you knew it.",
+    "type": "Weapon: Polearm",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Brandts Blade",
+    "function": "You may spend one energy to call Silence with this weapon on a strike that would deal damage. When you use this effect you are also affected by Silence.",
+    "type": "Weapon: One Handed",
+    "rarity": "Masterwork",
+    "materials": 18
+  },
+  {
+    "name": "Crystalhunger Robes",
+    "function": "Once per day, when you consume a piece of crystal mana, it restores three personal mana rather than one.",
+    "type": "Armour: Clothes",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Druids Crook",
+    "function": "You may cast the shackle spell as if you knew it.",
+    "type": "Weapon: Polearm",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Greatweapon of the Old Ways",
+    "function": "This weapon may not be used to deliver the Knockback effect. Instead, while wielding the weapon in two hands you may strike a shield and call ‘Magic Damage 3’. Expend one energy. As this strike can only affect a shield, please inform the target if you miss.",
+    "type": "Weapon: Great Weapon",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Guards Watcher",
+    "function": "You may spend one energy to call Knockback or Shackle with this weapon.",
+    "type": "Weapon: Polearm",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Linebreakers Staff",
+    "function": "You may cast the knockback spell as if you knew it.",
+    "type": "Weapon: Polearm",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Marauders Warcoat",
+    "function": "While wearing this armour you may spend one energy to call Fracture with Polearms, Greatweapons or One Handed Weapons.",
+    "type": "Armour: Medium",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Medics Gambeson",
+    "function": "You may offer first aid to characters who are bleeding out. While doing so the characters bleedout time is paused. This requires two hands, your full attention, appropriate roleplay and being stationary.",
+    "type": "Armour: Light",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Mountebanks Surprise",
+    "function": "Once per day when you cast the Empower spell on a target you are also affected by the empower spell.",
+    "type": "Weapon: Pair: Short Weapon and One Handed Weapon",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Reforging Gavel",
+    "function": "You may cast or swift cast the reforging spell as if you knew it.",
+    "type": "Talisman: Tool",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Saga of the Lost",
+    "function": "A member of this sect will never become a conscious undead. If their spirit is called upon after their death they will be calm and aware of their circumstances. Members of this sect may roleplay stoic silence rather than pain while in the terminal state.",
+    "type": "Reliquary",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Serpent's Tail",
+    "function": "You may cast the venom spell as if you knew it.",
+    "type": "Weapon: Polearm",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Warriors Right Hand",
+    "function": "Gain one additional energy.",
+    "type": "Weapon: One Handed",
+    "rarity": "Masterwork",
+    "materials": 13
+  },
+  {
+    "name": "Standard of the Brave",
+    "function": "Once per Conflux you may call immune to a fear effect or remove the Fear effect from a member of your Warband.",
+    "type": "Banner",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Apprentices Penknife",
+    "function": "You gain one additional personal mana.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Comrades Knife",
+    "function": "Whenever you cast or swift cast the heal spell you gain one hit point.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Expert",
+    "materials": 5
+  },
+  {
+    "name": "Desperate Times",
+    "function": "Once per day you may call Venom with this weapon for no energy or mana cost. You are also affected by Venom when you use this ability.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Expert",
+    "materials": 4
+  },
+  {
+    "name": "Flameborn Dagger",
+    "function": "You may cast the Damage spell as if you knew it.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Expert",
+    "materials": 4
+  },
+  {
+    "name": "Warmages Blessing",
+    "function": "You gain one additional hitpoint. This item requires the Battlemage skill.",
+    "type": "Talisman: Battlemages Circlet",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Arcane Shears",
+    "function": "Twice per day you may use this item to cut a bond connecting a magical item to an individual. You may only use this item if you have the Artisan skill.",
+    "type": "Talisman: Tool",
+    "rarity": "Masterwork",
+    "materials": 15
+  },
+  {
+    "name": "Purifying Scalpel",
+    "function": "When you cast (but not swift cast) the Heal spell you may also remove the Venom effect from the target.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Expert",
+    "materials": 6
+  },
+  {
+    "name": "Archmage's Staff",
+    "function": "Twice per day you may cast, or where appropriate swift cast any spell you know for no mana cost.",
+    "type": "Weapon: Polearm",
+    "rarity": "Masterwork",
+    "materials": 18
+  },
+  {
+    "name": "Armsman's Amulet",
+    "function": "You gain the Weaponmaster skill",
+    "type": "Talisman: Jewellery",
+    "rarity": "Masterwork",
+    "materials": 12
+  },
+  {
+    "name": "Artebazzani Artifact",
+    "function": "Once per day your sect may join with another sect to perform a ceremony together. While your sects may perform the ceremony together they are still treated as separate sects for all other purposes. Your Sect does not gain the benefit of the Sects reliquaries if any.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Avalanche",
+    "function": "You may spend one energy to call either Break or use the Mighty Blow effect with this weapon.",
+    "type": "Weapon: Great Weapon",
+    "rarity": "Masterwork",
+    "materials": 19
+  },
+  {
+    "name": "Barons Blessed Cairn",
+    "function": "When your sect performs a ceremony that targets resources in a single region, the ceremony may also affect resources in a second region of the same Realm.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 30
+  },
+  {
+    "name": "Battlehealers Coat",
+    "function": "When you cast or swift cast the Heal, Purify or Mend Limb spells you regain one hitpoint.",
+    "type": "Armour: Light",
+    "rarity": "Masterwork",
+    "materials": 12
+  },
+  {
+    "name": "Beggars Key",
+    "function": "Twice per day after thirty seconds of roleplay you may open a portal as you had used the Channel Waystone spell. You may use this power if you are wearing armour.",
+    "type": "Talisman: Jewellery",
+    "rarity": "Masterwork",
+    "materials": 17
+  },
+  {
+    "name": "Acolyte's Assistant",
+    "function": "You may cast or swift cast the heal spell as if you knew it.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Setting Blade",
+    "function": "You may cast or swift cast the mend limb spell as if you knew it.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Bloodcloak",
+    "function": "Three times per day when you use the Surgeon skill you can roleplay drawing some of your own blood and using it in place of a herb of your choice.",
+    "type": "Talisman: Tool",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Bracelet of the Young Ward",
+    "function": "You gain the Bulwark skill",
+    "type": "Talisman: Jewellery",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Bramblehafted Spear",
+    "function": "Twice per day you may call Shackle for no cost. This strike can hit any of the standard thrusting locations.",
+    "type": "Weapon: Spear",
+    "rarity": "Masterwork",
+    "materials": 11
+  },
+  {
+    "name": "Thieves Good Hand",
+    "function": "You may cast the silence spell as if you knew it.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Celebrants Chain",
+    "function": "You may cast the Create Bond spell without spending mana.",
+    "type": "Talisman: Jewellery",
+    "rarity": "Masterwork",
+    "materials": 18
+  },
+  {
+    "name": "Dragonhide Plate",
+    "function": "You gain two additional hitpoints.",
+    "type": "Armour: Medium",
+    "rarity": "Masterwork",
+    "materials": 15
+  },
+  {
+    "name": "Duelists Obstinate Ally",
+    "function": "When you spend one energy you regain one hitpoint.",
+    "type": "Talisman: Shield",
+    "rarity": "Masterwork",
+    "materials": 16
+  },
+  {
+    "name": "Forgemasters Shield",
+    "function": "You may spend one energy to remove the Break effect from this Shield. This requires five seconds of uninterrupted roleplay. Performing this action causes you to be affected by ‘Shield 1’",
+    "type": "Talisman: Shield",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Forgesteel Armour",
+    "function": "You may spend one energy to ignore a Fracture call.",
+    "type": "Armour: Medium",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Guardians Banner",
+    "function": "While at least five members of a Warband that fights under this banner remain around the far side of a portal during a Skirmish or Major conflux, the portal will remain open for an additional ten minutes.",
+    "type": "Banner",
+    "rarity": "Masterwork",
+    "materials": 12
+  },
+  {
+    "name": "Harness of Heartiness",
+    "function": "After five seconds of roleplaying that includes a loud invocation of cleansing you may spend one energy to remove the Venom condition from yourself. Performing this action causes you to be affected by ‘Shield 1’",
+    "type": "Armour: Heavy",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Hoplites Spear",
+    "function": "Gain one additional energy.",
+    "type": "Weapon: Spear",
+    "rarity": "Masterwork",
+    "materials": 13
+  },
+  {
+    "name": "Hunters Ark",
+    "function": "Members of this sect who are performing an Arcadian ceremony may use Beastbone instead of Crystal Mana. Every two measures of Beastbone count as one Crystal Mana.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Illuminating Forge",
+    "function": "Members of this sect who are performing a Lumos ceremony may use Sun’s Iron instead of crystal mana. Every two measures of Sun’s Iron counts as one Crystal Mana.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Immortals Shield",
+    "function": "You gain one additional hitpoint and two ranks of the Deathless skill.",
+    "type": "Talisman: Shield",
+    "rarity": "Masterwork",
+    "materials": 16
+  },
+  {
+    "name": "Legionnaires Commandment",
+    "function": "When your Sect completes a ceremony that targets characters who are all members of a single band, the ceremony may also target members of a different band that are from the same Realm.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 25
+  },
+  {
+    "name": "Lich Paragon’s Robe",
+    "function": "You gain three ranks of the Deathless skill.",
+    "type": "Armour: Clothes",
+    "rarity": "Masterwork",
+    "materials": 13
+  },
+  {
+    "name": "Matched Thunderbolts",
+    "function": "If you strike a shield or individual with both weapons at once, you may spend one energy and call knockback.",
+    "type": "Weapon: Pair: One Handed",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Mercenary Banner",
+    "function": "Members of this Warband may fight with a different Realm during the Major Conflux they attend. Which realm the intend to to join must be announced at the War Chamber meeting prior to that Major Conflux.",
+    "type": "Banner",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Mundane Forcebarrier",
+    "function": "You gain two additional personal mana and one additional hitpoint.",
+    "type": "Talisman: Shield",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Opened Eye",
+    "function": "Twice per day you may cast the Fear spell for no mana. You must know the Fear spell to use this effect.",
+    "type": "Weapon: Polearm",
+    "rarity": "Masterwork",
+    "materials": 19
+  },
+  {
+    "name": "Philosophers Charm",
+    "function": "Once per day, a character bonded to this item may transmute X amount of minerals into any one other mineral. In this circumstance X equals the amount of mana being expended. This requires thirty seconds of roleplay and the presence of a Civil Servant.",
+    "type": "Talisman: Jewellery",
+    "rarity": "Masterwork",
+    "materials": 35
+  },
+  {
+    "name": "Pugilists Charm",
+    "function": "You may spend one energy to restore a limb affected by the Fracture call. This requires five seconds of roleplay that is interrupted upon receiving a strike to you or your target.",
+    "type": "Talisman: Jewellery",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Pyromancers Staff",
+    "function": "Twice per day you may cast the Damage spell for no mana. You may spend one Mana to ignore a Magic Damage effect. You must know the Damage spell to use these effects.",
+    "type": "Weapon: Polearm",
+    "rarity": "Masterwork",
+    "materials": 19
+  },
+  {
+    "name": "Rag of Warfare",
+    "function": "While wielding this banner you gain five additional hit points.",
+    "type": "Banner",
+    "rarity": "Masterwork",
+    "materials": 14
+  },
+  {
+    "name": "Robe of the Saviour",
+    "function": "Twice per day when you cast or swift cast the Heal spell you may do so without spending mana.",
+    "type": "Armour: Clothes",
+    "rarity": "Masterwork",
+    "materials": 17
+  },
+  {
+    "name": "Robes of the Seer",
+    "function": "You gain two additional personal mana",
+    "type": "Armour: Clothes",
+    "rarity": "Masterwork",
+    "materials": 15
+  },
+  {
+    "name": "Runeplate",
+    "function": "You gain two additional hitpoints.",
+    "type": "Armour: Heavy",
+    "rarity": "Masterwork",
+    "materials": 13
+  },
+  {
+    "name": "Sargents Fist",
+    "function": "You gain two additional energy.",
+    "type": "Weapon: Great Weapon",
+    "rarity": "Masterwork",
+    "materials": 17
+  },
+  {
+    "name": "Torment’s Blade",
+    "function": "You may cast the fear spell as if you knew it.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Journeyman",
+    "materials": 0
+  },
+  {
+    "name": "Shattering Stone",
+    "function": "Members of this sect who are performing an Anarch ceremony may use Bloodglass instead of crystal mana. Every two measures of Bloodglass counts as one Crystal Mana.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Slayers Blade",
+    "function": "Gain one additional energy.",
+    "type": "Weapon: Great Weapon",
+    "rarity": "Masterwork",
+    "materials": 12
+  },
+  {
+    "name": "Smiths Polearm",
+    "function": "You may spend one energy to remove the Break effect from this weapon. This requires five seconds of uninterrupted roleplay. Performing this action causes you to be affected by ‘Shield 1’",
+    "type": "Weapon: Polearm",
+    "rarity": "Masterwork",
+    "materials": 16
+  },
+  {
+    "name": "Soldiers Hauberk",
+    "function": "Gain one additional energy.",
+    "type": "Armour: Medium",
+    "rarity": "Masterwork",
+    "materials": 12
+  },
+  {
+    "name": "Squires Mail",
+    "function": "Gain one additional energy.",
+    "type": "Armour: Light",
+    "rarity": "Masterwork",
+    "materials": 12
+  },
+  {
+    "name": "Standard of the Tower",
+    "function": "While wielding this standard you gain three additional personal mana, and all members of the Warband bonded to this banner gain one additional personal mana.",
+    "type": "Banner",
+    "rarity": "Masterwork",
+    "materials": 15
+  },
+  {
+    "name": "Starlit Pool",
+    "function": "Members of this sect who are performing a Stallia ceremony may use Black Sap instead of crystal mana. Every two measures of Black Sap counts as one Crystal Mana.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Steel Pillar",
+    "function": "Members of this sect who are performing a Cervitas ceremony may use Forgesteel instead of crystal mana. Every two measures of Forgesteel counts as one crystal mana.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Warfletcher",
+    "function": "You gain two additional hitpoints.",
+    "type": "Weapon: Bow",
+    "rarity": "Masterwork",
+    "materials": 13
+  },
+  {
+    "name": "Warlocks Longknives",
+    "function": "You may either expend one energy to regain one personal mana or expend three personal mana to regain one energy.",
+    "type": "Weapon: Pair: One Handed",
+    "rarity": "Masterwork",
+    "materials": 16
+  },
+  {
+    "name": "Seers Knife",
+    "function": "You gain two additional personal mana.",
+    "type": "Weapon: Short Weapon",
+    "rarity": "Masterwork",
+    "materials": 17
+  },
+  {
+    "name": "Weighted Scales",
+    "function": "Members of this sect who are performing a Panoply ceremony may use Shimmering Scales instead of crystal mana. Every two measures of Shimmering Scales counts as one Crystal Mana.",
+    "type": "Reliquary",
+    "rarity": "Masterwork",
+    "materials": 24
+  },
+  {
+    "name": "Wolverines Bite",
+    "function": "Twice per day when you use Fracture you may strike two targets instead of one for no additional cost. You have only 10 seconds to deliver the second Fracture.",
+    "type": "Weapon: Pair: One Handed",
+    "rarity": "Masterwork",
+    "materials": 16
+  }
+]

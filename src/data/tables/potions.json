@@ -1,0 +1,149 @@
+[
+  {
+    "name": "Al-Asah’s Antidote",
+    "mechanical": "Remove the Venom Effect. Gain two ranks of Deathless for the remainder of the day.\nInitial studies show that the mixture is a valid replacement for common treatment at the first stage of the Blasserstreit plague, provided wounds are cleaned.",
+    "roleplay": "Your veins pulse with pressure for a few moments, you feel like you are being pulled taut",
+    "tonic": true,
+    "materials": 4
+  },
+  {
+    "name": "Arcmages Spirit",
+    "mechanical": "You regain all spent personal mana and gain two additional bonus mana.",
+    "roleplay": "You are filled with painful amounts of magical power. You are driven to use your magic where possible. After it has passed you feel an urge to sample it again.",
+    "tonic": true,
+    "materials": 10
+  },
+  {
+    "name": "Believers Burning Brew",
+    "mechanical": "Removes the Venom effect.",
+    "roleplay": "You experience a few moments of extreme pain, your insides are aflame. It quickly passes.",
+    "tonic": false,
+    "materials": 2
+  },
+  {
+    "name": "Blessed Water of the Questing Knight",
+    "mechanical": "You regain all spent energy and gain a bonus additional point above your standard maximum.",
+    "roleplay": "You are filled with a stoic clarity. You feel connected to the sphere closest to your spirit. You must act.",
+    "tonic": true,
+    "materials": 12
+  },
+  {
+    "name": "Caricanium Solution",
+    "mechanical": "You regain the use of a limb that has been affected by Fracture.",
+    "roleplay": "The affected limb is numb for a considerable time.",
+    "tonic": false,
+    "materials": 2
+  },
+  {
+    "name": "Concoction of Bright Morning",
+    "mechanical": "If you possess Divine Lore Anarch, Lumos or Panoply, you gain one bonus rank for a ceremony you cast within the next 10 minutes.",
+    "roleplay": "You become flush with emotion, whatever you are feeling at the time is amplified twice fold.",
+    "tonic": true,
+    "materials": 8
+  },
+  {
+    "name": "Concoction of the Cold Night",
+    "mechanical": "If you possess Divine Lore Arcadian, Stallia or Cervitas, you gain one bonus rank for a ceremony you cast within the next 10 minutes.",
+    "roleplay": "Your beliefs become resolute, you cannot be convinced to alter your plans. After the effect fades you feel a lack of confidence.",
+    "tonic": true,
+    "materials": 8
+  },
+  {
+    "name": "Conquerors Ale",
+    "mechanical": "You regain three spent energy. Does not raise your maximum energy.",
+    "roleplay": "You feel energised and have a strong desire to raise the morale of others.",
+    "tonic": false,
+    "materials": 8
+  },
+  {
+    "name": "Elixir Vitae",
+    "mechanical": "You regain up to three lost hitpoints",
+    "roleplay": "A warm glow spreads through your body, you feel at ease.",
+    "tonic": false,
+    "materials": 2
+  },
+  {
+    "name": "Fade of the Spheres",
+    "mechanical": "Removes the Venom effect, restoles all limbs affected by Fracture, restores you to full hitpoints. You may ignore the roleplaying effect of all traumatic wounds you are suffering from until the end of the engagement.",
+    "roleplay": "You feel lightheaded for a moment before feeling refreshed and full of energy. You are suffused with hope. You will be victorious.",
+    "tonic": false,
+    "materials": 12
+  },
+  {
+    "name": "Fools Anaesthetic",
+    "mechanical": "Allows you to ignore the roleplay effects of a traumatic wound until the end of the engagement.",
+    "roleplay": "You feel numb and foolhardy.",
+    "tonic": false,
+    "materials": 2
+  },
+  {
+    "name": "Guardians Memory",
+    "mechanical": "You gain a bonus hitpoint above your standard. Must remain below the 10 point maximum. This effect lasts until the next sunrise.",
+    "roleplay": "You feel foolhardy and borderline invincible.",
+    "tonic": true,
+    "materials": 5
+  },
+  {
+    "name": "Ironblood tonic",
+    "mechanical": "Your bleed out time increased by one minute until the next sunrise.",
+    "roleplay": "You feel introspective and wise.",
+    "tonic": true,
+    "materials": 5
+  },
+  {
+    "name": "Kaida’s Summer Special",
+    "mechanical": "This brews a pot of tea. Each person drinking a cup of tea recovers all lost hits after 15 minutes of rest and relaxation. There is no effect if the drinker is on the battlefield or stressful environment. If the drinker does any action aside from relax the effect fails. The drinker must have at least one hitpoint to consume the tea. The tea loses its qualities after it reaches room temperature.",
+    "roleplay": "You feel sleepy and relaxed, disinclined to be active or aggressive.",
+    "tonic": false,
+    "materials": 4
+  },
+  {
+    "name": "Mageblood",
+    "mechanical": "You regain two spent personal mana. Does not raise your maximum personal mana.",
+    "roleplay": "For a moment, you can see magic in the world, in all its minute forms.",
+    "tonic": false,
+    "materials": 2
+  },
+  {
+    "name": "Rhythm of the Spheres",
+    "mechanical": "If you possess Divine Lore Anarch, Lumos or Panoply, you may use up to three personal mana as if it were crystal mana during a ceremony you cast within the next 10 minutes.",
+    "roleplay": "You feel physically vibrant. To dance, train or create is a driving force.",
+    "tonic": true,
+    "materials": 10
+  },
+  {
+    "name": "Soulfire",
+    "mechanical": "If you possess Divine Lore Anarch, Lumos or Panoply, you gain 3 bonus ranks for a ceremony you cast within the next 10 minutes.",
+    "roleplay": "After the ceremony is complete, find either the Church ST or Lead ST and inform them that you have consumed Soulfire",
+    "tonic": true,
+    "materials": 14
+  },
+  {
+    "name": "Starblood",
+    "mechanical": "If you possess Divine Lore Arcadian, Stallia or Cervitas, you may use up to three personal mana as if it were crystal mana during a ceremony you cast within the next 10 minutes.",
+    "roleplay": "What you know must be hidden. You feel driven to conceal your intentions. When it fades, you feel haunted.",
+    "tonic": true,
+    "materials": 10
+  },
+  {
+    "name": "Times Absence",
+    "mechanical": "If you possess Divine Lore Arcadian, Stallia or Cervitas, you gain 3 bonus ranks for a ceremony you cast within the next 10 minutes.",
+    "roleplay": "After the ceremony is complete find either the Church ST or Lead ST and inform them that you have consumed Times Absence",
+    "tonic": true,
+    "materials": 14
+  },
+  {
+    "name": "Van Demuers Solace",
+    "mechanical": "You regain six spent personal mana. Does not raise your maximum personal mana.",
+    "roleplay": "You feel a strong urge to grapple with the deepest questions you hold.",
+    "tonic": false,
+    "materials": 8
+  },
+  {
+    "name": "Warbrew",
+    "mechanical": "You regain one spent energy. Does not raise your maximum energy",
+    "roleplay": "It burns like strong liquor, you feel boisterous and loud, suddenly invigorated.",
+    "tonic": false,
+    "materials": 3
+  }
+]
