@@ -1,9 +1,9 @@
 import classNames from "classnames";
 
-function TabItem({ name, onTabSelect, active }) {
+function TabItem({ tab, onTabSelect, active }) {
   const classes = classNames(
     "transition duration-200",
-    "px-1 w-32 text-center m-1",
+    "px-1 w-28 text-center m-1",
     "cursor-pointer",
     "bg-white text-black",
     {
@@ -12,12 +12,12 @@ function TabItem({ name, onTabSelect, active }) {
   );
 
   const handleClick = () => {
-    onTabSelect(name);
+    onTabSelect(tab);
   };
 
   return (
     <div className={classes} onClick={handleClick}>
-      {name}
+      {tab.name}
     </div>
   );
 }

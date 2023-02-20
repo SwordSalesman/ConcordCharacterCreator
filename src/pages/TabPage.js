@@ -1,45 +1,71 @@
 import { useState } from "react";
 import TabItem from "../components/TabItem";
-import IntroPage from "./IntroPage";
-import RealmPage from "./RealmPage";
-import SkillsPage from "./SkillsPage";
-import OptionsPage from "./OptionsPage";
-import BackgroundPage from "./BackgroundPage";
 
-function TabPage() {
-  const [activeTab, setActiveTab] = useState("Intro");
+import { Transition } from "@headlessui/react";
 
-  const tabs = ["Intro", "Realm", "Skills", "Options", "Background"];
+const transitionClasses = {
+  enter: "transition ease-in-out duration-300",
+  enterFrom: "opacity-0 -translate-x-2",
+  enterTo: "opacity-100 translate-x-0",
+  leave: "transition ease-in-out duration-150",
+  leaveFrom: "opacity-100 translate-x-0",
+  leaveTo: "opacity-0 translate-x-2",
+};
+
+function TabPage({ tabs }) {
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [pendingTab, setPendingTab] = useState(null);
 
   const handleClickTab = (tab) => {
-    setActiveTab(tab);
+    if (activeTab === tab) {
+      return;
+    }
+    setActiveTab(null);
+    setPendingTab(tab);
+  };
+
+  const handleTabLeave = () => {
+    if (pendingTab === null) {
+      setActiveTab(tabs[0]);
+    } else {
+      setActiveTab(pendingTab);
+      setPendingTab(null);
+    }
   };
 
   const renderedTabItems = tabs.map((tab) => {
     return (
       <TabItem
-        key={tab}
-        name={tab}
+        key={tab.name}
+        tab={tab}
         onTabSelect={handleClickTab}
         active={tab === activeTab}
       ></TabItem>
     );
   });
 
-  const renderedTabContent = {
-    Intro: <IntroPage />,
-    Realm: <RealmPage />,
-    Skills: <SkillsPage />,
-    Options: <OptionsPage />,
-    Background: <BackgroundPage />,
-  }[activeTab];
+  const renderedTabContent = tabs.map((tab) => {
+    return (
+      <Transition
+        key={tab.name}
+        show={activeTab === tab}
+        afterLeave={handleTabLeave}
+        {...transitionClasses}
+      >
+        {tab.content}
+      </Transition>
+    );
+  });
 
   return (
-    <div className="m-6 max-w-2xl flex flex-col justify-center items-center">
-      <div id="tab-bar" className="flex mb-1">
+    <div className="m-6 max-w-xl flex flex-col justify-center items-center">
+      <div id="tab-items" className="flex mb-1">
         {renderedTabItems}
       </div>
-      <div id="tab-content" className="min-w-full h-96 flex p-1 justify-center">
+      <div
+        id="tab-content"
+        className="min-w-full h-96 bg-white flex justify-center"
+      >
         {renderedTabContent}
       </div>
     </div>

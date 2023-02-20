@@ -8,11 +8,12 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
   const classes = classNames(
     "w-24 h-24 m-2 mx-1",
     "mix-blend-multiply",
-    "hover:scale-125",
+    "hover:scale-[1.15]",
     "transition duration-200",
     {
-      "opacity-50 blur-sm": selectedRealm !== null && realm !== selectedRealm,
-      "blur-none scale-125 hover:scale-125": realm === selectedRealm,
+      "opacity-50 blur-[2px]":
+        selectedRealm !== null && realm !== selectedRealm,
+      "blur-none hover:scale-[1.15] scale-[1.15]": realm === selectedRealm,
     }
   );
 
