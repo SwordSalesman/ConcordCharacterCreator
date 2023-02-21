@@ -58,13 +58,13 @@ function TabPage({ tabs }) {
   });
 
   return (
-    <div className="m-6 max-w-xl flex flex-col justify-center items-center">
+    <div className="m-6 max-w-xl flex flex-col justify-center items-center ">
       <div id="tab-items" className="flex mb-1">
         {renderedTabItems}
       </div>
       <div
         id="tab-content"
-        className="min-w-full h-96 bg-white flex justify-center"
+        className="min-w-full h-96 bg-white flex justify-center w-[700px] text-center"
       >
         {renderedTabContent}
       </div>
