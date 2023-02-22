@@ -1,6 +1,6 @@
 import Accordion from "../components/Accordion";
 import ContentPane from "../components/ContentPane";
-import BackgroundImage from "../data/images/realm-logos/Bbw.jpg";
+import useFormContext from "../hooks/use-form-context";
 
 const tabs = [
   {
@@ -22,10 +22,12 @@ const tabs = [
 ];
 
 function OptionsPage() {
+  const { realm } = useFormContext();
+
   return (
     <div>
       <div className="flex">
-        <ContentPane background={BackgroundImage}>
+        <ContentPane background={realm ? realm.image : null}>
           Summary for chosen options here.
         </ContentPane>
         <ContentPane>

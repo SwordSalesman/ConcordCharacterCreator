@@ -12,14 +12,15 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
     "transition duration-200",
     {
       "opacity-50 blur-[2px]":
-        selectedRealm !== null && realm !== selectedRealm,
-      "blur-none hover:scale-[1.15] scale-[1.15]": realm === selectedRealm,
+        selectedRealm !== null && realm.name !== selectedRealm.name,
+      "blur-none hover:scale-[1.15] scale-[1.15]":
+        selectedRealm !== null && realm.name === selectedRealm.name,
     }
   );
 
   return (
     <div onClick={handleClick} className={classes}>
-      <img className="cursor-pointer" alt={realm.name} src={realm.src}></img>
+      <img className="cursor-pointer" alt={realm.name} src={realm.image}></img>
     </div>
   );
 }

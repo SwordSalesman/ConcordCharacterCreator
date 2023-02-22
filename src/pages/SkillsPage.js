@@ -1,6 +1,6 @@
 import Accordion from "../components/Accordion";
 import ContentPane from "../components/ContentPane";
-import BackgroundImage from "../data/images/realm-logos/Bbw.jpg";
+import useFormContext from "../hooks/use-form-context";
 
 const tabs = [
   {
@@ -54,10 +54,12 @@ const tabs = [
 ];
 
 function SkillsPage() {
+  const { realm } = useFormContext();
+
   return (
     <div>
       <div className="flex">
-        <ContentPane background={BackgroundImage}>
+        <ContentPane background={realm ? realm.image : null}>
           Hey, this is where you would pick your skills. Have a look on the side
           and pick some skills which take your fancy, or don't! I'm not your
           mother.

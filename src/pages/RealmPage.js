@@ -1,85 +1,40 @@
-import { useState } from "react";
 import RealmItem from "../components/RealmItem";
-import AndashLogo from "../data/images/realm-logos/Abw.jpg";
-import BordevarLogo from "../data/images/realm-logos/Bbw.jpg";
-import GreenwealdLogo from "../data/images/realm-logos/Gbw.jpg";
-import IronValleyLogo from "../data/images/realm-logos/IVbw.jpg";
-import LeronaMereLogo from "../data/images/realm-logos/LMbw.jpg";
 import WikiLink from "../components/WikiLink";
-
-const realmData = [
-  {
-    name: "Andash",
-    subtitle: '"My brethren, what can we save from the past?"',
-    link: '"andash"',
-    src: AndashLogo,
-    desc: "Andash description",
-  },
-  {
-    name: "Bordevar",
-    subtitle: '"By my steel and by my soul, I will not fail again."',
-    link: "bordevar",
-    src: BordevarLogo,
-    desc: "Bordevar description",
-  },
-  {
-    name: "Greenweald",
-    subtitle:
-      '"The forest is dark and holds many secrets, but we are the light that seeks the truth."',
-    link: "greenweald",
-    src: GreenwealdLogo,
-    desc: "Greenweald description",
-  },
-  {
-    name: "Iron Valley",
-    subtitle: '"We stand together."',
-    link: "iron",
-    src: IronValleyLogo,
-    desc: "Iron Valley description",
-  },
-  {
-    name: "Lerona Mere",
-    subtitle: '"Everyone a King! Everyone a Captain!"',
-    link: "lerona",
-    src: LeronaMereLogo,
-    desc: "Lerona Mere description",
-  },
-];
+import useFormContext from "../hooks/use-form-context";
+import { realms } from "../data/tables/realms";
 
 function RealmPage() {
-  const [selectedRealm, setSelectedRealm] = useState(null);
+  const { realm, selectRealm } = useFormContext();
 
-  const handleRealmSelect = (realm) => {
-    if (realm === selectedRealm) {
-      setSelectedRealm(null);
+  const handleRealmSelect = (r) => {
+    if (r === realm) {
+      selectRealm(null);
     } else {
-      setSelectedRealm(realm);
+      selectRealm(r);
     }
   };
 
-  const renderedLogos = realmData.map((realm) => {
+  const renderedLogos = realms.map((r) => {
     return (
       <RealmItem
-        key={realm.name}
-        realm={realm}
+        key={r.name}
+        realm={r}
         onSelect={handleRealmSelect}
-        selectedRealm={selectedRealm}
+        selectedRealm={realm}
       />
     );
   });
 
-  const content = selectedRealm ? (
+  const content = realm ? (
     <div>
       <div>
-        <h1 className="text-3xl font-semibold">{selectedRealm.name}</h1>
-        <div className="italic opacity-50 text-sm">
-          {selectedRealm.subtitle}
-        </div>
-        <div className="my-4">{selectedRealm.desc}</div>
+        <h1 className="text-3xl font-semibold">{realm.name}</h1>
+        <div className="italic opacity-50 text-sm">{realm.subtitle}</div>
+        <div className="my-4">{realm.desc}</div>
       </div>
-      {selectedRealm.link ? (
+      {realm.link ? (
         <div className="flex justify-end">
-          <WikiLink path={["almanac", "realms", selectedRealm.link]} />
+          <WikiLink path={["almanac", "realms", realm.link]} />
         </div>
       ) : null}
     </div>

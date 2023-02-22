@@ -12,7 +12,7 @@ const transitionClasses = {
   leaveTo: "opacity-0 translate-x-2",
 };
 
-function TabPage({ tabs }) {
+function FormPage({ tabs }) {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [pendingTab, setPendingTab] = useState(null);
 
@@ -33,7 +33,7 @@ function TabPage({ tabs }) {
     }
   };
 
-  const renderedTabItems = tabs.map((tab) => {
+  const renderedTabs = tabs.map((tab) => {
     return (
       <TabItem
         key={tab.name}
@@ -44,7 +44,7 @@ function TabPage({ tabs }) {
     );
   });
 
-  const renderedTabContent = tabs.map((tab) => {
+  const renderedContent = tabs.map((tab) => {
     return (
       <Transition
         key={tab.name}
@@ -59,17 +59,17 @@ function TabPage({ tabs }) {
 
   return (
     <div className="m-6 max-w-xl flex flex-col justify-center items-center ">
-      <div id="tab-items" className="flex mb-1">
-        {renderedTabItems}
+      <div id="form-tabs" className="flex mb-1">
+        {renderedTabs}
       </div>
       <div
-        id="tab-content"
+        id="form-content"
         className="min-w-full h-96 bg-white flex justify-center w-[700px] text-center"
       >
-        {renderedTabContent}
+        {renderedContent}
       </div>
     </div>
   );
 }
 
-export default TabPage;
+export default FormPage;

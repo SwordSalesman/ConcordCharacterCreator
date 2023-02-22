@@ -1,4 +1,4 @@
-import TabPage from "./pages/TabPage";
+import FormPage from "./pages/FormPage";
 import IntroPage from "./pages/IntroPage";
 import RealmPage from "./pages/RealmPage";
 import SkillsPage from "./pages/SkillsPage";
@@ -19,7 +19,7 @@ function App() {
   return (
     <div className={"h-[100vh] justify bg-white"}>
       <div className="flex justify-center font-serif">
-        <TabPage tabs={tabs} />
+        <FormPage tabs={tabs} />
       </div>
     </div>
   );
