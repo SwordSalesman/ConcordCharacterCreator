@@ -4,7 +4,7 @@ function ContentPane({ background, children }) {
   const renderedBackground = background ? (
     <div>
       <img
-        className="absolute top-6 right-3 mix-blend-multiply blur-[1px]"
+        className="absolute top-6 mix-blend-multiply blur-[1px]"
         src={background}
         alt="Background"
       ></img>
@@ -13,9 +13,11 @@ function ContentPane({ background, children }) {
   ) : null;
 
   return (
-    <div className="relative w-[340px] h-96 overflow-scroll py-1">
+    <div className="relative w-[350px] h-96 py-1">
       {renderedBackground}
-      <div className="absolute">{children}</div>
+      <div className="absolute h-full w-full overflow-y-scroll overflow-x-hidden">
+        {children}
+      </div>
     </div>
   );
 

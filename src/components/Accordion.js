@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiChevronDown, BiChevronLeft } from "react-icons/bi";
+import TransitionWrapper from "./TransitionWrapper";
 
 function Accordion({ items }) {
   const [expandedIndex, setExpandedIndex] = useState(-1);
@@ -25,13 +26,19 @@ function Accordion({ items }) {
     return (
       <li key={index}>
         <div
-          className="flex justify-between p-2 px-3 bg-gray-50 border-b items-center cursor-pointer"
+          className="flex justify-between p-2 px-3 bg-gray-100 border-b items-center cursor-pointer"
           onClick={() => handleLabelClick(index)}
         >
           {item.label}
           {icon}
         </div>
-        {expanded && <div className="border-b p-2">{item.content}</div>}
+        {
+          <TransitionWrapper show={expanded} enter>
+            <div className="border-b p-1 flex w-full flex-wrap">
+              {item.content}
+            </div>
+          </TransitionWrapper>
+        }
       </li>
     );
   });

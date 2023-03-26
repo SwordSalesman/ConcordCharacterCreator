@@ -58,8 +58,8 @@ function FormPage({ tabs }) {
   });
 
   return (
-    <div className="m-6 max-w-xl flex flex-col justify-center items-center ">
-      <div id="form-tabs" className="flex mb-1">
+    <div className="m-6 max-w-xl flex flex-col justify-center items-center">
+      <div id="form-tabs" className="flex mb-1 border-b-0 border-gray-200">
         {renderedTabs}
       </div>
       <div

@@ -27,23 +27,25 @@ function RealmPage() {
 
   const content = realm ? (
     <div>
-      <div>
+      <div className="flex flex-col items-center">
         <h1 className="text-3xl font-semibold">{realm.name}</h1>
         <div className="italic opacity-50 text-sm">{realm.subtitle}</div>
-        <div className="my-4">{realm.desc}</div>
-      </div>
-      {realm.link ? (
-        <div className="flex justify-end">
-          <WikiLink path={["almanac", "realms", realm.link]} />
+        <div className="flex items-center">
+          <div className="flex justify-end">
+            <WikiLink path={["almanac", "realms", realm.link]} />
+          </div>
+          <div className="m-2 mt-4">
+            <div className="border-l-2 m-2 pl-2 text-left">{realm.desc}</div>
+          </div>
         </div>
-      ) : null}
+      </div>
     </div>
   ) : (
     <div className="italic opacity-50">Select a realm</div>
   );
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-6">
       <div className="flex justify-center items-center mb-1">
         {renderedLogos}
       </div>

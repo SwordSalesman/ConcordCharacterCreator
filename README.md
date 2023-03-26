@@ -8,3 +8,9 @@ To-do
 
 Optionals
 - Add dark theme option
+
+Potential Names
+- Concordian Scibe
+- Hero Registrar
+- Concord Hero Scribe
+- Concord Archivist

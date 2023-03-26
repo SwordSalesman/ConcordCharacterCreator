@@ -1,0 +1,64 @@
+{
+  "form": {
+    "intro": {
+      "gamesPlayed": 0
+    },
+    "realms": {
+      "realm": ""
+    },
+    "skills": {
+      "chosenSkills": []
+    },
+    "options": {
+      "investment": {
+        "investmentType": "",
+        "investmentLevel": 1,
+        "investmentLocation": ""
+      },
+      "spells": [],
+      "crafts": [],
+      "recipes": [],
+      "ceremonies": []
+    },
+    "background": {
+      "identity": {
+        "name": "",
+        "archetype": ""
+      },
+      "alliances": {
+        "warband": "",
+        "sect": ""
+      },
+      "objectives": {
+        "icGoals": "",
+        "oocGoals": ""
+      },
+      "backstory": {
+        "backstoryEntry": ""
+      }
+    },
+    "overview": {}
+  },
+  "data": {
+    "realms": {
+      "name": "",
+      "subtitle": "",
+      "link": "",
+      "image": "",
+      "desc": ""
+    },
+    "skills": {
+      "name": "",
+      "tree": "",
+      "description": "",
+      "costInit": 0,
+      "costExtra": 0,
+      "prerequisites": [],
+      "exclusions": [],
+      "icon": ""
+    },
+    "options": {
+      "investment":
+    }
+  }
+}

@@ -7,17 +7,18 @@ function WikiLink({ path, ...rest }) {
   const url = path ? root + path.join(":") : root;
 
   const classes = classNames(
-    "text-white bg-red-300 hover:bg-red-400",
-    "rounded-full w-[26px] h-[26px] text-xl p-[3.1px]",
+    "text-white bg-gray-300 hover:bg-gray-400",
+    "rounded-lg w-[25px] h-[25px] text-xl px-[3px] py-[2px]",
+    "cursor-help",
     rest.className
   );
 
   return (
-    <div title={url} className={classes}>
-      <a href={url} target="_blank" rel="noreferrer">
+    <a href={url} target="_blank" rel="noreferrer">
+      <div title={url} className={classes}>
         <GiOpenBook />
-      </a>
-    </div>
+      </div>
+    </a>
   );
 }
 
