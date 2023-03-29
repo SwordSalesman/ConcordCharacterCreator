@@ -1,10 +1,10 @@
-import FormPage from "./pages/FormPage";
-import IntroPage from "./pages/IntroPage";
-import RealmPage from "./pages/RealmPage";
-import SkillsPage from "./pages/SkillsPage";
-import OptionsPage from "./pages/OptionsPage";
-import BackgroundPage from "./pages/BackgroundPage";
-import ReviewPage from "./pages/ReviewPage";
+import Creator from "./components/Creator";
+import IntroPage from "./components/intro/IntroPage";
+import RealmPage from "./components/realm/RealmPage";
+import SkillsPage from "./components/skills/SkillsPage";
+import OptionsPage from "./components/options/OptionsPage";
+import BackgroundPage from "./components/background/BackgroundPage";
+import ReviewPage from "./components/review/ReviewPage";
 
 const tabs = [
   { name: "Intro", content: <IntroPage /> },
@@ -17,10 +17,8 @@ const tabs = [
 
 function App() {
   return (
-    <div className={"h-[100vh] justify bg-white"}>
-      <div className="flex justify-center font-serif">
-        <FormPage tabs={tabs} />
-      </div>
+    <div className={"h-[100vh] flex justify-center bg-blue-100 font-serif"}>
+      <Creator tabs={tabs} />
     </div>
   );
 }

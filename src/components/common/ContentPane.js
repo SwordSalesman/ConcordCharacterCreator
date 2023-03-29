@@ -4,16 +4,16 @@ function ContentPane({ background, children }) {
   const renderedBackground = background ? (
     <div>
       <img
-        className="absolute top-6 mix-blend-multiply blur-[1px]"
+        className="absolute top-6 mix-blend-multiply blur-[1px] w-full h-full"
         src={background}
-        alt="Background"
+        alt="Blurred background of a realmic logo"
       ></img>
       <div className="absolute inset-0 w-full h-full bg-white/90"></div>
     </div>
   ) : null;
 
   return (
-    <div className="relative w-[350px] h-96 py-1">
+    <div className="relative w-full h-full py-1">
       {renderedBackground}
       <div className="absolute h-full w-full overflow-y-scroll overflow-x-hidden">
         {children}

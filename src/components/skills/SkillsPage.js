@@ -1,24 +1,13 @@
-import Accordion from "../components/Accordion";
-import ContentPane from "../components/ContentPane";
-import useFormContext from "../hooks/use-form-context";
+import Accordion from "../common/Accordion";
+import ContentPane from "../common/ContentPane";
+import useFormContext from "../../hooks/use-form-context";
 import { useEffect, useState } from "react";
-import XpDisplay from "../components/XpDisplay";
-import SkillItem from "../components/SkillItem";
+import XpDisplay from "./XpDisplay";
+import SkillItem from "./SkillItem";
 import { GiBroadsword } from "react-icons/gi";
 import { render } from "@testing-library/react";
-var tabs = require("../data/tables/skillTabs.json");
-var skills = require("../data/tables/skills.json");
-
-const tabsOld = {
-  label: "Combat",
-  content: (
-    <div>
-      <SkillItem
-        skill={{ name: "Weaponmaster", cost: 2, icon: <GiBroadsword /> }}
-      ></SkillItem>
-    </div>
-  ),
-};
+var tabs = require("../../data/tables/skillTabs.json");
+var skills = require("../../data/tables/skills.json");
 
 function SkillsPage() {
   const { realm, gamesPlayed } = useFormContext();

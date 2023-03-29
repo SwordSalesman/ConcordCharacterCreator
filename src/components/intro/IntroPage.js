@@ -1,5 +1,5 @@
-import WikiLink from "../components/WikiLink";
-import useFormContext from "../hooks/use-form-context";
+import WikiLink from "../common/WikiLink";
+import useFormContext from "../../hooks/use-form-context";
 
 function IntroPage() {
   const { gamesPlayed, setGamesPlayed } = useFormContext();
@@ -23,11 +23,9 @@ function IntroPage() {
       </p>
       <br />
       <div className="flex justify-center">
-        <p>If you ever see one of these</p>
+        <p>You can click on these </p>
         <WikiLink className="mx-2" />
-        <p>
-          give it a click! It will take you right to the relevant wiki page.
-        </p>
+        <p>to take you right to the relevant wiki page.</p>
       </div>
       <br />
       <p>

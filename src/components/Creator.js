@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TabItem from "../components/TabItem";
+import TabItem from "./common/TabItem";
 
 import { Transition } from "@headlessui/react";
 
@@ -12,7 +12,7 @@ const transitionClasses = {
   leaveTo: "opacity-0 translate-x-2",
 };
 
-function FormPage({ tabs }) {
+function Creator({ tabs }) {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [pendingTab, setPendingTab] = useState(null);
 
@@ -58,13 +58,16 @@ function FormPage({ tabs }) {
   });
 
   return (
-    <div className="m-6 max-w-xl flex flex-col justify-center items-center">
-      <div id="form-tabs" className="flex mb-1 border-b-0 border-gray-200">
+    <div className="m-6 w-1/2 min-w-[600px]">
+      <div
+        id="form-tabs"
+        className="flex justify-center mb-1 border-b-0 border-gray-200 w-full"
+      >
         {renderedTabs}
       </div>
       <div
         id="form-content"
-        className="min-w-full h-96 bg-white flex justify-center w-[700px] text-center"
+        className="w-full h-[450px] bg-white flex justify-center text-center"
       >
         {renderedContent}
       </div>
@@ -72,4 +75,4 @@ function FormPage({ tabs }) {
   );
 }
 
-export default FormPage;
+export default Creator;

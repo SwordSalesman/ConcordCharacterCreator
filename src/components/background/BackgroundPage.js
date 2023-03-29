@@ -1,6 +1,6 @@
-import Accordion from "../components/Accordion";
-import ContentPane from "../components/ContentPane";
-import useFormContext from "../hooks/use-form-context";
+import Accordion from "../common/Accordion";
+import ContentPane from "../common/ContentPane";
+import useFormContext from "../../hooks/use-form-context";
 
 const tabs = [
   {

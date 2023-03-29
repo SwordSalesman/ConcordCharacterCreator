@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { BiChevronDown, BiChevronLeft } from "react-icons/bi";
-import TransitionWrapper from "./TransitionWrapper";
 
 function Accordion({ items }) {
   const [expandedIndex, setExpandedIndex] = useState(-1);
@@ -23,6 +22,10 @@ function Accordion({ items }) {
       </span>
     );
 
+    const contentClasses =
+      "border-b p-1 flex w-full flex-wrap overflow-hidden max-h-0 transition-all duration-[400ms]" +
+      (expanded ? " max-h-48 " : "");
+
     return (
       <li key={index}>
         <div
@@ -33,11 +36,9 @@ function Accordion({ items }) {
           {icon}
         </div>
         {
-          <TransitionWrapper show={expanded} enter>
-            <div className="border-b p-1 flex w-full flex-wrap">
-              {item.content}
-            </div>
-          </TransitionWrapper>
+          //<TransitionWrapper show={expanded} enter>
+          <div className={contentClasses}>{item.content}</div>
+          //</TransitionWrapper>
         }
       </li>
     );

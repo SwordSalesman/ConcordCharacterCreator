@@ -1,7 +1,7 @@
-import RealmItem from "../components/RealmItem";
-import WikiLink from "../components/WikiLink";
-import useFormContext from "../hooks/use-form-context";
-import { realms } from "../data/tables/realms";
+import RealmItem from "./RealmItem";
+import WikiLink from "../common/WikiLink";
+import useFormContext from "../../hooks/use-form-context";
+import { realms } from "../../data/tables/realms";
 
 function RealmPage() {
   const { realm, selectRealm } = useFormContext();
