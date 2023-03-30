@@ -26,7 +26,7 @@ function OptionsPage() {
 
   return (
     <div>
-      <div className="flex">
+      <div className="flex justify-around">
         <ContentPane background={realm ? realm.image : null}>
           Summary for chosen options here.
         </ContentPane>

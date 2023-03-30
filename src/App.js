@@ -17,7 +17,11 @@ const tabs = [
 
 function App() {
   return (
-    <div className={"h-[100vh] flex justify-center bg-blue-100 font-serif"}>
+    <div
+      className={
+        "h-[100vh] flex justify-center bg-gradient-to-b from-white to-gray-400 font-serif"
+      }
+    >
       <Creator tabs={tabs} />
     </div>
   );

@@ -5,7 +5,7 @@ import { Transition } from "@headlessui/react";
 
 const transitionClasses = {
   enter: "transition ease-in-out duration-300",
-  enterFrom: "opacity-0 -translate-x-2",
+  enterFrom: "opacity-0 -translate-2-3",
   enterTo: "opacity-100 translate-x-0",
   leave: "transition ease-in-out duration-150",
   leaveFrom: "opacity-100 translate-x-0",
@@ -20,6 +20,7 @@ function Creator({ tabs }) {
     if (activeTab === tab) {
       return;
     }
+    let forwards = tabs.indexOf(activeTab) < tabs.indexOf(tab);
     setActiveTab(null);
     setPendingTab(tab);
   };
@@ -44,13 +45,14 @@ function Creator({ tabs }) {
     );
   });
 
-  const renderedContent = tabs.map((tab) => {
+  const renderedContent = tabs.map((tab, index) => {
     return (
       <Transition
         key={tab.name}
         show={activeTab === tab}
         afterLeave={handleTabLeave}
         {...transitionClasses}
+        className="w-full h-full"
       >
         {tab.content}
       </Transition>
@@ -67,7 +69,7 @@ function Creator({ tabs }) {
       </div>
       <div
         id="form-content"
-        className="w-full h-[450px] bg-white flex justify-center text-center"
+        className="h-[450px] flex justify-around text-center"
       >
         {renderedContent}
       </div>

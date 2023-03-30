@@ -4,12 +4,14 @@ import classNames from "classnames";
 const root = "http://concordlarpaus.wikidot.com/";
 
 function WikiLink({ path, ...rest }) {
-  const url = path ? root + path.join(":") : root;
+  //const url = path ? root + path.join(":") : root;
+  const url = path ? root + path : root;
 
   const classes = classNames(
-    "text-white bg-gray-300 hover:bg-gray-400",
-    "rounded-lg w-[25px] h-[25px] text-xl px-[3px] py-[2px]",
+    "text-white bg-slate-300 hover:bg-slate-400",
+    "rounded-lg w-[25px] h-[25px] text-xl",
     "cursor-help",
+    "flex justify-center items-center",
     rest.className
   );
 

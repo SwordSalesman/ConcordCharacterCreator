@@ -32,10 +32,12 @@ function RealmPage() {
         <div className="italic opacity-50 text-sm">{realm.subtitle}</div>
         <div className="flex items-center">
           <div className="flex justify-end">
-            <WikiLink path={["almanac", "realms", realm.link]} />
+            <WikiLink path={"almanac:realms:" + realm.link} />
           </div>
-          <div className="m-2 mt-4">
-            <div className="border-l-2 m-2 pl-2 text-left">{realm.desc}</div>
+          <div className=" m-2 ml-1 mt-4">
+            <div className="border-l-2 border-gray-300 m-2 pl-2 text-left">
+              {realm.desc}
+            </div>
           </div>
         </div>
       </div>

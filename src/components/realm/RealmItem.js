@@ -7,7 +7,6 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
 
   const classes = classNames(
     "w-24 h-24 m-2 mx-1",
-    "mix-blend-multiply",
     "hover:scale-[1.15]",
     "transition duration-200",
     {

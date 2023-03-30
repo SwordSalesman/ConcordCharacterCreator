@@ -5,9 +5,10 @@ function TabItem({ tab, onTabSelect, active }) {
     "transition duration-200",
     "px-1 w-28 text-center m-1",
     "cursor-pointer",
-    "bg-white text-black",
+    "text-black",
+    "border-transparent border-b",
     {
-      "border-red-600 border-b-2 text-red-600": active,
+      "border-b-red-600 text-red-600 cursor-default": active,
     }
   );
 

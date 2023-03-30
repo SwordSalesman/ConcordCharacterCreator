@@ -1,5 +1,7 @@
+import classNames from "classnames";
 import { useState } from "react";
 import { BiChevronDown, BiChevronLeft } from "react-icons/bi";
+import WikiLink from "./WikiLink";
 
 function Accordion({ items }) {
   const [expandedIndex, setExpandedIndex] = useState(-1);
@@ -17,36 +19,38 @@ function Accordion({ items }) {
     const expanded = index === expandedIndex;
 
     const icon = (
-      <span className="text-2xl">
-        {expanded ? <BiChevronDown /> : <BiChevronLeft />}
-      </span>
+      <div className="flex">
+        <span className="text-2xl mr-1">
+          {expanded ? <BiChevronDown /> : <BiChevronLeft />}
+        </span>
+        {item.link && <WikiLink path={item.link} />}
+      </div>
     );
 
-    const contentClasses =
-      "border-b p-1 flex w-full flex-wrap overflow-hidden max-h-0 transition-all duration-[400ms]" +
-      (expanded ? " max-h-48 " : "");
+    const contentClasses = classNames(
+      "m-1",
+      "flex w-full flex-wrap overflow-auto overflow-x-hidden max-h-0",
+      "transition-all duration-[500ms]",
+      {
+        "max-h-52": expanded,
+      }
+    );
 
     return (
-      <li key={index}>
+      <li key={index} className="w-full">
         <div
-          className="flex justify-between p-2 px-3 bg-gray-100 border-b items-center cursor-pointer"
+          className="flex justify-between p-1 px-2 bg-gray-100 border rounded items-center cursor-pointer"
           onClick={() => handleLabelClick(index)}
         >
           {item.label}
           {icon}
         </div>
-        {
-          //<TransitionWrapper show={expanded} enter>
-          <div className={contentClasses}>{item.content}</div>
-          //</TransitionWrapper>
-        }
+        <div className={contentClasses}>{item.content}</div>
       </li>
     );
   });
 
-  return (
-    <ul className="border-x border-t rounded w-[340px]">{renderedItems}</ul>
-  );
+  return <ul className="rounded w-full">{renderedItems}</ul>;
 }
 
 export default Accordion;
