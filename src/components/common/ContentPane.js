@@ -4,7 +4,7 @@ function ContentPane({ background, children }) {
   const renderedBackground = background ? (
     <div>
       <img
-        className="absolute top-6 mix-blend-multiply blur-[1px] w-full max-w-[400px] opacity-10"
+        className="absolute top-6 mix-blend-multiply blur-[1px] w-full opacity-10"
         src={background}
         alt="Blurred background of a realmic logo"
       ></img>

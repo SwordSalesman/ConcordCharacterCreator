@@ -13,6 +13,8 @@ function FormContextProvider({ children }) {
   const [crafts, setCrafts] = useState([]);
   const [potions, setPotions] = useState([]);
   const [ceremonies, setCeremonies] = useState([]);
+  const [heroName, setHeroName] = useState(null);
+  const [archetype, setArchetype] = useState(null);
 
   // Derived Variables
   const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
@@ -76,14 +78,6 @@ function FormContextProvider({ children }) {
     setRealm(selectedRealm);
   };
 
-  // const selectSkill = (skill) => {
-  //   selectItem(skill, skills, setSkills);
-  // };
-
-  // const removeSkill = (skill) => {
-  //   removeItem(skill, skills, setSkills);
-  // };
-
   // skill should be a skillObj formatted as if from the SkillItem method call
   const validSkillChoice = (skill) => {
     let prereqMet =
@@ -97,61 +91,21 @@ function FormContextProvider({ children }) {
     toggleItem(skill, skills, setSkills);
   };
 
-  // const selectInvestment = (investment) => {
-  //   selectItem(investment, investments, setInvestments);
-  // };
-
-  // const removeInvestment = (investment) => {
-  //   removeItem(investment, investments, setInvestments);
-  // };
-
   const toggleInvestment = (investment) => {
     toggleItem(investment, investments, setInvestments);
   };
-
-  // const selectSpell = (spell) => {
-  //   selectItem(spell, spells, setSpells);
-  // };
-
-  // const removeSpell = (spell) => {
-  //   removeItem(spell, spells, setSpells);
-  // };
 
   const toggleSpell = (spell) => {
     toggleItem(spell, spells, setSpells);
   };
 
-  // const selectCraft = (craft) => {
-  //   selectItem(craft, crafts, setCrafts);
-  // };
-
-  // const removeCraft = (craft) => {
-  //   removeItem(craft, crafts, setCrafts);
-  // };
-
   const toggleCraft = (craft) => {
     toggleItem(craft, crafts, setCrafts);
   };
 
-  // const selectPotion = (potion) => {
-  //   selectItem(potion, potions, setPotions);
-  // };
-
-  // const removePotion = (potion) => {
-  //   removeItem(potion, potions, setPotions);
-  // };
-
   const togglePotion = (potion) => {
     toggleItem(potion, potions, setPotions);
   };
-
-  // const selectCeremony = (ceremony) => {
-  //   selectItem(ceremony, ceremonies, setCeremonies);
-  // };
-
-  // const removeCeremony = (ceremony) => {
-  //   removeItem(ceremony, ceremonies, setCeremonies);
-  // };
 
   const toggleCeremony = (ceremony) => {
     toggleItem(ceremony, ceremonies, setCeremonies);
@@ -168,6 +122,8 @@ function FormContextProvider({ children }) {
     setCrafts(JSON.parse(window.localStorage.getItem("crafts")));
     setPotions(JSON.parse(window.localStorage.getItem("potions")));
     setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
+    setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
+    setArchetype(JSON.parse(window.localStorage.getItem("archetype")));
   }, []);
 
   useEffect(() => {
@@ -221,6 +177,14 @@ function FormContextProvider({ children }) {
     window.localStorage.setItem("ceremonies", JSON.stringify(ceremonies));
   }, [ceremonies]);
 
+  useEffect(() => {
+    window.localStorage.setItem("heroName", JSON.stringify(heroName));
+  }, [heroName]);
+
+  useEffect(() => {
+    window.localStorage.setItem("archetype", JSON.stringify(archetype));
+  }, [archetype]);
+
   // Outputs
 
   const formContext = {
@@ -229,31 +193,23 @@ function FormContextProvider({ children }) {
     gamesPlayed,
     setGamesPlayed,
     skills,
-    // selectSkill,
-    // removeSkill,
     remainingXp,
     toggleSkill,
     validSkillChoice,
     investments,
-    // selectInvestment,
-    // removeInvestment,
     toggleInvestment,
     spells,
-    // selectSpell,
-    // removeSpell,
     toggleSpell,
     crafts,
-    // selectCraft,
-    // removeCraft,
     toggleCraft,
     potions,
-    // selectPotion,
-    // removePotion,
     togglePotion,
     ceremonies,
-    // selectCeremony,
-    // removeCeremony,
     toggleCeremony,
+    heroName,
+    setHeroName,
+    archetype,
+    setArchetype,
   };
 
   return (
