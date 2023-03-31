@@ -11,37 +11,41 @@ var tabs = require("../../data/tables/skillTabs.json");
 var skillItems = require("../../data/tables/skills.json");
 
 function SkillsPage() {
-  const { realm, gamesPlayed, skills, selectSkill, removeSkill } =
-    useFormContext();
-  const [skillXp, setSkillXp] = useState(0);
+  const {
+    realm,
+    gamesPlayed,
+    skills,
+    toggleSkill,
+    validSkillChoice,
+    remainingXp,
+  } = useFormContext();
 
-  const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
-  const remainingXp =
-    totalXp - skills.map((s) => s.cost).reduce((a, b) => a + b, 0);
-
-  const handleSelectSkill = (skill) => {
-    if (skills?.map((s) => s.name).includes(skill.name)) {
-      removeSkill(skill);
-    } else {
-      selectSkill(skill);
-    }
+  // toggles the selection of the skill, then checks validity for all skills
+  const handleClickSkill = (skill) => {
+    toggleSkill(skill);
   };
 
-  const handleRemoveSkill = (skill) => {
-    removeSkill(skill);
-  };
-
+  // tabs of the Accordian
   const renderedTabs = tabs.map((tab) => {
     const renderedSkills = skillItems
       .filter((skill) => skill.tree === tab.label)
       .map((skill) => {
         let selected = skills?.map((s) => s.name).includes(skill.name);
+        let skillObj = {
+          name: skill.name,
+          cost: skill.costInit,
+          prereq: skill.prereq,
+          exclusion: skill.exclusion,
+        };
         return (
           <SkillItem
-            skill={{ name: skill.name, cost: skill.costInit }}
-            selectSkill={handleSelectSkill}
+            skill={skillObj}
+            selectSkill={handleClickSkill}
             selected={selected}
-            inactive={!selected && skill.costInit > remainingXp}
+            inactive={
+              !selected &&
+              (!validSkillChoice(skillObj) || skillObj.cost > remainingXp)
+            }
           ></SkillItem>
         );
       });
@@ -51,13 +55,19 @@ function SkillsPage() {
     return { label: tab.label, content: renderedSkills, link: link };
   });
 
+  // Chips to render in the left section
   const renderedSkills = skills?.map((skill) => {
     return (
       <div key={skill.name + skill.cost}>
         <SkillItem
-          skill={{ name: skill.name, cost: skill.cost }}
-          selectSkill={handleRemoveSkill}
-          shadow={true}
+          skill={{
+            name: skill.name,
+            cost: skill.cost,
+            prereq: skill.prereq,
+            exclusion: skill.exclusion,
+          }}
+          selectSkill={handleClickSkill}
+          shadow
         ></SkillItem>
       </div>
     );
@@ -68,12 +78,12 @@ function SkillsPage() {
       <div className="flex justify-around">
         <ContentPane background={realm ? realm.image : null}>
           <SectionDivider
-            text="REMAINING XP"
-            number={remainingXp}
+            left="Remaining XP"
+            right={remainingXp}
             className="mb-2"
           />
           {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
-          {renderedSkills.length > 0 ? (
+          {renderedSkills?.length > 0 ? (
             <div className="flex flex-wrap justify-center">
               {renderedSkills}
             </div>

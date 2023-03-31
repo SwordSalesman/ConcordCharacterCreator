@@ -4,7 +4,7 @@ function TabItem({ tab, onTabSelect, active }) {
   const classes = classNames(
     "transition duration-200",
     "px-1 w-28 text-center m-1",
-    "cursor-pointer",
+    "cursor-pointer select-none",
     "text-black",
     "border-transparent border-b-2",
     {

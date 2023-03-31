@@ -13,9 +13,8 @@ function SkillItem({ skill, selectSkill, selected, shadow, inactive }) {
       shadow={shadow}
       inactive={inactive}
     >
-      {skill.cost}
-      <div className="mx-[5px] my-1 border-r-2 border-gray-300"></div>
-      <p>{skill.name}</p>
+      <div className="font-sans text-sm">{skill.cost}</div>
+      <div className="ml-1 px-1 border-l border-gray-300">{skill.name}</div>
     </Chip>
   );
 }

@@ -1,11 +1,11 @@
 [
-  "Military",
-  "Naval",
-  "Leyline",
-  "Congregation",
-  "Business",
-  "Farm",
-  "Wilderness",
-  "Herb Garden",
-  "Mine"
+  { "name": "Military" },
+  { "name": "Naval" },
+  { "name": "Leyline" },
+  { "name": "Congregation" },
+  { "name": "Business" },
+  { "name": "Farm" },
+  { "name": "Wilderness" },
+  { "name": "Herb Garden" },
+  { "name": "Mine" }
 ]

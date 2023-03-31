@@ -10,17 +10,16 @@ function Chip({ children, onClick, selected, shadow, inactive, ...rest }) {
   const classes = classNames(
     "px-[5px] m-1 h-6 w-fit",
     "border border-gray-300 rounded-lg",
-    " flex flex-row",
+    "flex items-center",
     "bg-gray-50 hover:bg-gray-200",
-    "cursor-pointer",
+    "cursor-pointer select-none",
     "whitespace-nowrap",
     "transition-all",
     rest.className,
     {
-      "bg-slate-500 hover:bg-slate-500 text-white cursor-default": selected,
       "drop-shadow bg-white": shadow,
-      "bg-gray-200 text-gray-400 hover:bg-gray-200 cursor-default":
-        inactive && !selected,
+      "bg-gray-200 text-gray-400 hover:bg-gray-200 cursor-default": inactive,
+      "bg-slate-500 hover:bg-slate-400 text-white": selected,
     }
   );
 
