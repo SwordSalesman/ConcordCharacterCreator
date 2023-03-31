@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-function Chip({ children, onClick, selected, shadow, inactive }) {
+function Chip({ children, onClick, selected, shadow, inactive, ...rest }) {
   const handleClick = () => {
     if (!inactive) {
       onClick();
@@ -10,14 +10,15 @@ function Chip({ children, onClick, selected, shadow, inactive }) {
   const classes = classNames(
     "px-[5px] m-1 h-6 w-fit",
     "border border-gray-300 rounded-lg",
-    "text-sm flex flex-row",
-    "bg-gray-100 hover:bg-gray-200",
+    " flex flex-row",
+    "bg-gray-50 hover:bg-gray-200",
     "cursor-pointer",
     "whitespace-nowrap",
     "transition-all",
+    rest.className,
     {
       "bg-slate-500 hover:bg-slate-500 text-white cursor-default": selected,
-      "drop-shadow": shadow,
+      "drop-shadow bg-white": shadow,
       "bg-gray-200 text-gray-400 hover:bg-gray-200 cursor-default":
         inactive && !selected,
     }

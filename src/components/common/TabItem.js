@@ -6,7 +6,7 @@ function TabItem({ tab, onTabSelect, active }) {
     "px-1 w-28 text-center m-1",
     "cursor-pointer",
     "text-black",
-    "border-transparent border-b",
+    "border-transparent border-b-2",
     {
       "border-b-red-600 text-red-600 cursor-default": active,
     }

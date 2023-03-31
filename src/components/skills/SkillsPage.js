@@ -21,9 +21,10 @@ function SkillsPage() {
 
   const handleSelectSkill = (skill) => {
     if (skills?.map((s) => s.name).includes(skill.name)) {
-      return;
+      removeSkill(skill);
+    } else {
+      selectSkill(skill);
     }
-    selectSkill(skill);
   };
 
   const handleRemoveSkill = (skill) => {
@@ -34,12 +35,13 @@ function SkillsPage() {
     const renderedSkills = skillItems
       .filter((skill) => skill.tree === tab.label)
       .map((skill) => {
+        let selected = skills?.map((s) => s.name).includes(skill.name);
         return (
           <SkillItem
             skill={{ name: skill.name, cost: skill.costInit }}
             selectSkill={handleSelectSkill}
-            selected={skills?.map((s) => s.name).includes(skill.name)}
-            inactive={skill.costInit > remainingXp}
+            selected={selected}
+            inactive={!selected && skill.costInit > remainingXp}
           ></SkillItem>
         );
       });
@@ -65,11 +67,21 @@ function SkillsPage() {
     <div>
       <div className="flex justify-around">
         <ContentPane background={realm ? realm.image : null}>
-          <div className="text-left">
-            <SectionDivider text="REMAINING XP" number={remainingXp} />
-            <br />
-          </div>
-          <div className="flex flex-wrap justify-center">{renderedSkills}</div>
+          <SectionDivider
+            text="REMAINING XP"
+            number={remainingXp}
+            className="mb-2"
+          />
+          {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
+          {renderedSkills.length > 0 ? (
+            <div className="flex flex-wrap justify-center">
+              {renderedSkills}
+            </div>
+          ) : (
+            <div className="opacity-60 italic px-10">
+              Select your skills from the options on the right
+            </div>
+          )}
         </ContentPane>
         <ContentPane>
           <Accordion items={renderedTabs}></Accordion>

@@ -19,7 +19,7 @@ function App() {
   return (
     <div
       className={
-        "h-[100vh] flex justify-center bg-gradient-to-b from-white to-gray-400 font-serif"
+        "h-[100vh] flex justify-center bg-gradient-to-b from-white to-slate-300 font-serif"
       }
     >
       <Creator tabs={tabs} />

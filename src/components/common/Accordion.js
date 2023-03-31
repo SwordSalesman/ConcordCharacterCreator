@@ -39,7 +39,7 @@ function Accordion({ items }) {
     return (
       <li key={index} className="w-full">
         <div
-          className="flex justify-between p-1 px-2 bg-gray-100 border rounded items-center cursor-pointer"
+          className="flex justify-between p-1 px-2 bg-gradient-to-r from-gray-100 to-gray-50 border border-gray-300 rounded items-center cursor-pointer"
           onClick={() => handleLabelClick(index)}
         >
           {item.label}
