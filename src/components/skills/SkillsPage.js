@@ -1,50 +1,56 @@
 import Accordion from "../common/Accordion";
 import ContentPane from "../common/ContentPane";
 import useFormContext from "../../hooks/use-form-context";
-import { useEffect, useState } from "react";
 import SkillItem from "./SkillItem";
-import { GiBroadsword } from "react-icons/gi";
-import { render } from "@testing-library/react";
-import WikiLink from "../common/WikiLink";
 import SectionDivider from "../common/SectionDivider";
+import { all } from "axios";
 var tabs = require("../../data/tables/skillTabs.json");
-var skillItems = require("../../data/tables/skills.json");
+var baseSkills = require("../../data/tables/skills.json");
+
+function getNextSkillName(name) {
+  let words = name.split(" ");
+  let newNum = (Number.parseInt(words.pop()) + 1).toString();
+  return words.join(" ") + " " + newNum;
+}
 
 function SkillsPage() {
-  const {
-    realm,
-    gamesPlayed,
-    skills,
-    toggleSkill,
-    validSkillChoice,
-    remainingXp,
-  } = useFormContext();
+  const { realm, skills, toggleSkill, validSkillChoice, remainingXp } =
+    useFormContext();
 
   // toggles the selection of the skill, then checks validity for all skills
   const handleClickSkill = (skill) => {
     toggleSkill(skill);
   };
 
+  const extraSkills = skills
+    ?.filter((s) => s.costExtra !== undefined)
+    .map((s) => {
+      return {
+        name: getNextSkillName(s.name),
+        tree: s.tree,
+        cost: s.cost + s.costExtra,
+        costExtra: s.costExtra,
+        prereq: s.name,
+        exclusion: s.exclusion,
+      };
+    });
+  const allSkills = extraSkills ? baseSkills.concat(extraSkills) : baseSkills;
+
   // tabs of the Accordian
   const renderedTabs = tabs.map((tab) => {
-    const renderedSkills = skillItems
+    const renderedSkills = allSkills
       .filter((skill) => skill.tree === tab.label)
+      .sort((a, b) => (a.name > b.name ? 1 : -1))
       .map((skill) => {
         let selected = skills?.map((s) => s.name).includes(skill.name);
-        let skillObj = {
-          name: skill.name,
-          cost: skill.costInit,
-          prereq: skill.prereq,
-          exclusion: skill.exclusion,
-        };
         return (
           <SkillItem
-            skill={skillObj}
+            skill={skill}
             selectSkill={handleClickSkill}
             selected={selected}
             inactive={
               !selected &&
-              (!validSkillChoice(skillObj) || skillObj.cost > remainingXp)
+              (!validSkillChoice(skill) || skill.cost > remainingXp)
             }
           ></SkillItem>
         );
@@ -60,12 +66,7 @@ function SkillsPage() {
     return (
       <div key={skill.name + skill.cost}>
         <SkillItem
-          skill={{
-            name: skill.name,
-            cost: skill.cost,
-            prereq: skill.prereq,
-            exclusion: skill.exclusion,
-          }}
+          skill={skill}
           selectSkill={handleClickSkill}
           shadow
         ></SkillItem>

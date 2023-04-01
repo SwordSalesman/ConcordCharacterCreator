@@ -1,316 +1,209 @@
 [
   {
-    "name": "Additional Mana",
+    "name": "Additional Mana 1",
     "tree": "Magic",
     "description": "You gain two additional mana each time you purchase this skill.",
-    "costInit": 1,
+    "cost": 1,
     "costExtra": 1,
     "prereq": "Magus",
-    "exclusion": "Juggernaut",
-    "effectType": "Stat",
-    "effect": "Mana +2",
-    "ability": false,
-    "icon": "Two swirling motes of magic"
+    "exclusion": "Juggernaut"
   },
   {
-    "name": "Additional Spell",
+    "name": "Additional Spell 1",
     "tree": "Magic",
     "description": "Your character learns an additional spell each time you purchase this skill.",
-    "costInit": 1,
+    "cost": 1,
     "costExtra": 0,
-    "prereq": "Magus",
-    "effectType": "Learn",
-    "effect": "Spells +1",
-    "ability": false,
-    "icon": "Book with pentagram on the cover"
+    "prereq": "Magus"
   },
   {
     "name": "Battle Mage",
     "tree": "Magic",
     "description": "Your character may wear medium armour and cast spells, provided the character is wearing a circlet. \n\nYou may wield polearms. You may use polearms to deliver any Combat spells you know. These effect calls must be preceded by the Magic call. They take effect even if striking a shield or weapon.",
-    "costInit": 3,
+    "cost": 3,
     "prereq": "Magus",
-    "exclusion": "Bloodmage",
-    "effectType": "Proficiency",
-    "effect": "Polearm",
-    "ability": true,
-    "icon": "Swirling staff with energy trails"
+    "exclusion": "Bloodmage"
   },
   {
     "name": "Bloodmage",
     "tree": "Magic",
     "description": "During each Conflux, a number of times equal to your Max HP, you may turn your own hitpoints into personal mana at a 1:1 ratio. Doing so requires 5 seconds of appropriate roleplay per point of health lost.",
-    "costInit": 3,
+    "cost": 3,
     "prereq": "Magus",
-    "exclusion": "Battle Mage",
-    "ability": true,
-    "icon": "Bleeding pentagram"
+    "exclusion": "Battle Mage"
   },
   {
     "name": "Magus",
     "tree": "Magic",
     "description": "You gain four mana and learn the following spells:\n- Channel Waystone\n- Create Bond\n- One spell of your choice.",
-    "costInit": 4,
-    "effectType": "Stat, Learn",
-    "effect": "Mana +4, Spells +3",
-    "ability": false,
-    "icon": "Pentagram with front facing palm hand in the middle"
+    "cost": 4
   },
   {
-    "name": "Additional Energy",
+    "name": "Additional Energy 1",
     "tree": "Combat",
     "description": "You gain an additional energy per purchase.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat",
-    "effect": "Energy +1",
-    "ability": false,
-    "icon": "Lightning bolt over silhouette of running person"
+    "cost": 1,
+    "costExtra": 1
   },
   {
     "name": "Archer",
     "tree": "Combat",
     "description": "You may use a bow and carry arrows. You must complete the additional archery clearance.",
-    "costInit": 3,
-    "effectType": "Proficiency",
-    "effect": "Bow",
-    "ability": false,
-    "icon": "Bow and arrow"
+    "cost": 3
   },
   {
     "name": "Armoured",
     "tree": "Combat",
     "description": "You may wear heavy armour.",
-    "costInit": 2,
-    "effectType": "Proficiency",
-    "effect": "Heavy",
-    "ability": false,
-    "icon": "Plate armour torso and shoulders"
+    "cost": 2
   },
   {
     "name": "Bladehand",
     "tree": "Combat",
     "description": "You may wield a one handed or short weapon in each hand.",
-    "costInit": 2,
-    "ability": true,
-    "icon": "Two hands holding knives"
+    "cost": 2
   },
   {
     "name": "Bulwark",
     "tree": "Combat",
     "description": "You may wield a shield.",
-    "costInit": 3,
-    "effectType": "Proficiency",
-    "effect": "Shield",
-    "ability": false,
-    "icon": "Shield"
+    "cost": 3
   },
   {
-    "name": "Deathless",
+    "name": "Deathless 1",
     "tree": "Combat",
     "description": "Increases your bleed out time by one minute per purchase.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat",
-    "effect": "Bleedout +1",
-    "ability": false,
-    "icon": "Skull"
+    "cost": 1,
+    "costExtra": 1
   },
   {
     "name": "Hand-and-a-half",
     "tree": "Combat",
     "description": "You may strike opponents while wielding a great weapon in a single hand. While doing so, your other hand still counts as occupied for the purposes of wielding weapons, casting spells or using skills.",
-    "costInit": 1,
-    "prereq": "Weaponmaster",
-    "ability": true,
-    "icon": "Close up of sword grip, top hand gripping it, second hand open"
+    "cost": 1,
+    "prereq": "Weaponmaster"
   },
   {
     "name": "Impaler",
     "tree": "Combat",
     "description": "You may use a thrusting polearm or spear. You must complete the additional thrusting weapon clearance.",
-    "costInit": 3,
-    "effectType": "Proficiency",
-    "effect": "Thrusting",
-    "ability": false,
-    "icon": "Large spear"
+    "cost": 3
   },
   {
-    "name": "Juggernaut",
+    "name": "Juggernaut 1",
     "tree": "Combat",
     "description": "You gain an additional hitpoint per purchase.",
-    "costInit": 2,
+    "cost": 2,
     "costExtra": 2,
-    "exclusion": "Additional Mana",
-    "effectType": "Stat",
-    "effect": "Hitpoints +1",
-    "ability": false,
-    "icon": "Heart over swole guy tensing"
+    "exclusion": "Additional Mana"
   },
   {
     "name": "Stay With Me",
     "tree": "Combat",
     "description": "You may spend five seconds and one point of energy interacting with a character who is bleeding out. That character returns to one hitpoint. If you are attacked or attack during this period of time the skill fails. You must be able to touch your target for this to function.",
-    "costInit": 3,
-    "ability": true,
-    "icon": "Hand reach down to grab another hand reaching up"
+    "cost": 3
   },
   {
     "name": "Weaponmaster",
     "tree": "Combat",
     "description": "You may wield Greatweapons and Polearms.",
-    "costInit": 2,
-    "effectType": "Proficiency, Proficiency",
-    "effect": "Greatweapon, Polearm",
-    "ability": false,
-    "icon": "Tip of halberd"
+    "cost": 2
   },
   {
     "name": "Mender",
     "tree": "Surgical",
     "description": "You may offer first aid to characters who are bleeding out. While doing so the characters bleedout time is paused. You may move this character. You may not use this skill on yourself.\n\nAfter thirty seconds of roleplay you may return that character to a single hitpoint. This process requires two hands, your full attention, appropriate roleplay and for both characters to remain stationary.",
-    "costInit": 2,
-    "ability": true,
-    "icon": "Slightly unrolled bandage"
+    "cost": 2
   },
   {
     "name": "Surgeon",
     "tree": "Surgical",
     "description": "This skill allows for several actions to be performed at your choice. These actions cannot be combined together, each duration must be performed separately. These actions require two hands, your full attention, appropriate roleplay and for both characters to remains stationary. You cannot be perform these actions on yourself.\n\nBroken Limb: You may spend two minutes performing appropriate roleplaying treating a character who has been affected by ‘Fracture’. After two minutes that limb is restored to normal function.\n\nRest Easy: If you spend at least three minutes treating a character who is Terminal then you may allow the character to act as if they are not in pain.\n\nSurgery: If you spend at least five minutes treating a character who is wounded then they regain all lost hitpoints after a further ten minutes of rest and relaxation. This roleplaying can only be performed in a tent or similar building suited for use as a surgeon's chamber.\n\nHerbal Remedy: You can apply medical herbs directly to a patient to treat them. You must spend 30 seconds interacting with your patient to apply a herb. This can be performed while performing treatment with the Mender Skill. Herb details can be found on the Herb card or in Appendix: Herbs.\n\nWound Treatment: You may open traumatic and spiritual wound cards to reveal the cure required. Any cures must be completed within a similar location to Surgery as listed above.",
-    "costInit": 4,
-    "prereq": "Mender",
-    "ability": true,
-    "icon": "Bandage with scissors and scalpel"
+    "cost": 4,
+    "prereq": "Mender"
   },
   {
     "name": "Artisan",
     "tree": "Crafting",
     "description": "During the downtime between events you may craft up to three magical items using the materials you have in your possession.\nThis skill grants you four magical item recipes automatically. You can only craft items that you have learned the recipes for. You may only craft one item of each rarity per downtime. You begin play with one Journeyman item you are able to craft, or three Artisan’s Oil if you do not know any Journeyman item recipes. Characters can learn crafts of any rarity.",
-    "costInit": 3,
-    "effectType": "Learn",
-    "effect": "Crafts +4",
-    "ability": true,
-    "icon": "Hammer hitting against anvil"
+    "cost": 3
   },
   {
     "name": "Apothecary",
     "tree": "Crafting",
     "description": "You may craft potions during Concord events by spending a few moments roleplaying the process and exchanging the required resources with the Concord Crew at the main operations tent for the appropriate potion card.\n\nYou know how to craft three potions and can take the extra recipe skill to learn how to make additional potions.",
-    "costInit": 3,
-    "effectType": "Learn",
-    "effect": "Recipes +3",
-    "ability": true,
-    "icon": "Potion viles in front of herbs"
+    "cost": 3
   },
   {
     "name": "Mastercrafter",
     "tree": "Crafting",
     "description": "You may craft an additional expert or masterwork artisan craft during each downtime. You must still pay for them as standard.",
-    "costInit": 3,
-    "prereq": "Artisan",
-    "ability": true,
-    "icon": "Two hands holding hammers, pressed together at the knuckles"
+    "cost": 3,
+    "prereq": "Artisan"
   },
   {
-    "name": "Extra Craft",
+    "name": "Extra Craft 1",
     "tree": "Crafting",
     "description": "You learn an additional two crafting plans for use with the Artisan skill. Characters can learn crafts of any rarity.",
-    "costInit": 1,
+    "cost": 1,
     "costExtra": 0,
-    "prereq": "Artisan",
-    "effectType": "Learn",
-    "effect": "Crafts +2",
-    "ability": false,
-    "icon": "Book with anvil on the cover"
+    "prereq": "Artisan"
   },
   {
-    "name": "Extra Recipe",
+    "name": "Extra Recipe 1",
     "tree": "Crafting",
     "description": "You learn an additional two potion recipes to be used with the Apothecary skill.",
-    "costInit": 1,
+    "cost": 1,
     "costExtra": 0,
-    "prereq": "Apothecary",
-    "effectType": "Learn",
-    "effect": "Recipes +2",
-    "ability": false,
-    "icon": "Book with potion vile on the cover"
+    "prereq": "Apothecary"
   },
   {
-    "name": "Divine Lore Anarch",
+    "name": "Divine Lore Anarch 1",
     "tree": "Religious",
     "description": "This skill applies for Anarch, the Sphere of Elemental Chaos. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat, Learn",
-    "effect": "AnarchLore +1, Ceremonies +2",
-    "ability": true,
-    "icon": "Six orbs surrounding a flame with a whirlpool within in"
+    "cost": 1,
+    "costExtra": 1
   },
   {
-    "name": "Divine Lore Lumos",
+    "name": "Divine Lore Lumos 1",
     "tree": "Religious",
     "description": "This skill applies for Lumos, the Sphere of Truth. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat, Learn",
-    "effect": "LumosLore +1, Ceremonies +3",
-    "ability": true,
-    "icon": "Six orbs surrounding a pair of eyes"
+    "cost": 1,
+    "costExtra": 1
   },
   {
-    "name": "Divine Lore Arcadian",
+    "name": "Divine Lore Arcadian 1",
     "tree": "Religious",
     "description": "This skill applies for Arcadian, the Sphere of Steel and Courage. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat, Learn",
-    "effect": "ArcadianLore +1, Ceremonies +4",
-    "ability": true,
-    "icon": "Six orbs surrounding crossed swords"
+    "cost": 1,
+    "costExtra": 1
   },
   {
-    "name": "Divine Lore Panoply",
+    "name": "Divine Lore Panoply 1",
     "tree": "Religious",
     "description": "This skill applies for Panoply, the Sphere of Golden Folly. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat, Learn",
-    "effect": "PanoplyLore +1, Ceremonies +5",
-    "ability": true,
-    "icon": "Six orbs surrounding a corinthian helm"
+    "cost": 1,
+    "costExtra": 1
   },
   {
-    "name": "Divine Lore Cervitas",
+    "name": "Divine Lore Cervitas 1",
     "tree": "Religious",
     "description": "This skill applies for Cervitas, the Sphere of Imperial Wisdom. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat, Learn",
-    "effect": "CervitasLore +1, Ceremonies +6",
-    "ability": true,
-    "icon": "Six orbs surrounding a marble pillar"
+    "cost": 1,
+    "costExtra": 1
   },
   {
-    "name": "Divine Lore Stalia",
+    "name": "Divine Lore Stalia 1",
     "tree": "Religious",
     "description": "This skill applies for Stalia, the Sphere of Stars. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "costInit": 1,
-    "costExtra": 1,
-    "effectType": "Stat, Learn",
-    "effect": "StaliaLore +1, Ceremonies +7",
-    "ability": true,
-    "icon": "Six orbs surrounding an upside down star, bottom point longer"
+    "cost": 1,
+    "costExtra": 1
   },
   {
     "name": "Extra Ceremony",
     "tree": "Religious",
     "description": "Your character masters two additional ceremonies from a sphere that they have Divine Lore for each time you purchase this skill. You do not need to select these rituals when you purchase the skill, instead you may leave the ‘slots’ free and choose the rituals you want later if you wish.",
-    "costInit": 1,
-    "costExtra": 0,
-    "prereq": "Divine Lore",
-    "effectType": "Learn",
-    "effect": "Ceremonies +2",
-    "ability": false,
-    "icon": "Book with 6 spheres in a ring on it"
+    "cost": 1,
+    "costExtra": 0
   }
 ]

@@ -8,7 +8,7 @@ function Chip({ children, onClick, selected, shadow, inactive, ...rest }) {
   };
 
   const classes = classNames(
-    "px-[5px] m-1 h-6 w-fit",
+    "px-[5px] m-[2px] h-6 w-fit",
     "border border-gray-300 rounded-lg",
     "flex items-center",
     "bg-gray-50 hover:bg-gray-200",
