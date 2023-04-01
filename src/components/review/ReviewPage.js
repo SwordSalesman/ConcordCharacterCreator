@@ -34,22 +34,28 @@ function ReviewPage() {
     <div className="flex justify-center">
       <ContentPane background={realm ? realm.image : null}>
         <div className="flex flex-col items-center mt-2">
-          <div className="text-xl leading-6">{heroName}</div>
+          <div className="text-xl leading-6">
+            {heroName ? heroName : "Nameless Hero"}
+          </div>
           <div className="italic opacity-70">
-            {realm.name}
+            {realm ? realm.name : "Realmless"}
             {archetype ? " " + archetype : ""}
           </div>
           {border}
           <ReviewItem label="Summits attended">{gamesPlayed}</ReviewItem>
-          <ReviewItem label="Investment">
-            {investments.map((i) => i.name).toString()}
-          </ReviewItem>
+          {investments && (
+            <ReviewItem label="Investment">
+              {investments.map((i) => i.name).toString()}
+            </ReviewItem>
+          )}
           {(warband || sect) && border}
           {warband && <ReviewItem label="Warband">{warband}</ReviewItem>}
           {sect && <ReviewItem label="Sect">{sect}</ReviewItem>}
           {border}
           <ReviewItem label="Skills">
-            {skills.map((s) => " " + s.name)}
+            {skills?.length > 0
+              ? skills.map((s) => " " + s.name).toString()
+              : "None"}
           </ReviewItem>
           {spells.length > 0 && (
             <ReviewItem label="Spells">

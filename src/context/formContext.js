@@ -121,7 +121,7 @@ function FormContextProvider({ children }) {
 
   useEffect(() => {
     setRealm(JSON.parse(window.localStorage.getItem("realm")));
-    setGamesPlayed(JSON.parse(window.localStorage.getItem("gamesPlayed")));
+    setGamesPlayed(JSON.parse(window.localStorage.getItem("gamesPlayed")) || 0);
     setSkills(JSON.parse(window.localStorage.getItem("skills")));
     setInvestments(JSON.parse(window.localStorage.getItem("investments")));
     setSpells(JSON.parse(window.localStorage.getItem("spells")));
@@ -151,22 +151,22 @@ function FormContextProvider({ children }) {
   useEffect(() => {
     window.localStorage.setItem("skills", JSON.stringify(skills));
 
-    skills.forEach((s) => {
+    skills?.forEach((s) => {
       if (!validSkillChoice(s) || remainingXp < 0) {
         toggleSkill(s);
       }
     });
 
-    if (!skills.map((s) => s.name).includes("Magus")) {
+    if (!skills?.map((s) => s.name).includes("Magus")) {
       setSpells([]);
     }
-    if (!skills.map((s) => s.name).includes("Apothecary")) {
+    if (!skills?.map((s) => s.name).includes("Apothecary")) {
       setPotions([]);
     }
-    if (!skills.map((s) => s.name).includes("Artisan")) {
+    if (!skills?.map((s) => s.name).includes("Artisan")) {
       setCrafts([]);
     }
-    if (!skills.filter((s) => s.name.startsWith("Divine Lore")).length) {
+    if (!skills?.filter((s) => s.name.startsWith("Divine Lore")).length) {
       setCeremonies([]);
     }
   }, [skills, remainingXp]);

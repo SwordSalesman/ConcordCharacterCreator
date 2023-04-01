@@ -66,12 +66,12 @@ function OptionsPage() {
   } = useFormContext();
 
   // Variables
-  const skillNames = skills.map((s) => s.name);
+  const skillNames = skills ? skills.map((s) => s.name) : [];
   const showSpells = skillNames.includes("Magus");
   const showCrafts = skillNames.includes("Artisan");
   const showPotions = skillNames.includes("Apothecary");
   const showCeremonies =
-    skills.filter((s) => s.name.startsWith("Divine Lore")).length > 0;
+    skillNames.filter((s) => s.startsWith("Divine Lore")).length > 0;
 
   const numInvestments = 1 - (investments ? investments.length : 0);
 

@@ -5,14 +5,6 @@ import Button from "../common/Button";
 function IntroPage() {
   const { gamesPlayed, setGamesPlayed } = useFormContext();
 
-  const handleChange = (event) => {
-    if (event.target.value > 0) {
-      setGamesPlayed(event.target.value);
-    } else {
-      setGamesPlayed(0);
-    }
-  };
-
   const handleMinus = () => {
     if (gamesPlayed > 0) {
       setGamesPlayed(gamesPlayed - 1);
@@ -52,15 +44,10 @@ function IntroPage() {
         <p className="text-lg italic font-semibold">
           How many summits has this character attended?
         </p>
-        {/* <input
-          value={gamesPlayed || 0}
-          className="text-3xl font-sans text-center border border-gray-400 rounded-lg pl-2 w-12"
-          onChange={handleChange}
-        ></input> */}
         <div className="flex justify-center align-top">
           <Button icon="minus" onClick={handleMinus}></Button>
           <div className="select-none font-sans text-2xl w-8">
-            {gamesPlayed}
+            {gamesPlayed || 0}
           </div>
           <Button icon="plus" onClick={handlePlus}></Button>
         </div>
