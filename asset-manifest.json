@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/ConcordCharacterCreator/static/css/main.e66e3ffd.css",
+    "main.js": "/ConcordCharacterCreator/static/js/main.4fd1efff.js",
+    "static/media/Ginv.png": "/ConcordCharacterCreator/static/media/Ginv.d35bf373416de6a9cfa8.png",
+    "static/media/G.png": "/ConcordCharacterCreator/static/media/G.70f6d0c59e0ad646c754.png",
+    "static/media/Ainv.png": "/ConcordCharacterCreator/static/media/Ainv.8899085ecba8d58ce2ed.png",
+    "static/media/A.png": "/ConcordCharacterCreator/static/media/A.215a2eddb8bf693fdba4.png",
+    "static/media/Binv.png": "/ConcordCharacterCreator/static/media/Binv.4f4f8a0ef306aa6c46f1.png",
+    "static/media/B.png": "/ConcordCharacterCreator/static/media/B.b51470ea4fa116cc20bd.png",
+    "static/media/IVinv.png": "/ConcordCharacterCreator/static/media/IVinv.e36eb6ab248412ea0559.png",
+    "static/media/IV.png": "/ConcordCharacterCreator/static/media/IV.5f608fe71bf98e882395.png",
+    "static/media/LMinv.png": "/ConcordCharacterCreator/static/media/LMinv.e1697a8d5eed2ff77b24.png",
+    "static/media/LM.png": "/ConcordCharacterCreator/static/media/LM.c869fa06c61f6d83d206.png",
+    "index.html": "/ConcordCharacterCreator/index.html",
+    "main.e66e3ffd.css.map": "/ConcordCharacterCreator/static/css/main.e66e3ffd.css.map",
+    "main.4fd1efff.js.map": "/ConcordCharacterCreator/static/js/main.4fd1efff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e66e3ffd.css",
+    "static/js/main.4fd1efff.js"
+  ]
+}
