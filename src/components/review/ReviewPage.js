@@ -8,7 +8,7 @@ const border = (
 function ReviewItem({ label, children }) {
   return (
     <div className="flex w-full justify-between">
-      <div className="italic text-left">{label}</div>
+      <div className="italic text-left mr-3">{label}</div>
       <div className="text-right">{children}</div>
     </div>
   );

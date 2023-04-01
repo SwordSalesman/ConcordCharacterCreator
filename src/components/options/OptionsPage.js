@@ -77,13 +77,13 @@ function OptionsPage() {
 
   const maxSpells =
     showSpells &&
-    skillNames.includes("Magus") * 3 +
+    skillNames.includes("Magus") * 2 +
       skillNames.filter((s) => s.startsWith("Additional Spell")).length * 1;
   const numSpells = maxSpells - (spells ? spells.length : 0);
 
   const maxCeremonies =
     showCeremonies &&
-    skillNames.filter((s) => s.startsWith("Divine Lore")).length * 2 +
+    (skillNames.filter((s) => s.startsWith("Divine Lore")).length + 1) * 2 +
       skillNames.filter((s) => s.startsWith("Extra Ceremony")).length * 2;
   const numCeremonies = maxCeremonies - (ceremonies ? ceremonies.length : 0);
 

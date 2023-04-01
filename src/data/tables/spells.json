@@ -10,11 +10,6 @@
     "desc": "You channel the immense power of a Waystone to open a portal to wherever the Conflux on the other side has been channeled. This spell allows a few flexible functions:\n- Access the Shardcircle:&nbsp;By channelling the Shardcircle Waystone a Magi can allow themselves entry into the Shardcircle for a few days. This is the only way to enter the Shardcircle.\n- Activate Waystone:&nbsp;As a Conflux approaches, a Magi must use the Channel Waystone skill to create a portal, allowing people to travel to the far side. A short roleplay after this point will reveal to any caster how much time remains before the portal begins to close."
   },
   {
-    "name": "Create Bond",
-    "type": "Support",
-    "desc": "You can create and break the bonds that bind individuals to their bands and to their magical items. Each character can only be bonded to one magical item of each type and can only be bonded to one Band of each type."
-  },
-  {
     "name": "Deadspeaker",
     "type": "Support",
     "desc": "You channel arcane power, forcing a spirit that has not fully left a body to speak to you. This spell may be cast upon a corpse that is still being physrepped, allowing the spirit of the dead to speak, and only speak. The spirit is not forced to tell the truth or even speak and as it has not traversed the realms of the dead, it cannot reveal the nature of the afterlife. The spell ends after 10 minutes."
@@ -63,6 +58,11 @@
     "name": "Fear",
     "type": "Combat",
     "desc": "You use your magic to fill the enemy with horrifying visions. Strike them and call Fear."
+  },
+  {
+    "name": "Fire",
+    "type": "Combat",
+    "desc": "You summon arcane flames to scorch your foe. Strike them and call Fire."
   },
   {
     "name": "Knockback",

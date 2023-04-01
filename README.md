@@ -6,7 +6,7 @@ https://swordsalesman.github.io/ConcordCharacterCreator/
 
 ## To-do
 ### Must-haves
-- Add repeated skill buying feature (Juggernaut 2, Juggernaut 3...)
+- Include way to specify level of investment, maybe same as multi level skills?
 - Add email submission feature
 - Add 'restart' feature to clear all
 - Add url routing stuff for each of the tabs

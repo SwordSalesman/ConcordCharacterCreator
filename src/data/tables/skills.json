@@ -158,45 +158,45 @@
     "prereq": "Apothecary"
   },
   {
-    "name": "Divine Lore Anarch 1",
+    "name": "Divine Lore Anarch 2",
     "tree": "Religious",
     "description": "This skill applies for Anarch, the Sphere of Elemental Chaos. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "cost": 1,
+    "cost": 2,
     "costExtra": 1
   },
   {
-    "name": "Divine Lore Lumos 1",
+    "name": "Divine Lore Lumos 2",
     "tree": "Religious",
     "description": "This skill applies for Lumos, the Sphere of Truth. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "cost": 1,
+    "cost": 2,
     "costExtra": 1
   },
   {
-    "name": "Divine Lore Arcadian 1",
+    "name": "Divine Lore Arcadian 2",
     "tree": "Religious",
     "description": "This skill applies for Arcadian, the Sphere of Steel and Courage. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "cost": 1,
+    "cost": 2,
     "costExtra": 1
   },
   {
-    "name": "Divine Lore Panoply 1",
+    "name": "Divine Lore Panoply 2",
     "tree": "Religious",
     "description": "This skill applies for Panoply, the Sphere of Golden Folly. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "cost": 1,
+    "cost": 2,
     "costExtra": 1
   },
   {
-    "name": "Divine Lore Cervitas 1",
+    "name": "Divine Lore Cervitas 2",
     "tree": "Religious",
     "description": "This skill applies for Cervitas, the Sphere of Imperial Wisdom. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "cost": 1,
+    "cost": 2,
     "costExtra": 1
   },
   {
-    "name": "Divine Lore Stalia 1",
+    "name": "Divine Lore Stalia 2",
     "tree": "Religious",
     "description": "This skill applies for Stalia, the Sphere of Stars. This skill allows you to take part in Ceremonies of that Sphere. You may expend crystal mana equal to your ranks in a particular lore towards ceremonies of that lore. Characters may not have more than two different Divine Lores at any one time, but they can have as many ranks in each as they like.\n\nEach rank also allows you to master two ceremonies from within your Sphere. Your Divine Lore rank is considered doubled for ceremonies you have mastered. You do not need to select these ceremonies when you purchase the skill, instead you mayleave the ‘slots’ free and choose the ceremonies you want later if you wish.",
-    "cost": 1,
+    "cost": 2,
     "costExtra": 1
   },
   {
