@@ -69,7 +69,7 @@ function Creator({ tabs }) {
       </div>
       <div
         id="form-content"
-        className="h-[450px] flex justify-around text-center"
+        className="h-[400px] flex justify-center items-center text-center"
       >
         {renderedContent}
       </div>

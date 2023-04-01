@@ -1,5 +1,6 @@
 import WikiLink from "../common/WikiLink";
 import useFormContext from "../../hooks/use-form-context";
+import Button from "../common/Button";
 
 function IntroPage() {
   const { gamesPlayed, setGamesPlayed } = useFormContext();
@@ -9,6 +10,18 @@ function IntroPage() {
       setGamesPlayed(event.target.value);
     } else {
       setGamesPlayed(0);
+    }
+  };
+
+  const handleMinus = () => {
+    if (gamesPlayed > 0) {
+      setGamesPlayed(gamesPlayed - 1);
+    }
+  };
+
+  const handlePlus = () => {
+    if ((new Date().getFullYear() - 2019) * 2 - gamesPlayed > 0) {
+      setGamesPlayed(gamesPlayed + 1);
     }
   };
 
@@ -39,12 +52,18 @@ function IntroPage() {
         <p className="text-lg italic font-semibold">
           How many summits has this character attended?
         </p>
-        <input
+        {/* <input
           value={gamesPlayed || 0}
-          className="input text-3xl border-2 rounded-lg pl-2 w-12"
-          type="number"
+          className="text-3xl font-sans text-center border border-gray-400 rounded-lg pl-2 w-12"
           onChange={handleChange}
-        ></input>
+        ></input> */}
+        <div className="flex justify-center align-top">
+          <Button icon="minus" onClick={handleMinus}></Button>
+          <div className="select-none font-sans text-2xl w-8">
+            {gamesPlayed}
+          </div>
+          <Button icon="plus" onClick={handlePlus}></Button>
+        </div>
       </div>
     </div>
   );

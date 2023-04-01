@@ -74,29 +74,25 @@ function SkillsPage() {
   });
 
   return (
-    <div>
-      <div className="flex justify-around">
-        <ContentPane background={realm ? realm.image : null}>
-          <SectionDivider
-            left="Remaining XP"
-            right={remainingXp}
-            className="mb-2"
-          />
-          {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
-          {renderedSkills?.length > 0 ? (
-            <div className="flex flex-wrap justify-center">
-              {renderedSkills}
-            </div>
-          ) : (
-            <div className="opacity-60 italic px-10">
-              Select your skills from the options on the right
-            </div>
-          )}
-        </ContentPane>
-        <ContentPane>
-          <Accordion items={renderedTabs}></Accordion>
-        </ContentPane>
-      </div>
+    <div className="flex sm:flex-row justify-around">
+      <ContentPane background={realm ? realm.image : null}>
+        <SectionDivider
+          left="Remaining XP"
+          right={remainingXp}
+          className="mb-2"
+        />
+        {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
+        {renderedSkills?.length > 0 ? (
+          <div className="flex flex-wrap justify-center">{renderedSkills}</div>
+        ) : (
+          <div className="opacity-60 italic px-10">
+            Select your skills from the options on the right
+          </div>
+        )}
+      </ContentPane>
+      <ContentPane>
+        <Accordion items={renderedTabs}></Accordion>
+      </ContentPane>
     </div>
   );
 }

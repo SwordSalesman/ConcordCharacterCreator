@@ -1,7 +1,17 @@
-function TextInput({ value, onChange, title, placeholder }) {
+import classNames from "classnames";
+
+function TextInput({ value, onChange, title, placeholder, ...rest }) {
   const handleChange = (event) => {
     onChange(event.target.value);
   };
+
+  const inputClasses = classNames(
+    "w-full h-7 pt-1 px-1 ml-2 bg-white rounded-lg",
+    "border border-gray-300 bg-white",
+    "leading-4 text-center text-sm font-sans",
+    "placeholder:italic placeholder:opacity-70",
+    rest.className
+  );
 
   return (
     <div className="w-11/12">
@@ -10,10 +20,12 @@ function TextInput({ value, onChange, title, placeholder }) {
       </div>
       <textarea
         value={value || ""}
-        className="input border w-full min-h-fit py-1 border-gray-300 px-1 ml-2 leading-4 text-center bg-white rounded-lg"
+        className={inputClasses}
         type="text"
         onChange={handleChange}
         placeholder={placeholder}
+        spellcheck="false"
+        maxLength="1000"
       ></textarea>
     </div>
   );

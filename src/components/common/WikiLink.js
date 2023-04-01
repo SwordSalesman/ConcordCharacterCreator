@@ -10,7 +10,7 @@ function WikiLink({ path, ...rest }) {
   const classes = classNames(
     "text-white opacity-50 bg-slate-500 hover:bg-slate-400",
     "rounded-lg w-[25px] h-[25px] text-xl",
-    "cursor-help",
+    "cursor-help transition-all",
     "flex justify-center items-center",
     rest.className
   );

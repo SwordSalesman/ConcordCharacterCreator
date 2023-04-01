@@ -1,19 +1,23 @@
 import classNames from "classnames";
 
-function ContentPane({ background, children }) {
-  const renderedBackground = background ? (
-    <div>
-      <img
-        className="absolute top-6 mix-blend-multiply blur-[1px] w-full opacity-10"
-        src={background}
-        alt="Blurred background of a realmic logo"
-      ></img>
-      {/* <div className="absolute inset-0 w-full h-full bg-white opacity-[92%]"></div> */}
-    </div>
-  ) : null;
+function ContentPane({ background, image, children }) {
+  const renderedBackground =
+    background || image ? (
+      <div>
+        <img
+          className={
+            "absolute top-6 mix-blend-multiply w-full " +
+            (background && " blur-[1px] opacity-10")
+          }
+          src={background ? background : image}
+          alt="Blurred background of a realmic logo"
+        ></img>
+        {/* <div className="absolute inset-0 w-full h-full bg-white opacity-[92%]"></div> */}
+      </div>
+    ) : null;
 
   return (
-    <div className="relative w-[49%] h-[450px] p-0">
+    <div className="relative w-[49%] h-[400px] p-0">
       {renderedBackground}
       <div className="absolute h-full w-full overflow-x-hidden">{children}</div>
     </div>

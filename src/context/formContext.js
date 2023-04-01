@@ -15,6 +15,12 @@ function FormContextProvider({ children }) {
   const [ceremonies, setCeremonies] = useState([]);
   const [heroName, setHeroName] = useState(null);
   const [archetype, setArchetype] = useState(null);
+  const [warband, setWarband] = useState(null);
+  const [sect, setSect] = useState(null);
+  const [icGoals, setIcGoals] = useState(null);
+  const [oocGoals, setOocGoals] = useState(null);
+  const [backstory, setBackstory] = useState(null);
+  const [investmentDetails, setInvestmentDetails] = useState(null);
 
   // Derived Variables
   const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
@@ -124,6 +130,14 @@ function FormContextProvider({ children }) {
     setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
     setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
     setArchetype(JSON.parse(window.localStorage.getItem("archetype")));
+    setWarband(JSON.parse(window.localStorage.getItem("warband")));
+    setSect(JSON.parse(window.localStorage.getItem("sect")));
+    setIcGoals(JSON.parse(window.localStorage.getItem("icGoals")));
+    setOocGoals(JSON.parse(window.localStorage.getItem("oocGoals")));
+    setBackstory(JSON.parse(window.localStorage.getItem("backstory")));
+    setInvestmentDetails(
+      JSON.parse(window.localStorage.getItem("investmentDetails"))
+    );
   }, []);
 
   useEffect(() => {
@@ -185,6 +199,33 @@ function FormContextProvider({ children }) {
     window.localStorage.setItem("archetype", JSON.stringify(archetype));
   }, [archetype]);
 
+  useEffect(() => {
+    window.localStorage.setItem("warband", JSON.stringify(warband));
+  }, [warband]);
+
+  useEffect(() => {
+    window.localStorage.setItem("sect", JSON.stringify(sect));
+  }, [sect]);
+
+  useEffect(() => {
+    window.localStorage.setItem("icGoals", JSON.stringify(icGoals));
+  }, [icGoals]);
+
+  useEffect(() => {
+    window.localStorage.setItem("oocGoals", JSON.stringify(oocGoals));
+  }, [oocGoals]);
+
+  useEffect(() => {
+    window.localStorage.setItem("backstory", JSON.stringify(backstory));
+  }, [backstory]);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "investmentDetails",
+      JSON.stringify(investmentDetails)
+    );
+  }, [investmentDetails]);
+
   // Outputs
 
   const formContext = {
@@ -210,6 +251,18 @@ function FormContextProvider({ children }) {
     setHeroName,
     archetype,
     setArchetype,
+    warband,
+    setWarband,
+    sect,
+    setSect,
+    icGoals,
+    setIcGoals,
+    oocGoals,
+    setOocGoals,
+    backstory,
+    setBackstory,
+    investmentDetails,
+    setInvestmentDetails,
   };
 
   return (
