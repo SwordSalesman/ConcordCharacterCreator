@@ -38,7 +38,7 @@ function ReviewPage() {
             {heroName ? heroName : "Nameless Hero"}
           </div>
           <div className="italic opacity-70">
-            {realm ? realm.name : "Realmless"}
+            {realm ? realm.citizen : "Realmless"}
             {archetype ? " " + archetype : ""}
           </div>
           {border}

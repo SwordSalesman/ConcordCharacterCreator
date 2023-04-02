@@ -12,6 +12,7 @@ import LeronaMereLogoInv from "../images/realm-logos/LMinv.png";
 export const realms = [
   {
     name: "Andash",
+    citizen: "Andashi",
     subtitle: '"My brethren, what can we save from the past?"',
     link: '"andash"',
     image: AndashLogo,
@@ -20,6 +21,7 @@ export const realms = [
   },
   {
     name: "Kingdom of Bordevar",
+    citizen: "Bordevarian",
     subtitle: '"By my steel and by my soul, I will not fail again."',
     link: "bordevar",
     image: BordevarLogo,
@@ -28,6 +30,7 @@ export const realms = [
   },
   {
     name: "Greenweald Baronies",
+    citizen: "Greenwealder",
     subtitle:
       '"The forest is dark and holds many secrets, but we are the light that seeks the truth."',
     link: "greenweald",
@@ -37,6 +40,7 @@ export const realms = [
   },
   {
     name: "Iron Valley",
+    citizen: "Valleyfolk",
     subtitle: '"We stand together."',
     link: "iron",
     image: IronValleyLogo,
@@ -45,6 +49,7 @@ export const realms = [
   },
   {
     name: "Lerona Mere",
+    citizen: "Lerona Merian",
     subtitle: '"Everyone a King! Everyone a Captain!"',
     link: "lerona",
     image: LeronaMereLogo,

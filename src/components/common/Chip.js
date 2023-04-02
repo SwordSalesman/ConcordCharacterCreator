@@ -11,14 +11,14 @@ function Chip({ children, onClick, selected, shadow, inactive, ...rest }) {
     "px-[5px] m-[2px] h-6 w-fit",
     "border border-gray-300 rounded-lg",
     "flex items-center",
-    "bg-gray-50 hover:bg-gray-200",
     "cursor-pointer select-none",
     "whitespace-nowrap",
     "transition-all",
     rest.className,
     {
+      "bg-gray-50 hover:bg-gray-200": !inactive,
       "drop-shadow bg-white": shadow,
-      "bg-gray-200 text-gray-400 hover:bg-gray-200 cursor-default": inactive,
+      "bg-gray-100 text-gray-400 cursor-auto": inactive,
       "bg-slate-500 hover:bg-slate-400 text-white": selected,
     }
   );
