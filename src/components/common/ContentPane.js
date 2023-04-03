@@ -6,7 +6,7 @@ function ContentPane({ background, image, children }) {
       <div>
         <img
           className={
-            "absolute top-6 mix-blend-multiply w-full " +
+            "absolute top-6 w-full max-w-[450px]" +
             (background && " blur-[1px] opacity-10")
           }
           src={background ? background : image}

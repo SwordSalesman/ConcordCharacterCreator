@@ -6,7 +6,7 @@ function TextInput({ value, onChange, title, placeholder, ...rest }) {
   };
 
   const inputClasses = classNames(
-    "w-full h-7 pt-1 px-1 ml-2 bg-white rounded-lg",
+    "w-full h-7 pt-1 px-1 bg-white rounded-lg",
     "border border-gray-300 bg-white",
     "leading-4 text-center text-sm font-sans",
     "placeholder:italic placeholder:opacity-70",

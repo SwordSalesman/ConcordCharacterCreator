@@ -1,8 +1,11 @@
 import Accordion from "../common/Accordion";
 import ContentPane from "../common/ContentPane";
 import useFormContext from "../../hooks/use-form-context";
-import TextInput from "./TextInput";
+import TextInput from "../common/TextInput";
 import SectionDivider from "../common/SectionDivider";
+import SelectInput from "../common/SelectInput";
+
+var archetypes = require("../../data/tables/archetypes.json");
 
 function OptionsPage() {
   const {
@@ -25,6 +28,19 @@ function OptionsPage() {
     setInvestmentDetails,
   } = useFormContext();
 
+  var renderedArchetypes = null;
+  if (realm) {
+    renderedArchetypes = archetypes
+      .filter((a) => a.realm === realm.name)
+      .map((a) => {
+        return {
+          value: a.name,
+          label: a.name,
+        };
+      });
+    renderedArchetypes.unshift({ value: null, label: "(No archetype)" });
+  }
+
   const tabs = [
     {
       label: "Identity",
@@ -36,12 +52,27 @@ function OptionsPage() {
             title="Name"
             placeholder="Enter your name"
           ></TextInput>
-          <TextInput
+          {/* <TextInput
             value={archetype}
             onChange={setArchetype}
             title="Archetype"
+            dropdownData={archetypes
+              .filter((a) => a.realm === realm.name)
+              .map((a) => a.name)}
             placeholder="Enter your archetype"
-          ></TextInput>
+          ></TextInput> */}
+
+          <SelectInput
+            options={renderedArchetypes}
+            onChange={setArchetype}
+            value={archetype}
+            title="Archetype"
+            disabled={realm === null}
+            className="mb-4"
+            placeholder={
+              realm ? "Select your archetype" : "Select a realm first"
+            }
+          ></SelectInput>
         </>
       ),
       link: "almanac:realms:archetypes",
