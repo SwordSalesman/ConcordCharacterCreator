@@ -14,7 +14,8 @@ function FormContextProvider({ children }) {
   const [potions, setPotions] = useState([]);
   const [ceremonies, setCeremonies] = useState([]);
   const [heroName, setHeroName] = useState(null);
-  const [archetype, setArchetype] = useState(null);
+  const [archetypes, setArchetypes] = useState([]);
+  const [graces, setGraces] = useState([]);
   const [warband, setWarband] = useState(null);
   const [sect, setSect] = useState(null);
   const [icGoals, setIcGoals] = useState(null);
@@ -82,6 +83,7 @@ function FormContextProvider({ children }) {
 
   const selectRealm = (selectedRealm) => {
     setRealm(selectedRealm);
+    setArchetypes([]);
   };
 
   // skill should be a skillObj formatted as if from the SkillItem method call
@@ -117,6 +119,14 @@ function FormContextProvider({ children }) {
     toggleItem(ceremony, ceremonies, setCeremonies);
   };
 
+  const toggleArchetype = (archetype) => {
+    toggleItem(archetype, archetypes, setArchetypes);
+  };
+
+  const toggleGrace = (grace) => {
+    toggleItem(grace, graces, setGraces);
+  };
+
   // Local Storage management
 
   useEffect(() => {
@@ -129,7 +139,8 @@ function FormContextProvider({ children }) {
     setPotions(JSON.parse(window.localStorage.getItem("potions")));
     setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
     setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
-    setArchetype(JSON.parse(window.localStorage.getItem("archetype")));
+    setArchetypes(JSON.parse(window.localStorage.getItem("archetypes")));
+    setGraces(JSON.parse(window.localStorage.getItem("graces")));
     setWarband(JSON.parse(window.localStorage.getItem("warband")));
     setSect(JSON.parse(window.localStorage.getItem("sect")));
     setIcGoals(JSON.parse(window.localStorage.getItem("icGoals")));
@@ -196,8 +207,12 @@ function FormContextProvider({ children }) {
   }, [heroName]);
 
   useEffect(() => {
-    window.localStorage.setItem("archetype", JSON.stringify(archetype));
-  }, [archetype]);
+    window.localStorage.setItem("archetypes", JSON.stringify(archetypes));
+  }, [archetypes]);
+
+  useEffect(() => {
+    window.localStorage.setItem("graces", JSON.stringify(graces));
+  }, [graces]);
 
   useEffect(() => {
     window.localStorage.setItem("warband", JSON.stringify(warband));
@@ -249,8 +264,10 @@ function FormContextProvider({ children }) {
     toggleCeremony,
     heroName,
     setHeroName,
-    archetype,
-    setArchetype,
+    archetypes,
+    toggleArchetype,
+    graces,
+    toggleGrace,
     warband,
     setWarband,
     sect,

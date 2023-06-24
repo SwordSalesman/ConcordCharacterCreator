@@ -93,7 +93,7 @@ function Creator({ tabs }) {
   );
 
   return (
-    <div className="m-6 w-1/2 min-w-[600px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl">
+    <div className="m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl">
       <div
         id="form-tabs"
         className="flex justify-center mb-1 border-b-0 border-gray-200 w-full"

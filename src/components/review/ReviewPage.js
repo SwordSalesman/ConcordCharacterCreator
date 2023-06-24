@@ -25,7 +25,8 @@ function ReviewPage() {
     potions,
     ceremonies,
     heroName,
-    archetype,
+    archetypes,
+    graces,
     warband,
     sect,
   } = useFormContext();
@@ -37,9 +38,16 @@ function ReviewPage() {
           <div className="text-xl leading-6">
             {heroName ? heroName : "Nameless Hero"}
           </div>
+          {graces && (
+            <div className="italic opacity-70">
+              {graces.map((g) => (
+                <>{g.name + ", Graced By " + g.sphere}</>
+              ))}
+            </div>
+          )}
           <div className="italic opacity-70">
             {realm ? realm.citizen : "Realmless"}
-            {archetype ? " " + archetype : ""}
+            {archetypes ? " " + archetypes : ""}
           </div>
           {border}
           <ReviewItem label="Summits attended">{gamesPlayed}</ReviewItem>
