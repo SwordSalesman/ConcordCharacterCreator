@@ -3,6 +3,7 @@ import ContentPane from "../common/ContentPane";
 import useFormContext from "../../hooks/use-form-context";
 import Chip from "../common/Chip";
 import SectionDivider from "../common/SectionDivider";
+import useRealmDetails from "../../hooks/use-realm-details";
 var investmentsData = require("../../data/tables/investments.json");
 var spellsData = require("../../data/tables/spells.json");
 var craftsData = require("../../data/tables/crafts.json");
@@ -64,6 +65,7 @@ function OptionsPage() {
     ceremonies,
     toggleCeremony,
   } = useFormContext();
+  const realmFull = useRealmDetails(realm);
 
   // Variables
   const skillNames = skills ? skills.map((s) => s.name) : [];
@@ -176,7 +178,7 @@ function OptionsPage() {
   return (
     <div>
       <div className="flex justify-around transition-all">
-        <ContentPane background={realm ? realm.image : null}>
+        <ContentPane background={realmFull ? realmFull.image : null}>
           <SectionDivider left="Investment" right={numInvestments} />
           <div className="flex flex-wrap justify-center my-1">
             {renderedInvestments}

@@ -4,6 +4,7 @@ import useFormContext from "../../hooks/use-form-context";
 import SkillItem from "./SkillItem";
 import SectionDivider from "../common/SectionDivider";
 import { all } from "axios";
+import useRealmDetails from "../../hooks/use-realm-details";
 var tabs = require("../../data/tables/skillTabs.json");
 var baseSkills = require("../../data/tables/skills.json");
 
@@ -16,6 +17,7 @@ function getNextSkillName(name) {
 function SkillsPage() {
   const { realm, skills, toggleSkill, validSkillChoice, remainingXp } =
     useFormContext();
+  const realmFull = useRealmDetails(realm);
 
   // toggles the selection of the skill, then checks validity for all skills
   const handleClickSkill = (skill) => {
@@ -76,7 +78,7 @@ function SkillsPage() {
 
   return (
     <div className="flex sm:flex-row justify-around">
-      <ContentPane background={realm ? realm.image : null}>
+      <ContentPane background={realmFull ? realmFull.image : null}>
         <SectionDivider
           left="Remaining XP"
           right={remainingXp}

@@ -11,9 +11,9 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
     "transition duration-200",
     {
       "opacity-50 blur-[2px]":
-        selectedRealm !== null && realm.name !== selectedRealm.name,
+        selectedRealm && realm.name !== selectedRealm?.name,
       "blur-none hover:scale-[1.15] scale-[1.15]":
-        selectedRealm !== null && realm.name === selectedRealm.name,
+        selectedRealm && realm.name === selectedRealm?.name,
     }
   );
 

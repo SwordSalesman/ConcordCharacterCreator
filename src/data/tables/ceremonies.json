@@ -3,903 +3,774 @@
     "sphere": "Anarch",
     "name": "Freedom of the Soul",
     "type": "Enchantment",
-    "desc": "Creates an aura on a character that greatly heightens the emotions of that character. Their emotions will be more intense, but not unreasonably so.",
     "Magnitude": 2
   },
   {
     "sphere": "Anarch",
     "name": "Anarchic Missive",
     "type": "-",
-    "desc": "Sends a message to an Anarch Herald or Eternal. The character writes a missive of a single page or less, which is blessed during the ceremony and handed to the Church storyteller after completion.You must know the name of the Herald or Eternal you communicate with.",
     "Magnitude": 2
   },
   {
     "sphere": "Anarch",
     "name": "Prove the Foundation",
     "type": "Curse",
-    "desc": "The character affected by this curse is driven by a supernaturally strong desire to prove themselves. They must select a skill, field or talent that they believe they excel at and must challenge someone who they believe is superior to them at that skill to a test of that skill. Regardless of victory or defeat, the effect fades after the test. Until the effect is relieved, the target is anxious, fidgety, and second-guesses themselves.",
     "Magnitude": 3
   },
   {
     "sphere": "Anarch",
     "name": "Explosive Force",
     "type": "Enchantment",
-    "desc": "The target character may take the DAMAGE effect as the KNOCKBACK effect for the remainder of the event. Each time this effect happens, they gain 1 energy",
     "Magnitude": 4
   },
   {
     "sphere": "Anarch",
     "name": "Leave the Past Behind",
     "type": "-",
-    "desc": "Target character changes their investment to a new form of investment and may move it to a different region if they wish. That character can never possess that kind of investment again.",
     "Magnitude": 4
   },
   {
     "sphere": "Anarch",
     "name": "Witness the Glorious Day",
     "type": "Enchantment",
-    "desc": "Target character may ignore the roleplay effects of traumatic or spiritual wounds for the remainder of the event. Those roleplay effects are replaced with a burning sense of righteous change and possibility. The intensity (and chaotic volume) of this effect increases with each wound experienced while under this effect (not necessarily concurrently).",
     "Magnitude": 4
   },
   {
     "sphere": "Anarch",
     "name": "Anarchs Wooden Steed",
     "type": "-",
-    "desc": "Creates a blessing that must be given to a character before the end of the day, that character may travel through Waystone portals as if they were a Concordian citizen for the remainder of the event.",
     "Magnitude": 6
   },
   {
     "sphere": "Anarch",
     "name": "Burn the Ashes",
     "type": "Enchantment",
-    "desc": "Target Terminal character regains all their hitpoints, mana and energy, regains the ability to attend confluxes and function as normal until being reduced to 0 hit points or the end of the day, after which point they die instantly, painfully consumed by fire. As the day progresses the character feels a fire inside them burning hotter and hotter.",
     "Magnitude": 8
   },
   {
     "sphere": "Anarch",
     "name": "Stormveil",
     "type": "Enchantment",
-    "desc": "A single region becomes obscured to scrying. The ceremony may be cast for up to four additional magnitude to create a more powerful veil. This effect lasts a year.",
     "Magnitude": 8
   },
   {
     "sphere": "Anarch",
     "name": "Churning Cauldron of the Maelstrom",
     "type": "-",
-    "desc": "After five measures of herbs have been placed in a vessel, the amount of herbs is doubled. The newly created herbs will be of the same type.",
     "Magnitude": 8
   },
   {
     "sphere": "Anarch",
     "name": "Unfettered Anarchy",
     "type": "Curse",
-    "desc": "Curses a character with unstable emotions. That character regularly flits between extremely powerful emotions of a wide variety. The character cannot feel effects of calm, clarity or tranquility. This effect lasts until the end of the event. They feel an urge to oppose anything they see as restraining their behaviour, whether it is a law, an expectation of society, or a sign that says 'quiet please' on it. These sensations surge and recede; the curse is most likely to impact the roleplaying of the character at dramatically appropriate moments.",
     "Magnitude": 10
   },
   {
     "sphere": "Anarch",
     "name": "Unending Cascade of Bloods Fire",
     "type": "Enchantment",
-    "desc": "The target gains the ability to cast the Venom spell four times per day as if they knew it without spending any mana. They also experience the strong desire to cast venom against anything that startles or threatens them. If you recover all spent personal mana from an effect it also recovers the uses of this ability.",
     "Magnitude": 12
   },
   {
     "sphere": "Anarch",
     "name": "Rampant Hammer Rhythm",
     "type": "Enchantment",
-    "desc": "The target artisan can craft a single item overnight. They must know how to make the item and have all the required materials. After making the item they feel tired and drained, exhausted from a night of supernaturally enchanted work.",
     "Magnitude": 14
   },
   {
     "sphere": "Anarch",
     "name": "Shatter the Shackles",
     "type": "-",
-    "desc": "Curse affecting the target character is broken, having no more effect.",
     "Magnitude": "15 + The magnitude of the original curse."
   },
   {
     "sphere": "Anarch",
     "name": "Still Waters Running Deep",
     "type": "Enchantment",
-    "desc": "Imbues a character with the desire to change the world and people around them for the better, disrupting the status quo if possible. That character also receives an additional 3 energy. and is immune to the Fear effect. This effect lasts until the end of the event. It may be applied to an additional character from the same Warband for an additional 5 magnitude.",
     "Magnitude": 16
   },
   {
     "sphere": "Anarch",
     "name": "Transmogrification of the Souls Echo",
     "type": "-",
-    "desc": "Permanently changes the personality of a target willing character. This is purely an emotional change but may change goals, nature, belief or behaviour. In addition, this may remove a lower magnitude curse.",
     "Magnitude": 25
   },
   {
     "sphere": "Anarch",
     "name": "Empower Storms of Nature",
     "type": "Enchantment",
-    "desc": "The target region is wracked by dangerous and unseasonal storms. Farms and Wildernesses produce at half value as the weather makes such work untenable. Leylines in adjacent regions produce at half value as the storm feeds off of them. This effect lasts until the next event.",
     "Magnitude": 30
   },
   {
     "sphere": "Anarch",
     "name": "Otherworldly Challenge",
     "type": "-",
-    "desc": "Delivers a challenge to the Eternal known as The Peak. This binds the target in this challenge. If the challenge is overcome, a reward commensurate with the difficult and nature of the challenge. Failure or cheating will result in a powerful curse.",
     "Magnitude": 30
   },
   {
     "sphere": "Anarch",
     "name": "Foam and Spittle of the Furious Sea",
     "type": "Enchantment",
-    "desc": "Navies in the targeted region experience 500 casualties during the next season, spread equally among them. Any fleet based in the region has its production reduced by half for that period.",
     "Magnitude": 40
   },
   {
     "sphere": "Anarch",
     "name": "Anarchs Claim",
     "type": "Curse",
-    "desc": "This ceremony creates a curse which removes the target characters held Concordian Title. The legality, systems and expectations be damned. The target can be reelected into the position, but this must occur.",
     "Magnitude": 80
   },
   {
     "sphere": "Anarch",
     "name": "Soldiers of Storm and Stone",
     "type": "Enchantment",
-    "desc": "The target army is assisted in battle by supernatural warriors of storm and stone, increasing its effective strength by 3,000 during the next season.",
     "Magnitude": 100
   },
   {
     "sphere": "Arcadian",
     "name": "Missive of Courage",
     "type": "-",
-    "desc": "Sends a message to an Arcadian Herald or Eternal. The character writes a missive of a single page or less, which is blessed during the ceremony and handed to the Church storyteller after completion. You must know the name of the Herald or Eternal you communicate with.",
     "Magnitude": 2
   },
   {
     "sphere": "Arcadian",
     "name": "Strength of the Bull",
     "type": "Enchantment",
-    "desc": "The target character gains one rank of the Juggernaut skill. This may affect another two additional characters of the same Warband for an additional 3 magnitude. The characters are filled with boundless enthusiasm. This effect lasts until the end of the event.",
     "Magnitude": 3
   },
   {
     "sphere": "Arcadian",
     "name": "Swift Leaping Hare",
     "type": "Enchantment",
-    "desc": "The target character may call Knockback once per day with a melee weapon, excluding pikes.The strike must be a damaging blow. This may affect another two additional characters of the same Warband for an additional 3 magnitude. The characters are filled with a nervous excitement. This effect lasts until the end of the event.",
     "Magnitude": 3
   },
   {
     "sphere": "Arcadian",
     "name": "Bless the Warhost",
     "type": "-",
-    "desc": "Target characters (any amount) are bound by courage and energy into a warband. They must swear their oath and warcry during the ceremony.",
     "Magnitude": 5
   },
   {
     "sphere": "Arcadian",
     "name": "Bedecked in Final Glory",
     "type": "Enchantment",
-    "desc": "Target becomes supernaturally driven to glorious purpose. If this character becomes terminal before the end of the day, they experience no pain from the Terminal status and require no support to move or act (although they still cannot fight or use any skills). The character is filled with a sense of final peace, wisdom of the veteran and the knowledge that they have achieved their goals. They fade into nothing rather than leaving a corpse behind.",
     "Magnitude": 6
   },
   {
     "sphere": "Arcadian",
     "name": "Raise the Wounded Warrior",
     "type": "-",
-    "desc": "Target ‘Damaged’ Military or Naval Investment is repaired and functions as if it were one tier higher in the coming season. The owner of this investment is driven by a supernatural desire to save or sacrifice themselves for the wounded.",
     "Magnitude": 6
   },
   {
     "sphere": "Arcadian",
     "name": "Chamber of the Restful Warrior",
     "type": "Enchantment",
-    "desc": "Enchants a target area with an aura of introspection that encourages people to speak of their concerns, fears and worries. The target area is not large, and is roughly equal to one tent or a single table in a larger area. In addition, if you spend more than fifteen minutes resting in this location, you recover all energy. This effect ends at the end of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Arcadian",
     "name": "Pythons Presence",
     "type": "Enchantment",
-    "desc": "Until the end of the event the two characters in the same Warband gain the ability to call SHACKLE by spending one Energy when landing a melee strike that would deal damage. The weapon used can be any aside from a Pike or bow.",
     "Magnitude": 8
   },
   {
     "sphere": "Arcadian",
     "name": "Rally the Fallen",
     "type": "Enchantment",
-    "desc": "The target character may use Stay With Me twice a day as if they know the skill without spending any energy. This effect lasts until the end of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Arcadian",
     "name": "Surgeons Limited Patience",
     "type": "Enchantment",
-    "desc": "The target character with the Surgeon skill loses access to it but gains the Bulwark, Armour, Weaponmaster and two ranks of the Juggernaut skill. This effect lasts for the rest of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Arcadian",
     "name": "Poisoners Blessing",
     "type": "Enchantment",
-    "desc": "The two target characters from the same Warband gain the ability to deliver the Venom effect on any strike that would deal damage once per day. This effect lasts until the end of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Arcadian",
     "name": "Chorus of the Righteous",
     "type": "Enchantment",
-    "desc": "Target group of musicians (minimum 3) find their talent in true alignment with the spheres. One per day they may add musical support to a ceremony being cast that has a minimum magnitude of 8. They count as if they were an additional priest of Divine Lore 3 and count as having spent 3 Crystal Mana. They may not count as having mastered a ceremony when using this ability. This effect lasts the remainder of the event.",
     "Magnitude": 10
   },
   {
     "sphere": "Arcadian",
     "name": "Trial of Worthiness",
     "type": "Curse",
-    "desc": "Target character affected by this curse loses all skills that grant them weapon or shield proficiencies for 1 Year. If the character attends four confluxes and defeats at least one foe during this period and allows the curse to fade naturally, they gain one of the following skills for no cost: Archer, Armoured, Bladehand, Bulwark, Hand-And-A-Half, Weaponmaster.",
     "Magnitude": 10
   },
   {
     "sphere": "Arcadian",
     "name": "Powerful Growth",
     "type": "Enchantment",
-    "desc": "A target Wilderness investment will produce 3 Locks and six measures of herbs in addition to its standard production before the next event.",
     "Magnitude": 12
   },
   {
     "sphere": "Arcadian",
     "name": "Pirates Unity",
     "type": "Enchantment",
-    "desc": "The target Naval investment is treated as being five ranks higher during its next season provided it takes Independent Action. The owner of this Naval investment feels unrestrained and uncensored about the consequences of their actions, combined with a desire to take what they want.",
     "Magnitude": 12
   },
   {
     "sphere": "Arcadian",
     "name": "Tree Falls Weight",
     "type": "Enchantment",
-    "desc": "The target may call BREAK twice per day with a Greatweapon for no cost. In addition the character experiences the desire to act now rather than worry about complicated plans and to solve problems in the most physical manner available. This effect lasts until the end of the event.",
     "Magnitude": 15
   },
   {
     "sphere": "Arcadian",
     "name": "Style of the Bronze Colossus",
     "type": "Enchantment",
-    "desc": "The target character gains two bonus hit points and two bonus energy as long as they are wearing heavy armour. They are immune to the Fracture call. The target also gains a strong drive to not remove their armour, feeling it as an extension of themselves. They also gain strong mercenary thoughts, the idea of fighting in return for reward seems appealing. The idea of fighting without receiving payment, preferably in advance, seems offensive. This effect lasts until the end of the event.",
     "Magnitude": 20
   },
   {
     "sphere": "Arcadian",
     "name": "Conclave of Trees and Courage",
     "type": "Enchantment",
-    "desc": "A target Resource investment becomes a military unit for the next season. Its tier remains the same. This military is particularly effective at ‘Support the army’ gaining a five tier bonus to this action.",
     "Magnitude": 22
   },
   {
     "sphere": "Arcadian",
     "name": "Warriors Mantle",
     "type": "Enchantment",
-    "desc": "The character gains the Weaponmaster, Armoured, Bulwark, Impaler, Archer and Bladehand skills for the remainder of the event. The character is driven to react to any event that would elicit fear, doubt or wariness by declaring a challenge against it and moving to attack it. Heralds of Arcadian will note the being.",
     "Magnitude": 30
   },
   {
     "sphere": "Arcadian",
     "name": "Lions Roar",
     "type": "Enchantment",
-    "desc": "The target character may cast a single MASS KNOCKBACK once per day for the remainder of the event for no cost.",
     "Magnitude": 40
   },
   {
     "sphere": "Arcadian",
     "name": "God of War",
     "type": "Enchantment",
-    "desc": "The target character who has gained at least 3 experience is considered an army with a strength equal to 500 x the number of combat skills they have for the purposes of campaign actions. They may enter the War Chamber, gain a vote in the War Chamber and may act accordingly. The character will become terminal at the start of the next Summit",
     "Magnitude": 100
   },
   {
     "sphere": "Cervitas",
     "name": "Comrades Missive",
     "type": "-",
-    "desc": "Sends a message to a Cervitas Herald or Eternal. The character writes a missive of a single page or less, which is blessed during the ceremony and handed to the Church storyteller after completion. You must know the name of the Herald or Eternal you communicate with.",
     "Magnitude": 2
   },
   {
     "sphere": "Cervitas",
     "name": "Call Winged Messenger",
     "type": "-",
-    "desc": "Sends a message to a mortal character anywhere in the Mortal sphere. The characters full name and location must be known and written on the message. The character writes a missive of a single page or less, which is blessed during the ceremony and handed to the Church storyteller after completion.",
     "Magnitude": 2
   },
   {
     "sphere": "Cervitas",
     "name": "Break off the Chain of Memory",
     "type": "-",
-    "desc": "Excises a memory of a willing character, removing it from their mind. When the character attempts to recall the memory, they are filled with guilt.",
     "Magnitude": 2
   },
   {
     "sphere": "Cervitas",
     "name": "Duties Sacrifice",
     "type": "-",
-    "desc": "Moves one negative effect from one willing character to another willing character. This cannot be used to move the death or terminal effect.",
     "Magnitude": 4
   },
   {
     "sphere": "Cervitas",
     "name": "Aid Once More",
     "type": "Enchantment",
-    "desc": "The target priest may assist in Ceremonies being cast by Sects they are not a member of once per day for the remainder of the event.",
     "Magnitude": 5
   },
   {
     "sphere": "Cervitas",
     "name": "Blessing of the Pillar",
     "type": "Enchantment",
-    "desc": "Target may cast Heal and Stay With Me on other members of their Band as if they knew the spells, though they must still pay the mana cost for them. Lasts until end of event.",
     "Magnitude": 5
   },
   {
     "sphere": "Cervitas",
     "name": "Bond of Loyalty",
     "type": "Enchantment",
-    "desc": "Up to five willing characters swear loyalty to each other - until the end of the event, they are wracked by crushing guilt at even the idea of betraying the other characters in the bond, and find it physically painful to do so.",
     "Magnitude": 6
   },
   {
     "sphere": "Cervitas",
     "name": "Cervitas’ Bulwark",
     "type": "Enchantment",
-    "desc": "The target character gains the Bulwark skill. The character feels the drive to be at the forefront of any confrontation. This effect lasts until the end of the event.",
     "Magnitude": 6
   },
   {
     "sphere": "Cervitas",
     "name": "Chamber of delights",
     "type": "Enchantment",
-    "desc": "Enchants a target area with an aura of relaxation that encourages people to indulge and luxuriate in pleasurable sensations. The target area is not large, and is roughly equal to one tent or a single table in a larger area. In addition, if you spend more than fifteen minutes resting in this location, you recover all personal mana. This effect ends at the end of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Cervitas",
     "name": "Shunned by the spheres",
     "type": "Curse",
-    "desc": "Target is no longer gains any bonuses from artisan items that are attuned to their band or sect specifically, and cannot interact with those items as if they were a member of the band or sect. For the duration, you feel distant and disconnected from all the members of your band or sect, all spoken words from members of your band or sect are heard by you as mumbles and unclear whispers. Lasts until the end of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Cervitas",
     "name": "Smiths Inspiration",
     "type": "Enchantment",
-    "desc": "The target character may repair a weapon or shield that has been affected by Break three times per day after five seconds of appropriate roleplay. This effect lasts until the end of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Cervitas",
     "name": "Words as Deeds",
     "type": "-",
-    "desc": "The target Band may change its Oath, all members must be present to speak the new oath.",
     "Magnitude": 8
   },
   {
     "sphere": "Cervitas",
     "name": "Blessing of the Legion",
     "type": "Enchantment",
-    "desc": "All characters from the target Warband gain one additional hitpoint. This effect lasts until the end of the event. If the Warband has more than ten members, the Warband leader also gains an additional bonus energy.",
     "Magnitude": 12
   },
   {
     "sphere": "Cervitas",
     "name": "Order of the Iron Sargent",
     "type": "Enchantment",
-    "desc": "Up to 5 members of a target Warband gain the ability to fight with one of the following weapons, provided they can pass any appropriate clearances; Spear, Greatweapon, Polearm or Pike. This ceremony requires the presence of a character with the Weapon Master skill. The characters gain a desire to stick together and fight alongside each other. This effect lasts until the end of the event.",
     "Magnitude": 13
   },
   {
     "sphere": "Cervitas",
     "name": "Hands of the Healer",
     "type": "Enchantment",
-    "desc": "The target may swift cast Heal for 1 mana rather than 2. The character experiences a massively increased amount of empathy for other beings. The target character also gains two additional personal mana. This effect lasts until the end of the event.",
     "Magnitude": 15
   },
   {
     "sphere": "Cervitas",
     "name": "Pilgramage to Distant Brethren",
     "type": "Enchantment",
-    "desc": "Target character counts as being from a different realm for the purposes of joining sects for the remainder of the event. This would allow them to join a sect and perform ceremonies with them. It does still require them to complete the Binding of Hope ceremony.",
     "Magnitude": 15
   },
   {
     "sphere": "Cervitas",
     "name": "Strike the Holy Oath",
     "type": "-",
-    "desc": "Target (willing) character swears an oath. If they break this oath, they become terminal. They cannot be released from this oath except for by a Cervitas Herald or Eternal",
     "Magnitude": 20
   },
   {
     "sphere": "Cervitas",
     "name": "Betrayers Fleshcurse",
     "type": "Curse",
-    "desc": "Creates a curse that can be applied to a character. While under the effect of the curse the character is constantly unwell, experiencing evers and itching. The character is constantly under the effect of Venom. This cannot be removed while the curse is in effect. The character is more likely to suffer infected wounds and should seek out the Church storyteller after each conflict in which they suffer hitpoint loss. If the character becomes terminal while under this curse, they are overwhelmed by feverish delirium and suffer a slow, agonising death as the flesh rots from their bones. This curse lasts four events.",
     "Magnitude": 35
   },
   {
     "sphere": "Cervitas",
     "name": "The Weight of your Words.",
     "type": "Enchantment",
-    "desc": "The target character may cast a single MASS SHACKLE each day for the remainder of the event for no cost.",
     "Magnitude": 35
   },
   {
     "sphere": "Cervitas",
     "name": "Bound by Common Cause",
     "type": "Enchantment",
-    "desc": "The target Army gains an additional 50 strength for each military unit attached to it for the first 5 units, an additional 30 for the second 5 and an additional 10 for each military unit attached to it thereafter during the next season.",
     "Magnitude": 60
   },
   {
     "sphere": "Cervitas",
     "name": "Defenders Blessed Cohort",
     "type": "Enchantment",
-    "desc": "The target fortification is blessed by spectral warriors that defend it, increasing its strength by 1500 for the next season.",
     "Magnitude": 60
   },
   {
     "sphere": "Cervitas",
     "name": "Arboreal Brotherhood of Rage",
     "type": "Enchantment",
-    "desc": "Plants within a region spring to life and attack wildly; indiscriminately. Each season for the next four seasons armies in the region suffer 500 casualties spread equally between them. Fortifications take double the amount..",
     "Magnitude": 120
   },
   {
     "sphere": "Lumos",
     "name": "The Candle Extinguished",
     "type": "-",
-    "desc": "At the completion of the ceremony a corpse with hundreds of candle flamess that rapidly consumes the remains. Not even bones will be left behind. If it targets a terminal character, they die peacefully and painlessly after being moved from the sanctified square to a holy location.",
     "Magnitude": 2
   },
   {
     "sphere": "Lumos",
     "name": "Believers Missive",
     "type": "-",
-    "desc": "Sends a message to a Lumos Herald or Eternal. The character writes a missive of a single page or less, which is blessed during the ceremony and handed to the Church storyteller after completion. You must know the name of the Herald or Eternal you communicate with.",
     "Magnitude": 2
   },
   {
     "sphere": "Lumos",
     "name": "Release the Chain of Memory",
     "type": "-",
-    "desc": "Excises memory via voluntary amnesia. The character is filled with a sense of hope when they attempt to recall it.",
     "Magnitude": 2
   },
   {
     "sphere": "Lumos",
     "name": "Hearthfire Circle",
     "type": "-",
-    "desc": "The target character recovers all lost hits, and fractures, venom or silence effects are relieved and characters may ignore the roleplay effect of any traumatic wounds. This ceremony may affect other members of a band for a cost of additional 3 magnitude.",
     "Magnitude": 4
   },
   {
     "sphere": "Lumos",
     "name": "Binding of Hope",
     "type": "-",
-    "desc": "Target characters (any amount) are bound by hope and faith into a Sect. They must choose up to two spheres to align their sect in support of and speak their oath.",
     "Magnitude": 5
   },
   {
     "sphere": "Lumos",
     "name": "Believers of the True Orator",
     "type": "Enchantment",
-    "desc": "If the target Congregation takes the ‘Petition’ action next downtime, it will produce an additional five votes.",
     "Magnitude": 6
   },
   {
     "sphere": "Lumos",
     "name": "Enlightened Ceremony",
     "type": "Enchantment",
-    "desc": "This ceremony augments a cultural bonding ceremony, such as a wedding, adoption, blood-binding of warriors or simmilar gathering. This ceremony binds the hopes and devotions of those two characters together. For the remainder of the event both characters gain either +1 Hit Point or +2 Mana (chosen individually.",
     "Magnitude": 6
   },
   {
     "sphere": "Lumos",
     "name": "Like a Moth to a Flame",
     "type": "Curse",
-    "desc": "The character affected by this curse is supernaturally drawn to bright lights and shuns the darkness. Whenever the character is not well lit, they are affected by the Silence Spell. This effect lasts a year.",
     "Magnitude": 10
   },
   {
     "sphere": "Lumos",
     "name": "Embrace the Living Flame",
     "type": "Enchantment",
-    "desc": "Grants two additional energy to a character for the remainder of the event. Your character feels as though their beliefs are confirmed and has great confidence in them.",
     "Magnitude": 8
   },
   {
     "sphere": "Lumos",
     "name": "The Twilight masquerade",
     "type": "Enchantment",
-    "desc": "The target character appears as a different Grace for the remainder of the event, taking on all the roleplay effects and physical requirements of that Grace.",
     "Magnitude": 8
   },
   {
     "sphere": "Lumos",
     "name": "Antithesis of Faith",
     "type": "Enchantment",
-    "desc": "The target character with the Magi skill gains the ability to cast Silence and Stun as if they knew them for the remainder of the event. They may cast each of these once per day for no mana.",
     "Magnitude": 9
   },
   {
     "sphere": "Lumos",
     "name": "Vigor of Belief",
     "type": "Enchantment",
-    "desc": "The target character gains three ranks of Deathless for the remainder of the event. This ceremony may affect additional members of the same sect for an additional 3 magnitude each.",
     "Magnitude": 9
   },
   {
     "sphere": "Lumos",
     "name": "Grace in Forgiveness",
     "type": "-",
-    "desc": "The target character under the effect of a curse has that curse removed. This ritual must include the original Prophet who cursed them. The Prophet must consent to the curse being lifted under their own power.",
     "Magnitude": 10
   },
   {
     "sphere": "Lumos",
     "name": "Revealed to the Initiate",
     "type": "Enchantment",
-    "desc": "Target character with no ranks in any Divine Lore gains 2 ranks in the Divine Lore of one sphere for the remainder of the Event. They feel that they are the chosen one of their sphere and are driven to prosthelytize the teachings of that sphere in public and in private for the remainder of the event.",
     "Magnitude": 10
   },
   {
     "sphere": "Lumos",
     "name": "Strength of Belief",
     "type": "Enchantment",
-    "desc": "All members of target sect gain bonus hitpoints equal to their individual ranks in Divine Lore",
     "Magnitude": 10
   },
   {
     "sphere": "Lumos",
     "name": "Flame of Healing",
     "type": "Enchantment",
-    "desc": "The target character may cast heal, mend limb and purify as if they knew them for the remainder of the event. They may cast each of these spells once per day for no mana.",
     "Magnitude": 10
   },
   {
     "sphere": "Lumos",
     "name": "Inquisitors Seeking Eye",
     "type": "Enchantment",
-    "desc": "The target military investment gains three bonus tiers as long as it undertakes the ‘Scout the Frontline’ order during the next season.",
     "Magnitude": 10
   },
   {
     "sphere": "Lumos",
     "name": "The Bright Soul Within",
     "type": "Enchantment",
-    "desc": "The target region controlled by The Concord becomes blessed against Undeath. Individuals who perish within the region cannot be raised as undead against their will for the next six months.",
     "Magnitude": 35
   },
   {
     "sphere": "Lumos",
     "name": "Hopeforged",
     "type": "-",
-    "desc": "The target item or prop is immune to the break effect. Those who carry it are infused with hope that cannot be darkened.",
     "Magnitude": 35
   },
   {
     "sphere": "Lumos",
     "name": "Rivers of Blood and Life",
     "type": "Enchantment",
-    "desc": "During the next Season, all losses incurred in the target Region are either doubled or halved, determined during the casting of the ceremony.",
     "Magnitude": 50
   },
   {
     "sphere": "Lumos",
     "name": "Blessing of Unmade Belief",
     "type": "Enchantment",
-    "desc": "The target character with one or more levels in Divine Lore may change their Divine Lore skill to target a different sphere. This effect is permanent.",
     "Magnitude": 50
   },
   {
     "sphere": "Stalia",
     "name": "Knowledgeable Missive",
     "type": "-",
-    "desc": "Sends a message to a Stallia Herald or Eternal. The character writes a missive of a single page or less, which is blessed during the ceremony and handed to the Church storyteller after completion. You must know the name of the Herald or Eternal you communicate with.",
     "Magnitude": 2
   },
   {
     "sphere": "Stalia",
     "name": "Secrets of skillful artifice",
     "type": "Enchantment",
-    "desc": "Grants the ability to craft a single item. When the ceremony is begun the priests must choose a single magic item they wish the target artisan to be able to craft. There must be someone present who already knows how to make that item, but they need not be a willing participant. That artisan may be counted as knowing how to craft the item during the next season.",
     "Magnitude": 4
   },
   {
     "sphere": "Stalia",
     "name": "Knowledge of its own Accord",
     "type": "-",
-    "desc": "Two characters who know spells exchange the one of their spells, learning the new one and forgetting the old.",
     "Magnitude": 6
   },
   {
     "sphere": "Stalia",
     "name": "Signs and Portents",
     "type": "-",
-    "desc": "Up to 4 contributors receive a mystic vision related to things that are happening, have happened or may happen at the event. The information is often cryptic. Each contributor may receive a different vision. It is not possible to direct this spell towards particular topics. All affected regain all spent personal mana.",
     "Magnitude": 6
   },
   {
     "sphere": "Stalia",
     "name": "Being of Like Mind",
     "type": "Enchantment",
-    "desc": "The target Band selects a spell that one of its members knows. All other members know that spell for the rest of the Event",
     "Magnitude": 8
   },
   {
     "sphere": "Stalia",
     "name": "Shield of the Stars",
     "type": "Enchantment",
-    "desc": "The target character who has the Battlemage skill gains two additional hitpoints. This effect lasts until the end of the event.",
     "Magnitude": 8
   },
   {
     "sphere": "Stalia",
     "name": "Departure of the Blessed Falcon",
     "type": 10,
-    "desc": "Summons and sends a blessed creature to a target location. It will arrive in a season or longer, depending on location. This creature is a target for scrying.",
     "Magnitude": 10
   },
   {
     "sphere": "Stalia",
     "name": "Blindfold of the Uninitiated",
     "type": "Curse",
-    "desc": "The character affected by this curse cannot read or write for a year. Words they read or write simply read \"You are not permitted.\"",
     "Magnitude": 10
   },
   {
     "sphere": "Stalia",
     "name": "Crystalline Memory",
     "type": "-",
-    "desc": "Painfully kills a terminal target, but creates a forged crystal of their memories, this crystal can be consumed to answer one question relevant to the target before being destroyed.",
     "Magnitude": 10
   },
   {
     "sphere": "Stalia",
     "name": "Tactician Verses Tactician",
     "type": "Enchantment",
-    "desc": "Two military investments are improved by two tiers provided it takes the ‘Support the Army’ or ‘Independent Action’ downtime actions during the next season. The characters who control those military investments have an urge to hatch clever schemes, especially those around tactical cunning. The owners of the two investments experience an intense, temporary rivalry.",
     "Magnitude": 10
   },
   {
     "sphere": "Stalia",
     "name": "True Glimpsing",
     "type": "-",
-    "desc": "describe a specific location with high detail or a location targeted for scrying, recieve a true vision of that location.",
     "Magnitude": 20
   },
   {
     "sphere": "Stalia",
     "name": "Dream in the Witch House",
     "type": "-",
-    "desc": "The target characters (often the priests performing the ceremony) visit the Witch's house in their minds, answering their questions with the wisdom of her lost lands. They become known to The Witch.",
     "Magnitude": 12
   },
   {
     "sphere": "Stalia",
     "name": "Crown of Stars",
     "type": "Enchantment",
-    "desc": "The target gains the power to cast Empower spell four times per day as if they knew it without spending any mana. They experience the drive to take command of any situation they find themselves in. If the target regains all spent personal mana by resting in a magical aura, they also recover these uses.",
     "Magnitude": 14
   },
   {
     "sphere": "Stalia",
     "name": "Anathemic Call of the Locust",
     "type": "Curse",
-    "desc": "Creates a curse that can be applied to a character. That character's farm, wilderness or herb garden investment experiences half production for the next three events.",
     "Magnitude": 16
   },
   {
     "sphere": "Stalia",
     "name": "There is no Welcome Here",
     "type": "Enchantment",
-    "desc": "Heralds of any sphere aside from Stallia may not pass the target threshold. This effect lasts until the next sunrise.",
     "Magnitude": 16
   },
   {
     "sphere": "Stalia",
     "name": "Window to the spheres",
     "type": "Enchantment",
-    "desc": "The target character gains two additional levels of Divine Lore while performing ceremonies over magnitude 12. This effect lasts until the end of the event. The character may gaze into a sphere of their choice.",
     "Magnitude": 22
   },
   {
     "sphere": "Stalia",
     "name": "Curse of Hunter's Pursuit",
     "type": "Curse",
-    "desc": "The cursed character suffers powerful nightmares of being pursued by powerful and inescapable foes composed of the darkness between stars. Whenever they are alone, they can feel the sky creeping towards them with hunger. The target no longer regains energy or personal mana overnight. The curse lasts four events.",
     "Magnitude": 30
   },
   {
     "sphere": "Stalia",
     "name": "Reach into the Abyss",
     "type": "-",
-    "desc": "This ceremony summons a spirit of the dead for questioning. A dangerous ceremony, it may open the casters up to danger. If you intend to cast this ceremony, please inform the Church storyteller an hour ahead of time.",
     "Magnitude": 30
   },
   {
     "sphere": "Stalia",
     "name": "Stardust’s Egg",
     "type": "-",
-    "desc": "Creates an egg sized mass of bright stardust. A priest may consume the egg to boost a single Divine Lore by 6 effective ranks for the purposes of casting a single ceremony, provided they already possess at least one rank of that divine lore. . _Once the ceremony has been cast, the effect ends.",
     "Magnitude": 50
   },
   {
     "sphere": "Stalia",
     "name": "Power of Tainted Knowledge",
     "type": "Enchantment",
-    "desc": "The target may cast a single MASS VENOM per day, they must have the Magus skill. This effect lasts until the end of the event.",
     "Magnitude": 50
   },
   {
     "sphere": "Stalia",
     "name": "A Moment to Speak",
     "type": "Enchantment",
-    "desc": "The target may cast a single MASS SILENCE per day, they must have the Magus Skill. This effect lasts until the end of the event.",
     "Magnitude": 50
   },
   {
     "sphere": "Panoply",
     "name": "Investors Missive",
     "type": "-",
-    "desc": "Sends a message to a Panoply Herald or Eternal. The character writes a missive of a single page or less, which is blessed during the ceremony and handed to the Church storyteller after completion. You must know the name of the Herald or Eternal you communicate with.",
     "Magnitude": 2
   },
   {
     "sphere": "Panoply",
     "name": "Tabula Rasa",
     "type": "-",
-    "desc": "The target willing character or item has all of their bonds broken, as per the Create Bond spell.",
     "Magnitude": 2
   },
   {
     "sphere": "Panoply",
     "name": "Wealdsages Skilled Dilution",
     "type": "-",
-    "desc": "Transforms a potion back into its component herbs.",
     "Magnitude": 3
   },
   {
     "sphere": "Panoply",
     "name": "Blessing of New Spring",
     "type": "Enchantment",
-    "desc": "A target farm or business investment produces 10 additional keys each event for the next two events.",
     "Magnitude": 4
   },
   {
     "sphere": "Panoply",
     "name": "Like for Like",
     "type": "-",
-    "desc": "Five measures of a single type of crafting material are placed within a vessel. At the completion of the ceremony, those five measures are destroyed and replaced with 5 Panoply Coins. These coins may be used in Panoply ceremonies as if they were 2 Crystal Mana.",
     "Magnitude": 4
   },
   {
     "sphere": "Panoply",
     "name": "Verdant Bounty of the Twilight Bayou",
     "type": "Enchantment",
-    "desc": "At the start of the next event, a targeted Wilderness investment produces six additional measures of its main material.",
     "Magnitude": 4
   },
   {
     "sphere": "Panoply",
     "name": "Words of Regret",
     "type": "-",
-    "desc": "TTarget magical item is destroyed and 75% of its component pieces are refunded. If the item has 2 events worth of durability remaining, it will refund 50% of its components. If it only has 1 events worth of durability remaining it will return 25% of its components",
     "Magnitude": 4
   },
   {
     "sphere": "Panoply",
     "name": "Benevolence of the Drunken Benefactor",
     "type": "Curse",
-    "desc": "Target character feels a sense of inebriation which is based on the amount of coin carried on their person. This scales from a tipsy feeling at around 10 keys to stone-cold drunkenness at around 10 locks. In addition, the character is unable to tell the difference between different denominations of physical coins. This lasts until the end of the event",
     "Magnitude": 8
   },
   {
     "sphere": "Panoply",
     "name": "Contract of Mercenary Need",
     "type": "Enchantment",
-    "desc": "Target Business or Farm Investment functions as a Military Investment for the following Season.",
     "Magnitude": 6
   },
   {
     "sphere": "Panoply",
     "name": "Clad in Golden Raiment",
     "type": "Enchantment",
-    "desc": "The target Military Investment effectiveness is increased by 2 tiers for the next seasons action, provided it takes the ‘Support the Army Action’. The character who controls the military unit is filled with the desire for recognition or approval.",
     "Magnitude": 6
   },
   {
     "sphere": "Panoply",
     "name": "Sunsets Transmutation",
     "type": "-",
-    "desc": "Transforms up to three measures of any material into three measures of any other material.",
     "Magnitude": 6
   },
   {
     "sphere": "Panoply",
     "name": "Contract of Good Faith",
     "type": "Curse (Special)",
-    "desc": "Two target characters are cursed and a contract is presented. If it is determined that either or both parties have broken the terms of the contract, those characters are branded with a permanent painful mark that appears on their face. The mark is permanent. The two characters can return to the Sacred Square to annul the contract, provided they both consent",
     "Magnitude": 6
   },
   {
     "sphere": "Panoply",
     "name": "Audit of Possessors Past",
     "type": "-",
-    "desc": "Priests involved receive a vision about the most significant historical event that this item has been present for, as well as the figures that were present.",
     "Magnitude": 8
   },
   {
     "sphere": "Panoply",
     "name": "Magnates Blessing",
     "type": "Enchantment",
-    "desc": "The target Mine or Business investment produces Locks and Minerals as if it was both a Mine and a Business of the Same tier for the next season.",
     "Magnitude": 13
   },
   {
     "sphere": "Panoply",
     "name": "A Good Trade",
     "type": "Enchantment",
-    "desc": "For the remainder of the event, each time the target successfully casts the damage spell they may also instantly cast the Heal spell. They must know both spells. The heal spell consumes one mana.",
     "Magnitude": 15
   },
   {
     "sphere": "Panoply",
     "name": "Shadow Vale",
     "type": "Enchantment",
-    "desc": "4 target investments are concealed from hostile forces. If the region is lost to hostile foes, this investment does not suffer a loss of production. This effect lasts a year.",
     "Magnitude": 16
   },
   {
     "sphere": "Panoply",
     "name": "Gluttons Curse",
     "type": "Curse",
-    "desc": "The target affected by this curse gains an unending, unfeedable hhunger for the duration. They may not gain any benefits from potions. This effect lasts four events.",
     "Magnitude": 20
   },
   {
     "sphere": "Panoply",
     "name": "Like Water Through Your Fingers",
     "type": "Curse",
-    "desc": "Target loses 3/4 of their income from their investment for 2 years as fortune conspires to remove it from them through malady and misfortune. In addition, the character finds it difficult to hold onto currency, frequently losing it and misplacing it. The character's physical appearance also becomes increasingly unkempt and shabby with stains, dirt and general uncleanliness slowly dominating their appearance.",
     "Magnitude": 30
   },
   {
     "sphere": "Panoply",
     "name": "Craftsmans Failure",
     "type": "-",
-    "desc": "Creates a single arcane implement that can be used once during the event to destroy a part of a defensive fortification on the battlefield.",
     "Magnitude": 35
   },
   {
     "sphere": "Panoply",
     "name": "Consequences of Indolence",
     "type": "Curse",
-    "desc": "Target character affected by this curse is cursed for their lack of action and for their timiditiy with the power vested in them. Once they finish the term of office for their current title, they are ineligible to run for it or hold it until another character has taken it in their place",
     "Magnitude": 40
   },
   {
     "sphere": "Panoply",
     "name": "Fools Gold Fortress",
     "type": "Enchantment",
-    "desc": "Creates a supernatural fortification in a target region. This fortification has a strength of 2,000 and lasts until the start of the next event.",
     "Magnitude": 60
   },
   {
     "sphere": "Panoply",
     "name": "Plague of Idleness",
     "type": "Enchantment",
-    "desc": "Target a Region. During the next season armies in that region suffer 500 casualties, spread evenly among them and cannot replenish. Any mine in the region produces half as much as normal. Any constructions in that region do not progress",
     "Magnitude": 60
   },
   {
     "sphere": "Panoply",
     "name": "Wondrous Forests of the Night",
     "type": "Enchantment",
-    "desc": "All Wildernesses in The Concord produce two extra measures of its most commonly produced materials. This effect ends at the start of the next event.",
     "Magnitude": 100
   }
 ]

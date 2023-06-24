@@ -1,4 +1,5 @@
 import useFormContext from "../../hooks/use-form-context";
+import useRealmDetails from "../../hooks/use-realm-details";
 import ContentPane from "../common/ContentPane";
 
 const border = (
@@ -30,10 +31,11 @@ function ReviewPage() {
     warband,
     sect,
   } = useFormContext();
+  const realmFull = useRealmDetails(realm);
 
   return (
     <div className="flex justify-center">
-      <ContentPane background={realm ? realm.image : null}>
+      <ContentPane background={realmFull ? realmFull.image : null}>
         <div className="flex flex-col items-center mt-2">
           <div className="text-xl leading-6">
             {heroName ? heroName : "Nameless Hero"}
@@ -46,7 +48,7 @@ function ReviewPage() {
             </div>
           )}
           <div className="italic opacity-70">
-            {realm ? realm.citizen : "Realmless"}
+            {realmFull ? realmFull.citizen : "Realmless"}
             {archetypes ? " " + archetypes : ""}
           </div>
           {border}

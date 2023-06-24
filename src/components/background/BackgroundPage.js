@@ -5,6 +5,7 @@ import TextInput from "../common/TextInput";
 import SectionDivider from "../common/SectionDivider";
 import SelectInput from "../common/SelectInput";
 import Chip from "../common/Chip";
+import useRealmDetails from "../../hooks/use-realm-details";
 
 var allArchetypes = require("../../data/tables/archetypes.json");
 var allGraces = require("../../data/tables/graces.json");
@@ -31,11 +32,12 @@ function OptionsPage() {
     investmentDetails,
     setInvestmentDetails,
   } = useFormContext();
+  const realmFull = useRealmDetails(realm);
 
   var renderedArchetypes = null;
   if (realm) {
     renderedArchetypes = allArchetypes
-      .filter((a) => a.realm === realm.name)
+      .filter((a) => a.realm === realm)
       .map((a) => {
         let selected = archetypes?.map((selA) => selA).includes(a.name);
         return (
@@ -154,7 +156,7 @@ function OptionsPage() {
   return (
     <div>
       <div className="flex justify-around">
-        <ContentPane background={realm ? realm.image : null}>
+        <ContentPane background={realmFull ? realmFull.image : null}>
           <SectionDivider left="Enter your name, everything else is optional"></SectionDivider>
         </ContentPane>
         <ContentPane>
