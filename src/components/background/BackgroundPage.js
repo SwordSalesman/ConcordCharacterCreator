@@ -1,11 +1,11 @@
-import Accordion from "../common/Accordion";
-import ContentPane from "../common/ContentPane";
+import Accordion from "../common/Accordion/Accordion";
+import ContentPane from "../common/ContentPane/ContentPane";
 import useFormContext from "../../hooks/use-form-context";
-import TextInput from "../common/TextInput";
-import SectionDivider from "../common/SectionDivider";
-import SelectInput from "../common/SelectInput";
-import Chip from "../common/Chip";
+import TextInput from "../common/TextInput/TextInput";
+import SectionDivider from "../common/SectionDivider/SectionDivider";
+import Chip from "../common/Chip/Chip";
 import useRealmDetails from "../../hooks/use-realm-details";
+import useRealmImage from "../../hooks/use-realm-image";
 
 var allArchetypes = require("../../data/tables/archetypes.json");
 var allGraces = require("../../data/tables/graces.json");
@@ -32,7 +32,7 @@ function OptionsPage() {
     investmentDetails,
     setInvestmentDetails,
   } = useFormContext();
-  const realmFull = useRealmDetails(realm);
+  const realmImage = useRealmImage(realm);
 
   var renderedArchetypes = null;
   if (realm) {
@@ -156,8 +156,8 @@ function OptionsPage() {
   return (
     <div>
       <div className="flex justify-around">
-        <ContentPane background={realmFull ? realmFull.image : null}>
-          <SectionDivider left="Enter your name, everything else is optional"></SectionDivider>
+        <ContentPane background={realmImage}>
+          <SectionDivider left="Tell us about yourself"></SectionDivider>
         </ContentPane>
         <ContentPane>
           <Accordion items={tabs}></Accordion>

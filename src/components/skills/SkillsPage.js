@@ -1,10 +1,10 @@
-import Accordion from "../common/Accordion";
-import ContentPane from "../common/ContentPane";
+import Accordion from "../common/Accordion/Accordion";
+import ContentPane from "../common/ContentPane/ContentPane";
 import useFormContext from "../../hooks/use-form-context";
 import SkillItem from "./SkillItem";
-import SectionDivider from "../common/SectionDivider";
+import SectionDivider from "../common/SectionDivider/SectionDivider";
 import { all } from "axios";
-import useRealmDetails from "../../hooks/use-realm-details";
+import useRealmImage from "../../hooks/use-realm-image";
 var tabs = require("../../data/tables/skillTabs.json");
 var baseSkills = require("../../data/tables/skills.json");
 
@@ -17,7 +17,7 @@ function getNextSkillName(name) {
 function SkillsPage() {
   const { realm, skills, toggleSkill, validSkillChoice, remainingXp } =
     useFormContext();
-  const realmFull = useRealmDetails(realm);
+  const realmImage = useRealmImage(realm);
 
   // toggles the selection of the skill, then checks validity for all skills
   const handleClickSkill = (skill) => {
@@ -78,12 +78,8 @@ function SkillsPage() {
 
   return (
     <div className="flex sm:flex-row justify-around">
-      <ContentPane background={realmFull ? realmFull.image : null}>
-        <SectionDivider
-          left="Remaining XP"
-          right={remainingXp}
-          className="mb-2"
-        />
+      <ContentPane background={realmImage}>
+        <SectionDivider left="Remaining XP" right={remainingXp} />
         {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
         {renderedSkills?.length > 0 ? (
           <div className="flex flex-wrap justify-center">{renderedSkills}</div>

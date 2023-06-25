@@ -5,6 +5,12 @@ import SkillsPage from "./components/skills/SkillsPage";
 import OptionsPage from "./components/options/OptionsPage";
 import BackgroundPage from "./components/background/BackgroundPage";
 import ReviewPage from "./components/review/ReviewPage";
+import { StyledApp } from "./styles/Global";
+import { useState } from "react";
+import { ThemeProvider } from "styled-components";
+import { light, dark } from "./styles/Theme.styled";
+import Button from "./components/common/Button/Button";
+import { BiAdjust } from "react-icons/bi";
 
 const tabs = [
   { name: "Intro", content: <IntroPage /> },
@@ -16,14 +22,22 @@ const tabs = [
 ];
 
 function App() {
+  const [theme, setTheme] = useState(light);
+
+  const toggleTheme = () => {
+    if (theme === light) {
+      setTheme(dark);
+    } else {
+      setTheme(light);
+    }
+  };
+
   return (
-    <div
-      className={
-        "h-[100vh] flex justify-center bg-gradient-to-b from-white to-slate-300 font-serif"
-      }
-    >
-      <Creator tabs={tabs} />
-    </div>
+    <ThemeProvider theme={theme}>
+      <StyledApp>
+        <Creator tabs={tabs} toggleTheme={toggleTheme} />
+      </StyledApp>
+    </ThemeProvider>
   );
 }
 

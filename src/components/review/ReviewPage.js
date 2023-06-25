@@ -1,6 +1,7 @@
 import useFormContext from "../../hooks/use-form-context";
 import useRealmDetails from "../../hooks/use-realm-details";
-import ContentPane from "../common/ContentPane";
+import useRealmImage from "../../hooks/use-realm-image";
+import ContentPane from "../common/ContentPane/ContentPane";
 
 const border = (
   <div className="w-full h-[2px] m-1 bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
@@ -32,10 +33,11 @@ function ReviewPage() {
     sect,
   } = useFormContext();
   const realmFull = useRealmDetails(realm);
+  const realmImage = useRealmImage(realm);
 
   return (
     <div className="flex justify-center">
-      <ContentPane background={realmFull ? realmFull.image : null}>
+      <ContentPane background={realmFull ? realmImage : null}>
         <div className="flex flex-col items-center mt-2">
           <div className="text-xl leading-6">
             {heroName ? heroName : "Nameless Hero"}

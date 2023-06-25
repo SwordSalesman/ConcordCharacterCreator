@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import Chip from "../common/Chip";
+import Chip from "../common/Chip/Chip";
+import { SkillCost } from "../common/Chip/Chip.styled";
 
 function SkillItem({ skill, selectSkill, selected, shadow, inactive }) {
   const handleClick = () => {
@@ -13,8 +14,8 @@ function SkillItem({ skill, selectSkill, selected, shadow, inactive }) {
       shadow={shadow}
       inactive={inactive}
     >
-      <div className="font-sans text-sm">{skill.cost}</div>
-      <div className="ml-1 px-1 border-l border-gray-300">{skill.name}</div>
+      <SkillCost>{skill.cost}</SkillCost>
+      <div>{skill.name}</div>
     </Chip>
   );
 }

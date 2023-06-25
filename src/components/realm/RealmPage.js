@@ -1,5 +1,5 @@
 import RealmItem from "./RealmItem";
-import WikiLink from "../common/WikiLink";
+import WikiLink from "../common/WikiLink/WikiLink";
 import useFormContext from "../../hooks/use-form-context";
 import { realms } from "../../data/tables/realms";
 import useRealmDetails from "../../hooks/use-realm-details";
@@ -7,7 +7,6 @@ import useRealmDetails from "../../hooks/use-realm-details";
 function RealmPage() {
   const { realm, selectRealm } = useFormContext();
   const realmFull = useRealmDetails(realm);
-  console.log(realmFull);
 
   const handleRealmSelect = (r) => {
     if (r === realmFull) {
@@ -32,7 +31,7 @@ function RealmPage() {
     <div>
       <div className="flex flex-col items-center">
         <h1 className="text-3xl font-semibold">{realmFull.name}</h1>
-        <div className="italic opacity-50 text-sm">{realmFull.subtitle}</div>
+        <div className="italic opacity-80 text-sm">{realmFull.subtitle}</div>
         <div className="flex items-center">
           <div className="flex justify-end pl-1">
             <WikiLink path={"almanac:realms:" + realmFull.link} />

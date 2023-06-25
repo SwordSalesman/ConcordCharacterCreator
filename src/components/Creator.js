@@ -1,8 +1,15 @@
 import { useState } from "react";
-import TabItem from "./common/TabItem";
-import Button from "./common/Button";
+import TabItem from "./common/Tabs/TabItem";
+import Button from "./common/Button/Button";
+import {
+  ContentWrapper,
+  CreatorWrapper,
+  NavigationPaneWrapper,
+  TabsWrapper,
+} from "./Creator.style";
 
 import { Transition } from "@headlessui/react";
+import { BiAdjust } from "react-icons/bi";
 
 const transitionClasses = {
   enter: "transition ease-in-out duration-300",
@@ -13,7 +20,7 @@ const transitionClasses = {
   leaveTo: "opacity-0 translate-x-2",
 };
 
-function Creator({ tabs }) {
+function Creator({ tabs, toggleTheme }) {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [pendingTab, setPendingTab] = useState(null);
 
@@ -62,7 +69,7 @@ function Creator({ tabs }) {
         show={activeTab === tab}
         afterLeave={handleTabLeave}
         {...transitionClasses}
-        className="w-full h-full"
+        style={{ width: "100%", height: "100%" }}
       >
         {tab.content}
       </Transition>
@@ -70,7 +77,7 @@ function Creator({ tabs }) {
   });
 
   const renderedButtons = (
-    <div className="flex justify-between mt-2">
+    <>
       {prevTab ? (
         <Button onClick={() => handleClickTab(prevTab)}>
           {"< " + prevTab.name}
@@ -89,25 +96,21 @@ function Creator({ tabs }) {
       >
         {nextTab ? nextTab.name + " >" : "Submit"}
       </Button>
-    </div>
+    </>
   );
 
   return (
-    <div className="m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl">
-      <div
-        id="form-tabs"
-        className="flex justify-center mb-1 border-b-0 border-gray-200 w-full"
+    <CreatorWrapper>
+      <Button
+        onClick={toggleTheme}
+        style={{ position: "absolute", left: "10px", top: "10px" }}
       >
-        {renderedTabs}
-      </div>
-      <div
-        id="form-content"
-        className="h-[400px] flex justify-center items-center text-center"
-      >
-        {renderedContent}
-      </div>
-      {renderedButtons}
-    </div>
+        <BiAdjust></BiAdjust>
+      </Button>
+      <TabsWrapper style={{ marginTop: "10px" }}>{renderedTabs}</TabsWrapper>
+      <ContentWrapper>{renderedContent}</ContentWrapper>
+      <NavigationPaneWrapper>{renderedButtons}</NavigationPaneWrapper>
+    </CreatorWrapper>
   );
 }
 

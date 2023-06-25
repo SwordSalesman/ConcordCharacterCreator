@@ -1,7 +1,5 @@
 import { realms } from "../data/tables/realms";
 
-function useRealmDetails(name) {
+export default function useRealmDetails(name) {
   return realms.find((r) => r.name === name);
 }
-
-export default useRealmDetails;

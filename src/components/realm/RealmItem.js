@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { ThemeProvider, useTheme } from "styled-components";
 
 function RealmItem({ realm, onSelect, selectedRealm }) {
   const handleClick = () => {
@@ -19,7 +20,11 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
 
   return (
     <div onClick={handleClick} className={classes}>
-      <img className="cursor-pointer" alt={realm.name} src={realm.image}></img>
+      <img
+        className="cursor-pointer"
+        alt={realm.name}
+        src={useTheme().name === "light" ? realm.image : realm.imageInv}
+      ></img>
     </div>
   );
 }
