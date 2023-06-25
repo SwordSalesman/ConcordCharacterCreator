@@ -1,92 +1,74 @@
 [
   {
     "name": "Arcane Holding",
-    "type": "Support",
-    "desc": "You seal shut a pouch, allowing only the caster to open it. This effect lasts until time out for the event and should be marked with a small blue ribbon."
+    "type": "Support"
   },
   {
     "name": "Channel Waystone",
-    "type": "Support",
-    "desc": "You channel the immense power of a Waystone to open a portal to wherever the Conflux on the other side has been channeled. This spell allows a few flexible functions:\n- Access the Shardcircle:&nbsp;By channelling the Shardcircle Waystone a Magi can allow themselves entry into the Shardcircle for a few days. This is the only way to enter the Shardcircle.\n- Activate Waystone:&nbsp;As a Conflux approaches, a Magi must use the Channel Waystone skill to create a portal, allowing people to travel to the far side. A short roleplay after this point will reveal to any caster how much time remains before the portal begins to close."
+    "type": "Support"
   },
   {
     "name": "Deadspeaker",
-    "type": "Support",
-    "desc": "You channel arcane power, forcing a spirit that has not fully left a body to speak to you. This spell may be cast upon a corpse that is still being physrepped, allowing the spirit of the dead to speak, and only speak. The spirit is not forced to tell the truth or even speak and as it has not traversed the realms of the dead, it cannot reveal the nature of the afterlife. The spell ends after 10 minutes."
+    "type": "Support"
   },
   {
     "name": "Empower",
-    "type": "Support",
-    "desc": "You channel magical power to energise an ally. The target gains one temporary Energy which must be spent in the next ten minutes. Empower costs no additional Mana to Swift Cast."
+    "type": "Support"
   },
   {
     "name": "Heal",
-    "type": "Support",
-    "desc": "You heal damage inflicted upon your allies. You heal a target for three hit points. These may not exceed their normal amount. This may bring them out of bleedout."
+    "type": "Support"
   },
   {
     "name": "Shield",
-    "type": "Support",
-    "desc": "You craft a magical shield around your allies. The target gains one hit point, which may exceed their normal amount but not the maximum. This hitpoint fades after ten minutes."
+    "type": "Support"
   },
   {
     "name": "Mend Limb",
-    "type": "Support",
-    "desc": "You reknit a damaged limb that has been made useless by the ‘Fracture’ call, allowing it to be used again."
+    "type": "Support"
   },
   {
     "name": "Purify",
-    "type": "Support",
-    "desc": "You flush poisons and contaminants from the target, freeing them of the ‘Venom’ call."
+    "type": "Support"
   },
   {
     "name": "Recall",
-    "type": "Support",
-    "desc": "You break the bonds of space and time to return to the last Waystone you used. Immediately go out of character and leave the current Conflux, returning to the waystone you entered from. You may recall additional friendly participants who are in contact with you by spending one additional mana per person. This additional cost is also doubled if Swift Cast, to 2 additional mana per person."
+    "type": "Support"
   },
   {
     "name": "Reforge",
-    "type": "Support",
-    "desc": "You use arcane power to reforge a weapon or shield that has been broken by the ‘Break’ call, returning it to usefulness."
+    "type": "Support"
   },
   {
     "name": "Damage",
-    "type": "Combat",
-    "desc": "You use your magic to blast the enemy with power. Strike them and call Damage 3"
+    "type": "Combat"
   },
   {
     "name": "Fear",
-    "type": "Combat",
-    "desc": "You use your magic to fill the enemy with horrifying visions. Strike them and call Fear."
+    "type": "Combat"
   },
   {
     "name": "Fire",
-    "type": "Combat",
-    "desc": "You summon arcane flames to scorch your foe. Strike them and call Fire."
+    "type": "Combat"
   },
   {
     "name": "Knockback",
-    "type": "Combat",
-    "desc": "You use your magic to throw your enemy back and to the ground. Strike them and call Knockback."
+    "type": "Combat"
   },
   {
     "name": "Shackle",
-    "type": "Combat",
-    "desc": "You use magic to bind your foe in place. Strike them and call Shackle."
+    "type": "Combat"
   },
   {
     "name": "Silence",
-    "type": "Combat",
-    "desc": "You use magic to rob your foe of their voice. Strike them and call Silence."
+    "type": "Combat"
   },
   {
     "name": "Stun",
-    "type": "Combat",
-    "desc": "You use your magic to freeze your foe in place. Strike them and call Stun."
+    "type": "Combat"
   },
   {
     "name": "Venom",
-    "type": "Combat",
-    "desc": "You use magic to poison your foe. Strike them and call Venom."
+    "type": "Combat"
   }
 ]

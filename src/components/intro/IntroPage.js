@@ -1,9 +1,13 @@
-import WikiLink from "../common/WikiLink";
+import WikiLink from "../common/WikiLink/WikiLink";
 import useFormContext from "../../hooks/use-form-context";
-import Button from "../common/Button";
+import Button from "../common/Button/Button";
+import { TitleWrapper } from "./Intro.style";
+import { FlexCenter } from "../../styles/Global";
 
 function IntroPage() {
   const { gamesPlayed, setGamesPlayed } = useFormContext();
+  // Little bit of extra wiggle room here for planning future builds
+  const maxGames = (new Date().getFullYear() - 2019) * 2;
 
   const handleMinus = () => {
     if (gamesPlayed > 0) {
@@ -12,7 +16,7 @@ function IntroPage() {
   };
 
   const handlePlus = () => {
-    if ((new Date().getFullYear() - 2019) * 2 - gamesPlayed > 0) {
+    if (gamesPlayed < maxGames) {
       setGamesPlayed(gamesPlayed + 1);
     }
   };
@@ -20,18 +24,18 @@ function IntroPage() {
   return (
     <div>
       <br />
-      <p className="text-lg">
+      <TitleWrapper>
         Welcome to the{" "}
         <i>
           <b>Concord Character Creator</b>
         </i>
-      </p>
+      </TitleWrapper>
       <br />
-      <div className="flex justify-center">
+      <FlexCenter>
         <p>You can click on these </p>
-        <WikiLink className="mx-2" />
+        <WikiLink style={{ margin: "0px 8px" }} />
         <p>to take you right to the relevant wiki page.</p>
-      </div>
+      </FlexCenter>
       <br />
       <p>
         Navigate along the tabs above to fill in your character details. Your
@@ -41,16 +45,22 @@ function IntroPage() {
       </p>
       <br />
       <div>
-        <p className="text-lg italic font-semibold">
+        <TitleWrapper style={{ fontWeight: "bold", fontStyle: "italic" }}>
           How many summits has this character attended?
-        </p>
-        <div className="flex justify-center align-top">
+        </TitleWrapper>
+        <FlexCenter>
           <Button icon="minus" onClick={handleMinus}></Button>
-          <div className="select-none font-sans text-2xl w-8">
+          <div
+            style={{
+              fontSize: "1.4rem",
+              width: "50px",
+              fontFamily: "sans-serif",
+            }}
+          >
             {gamesPlayed || 0}
           </div>
           <Button icon="plus" onClick={handlePlus}></Button>
-        </div>
+        </FlexCenter>
       </div>
     </div>
   );

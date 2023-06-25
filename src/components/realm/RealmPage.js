@@ -1,16 +1,18 @@
 import RealmItem from "./RealmItem";
-import WikiLink from "../common/WikiLink";
+import WikiLink from "../common/WikiLink/WikiLink";
 import useFormContext from "../../hooks/use-form-context";
 import { realms } from "../../data/tables/realms";
+import useRealmDetails from "../../hooks/use-realm-details";
 
 function RealmPage() {
   const { realm, selectRealm } = useFormContext();
+  const realmFull = useRealmDetails(realm);
 
   const handleRealmSelect = (r) => {
-    if (r === realm) {
+    if (r === realmFull) {
       selectRealm(null);
     } else {
-      selectRealm(r);
+      selectRealm(r.name);
     }
   };
 
@@ -20,23 +22,23 @@ function RealmPage() {
         key={r.name}
         realm={r}
         onSelect={handleRealmSelect}
-        selectedRealm={realm}
+        selectedRealm={realmFull}
       />
     );
   });
 
-  const content = realm ? (
+  const content = realmFull ? (
     <div>
       <div className="flex flex-col items-center">
-        <h1 className="text-3xl font-semibold">{realm.name}</h1>
-        <div className="italic opacity-50 text-sm">{realm.subtitle}</div>
+        <h1 className="text-3xl font-semibold">{realmFull.name}</h1>
+        <div className="italic opacity-80 text-sm">{realmFull.subtitle}</div>
         <div className="flex items-center">
           <div className="flex justify-end pl-1">
-            <WikiLink path={"almanac:realms:" + realm.link} />
+            <WikiLink path={"almanac:realms:" + realmFull.link} />
           </div>
           <div className=" m-2 ml-1 mt-4">
             <div className="border-l-2 border-gray-300 m-2 pl-2 text-left">
-              {realm.desc}
+              {realmFull.desc}
             </div>
           </div>
         </div>

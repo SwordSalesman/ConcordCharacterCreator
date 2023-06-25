@@ -1,8 +1,10 @@
-import Accordion from "../common/Accordion";
-import ContentPane from "../common/ContentPane";
+import Accordion from "../common/Accordion/Accordion";
+import ContentPane from "../common/ContentPane/ContentPane";
 import useFormContext from "../../hooks/use-form-context";
-import Chip from "../common/Chip";
-import SectionDivider from "../common/SectionDivider";
+import Chip from "../common/Chip/Chip";
+import SectionDivider from "../common/SectionDivider/SectionDivider";
+import useRealmDetails from "../../hooks/use-realm-details";
+import useRealmImage from "../../hooks/use-realm-image";
 var investmentsData = require("../../data/tables/investments.json");
 var spellsData = require("../../data/tables/spells.json");
 var craftsData = require("../../data/tables/crafts.json");
@@ -64,6 +66,7 @@ function OptionsPage() {
     ceremonies,
     toggleCeremony,
   } = useFormContext();
+  const realmImage = useRealmImage(realm);
 
   // Variables
   const skillNames = skills ? skills.map((s) => s.name) : [];
@@ -176,15 +179,15 @@ function OptionsPage() {
   return (
     <div>
       <div className="flex justify-around transition-all">
-        <ContentPane background={realm ? realm.image : null}>
+        <ContentPane background={realmImage}>
           <SectionDivider left="Investment" right={numInvestments} />
-          <div className="flex flex-wrap justify-center my-1">
+          <div className="flex flex-wrap justify-center my-1 mb-5">
             {renderedInvestments}
           </div>
           {showSpells && (
             <>
               <SectionDivider left="Spells" right={numSpells} />
-              <div className="flex flex-wrap justify-center my-1">
+              <div className="flex flex-wrap justify-center my-1 mb-5">
                 {renderedSpells}
               </div>
             </>
@@ -192,7 +195,7 @@ function OptionsPage() {
           {showCrafts && (
             <>
               <SectionDivider left="Crafts" right={numCrafts} />
-              <div className="flex flex-wrap justify-center my-1">
+              <div className="flex flex-wrap justify-center my-1 mb-5">
                 {renderedCrafts}
               </div>
             </>
@@ -200,7 +203,7 @@ function OptionsPage() {
           {showPotions && (
             <>
               <SectionDivider left="Potions" right={numPotions} />
-              <div className="flex flex-wrap justify-center my-1">
+              <div className="flex flex-wrap justify-center my-1 mb-5">
                 {renderedPotions}
               </div>
             </>
@@ -211,7 +214,7 @@ function OptionsPage() {
                 left={"Mastered Ceremonies"}
                 right={numCeremonies}
               />
-              <div className="flex flex-wrap justify-center my-1">
+              <div className="flex flex-wrap justify-center my-1 mb-5">
                 {renderedCeremonies}
               </div>
             </>
