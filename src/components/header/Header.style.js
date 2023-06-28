@@ -5,17 +5,17 @@ import Button from "../common/Button/Button";
 export const HeaderWrapper = styled.div`
   height: 36px;
   width: 100%;
-
   padding: 0 8px;
-  margin-bottom: 30px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   box-shadow: ${(props) => "0 0 10px " + props.theme.shadow};
-
   background-color: ${(props) => props.theme.backgroundRaised};
+
+  margin-bottom: 30px;
+  @media (max-width: ${(props) => props.theme.small}) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const ToggleThemeButton = styled(Button)`

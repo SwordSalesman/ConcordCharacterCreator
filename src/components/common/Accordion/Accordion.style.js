@@ -49,6 +49,9 @@ export const AccordionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
 
+  justify-content: center;
+  gap: 0px;
+
   overflow: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {

@@ -6,6 +6,7 @@ import SectionDivider from "../common/SectionDivider/SectionDivider";
 import Chip from "../common/Chip/Chip";
 import useRealmDetails from "../../hooks/use-realm-details";
 import useRealmImage from "../../hooks/use-realm-image";
+import { ColumnPageWrapper } from "../../styles/Global";
 
 var allArchetypes = require("../../data/tables/archetypes.json");
 var allGraces = require("../../data/tables/graces.json");
@@ -79,11 +80,15 @@ function OptionsPage() {
           ></TextInput>
           <div className="w-full">
             <div className="">Archetype</div>
-            <div className="flex w-full flex-wrap">{renderedArchetypes}</div>
+            <div className="flex w-full flex-wrap justify-center">
+              {renderedArchetypes}
+            </div>
           </div>
           <div className="w-full">
             <div className="">Grace</div>
-            <div className="flex w-full flex-wrap">{renderedGraces}</div>
+            <div className="flex w-full flex-wrap justify-center">
+              {renderedGraces}
+            </div>
           </div>
         </>
       ),
@@ -154,16 +159,14 @@ function OptionsPage() {
   ];
 
   return (
-    <div>
-      <div className="flex justify-around">
-        <ContentPane background={realmImage}>
-          <SectionDivider left="Tell us about yourself"></SectionDivider>
-        </ContentPane>
-        <ContentPane>
-          <Accordion items={tabs}></Accordion>
-        </ContentPane>
-      </div>
-    </div>
+    <ColumnPageWrapper>
+      <ContentPane background={realmImage} style={{ flex: 1 }}>
+        <SectionDivider left="Tell us about yourself"></SectionDivider>
+      </ContentPane>
+      <ContentPane style={{ flex: 2 }}>
+        <Accordion items={tabs}></Accordion>
+      </ContentPane>
+    </ColumnPageWrapper>
   );
 }
 

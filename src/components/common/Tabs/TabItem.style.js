@@ -6,8 +6,10 @@ export const StyledTabItem = styled.button`
   border-color: #ffffff00;
 
   margin-bottom: 10px;
-  width: 150px;
+  height: 30px;
   transition: 0.2s;
+
+  padding: 0;
 
   &::selection {
     border-color: ${(props) => props.theme.outline};
@@ -15,4 +17,12 @@ export const StyledTabItem = styled.button`
 
   border-color: ${(props) =>
     props.primary ? props.theme.special : "#ffffff00"};
+
+  opacity: ${(props) => (props.primary ? "1.0" : "0.6")};
+  flex: 1;
+
+  @media (max-width: ${(props) => props.theme.small}) {
+    /* font-size: ${(props) => (props.primary ? "16px" : "12px")}; */
+    font-size: 14px;
+  }
 `;

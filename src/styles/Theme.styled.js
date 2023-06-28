@@ -3,13 +3,13 @@
 export const light = {
   name: "light",
 
-  small: 600,
+  small: "600px",
 
   background: "#ffffff",
   backgroundRaised: "#eff0f3",
-  text: "#192129",
-  textSoft: "#1d2025",
-  textStrong: "#4a4a4a",
+  text: "#202020",
+  textSoft: "#727272",
+  textStrong: "#424242",
   border: "#a6b7cc",
   shadow: "#a6a9ad",
   outline: "#7eb3e6",
@@ -20,34 +20,16 @@ export const light = {
   dark: "#37485a",
 };
 
-export const light_yellow = {
-  name: "light",
-
-  small: 600,
-
-  background: "#ffffff",
-  backgroundRaised: "#eff0f3",
-  text: "#192129",
-  textSoft: "#1d2025",
-  textStrong: "#4a4a4a",
-  border: "#c7bcab",
-  shadow: "#837f757c",
-  outline: "#f7c55b",
-  special: "#e0b334",
-  specialBg: "#c58b1e",
-  specialDull: "#c4b697",
-  light: "#eef4fc",
-  dark: "#37485a",
-};
-
 export const dark = {
   name: "dark",
 
+  small: "600px",
+
   background: "#202020",
   backgroundRaised: "#292b2c",
-  text: "#edeff2",
-  textSoft: "#eeeff0",
-  textStrong: "#bbbbbb",
+  text: "#f3f3f3",
+  textSoft: "#929292",
+  textStrong: "#cfcfcf",
   border: "#4a515b",
   shadow: "#0000005d",
   outline: "#62a1d7",

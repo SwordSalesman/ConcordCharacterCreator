@@ -24,3 +24,10 @@ export const FlexCenter = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const ColumnPageWrapper = styled.div`
+  @media (min-width: ${(props) => props.theme.small}) {
+    display: flex;
+    justify-content: space-around;
+  }
+`;

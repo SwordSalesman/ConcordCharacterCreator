@@ -2,15 +2,17 @@ import useFormContext from "../../hooks/use-form-context";
 import useRealmDetails from "../../hooks/use-realm-details";
 import useRealmImage from "../../hooks/use-realm-image";
 import ContentPane from "../common/ContentPane/ContentPane";
-
-const border = (
-  <div className="w-full h-[2px] m-1 bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
-);
+import {
+  ReviewHeader,
+  ReviewPageWrapper,
+  ReviewSubtitles,
+  StyledBorder,
+} from "./ReviewPage.style";
 
 function ReviewItem({ label, children }) {
   return (
     <div className="flex w-full justify-between">
-      <div className="italic text-left mr-3">{label}</div>
+      <ReviewHeader>{label}</ReviewHeader>
       <div className="text-right">{children}</div>
     </div>
   );
@@ -36,34 +38,34 @@ function ReviewPage() {
   const realmImage = useRealmImage(realm);
 
   return (
-    <div className="flex justify-center">
-      <ContentPane background={realmFull ? realmImage : null}>
+    <ReviewPageWrapper>
+      <ContentPane forceShow={true} background={realmFull ? realmImage : null}>
         <div className="flex flex-col items-center mt-2">
           <div className="text-xl leading-6">
             {heroName ? heroName : "Nameless Hero"}
           </div>
-          <div className="italic opacity-70">
+          <ReviewSubtitles>
             {realmFull ? realmFull.citizen : "Realmless"}
             {archetypes ? " " + archetypes : ""}
-          </div>
+          </ReviewSubtitles>
           {graces && (
-            <div className="italic opacity-70">
+            <ReviewSubtitles>
               {graces.map((g) => (
                 <>{g.name + ", Graced By " + g.sphere}</>
               ))}
-            </div>
+            </ReviewSubtitles>
           )}
-          {border}
+          <StyledBorder />
           <ReviewItem label="Summits attended">{gamesPlayed}</ReviewItem>
           {investments && (
             <ReviewItem label="Investment">
               {investments.map((i) => i.name).toString()}
             </ReviewItem>
           )}
-          {(warband || sect) && border}
+          {(warband || sect) && <StyledBorder />}
           {warband && <ReviewItem label="Warband">{warband}</ReviewItem>}
           {sect && <ReviewItem label="Sect">{sect}</ReviewItem>}
-          {border}
+          <StyledBorder />
           <ReviewItem label="Skills">
             {skills?.length > 0
               ? skills.map((s) => " " + s.name).toString()
@@ -91,7 +93,7 @@ function ReviewPage() {
           )}
         </div>
       </ContentPane>
-    </div>
+    </ReviewPageWrapper>
   );
 }
 

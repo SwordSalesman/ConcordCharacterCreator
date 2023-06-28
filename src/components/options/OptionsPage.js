@@ -5,6 +5,8 @@ import Chip from "../common/Chip/Chip";
 import SectionDivider from "../common/SectionDivider/SectionDivider";
 import useRealmDetails from "../../hooks/use-realm-details";
 import useRealmImage from "../../hooks/use-realm-image";
+import { ColumnPageWrapper } from "../../styles/Global";
+import { SectionWrapper } from "../common/SectionDivider/SectionDivider.style";
 var investmentsData = require("../../data/tables/investments.json");
 var spellsData = require("../../data/tables/spells.json");
 var craftsData = require("../../data/tables/crafts.json");
@@ -177,54 +179,52 @@ function OptionsPage() {
   }
 
   return (
-    <div>
-      <div className="flex justify-around transition-all">
-        <ContentPane background={realmImage}>
-          <SectionDivider left="Investment" right={numInvestments} />
-          <div className="flex flex-wrap justify-center my-1 mb-5">
-            {renderedInvestments}
-          </div>
-          {showSpells && (
-            <>
-              <SectionDivider left="Spells" right={numSpells} />
-              <div className="flex flex-wrap justify-center my-1 mb-5">
-                {renderedSpells}
-              </div>
-            </>
+    <ColumnPageWrapper>
+      <ContentPane background={realmImage}>
+        <SectionDivider left="Investment" right={numInvestments} />
+        <SectionWrapper>
+          {renderedInvestments.length > 0 ? (
+            renderedInvestments
+          ) : (
+            <div className="opacity-60 italic px-10">
+              {
+                "Select your Investment, as well as any other options you may need."
+              }
+            </div>
           )}
-          {showCrafts && (
-            <>
-              <SectionDivider left="Crafts" right={numCrafts} />
-              <div className="flex flex-wrap justify-center my-1 mb-5">
-                {renderedCrafts}
-              </div>
-            </>
-          )}
-          {showPotions && (
-            <>
-              <SectionDivider left="Potions" right={numPotions} />
-              <div className="flex flex-wrap justify-center my-1 mb-5">
-                {renderedPotions}
-              </div>
-            </>
-          )}
-          {showCeremonies && (
-            <>
-              <SectionDivider
-                left={"Mastered Ceremonies"}
-                right={numCeremonies}
-              />
-              <div className="flex flex-wrap justify-center my-1 mb-5">
-                {renderedCeremonies}
-              </div>
-            </>
-          )}
-        </ContentPane>
-        <ContentPane>
-          <Accordion items={renderedTabs}></Accordion>
-        </ContentPane>
-      </div>
-    </div>
+        </SectionWrapper>
+        {showSpells && (
+          <>
+            <SectionDivider left="Spells" right={numSpells} />
+            <SectionWrapper>{renderedSpells}</SectionWrapper>
+          </>
+        )}
+        {showCrafts && (
+          <>
+            <SectionDivider left="Crafts" right={numCrafts} />
+            <SectionWrapper>{renderedCrafts}</SectionWrapper>
+          </>
+        )}
+        {showPotions && (
+          <>
+            <SectionDivider left="Potions" right={numPotions} />
+            <SectionWrapper>{renderedPotions}</SectionWrapper>
+          </>
+        )}
+        {showCeremonies && (
+          <>
+            <SectionDivider
+              left={"Mastered Ceremonies"}
+              right={numCeremonies}
+            />
+            <SectionWrapper>{renderedCeremonies}</SectionWrapper>
+          </>
+        )}
+      </ContentPane>
+      <ContentPane>
+        <Accordion items={renderedTabs}></Accordion>
+      </ContentPane>
+    </ColumnPageWrapper>
   );
 }
 

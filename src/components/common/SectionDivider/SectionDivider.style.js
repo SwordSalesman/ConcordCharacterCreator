@@ -4,13 +4,27 @@ export const StyledSectionDivider = styled.div`
   display: flex;
   justify-content: center;
   gap: 6px;
-  margin: 0px 0px 4px 0px;
+  /* margin: auto;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  width: fit-content; */
 
-  border-style: solid;
+  /* border-style: solid;
   border-bottom-width: 1px;
-  border-color: ${(props) => props.theme.border};
+  border-color: ${(props) => props.theme.special}; */
 
-  transition: 0.2s;
+  color: ${(props) => props.theme.special};
 `;
 
 export const StyledSectionValue = styled.div``;
+
+export const SectionWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 5px;
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    margin-bottom: 15px;
+  }
+`;

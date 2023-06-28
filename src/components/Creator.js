@@ -10,6 +10,7 @@ import {
 
 import { Transition } from "@headlessui/react";
 import { BiAdjust } from "react-icons/bi";
+import { useTheme } from "styled-components";
 
 const transitionClasses = {
   enter: "transition ease-in-out duration-300",
@@ -51,14 +52,29 @@ function Creator({ tabs, toggleTheme }) {
     }
   };
 
-  const renderedTabs = tabs.map((tab) => {
+  const renderedTabs = tabs.map((tab, index) => {
     return (
-      <TabItem
-        key={tab.name}
-        tab={tab}
-        onTabSelect={handleClickTab}
-        active={tab === activeTab}
-      ></TabItem>
+      <>
+        <TabItem
+          key={tab.name}
+          tab={tab}
+          onTabSelect={handleClickTab}
+          active={tab === activeTab}
+        />
+        {index < tabs.length - 1 && (
+          <div
+            key={index}
+            style={{
+              userSelect: "none",
+              opacity: "0.5",
+              fontWeight: "bold",
+              margin: "0 1px",
+            }}
+          >
+            {">"}
+          </div>
+        )}
+      </>
     );
   });
 
@@ -101,7 +117,7 @@ function Creator({ tabs, toggleTheme }) {
 
   return (
     <CreatorWrapper>
-      <TabsWrapper style={{ marginTop: "10px" }}>{renderedTabs}</TabsWrapper>
+      <TabsWrapper>{renderedTabs}</TabsWrapper>
       <ContentWrapper>{renderedContent}</ContentWrapper>
       <NavigationPaneWrapper>{renderedButtons}</NavigationPaneWrapper>
     </CreatorWrapper>

@@ -4,21 +4,23 @@ import {
   ContentPaneWrapper,
   PaneBackgroundImage,
 } from "./ContentPane.style";
+import { useTheme } from "styled-components";
 
-function ContentPane({ background, children }) {
+function ContentPane({ background, forceShow, children, ...rest }) {
   const renderedBackground = background ? (
     <div>
       <PaneBackgroundImage
         src={background}
+        forceShow={forceShow}
         alt="Blurred background of a realmic logo"
       ></PaneBackgroundImage>
     </div>
   ) : null;
 
   return (
-    <ContentPaneWrapper>
+    <ContentPaneWrapper {...rest}>
       {renderedBackground}
-      <ContentPaneContent bg={background}>{children}</ContentPaneContent>
+      <ContentPaneContent>{children}</ContentPaneContent>
     </ContentPaneWrapper>
   );
 }

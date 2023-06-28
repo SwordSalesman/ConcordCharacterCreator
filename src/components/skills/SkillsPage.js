@@ -5,6 +5,8 @@ import SkillItem from "./SkillItem";
 import SectionDivider from "../common/SectionDivider/SectionDivider";
 import { all } from "axios";
 import useRealmImage from "../../hooks/use-realm-image";
+import { ColumnPageWrapper } from "../../styles/Global";
+import { SectionWrapper } from "../common/SectionDivider/SectionDivider.style";
 var tabs = require("../../data/tables/skillTabs.json");
 var baseSkills = require("../../data/tables/skills.json");
 
@@ -77,22 +79,22 @@ function SkillsPage() {
   });
 
   return (
-    <div className="flex sm:flex-row justify-around">
+    <ColumnPageWrapper>
       <ContentPane background={realmImage}>
         <SectionDivider left="Remaining XP" right={remainingXp} />
         {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
         {renderedSkills?.length > 0 ? (
-          <div className="flex flex-wrap justify-center">{renderedSkills}</div>
+          <SectionWrapper>{renderedSkills}</SectionWrapper>
         ) : (
           <div className="opacity-60 italic px-10">
-            Select your skills from the options on the right
+            {"Select your skills from the options here"}
           </div>
         )}
       </ContentPane>
       <ContentPane>
         <Accordion items={renderedTabs}></Accordion>
       </ContentPane>
-    </div>
+    </ColumnPageWrapper>
   );
 }
 
