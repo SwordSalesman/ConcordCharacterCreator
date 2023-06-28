@@ -38,6 +38,10 @@ export const PaneBackgroundImage = styled.img`
   filter: blur(0px);
   opacity: 0.1;
 
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0%);
+
   z-index: -100;
 
   @media (max-width: ${(props) => props.theme.small}) {

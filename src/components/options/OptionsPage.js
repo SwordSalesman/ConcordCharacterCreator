@@ -183,7 +183,7 @@ function OptionsPage() {
       <ContentPane background={realmImage}>
         <SectionDivider left="Investment" right={numInvestments} />
         <SectionWrapper>
-          {renderedInvestments.length > 0 ? (
+          {renderedInvestments?.length > 0 ? (
             renderedInvestments
           ) : (
             <div className="opacity-60 italic px-10">
