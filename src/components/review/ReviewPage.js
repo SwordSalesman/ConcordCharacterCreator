@@ -42,6 +42,10 @@ function ReviewPage() {
           <div className="text-xl leading-6">
             {heroName ? heroName : "Nameless Hero"}
           </div>
+          <div className="italic opacity-70">
+            {realmFull ? realmFull.citizen : "Realmless"}
+            {archetypes ? " " + archetypes : ""}
+          </div>
           {graces && (
             <div className="italic opacity-70">
               {graces.map((g) => (
@@ -49,10 +53,6 @@ function ReviewPage() {
               ))}
             </div>
           )}
-          <div className="italic opacity-70">
-            {realmFull ? realmFull.citizen : "Realmless"}
-            {archetypes ? " " + archetypes : ""}
-          </div>
           {border}
           <ReviewItem label="Summits attended">{gamesPlayed}</ReviewItem>
           {investments && (

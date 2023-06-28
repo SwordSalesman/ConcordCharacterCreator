@@ -101,12 +101,6 @@ function Creator({ tabs, toggleTheme }) {
 
   return (
     <CreatorWrapper>
-      <Button
-        onClick={toggleTheme}
-        style={{ position: "absolute", left: "10px", top: "10px" }}
-      >
-        <BiAdjust></BiAdjust>
-      </Button>
       <TabsWrapper style={{ marginTop: "10px" }}>{renderedTabs}</TabsWrapper>
       <ContentWrapper>{renderedContent}</ContentWrapper>
       <NavigationPaneWrapper>{renderedButtons}</NavigationPaneWrapper>

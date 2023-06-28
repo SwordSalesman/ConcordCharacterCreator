@@ -5,12 +5,13 @@ import SkillsPage from "./components/skills/SkillsPage";
 import OptionsPage from "./components/options/OptionsPage";
 import BackgroundPage from "./components/background/BackgroundPage";
 import ReviewPage from "./components/review/ReviewPage";
-import { StyledApp } from "./styles/Global";
+import { GlobalStyle, StyledApp } from "./styles/Global";
 import { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { light, dark } from "./styles/Theme.styled";
 import Button from "./components/common/Button/Button";
 import { BiAdjust } from "react-icons/bi";
+import Header from "./components/header/Header";
 
 const tabs = [
   { name: "Intro", content: <IntroPage /> },
@@ -34,8 +35,10 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
       <StyledApp>
-        <Creator tabs={tabs} toggleTheme={toggleTheme} />
+        <Header toggleTheme={toggleTheme} />
+        <Creator tabs={tabs} />
       </StyledApp>
     </ThemeProvider>
   );

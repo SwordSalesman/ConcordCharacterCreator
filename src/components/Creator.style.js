@@ -2,8 +2,12 @@ import { styled } from "styled-components";
 
 // "m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl"
 export const CreatorWrapper = styled.div`
-  margin: 12px;
-  width: 600px;
+  margin: auto;
+
+  width: 90%;
+  min-width: 300px;
+  max-width: 600px;
+
   border-style: solid;
 `;
 

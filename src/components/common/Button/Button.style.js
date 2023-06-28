@@ -36,6 +36,15 @@ export const StyledButton = styled.button`
   border-color: ${(props) =>
     props.primary ? props.theme.specialBg : props.theme.border};
   background-color: ${(props) =>
-    props.primary ? props.theme.specialBg : props.theme.background};
-  color: ${(props) => (props.primary ? props.theme.light : props.theme.text)};
+    props.disabled
+      ? props.theme.backgroundRaised
+      : props.primary
+      ? props.theme.specialBg
+      : props.theme.background};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.border
+      : props.primary
+      ? props.theme.light
+      : props.theme.text};
 `;
