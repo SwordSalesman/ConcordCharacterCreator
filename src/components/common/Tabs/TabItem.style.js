@@ -23,5 +23,6 @@ export const StyledTabItem = styled.button`
 
     @media (max-width: ${(props) => props.theme.small}) {
         font-size: 1rem;
+        opacity: ${(props) => (props.primary ? "1.0" : "0.4")};
     }
 `;

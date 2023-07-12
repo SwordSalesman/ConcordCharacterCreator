@@ -15,6 +15,9 @@ export const TabsWrapper = styled.div`
     justify-content: space-around;
     margin-bottom: 10px;
     gap: 12px;
+    @media (max-width: ${(props) => props.theme.small}) {
+        gap: 0;
+    }
 `;
 
 // "h-[400px] flex justify-center items-center text-center"

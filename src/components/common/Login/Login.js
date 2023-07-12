@@ -162,7 +162,7 @@ export default Login;
 
 const ModalBox = styled.div`
     position: absolute;
-    top: 25%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 350px;
