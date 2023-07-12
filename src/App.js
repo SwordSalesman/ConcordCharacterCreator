@@ -1,47 +1,67 @@
 import Creator from "./components/Creator";
-import IntroPage from "./components/intro/IntroPage";
-import RealmPage from "./components/realm/RealmPage";
-import SkillsPage from "./components/skills/SkillsPage";
-import OptionsPage from "./components/options/OptionsPage";
-import BackgroundPage from "./components/background/BackgroundPage";
-import ReviewPage from "./components/review/ReviewPage";
 import { GlobalStyle, StyledApp } from "./styles/Global";
 import { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { light, dark } from "./styles/Theme.styled";
-import Button from "./components/common/Button/Button";
-import { BiAdjust } from "react-icons/bi";
-import Header from "./components/header/Header";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { auth } from "./hooks/use-firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import RealmPage from "./components/pages/realm/RealmPage";
+import SkillsPage from "./components/pages/skills/SkillsPage";
+import OptionsPage from "./components/pages/options/OptionsPage";
+import BackgroundPage from "./components/pages/background/BackgroundPage";
+import ReviewPage from "./components/pages/review/ReviewPage";
+import Header from "./components/common/Header/Header";
+import IntroPage from "./components/pages/intro/IntroPage";
+import Login from "./components/common/Login/Login";
 
 const tabs = [
-  { name: "Intro", content: <IntroPage /> },
-  { name: "Realm", content: <RealmPage /> },
-  { name: "Skills", content: <SkillsPage /> },
-  { name: "Options", content: <OptionsPage /> },
-  { name: "Background", content: <BackgroundPage /> },
-  { name: "Review", content: <ReviewPage /> },
+    { name: "Intro", content: <IntroPage /> },
+    { name: "Realm", content: <RealmPage /> },
+    { name: "Skills", content: <SkillsPage /> },
+    { name: "Options", content: <OptionsPage /> },
+    { name: "Background", content: <BackgroundPage /> },
+    { name: "Review", content: <ReviewPage /> },
 ];
 
 function App() {
-  const [theme, setTheme] = useState(light);
+    const [theme, setTheme] = useState(light);
+    const [showLogin, setShowLogin] = useState(false);
+    const [user, loading, error] = useAuthState(auth);
 
-  const toggleTheme = () => {
-    if (theme === light) {
-      setTheme(dark);
-    } else {
-      setTheme(light);
-    }
-  };
+    const toggleTheme = () => {
+        if (theme === light) {
+            setTheme(dark);
+        } else {
+            setTheme(light);
+        }
+    };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <StyledApp>
-        <Header toggleTheme={toggleTheme} />
-        <Creator tabs={tabs} />
-      </StyledApp>
-    </ThemeProvider>
-  );
+    const handleShowLogin = () => setShowLogin(true);
+    const handleCloseLogin = () => setShowLogin(false);
+
+    return (
+        <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <StyledApp>
+                <Header
+                    toggleTheme={toggleTheme}
+                    handleShowLogin={handleShowLogin}
+                    user={user}
+                />
+                <Creator tabs={tabs} />
+                {showLogin && (
+                    <Login
+                        show={showLogin}
+                        handleClose={handleCloseLogin}
+                        user={user}
+                        userLoading={loading}
+                    />
+                )}
+            </StyledApp>
+        </ThemeProvider>
+    );
 }
 
 export default App;

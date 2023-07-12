@@ -1,50 +1,59 @@
 import { styled } from "styled-components";
 
-/*
-  classNames(
-    "w-fit rounded-lg select-none",
-    "border cursor-pointer",
-    "transition-all",
-    "m-1 py-1 px-2",
-    rest.className,
-    {
-      "bg-gray-100 border-gray-500 hover:bg-gray-300 active:bg-gray-400":
-        !disabled,
-      "bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white border-gray-500 hover:border-gray-600":
-        active && !disabled,
-      "bg-gray-200 text-gray-400 border-gray-400 cursor-auto": disabled,
-      "w-6 h-6 rounded-full py-0.5 px-0.5": icon,
-    }
-  );
-*/
 export const StyledButton = styled.button`
-  border-radius: 8px;
-  border-style: solid;
-  border-width: 1px;
+    border-radius: 4px;
+    border-style: solid;
+    /* border-width: 1px; */
+    width: ${(props) => (props.wide ? "100%" : "fit-content")};
 
-  padding: 4px 8px;
-  transition: 0.2s;
+    padding: 8px 8px;
+    transition: 0.2s;
 
-  &:hover {
-    filter: brightness(0.9);
-  }
+    border-color: ${(props) =>
+        props.primary ? props.theme.specialBg : props.theme.border};
+    background-color: ${(props) => {
+        if (props.disabled) {
+            return props.theme.backgroundRaised;
+        }
+        if (props.primary) {
+            return props.theme.specialBg;
+        }
+        return props.theme.background;
+    }};
+    color: ${(props) => {
+        if (props.disabled) {
+            return props.theme.border;
+        }
+        if (props.primary) {
+            return props.theme.light;
+        }
+        return props.theme.text;
+    }};
 
-  &::selection {
-    border-color: ${(props) => props.theme.outline};
-  }
+    &:hover {
+        background-color: ${(props) => {
+            if (props.disabled) {
+                return props.theme.backgroundRaised;
+            }
+            if (props.primary) {
+                return props.theme.specialBgRaised;
+            } else {
+                return props.theme.borderSoft;
+            }
+        }};
+        color: ${(props) => {
+            if (props.disabled) {
+                return props.theme.border;
+            }
+            if (props.primary) {
+                return props.theme.light;
+            } else {
+                return props.theme.textStrong;
+            }
+        }};
+    }
 
-  border-color: ${(props) =>
-    props.primary ? props.theme.specialBg : props.theme.border};
-  background-color: ${(props) =>
-    props.disabled
-      ? props.theme.backgroundRaised
-      : props.primary
-      ? props.theme.specialBg
-      : props.theme.background};
-  color: ${(props) =>
-    props.disabled
-      ? props.theme.border
-      : props.primary
-      ? props.theme.light
-      : props.theme.text};
+    &::selection {
+        border-color: ${(props) => props.theme.outline};
+    }
 `;

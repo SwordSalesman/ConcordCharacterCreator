@@ -11,18 +11,18 @@ import { styled } from "styled-components";
 */
 
 export const StyledWikiLink = styled.div`
-  border-radius: 10px;
-  width: 25px;
-  height: 25px;
+    border-radius: 10px;
+    width: 25px;
+    height: 25px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  &:hover {
-    cursor: help;
-  }
+    &:hover {
+        cursor: help;
+    }
 
-  color: ${(props) => props.theme.light};
-  background: ${(props) => props.theme.specialBg};
+    color: ${(props) => props.theme.light};
+    background: ${(props) => props.theme.specialBg};
 `;
