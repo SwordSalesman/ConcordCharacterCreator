@@ -28,6 +28,12 @@ export const StyledChip = styled.button`
     border-width: 1px;
     border-radius: 20px;
 
+    @media (max-width: ${(props) => props.theme.small}) {
+        /* font-size: 26px; */
+        /* gap: 10px; */
+        padding: 5px 10px 5px 8px;
+    }
+
     &:hover {
         filter: brightness(0.9);
     }

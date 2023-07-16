@@ -17,16 +17,25 @@ import {
     AiOutlineUser,
     AiTwotoneProfile,
 } from "react-icons/ai";
+import { useState } from "react";
+import { Alert } from "@mui/material";
+import { toast } from "react-toastify";
+import { GiTick } from "react-icons/gi";
+import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 
 function Header({ toggleTheme, handleShowLogin, user }) {
     const theme = useTheme();
 
-    console.log(user);
+    // console.log(user);
 
     return (
         <HeaderWrapper>
             <div style={{ flex: 1 }}>
-                <ToggleThemeButton onClick={toggleTheme}>
+                <ToggleThemeButton
+                    onClick={() => {
+                        toggleTheme();
+                    }}
+                >
                     <BiAdjust></BiAdjust>
                 </ToggleThemeButton>
             </div>
@@ -72,14 +81,16 @@ function Header({ toggleTheme, handleShowLogin, user }) {
                             gap: "8px",
                         }}
                     >
-                        <div
-                            style={{
-                                fontSize: "1rem",
-                            }}
-                        >
-                            {user ? user.displayName : "Sign in"}
-                        </div>
-                        <BiUser />
+                        {!user && (
+                            <div
+                                style={{
+                                    fontSize: "1rem",
+                                }}
+                            >
+                                {"Sign in"}
+                            </div>
+                        )}
+                        {user ? <FaUserCheck /> : <FaUserPlus />}
                     </div>
                 </AccountButton>
             </div>

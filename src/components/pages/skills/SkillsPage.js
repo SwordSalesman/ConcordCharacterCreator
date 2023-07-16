@@ -61,9 +61,7 @@ function SkillsPage() {
                 );
             });
 
-        const link = "play-guide:the-system:character-creation:" + tab.link;
-
-        return { label: tab.label, content: renderedSkills, link: link };
+        return { label: tab.label, content: renderedSkills, link: tab.link };
     });
 
     // Chips to render in the left section

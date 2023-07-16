@@ -1,8 +1,18 @@
 import classNames from "classnames";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
-import { StyledButton } from "./Button.style";
+import { LoaderSpinner, StyledButton } from "./Button.style";
+import { CircularProgress } from "@mui/material";
 
-function Button({ onClick, icon, active, disabled, wide, children, ...rest }) {
+function Button({
+    onClick,
+    icon,
+    active,
+    disabled,
+    wide,
+    loading,
+    children,
+    ...rest
+}) {
     var renderedIcon = null;
     if (icon === "plus") {
         renderedIcon = <AiOutlinePlus />;
@@ -15,12 +25,19 @@ function Button({ onClick, icon, active, disabled, wide, children, ...rest }) {
         <StyledButton
             onClick={onClick}
             primary={active}
-            disabled={disabled}
             wide={wide}
+            loading={loading}
+            disabled={disabled || loading}
             {...rest}
         >
-            {renderedIcon}
-            {children}
+            {loading ? (
+                <LoaderSpinner />
+            ) : (
+                <>
+                    {renderedIcon}
+                    {children}
+                </>
+            )}
         </StyledButton>
     );
 }

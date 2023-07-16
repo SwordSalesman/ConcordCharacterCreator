@@ -36,7 +36,7 @@ function RealmPage() {
                 </div>
                 <div className='flex items-center'>
                     <div className='flex justify-end pl-1'>
-                        <WikiLink path={"almanac:realms:" + realmFull.link} />
+                        <WikiLink path={realmFull.link} />
                     </div>
                     <div className=' m-2 ml-1 mt-4'>
                         <div className='border-l-2 border-gray-300 m-2 pl-2 text-left'>

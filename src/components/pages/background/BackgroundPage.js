@@ -91,11 +91,11 @@ function BackgroundPage() {
                     </div>
                 </>
             ),
-            link: "almanac:realms:archetypes",
+            link: "Archetypes",
         },
         {
             label: "Alliances",
-            link: "play-guide:bands",
+            link: "Bands",
             content: (
                 <>
                     <TextInput

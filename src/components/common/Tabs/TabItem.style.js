@@ -17,12 +17,14 @@ export const StyledTabItem = styled.button`
 
     border-color: ${(props) =>
         props.primary ? props.theme.special : "#ffffff00"};
+    color: ${(props) =>
+        props.primary ? props.theme.textStrong : props.theme.text};
 
     opacity: ${(props) => (props.primary ? "1.0" : "0.6")};
     flex: 1;
 
     @media (max-width: ${(props) => props.theme.small}) {
         font-size: 1rem;
-        opacity: ${(props) => (props.primary ? "1.0" : "0.4")};
+        opacity: ${(props) => (props.primary ? "1.0" : "0.3")};
     }
 `;

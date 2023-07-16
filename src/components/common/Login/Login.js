@@ -3,7 +3,7 @@
 import { Modal, Tab, Tabs } from "@mui/material";
 import Button from "../Button/Button";
 import { styled, useTheme } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextInput from "../TextInput/TextInput";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {
@@ -13,16 +13,21 @@ import {
     signInWithGoogle,
 } from "../../../hooks/use-firebase";
 
-function Login({ show, handleClose, user, loading }) {
+function Login({ show, handleClose, user }) {
     const theme = useTheme();
     const [tab, setTab] = useState(0);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const submittable =
         email !== "" &&
         password !== "" &&
         (tab === 1 || (tab === 0 && name !== ""));
+
+    useEffect(() => {
+        setLoading(false);
+    }, [user]);
 
     const handleChange = (event, newValue) => {
         setTab(newValue);
@@ -30,8 +35,10 @@ function Login({ show, handleClose, user, loading }) {
 
     const handlePrimaryButton = () => {
         if (tab === 0) {
+            setLoading(true);
             registerWithEmailAndPassword(name, email, password);
         } else if (tab === 1) {
+            setLoading(true);
             logInWithEmailAndPassword(email, password);
         }
     };
@@ -102,18 +109,20 @@ function Login({ show, handleClose, user, loading }) {
             aria-describedby='modal-modal-description'
         >
             <ModalBox>
-                {loading ? (
-                    <div>Loading...</div>
-                ) : user ? (
-                    <Button
-                        wide
-                        primary
-                        onClick={() => {
-                            logout();
-                        }}
-                    >
-                        Sign Out
-                    </Button>
+                {user ? (
+                    <>
+                        <Button
+                            wide
+                            primary
+                            onClick={() => {
+                                setLoading(true);
+                                logout();
+                            }}
+                            loading={loading}
+                        >
+                            Sign Out
+                        </Button>
+                    </>
                 ) : (
                     <>
                         {tabs}
@@ -123,7 +132,8 @@ function Login({ show, handleClose, user, loading }) {
                                 wide={true}
                                 primary={submittable}
                                 disabled={!submittable}
-                                onClick={() => handlePrimaryButton}
+                                onClick={handlePrimaryButton}
+                                loading={loading}
                             >
                                 {tab === 0 && "Sign Up"}
                                 {tab === 1 && "Log In"}
@@ -134,8 +144,10 @@ function Login({ show, handleClose, user, loading }) {
                                 wide
                                 primary
                                 onClick={() => {
+                                    setLoading(true);
                                     signInWithGoogle();
                                 }}
+                                loading={loading}
                             >
                                 Sign in with Google
                             </Button>

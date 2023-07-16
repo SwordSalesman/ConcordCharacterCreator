@@ -16,7 +16,7 @@ export const TabsWrapper = styled.div`
     margin-bottom: 10px;
     gap: 12px;
     @media (max-width: ${(props) => props.theme.small}) {
-        gap: 0;
+        gap: 0px;
     }
 `;
 

@@ -125,7 +125,7 @@ function OptionsPage() {
     const renderedTabs = [
         genTabContent(
             "Investment",
-            "play-guide:investments",
+            "Investments",
             investmentsData,
             investments,
             toggleInvestment,
@@ -136,7 +136,7 @@ function OptionsPage() {
         renderedTabs.push(
             genTabContent(
                 "Spells",
-                "play-guide:spellcasting",
+                "Spellcasting",
                 spellsData,
                 spells,
                 toggleSpell,
@@ -147,7 +147,7 @@ function OptionsPage() {
         renderedTabs.push(
             genTabContent(
                 "Artisan Crafts",
-                "appendix:artisan-crafts",
+                "Artisan_Crafts",
                 craftsData,
                 crafts,
                 toggleCraft,
@@ -158,7 +158,7 @@ function OptionsPage() {
         renderedTabs.push(
             genTabContent(
                 "Potion Recipes",
-                "appendix:potions",
+                "List_of_Apothecary_Potions",
                 potionsData,
                 potions,
                 togglePotion,
@@ -170,7 +170,7 @@ function OptionsPage() {
         renderedTabs.push(
             genTabContent(
                 "Mastered Ceremonies",
-                "appendix:ceremonies",
+                "Ceremonies_Overview",
                 ceremoniesData,
                 ceremonies,
                 toggleCeremony,

@@ -57,3 +57,22 @@ export const StyledButton = styled.button`
         border-color: ${(props) => props.theme.outline};
     }
 `;
+
+export const LoaderSpinner = styled.div`
+    border: 10px solid ${(props) => props.theme.backgroundRaised};
+    border-top: 10px solid ${(props) => props.theme.special};
+    border-radius: 50%;
+    width: 0.9em;
+    height: 0.9em;
+    margin: auto;
+    animation: spin 1s linear infinite;
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+`;

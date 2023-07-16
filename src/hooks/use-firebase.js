@@ -9,6 +9,7 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
     signOut,
+    sendEmailVerification,
 } from "firebase/auth";
 import {
     getFirestore,
@@ -17,6 +18,8 @@ import {
     collection,
     where,
     addDoc,
+    getDoc,
+    doc,
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -55,16 +58,21 @@ const signInWithGoogle = async () => {
         }
     } catch (err) {
         console.error(err);
-        alert(err.message);
+        // alert(err.message);
     }
 };
 
 const logInWithEmailAndPassword = async (email, password) => {
     try {
-        const user = await signInWithEmailAndPassword(auth, email, password);
+        const userCred = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+        const user = userCred.user;
     } catch (err) {
         console.error(err);
-        alert(err.message);
+        // alert(err.message);
     }
 };
 
@@ -72,15 +80,16 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
-        await addDoc(collection(db, "users"), {
+        const userDoc = await addDoc(collection(db, "users"), {
             uid: user.uid,
             name,
-            authProvider: "local",
+            authProvider: "email",
             email,
         });
+        await sendEmailVerification(user);
     } catch (err) {
         console.error(err);
-        alert(err.message);
+        // alert(err.message);
     }
 };
 
@@ -90,7 +99,7 @@ const sendPasswordReset = async (email) => {
         alert("Password reset link sent!");
     } catch (err) {
         console.error(err);
-        alert(err.message);
+        // alert(err.message);
     }
 };
 

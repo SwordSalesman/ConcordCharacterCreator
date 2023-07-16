@@ -11,7 +11,7 @@ export const AccordionWrapper = styled.div`
 
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 0px;
 `;
 
 /*
@@ -35,6 +35,10 @@ export const AccordionHeader = styled.button`
     &:hover {
         cursor: pointer;
     }
+
+    @media (max-width: ${(props) => props.theme.small}) {
+        padding: 8px 11px;
+    }
 `;
 
 /*
@@ -49,7 +53,7 @@ export const AccordionContent = styled.div`
     display: flex;
     flex-wrap: wrap;
 
-    justify-content: center;
+    justify-content: left;
     gap: 0px;
 
     overflow: auto;
@@ -66,4 +70,8 @@ export const AccordionContent = styled.div`
     transition-duration: 0.4s;
 
     max-height: ${(props) => (props.expanded ? "250px" : "0px")};
+
+    @media (max-width: ${(props) => props.theme.small}) {
+        justify-content: center;
+    }
 `;

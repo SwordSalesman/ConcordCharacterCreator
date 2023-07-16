@@ -39,7 +39,7 @@ export const dark = {
     outline: "#62a1d7",
     special: "#7eb4e6",
     specialBg: "#1b5f9a",
-    specialBgRaised: "#355d81",
+    specialBgRaised: "#1b75c3",
     specialDull: "#506272",
     light: "#d7e5f6",
     dark: "#273645",

@@ -8,6 +8,10 @@ export const GlobalStyle = createGlobalStyle`
     transition-duration: 0.2s;
     font-family: Georgia, "Times New Roman", Times, serif;
     font-size: 18px;
+
+    @media (max-width: ${(props) => props.theme.small}) {
+      
+    }
   }
 
   h1, h2 {

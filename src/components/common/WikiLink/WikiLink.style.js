@@ -25,4 +25,9 @@ export const StyledWikiLink = styled.div`
 
     color: ${(props) => props.theme.light};
     background: ${(props) => props.theme.specialBg};
+
+    @media (max-width: ${(props) => props.theme.small}) {
+        width: 30px;
+        height: 30px;
+    }
 `;

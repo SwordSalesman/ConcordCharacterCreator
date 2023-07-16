@@ -2,10 +2,9 @@ import { GiOpenBook } from "react-icons/gi";
 import classNames from "classnames";
 import { StyledWikiLink } from "./WikiLink.style";
 
-const root = "http://concordlarpaus.wikidot.com/";
+const root = "https://wiki.concordlarp.com/index.php/";
 
 function WikiLink({ path, ...rest }) {
-    //const url = path ? root + path.join(":") : root;
     const url = path ? root + path : root;
 
     const handleClick = (e) => {

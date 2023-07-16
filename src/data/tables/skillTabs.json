@@ -1,22 +1,22 @@
 [
-  {
-    "label": "Combat",
-    "link": "combat-skills"
-  },
-  {
-    "label": "Magic",
-    "link": "magic-skills"
-  },
-  {
-    "label": "Crafting",
-    "link": "crafting-skills"
-  },
-  {
-    "label": "Religious",
-    "link": "religious-skills"
-  },
-  {
-    "label": "Surgical",
-    "link": "surgical-skills"
-  }
+    {
+        "label": "Combat",
+        "link": "Combat_Skills"
+    },
+    {
+        "label": "Magic",
+        "link": "Magic_Skills"
+    },
+    {
+        "label": "Crafting",
+        "link": "Crafting_Skills"
+    },
+    {
+        "label": "Religious",
+        "link": "Religious_Skills"
+    },
+    {
+        "label": "Surgical",
+        "link": "Surgical_Skills"
+    }
 ]

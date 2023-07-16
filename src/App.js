@@ -1,6 +1,6 @@
 import Creator from "./components/Creator";
 import { GlobalStyle, StyledApp } from "./styles/Global";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { light, dark } from "./styles/Theme.styled";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -15,6 +15,8 @@ import ReviewPage from "./components/pages/review/ReviewPage";
 import Header from "./components/common/Header/Header";
 import IntroPage from "./components/pages/intro/IntroPage";
 import Login from "./components/common/Login/Login";
+import { ToastContainer, toast } from "react-toastify";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const tabs = [
     { name: "Intro", content: <IntroPage /> },
@@ -41,6 +43,10 @@ function App() {
     const handleShowLogin = () => setShowLogin(true);
     const handleCloseLogin = () => setShowLogin(false);
 
+    useEffect(() => {
+        setShowLogin(false);
+    }, [user]);
+
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle />
@@ -56,7 +62,6 @@ function App() {
                         show={showLogin}
                         handleClose={handleCloseLogin}
                         user={user}
-                        userLoading={loading}
                     />
                 )}
             </StyledApp>
