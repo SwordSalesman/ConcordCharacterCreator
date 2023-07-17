@@ -12,6 +12,7 @@ import {
     registerWithEmailAndPassword,
     signInWithGoogle,
 } from "../../../hooks/use-firebase";
+import { FcGoogle } from "react-icons/fc";
 
 function Login({ show, handleClose, user }) {
     const theme = useTheme();
@@ -149,7 +150,25 @@ function Login({ show, handleClose, user }) {
                                 }}
                                 loading={loading}
                             >
-                                Sign in with Google
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignContent: "center",
+                                        gap: "10px",
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            backgroundColor: "white",
+                                            borderRadius: "50%",
+                                            padding: "1px",
+                                        }}
+                                    >
+                                        <FcGoogle size={18} />
+                                    </div>
+                                    <div>Sign in with Google</div>
+                                </div>
                             </Button>
                         </div>
                         <div
