@@ -44,6 +44,13 @@ function Login({ show, handleClose, user }) {
         }
     };
 
+    const handleLogout = () => {
+        if (window.confirm("Are you sure you want to sign out?")) {
+            setLoading(true);
+            logout();
+        }
+    };
+
     const tabs = (
         <Tabs
             value={tab}
@@ -111,19 +118,20 @@ function Login({ show, handleClose, user }) {
         >
             <ModalBox>
                 {user ? (
-                    <>
+                    <div>
+                        <div style={{ margin: "2px 0 10px 0" }}>
+                            <p>Signed in as</p>
+                            <b>{user.email}</b>
+                        </div>
                         <Button
                             wide
                             primary
-                            onClick={() => {
-                                setLoading(true);
-                                logout();
-                            }}
+                            onClick={handleLogout}
                             loading={loading}
                         >
                             Sign Out
                         </Button>
-                    </>
+                    </div>
                 ) : (
                     <>
                         {tabs}
