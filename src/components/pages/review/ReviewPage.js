@@ -3,18 +3,20 @@ import useRealmDetails from "../../../hooks/use-realm-details";
 import useRealmImage from "../../../hooks/use-realm-image";
 import ContentPane from "../../../components/common/ContentPane/ContentPane";
 import {
+    ReviewContent,
     ReviewHeader,
     ReviewPageWrapper,
+    ReviewSection,
     ReviewSubtitles,
     StyledBorder,
 } from "./ReviewPage.style";
 
 function ReviewItem({ label, children }) {
     return (
-        <div className='flex w-full justify-between'>
+        <ReviewSection>
             <ReviewHeader>{label}</ReviewHeader>
-            <div className='text-right'>{children}</div>
-        </div>
+            <ReviewContent>{children}</ReviewContent>
+        </ReviewSection>
     );
 }
 

@@ -24,9 +24,21 @@ export const StyledBorder = styled.div`
 
 export const ReviewSubtitles = styled.div`
     font-style: italic;
-    color: ${(props) => props.theme.textSoft};
+    color: ${(props) => props.theme.text};
 `;
 
 export const ReviewHeader = styled.div`
     color: ${(props) => props.theme.textStrong};
+    line-height: 1rem;
+    margin-top: 10px;
 `;
+
+export const ReviewSection = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+`;
+
+export const ReviewContent = styled.div``;

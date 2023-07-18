@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import Button from "./common/Button/Button";
 
 // "m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl"
 export const CreatorWrapper = styled.div`
@@ -12,7 +13,8 @@ export const CreatorWrapper = styled.div`
     flex-direction: column;
     align-items: center;
 
-    margin-top: 75px;
+    margin-top: 65px;
+    margin-bottom: 65px;
 `;
 
 // "flex justify-center mb-1 border-b-0 border-gray-200 w-full";
@@ -20,7 +22,7 @@ export const TabsWrapper = styled.div`
     display: flex;
     justify-content: space-around;
     margin-bottom: 15px;
-    width: 100%;
+    width: 95%;
     gap: 12px;
     @media (max-width: ${(props) => props.theme.small}) {
         width: auto;
@@ -52,7 +54,7 @@ export const NavigationPaneWrapper = styled.div`
     justify-content: space-between;
 
     /* margin-top: 10px; */
-    padding: 10px;
+    padding: 4px 10px;
     z-index: 10;
 
     background-color: ${(props) => props.theme.background};
@@ -63,6 +65,12 @@ export const NavigationPaneWrapper = styled.div`
 
         position: fixed;
         bottom: 0;
+        height: 50px;
         //background-color: ${(props) => props.theme.backgroundRaised};
     }
+`;
+
+export const NavigationButton = styled(Button)`
+    width: 150px;
+    padding: 4px 10px;
 `;

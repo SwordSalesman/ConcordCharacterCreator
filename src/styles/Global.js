@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 17px;
 
     @media (max-width: ${(props) => props.theme.small}) {
-      font-size: 19px;  
+      font-size: 18px;  
     }
   }
 

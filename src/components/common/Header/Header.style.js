@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 // "m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl"
 export const HeaderWrapper = styled.div`
     /* height: 36px; */
+    height: 50px;
     width: 100%;
     padding: 4px 8px;
     display: flex;

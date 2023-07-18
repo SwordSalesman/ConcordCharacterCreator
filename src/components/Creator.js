@@ -4,6 +4,7 @@ import Button from "./common/Button/Button";
 import {
     ContentWrapper,
     CreatorWrapper,
+    NavigationButton,
     NavigationPaneWrapper,
     TabsWrapper,
 } from "./Creator.style";
@@ -98,18 +99,19 @@ function Creator({ tabs, toggleTheme }) {
     const renderedButtons = (
         <>
             {prevTab ? (
-                <Button
+                <NavigationButton
                     onClick={() => handleClickTab(prevTab)}
-                    style={{ width: "130px" }}
                     secondary
                 >
-                    <AiOutlineLeft />
-                    {prevTab.name}
-                </Button>
+                    <div style={{ width: "15x" }}>
+                        <AiOutlineLeft />
+                    </div>
+                    <div style={{ width: "115px" }}>{prevTab.name}</div>
+                </NavigationButton>
             ) : (
                 <div></div>
             )}
-            <Button
+            <NavigationButton
                 onClick={
                     nextTab
                         ? () => handleClickTab(nextTab)
@@ -118,12 +120,15 @@ function Creator({ tabs, toggleTheme }) {
                                   "The Concord team is not currently taking submissions."
                               )
                 }
-                style={{ width: "130px" }}
                 primary
             >
-                {nextTab ? nextTab.name : "Submit"}
-                <AiOutlineRight />
-            </Button>
+                <div style={{ width: "115px" }}>
+                    {nextTab ? nextTab.name : "Submit"}
+                </div>
+                <div style={{ width: "15px" }}>
+                    <AiOutlineRight />
+                </div>
+            </NavigationButton>
         </>
     );
 
