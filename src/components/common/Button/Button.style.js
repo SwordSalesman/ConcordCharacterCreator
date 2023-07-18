@@ -10,7 +10,7 @@ export const StyledButton = styled.button`
     transition: 0.2s;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     border-color: ${(props) =>
         props.primary ? props.theme.specialBg : props.theme.border};
