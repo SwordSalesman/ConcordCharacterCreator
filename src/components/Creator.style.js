@@ -52,9 +52,10 @@ export const NavigationPaneWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     /* margin-top: 10px; */
-    padding: 8px 10px;
+    padding: 0 10px;
     z-index: 10;
 
     background-color: ${(props) => props.theme.background};
@@ -73,4 +74,5 @@ export const NavigationPaneWrapper = styled.div`
 export const NavigationButton = styled(Button)`
     width: 130px;
     padding: 4px 4px;
+    height: 38px;
 `;

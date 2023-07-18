@@ -9,7 +9,7 @@ export const StyledRealmItem = styled.div`
     height: 130px;
 
     filter: ${(props) =>
-        props.selection && !props.active ? "blur(2px)" : "blur(0)"};
+        props.selection && !props.active ? "blur(2px)" : "none"};
     opacity: ${(props) => (props.selection && !props.active ? "0.65" : "1")};
 
     @media (min-width: ${(props) => props.theme.small}) {
