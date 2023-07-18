@@ -1,8 +1,7 @@
 import { styled } from "styled-components";
 
 export const StyledTabItem = styled.button`
-    border-style: solid;
-    border-bottom-width: 3px;
+    border-bottom: 3px solid;
     border-color: #ffffff00;
 
     margin-bottom: 10px;
@@ -24,7 +23,8 @@ export const StyledTabItem = styled.button`
     flex: 1;
 
     @media (max-width: ${(props) => props.theme.small}) {
-        font-size: 1rem;
-        opacity: ${(props) => (props.primary ? "1.0" : "0.3")};
+        opacity: ${(props) => (props.primary ? "1.0" : "0.25")};
+        border-color: ${(props) =>
+            props.primary ? props.theme.special : props.theme.textSoft};
     }
 `;

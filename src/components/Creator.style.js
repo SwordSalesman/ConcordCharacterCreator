@@ -4,18 +4,26 @@ import { styled } from "styled-components";
 export const CreatorWrapper = styled.div`
     margin: auto;
 
-    width: 95%;
+    width: 100%;
+
     min-width: 300px;
     max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 75px;
 `;
 
 // "flex justify-center mb-1 border-b-0 border-gray-200 w-full";
 export const TabsWrapper = styled.div`
     display: flex;
     justify-content: space-around;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    width: 100%;
     gap: 12px;
     @media (max-width: ${(props) => props.theme.small}) {
+        width: auto;
         gap: 0px;
     }
 `;
@@ -26,7 +34,9 @@ export const ContentWrapper = styled.div`
     justify-content: center;
     text-align: center;
     align-items: top;
-    min-height: 360px;
+    min-height: 400px;
+
+    width: 95%;
 
     @media (max-width: ${(props) => props.theme.small}) {
         margin-bottom: 10px;
@@ -37,17 +47,22 @@ export const ContentWrapper = styled.div`
 `;
 
 export const NavigationPaneWrapper = styled.div`
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+
+    /* margin-top: 10px; */
+    padding: 10px;
+    z-index: 10;
+
+    background-color: ${(props) => props.theme.background};
+    /* box-shadow: ${(props) => "0 0 15px " + props.theme.shadow}; */
 
     @media (max-width: ${(props) => props.theme.small}) {
-        width: 100%;
-        padding: 0 10px;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        border-top: 1px solid ${(props) => props.theme.borderSoft};
 
+        position: fixed;
+        bottom: 0;
         //background-color: ${(props) => props.theme.backgroundRaised};
-        z-index: 10;
     }
 `;

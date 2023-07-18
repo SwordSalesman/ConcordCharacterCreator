@@ -8,6 +8,9 @@ export const StyledButton = styled.button`
 
     padding: 8px 8px;
     transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
     border-color: ${(props) =>
         props.primary ? props.theme.specialBg : props.theme.border};
@@ -17,6 +20,9 @@ export const StyledButton = styled.button`
         }
         if (props.primary) {
             return props.theme.specialBg;
+        }
+        if (props.secondary) {
+            return props.theme.backgroundRaised;
         }
         return props.theme.background;
     }};

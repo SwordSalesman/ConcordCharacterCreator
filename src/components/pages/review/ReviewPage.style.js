@@ -13,11 +13,11 @@ export const ReviewPageWrapper = styled.div`
 export const StyledBorder = styled.div`
     width: 100%;
     height: 2px;
-    background: rgb(194, 194, 194);
+    background: ${(props) => props.theme.border};
     background: linear-gradient(
         90deg,
         rgba(0, 0, 0, 0) 0%,
-        ${(props) => props.theme.textSoft} 50%,
+        ${(props) => props.theme.border} 50%,
         rgba(0, 0, 0, 0) 100%
     );
 `;

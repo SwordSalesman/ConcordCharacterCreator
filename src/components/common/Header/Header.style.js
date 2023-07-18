@@ -14,10 +14,10 @@ export const HeaderWrapper = styled.div`
     background-color: ${(props) => props.theme.background};
     border-bottom: 1px solid ${(props) => props.theme.borderSoft};
 
-    margin-bottom: 30px;
-    @media (max-width: ${(props) => props.theme.small}) {
-        margin-bottom: 20px;
-    }
+    /* margin-bottom: 30px; */
+    position: fixed;
+    top: 0;
+    z-index: 10;
 `;
 
 export const ToggleThemeButton = styled(Button)``;

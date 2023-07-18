@@ -34,12 +34,12 @@ function RealmPage() {
                 <div className='italic opacity-80 text-sm'>
                     {realmFull.subtitle}
                 </div>
-                <div className='flex items-center'>
-                    <div className='flex justify-end pl-1'>
+                <div className='flex items-center ml-3'>
+                    <div className='flex justify-end'>
                         <WikiLink path={realmFull.link} />
                     </div>
                     <div className=' m-2 ml-1 mt-4'>
-                        <div className='border-l-2 border-gray-300 m-2 pl-2 text-left'>
+                        <div className='border-l border-gray-300 m-2 pl-2 text-left'>
                             {realmFull.desc}
                         </div>
                     </div>
@@ -51,8 +51,8 @@ function RealmPage() {
     );
 
     return (
-        <div className='flex flex-col mt-6'>
-            <div className='flex justify-center items-center mb-1'>
+        <div className='flex flex-col mt-1 w-full'>
+            <div className='flex justify-center items-center mb-2'>
                 {renderedLogos}
             </div>
             <div className='text-center'>{content}</div>

@@ -11,6 +11,13 @@ import {
 import { Transition } from "@headlessui/react";
 import { BiAdjust } from "react-icons/bi";
 import { useTheme } from "styled-components";
+import {
+    AiOutlineArrowLeft,
+    AiOutlineArrowRight,
+    AiOutlineLeft,
+    AiOutlineRight,
+} from "react-icons/ai";
+import { TabDivider } from "./common/Tabs/TabItem.style";
 
 const transitionClasses = {
     enter: "transition ease-in-out duration-300",
@@ -23,12 +30,12 @@ const transitionClasses = {
 
 function Creator({ tabs, toggleTheme }) {
     const [activeTab, setActiveTab] = useState(tabs[0]);
-    const [pendingTab, setPendingTab] = useState(null);
+    // const [pendingTab, setPendingTab] = useState(null);
 
     let activeIndex = tabs.indexOf(activeTab);
-    if (activeIndex === -1) {
-        activeIndex = tabs.indexOf(pendingTab);
-    }
+    // if (activeIndex === -1) {
+    //     activeIndex = tabs.indexOf(pendingTab);
+    // }
     const prevTab = activeIndex > 0 ? tabs[activeIndex - 1] : null;
     const nextTab =
         activeIndex >= 0 && activeIndex < tabs.length - 1
@@ -39,18 +46,18 @@ function Creator({ tabs, toggleTheme }) {
         if (activeTab === tab) {
             return;
         }
-        setActiveTab(null);
-        setPendingTab(tab);
+        setActiveTab(tab);
+        // setPendingTab(tab);
     };
 
-    const handleTabLeave = () => {
-        if (pendingTab === null) {
-            setActiveTab(tabs[0]);
-        } else {
-            setActiveTab(pendingTab);
-            setPendingTab(null);
-        }
-    };
+    // const handleTabLeave = () => {
+    //     if (pendingTab === null) {
+    //         setActiveTab(tabs[0]);
+    //     } else {
+    //         setActiveTab(pendingTab);
+    //         setPendingTab(null);
+    //     }
+    // };
 
     const renderedTabs = tabs.map((tab, index) => {
         return (
@@ -61,42 +68,43 @@ function Creator({ tabs, toggleTheme }) {
                     onTabSelect={handleClickTab}
                     active={tab === activeTab}
                 />
-                {index < tabs.length - 1 && (
-                    <div
-                        key={index}
-                        style={{
-                            userSelect: "none",
-                            opacity: "0.5",
-                            fontWeight: "bold",
-                            margin: "0 1px",
-                        }}
-                    >
-                        {/* {">"} */}
-                    </div>
-                )}
             </>
         );
     });
 
     const renderedContent = tabs.map((tab, index) => {
         return (
-            <Transition
-                key={tab.name}
-                show={activeTab === tab}
-                afterLeave={handleTabLeave}
-                {...transitionClasses}
-                style={{ width: "100%", height: "100%" }}
-            >
-                {tab.content}
-            </Transition>
+            // <Transition
+            //     key={tab.name}
+            //     show={activeTab === tab}
+            //     afterLeave={handleTabLeave}
+            //     {...transitionClasses}
+            //     style={{ width: "100%", height: "100%" }}
+            // >
+            activeTab === tab &&
+            // (
+            // <div
+            //     style={{
+            //         width: "100%",
+            //         height: "100%",
+            //     }}
+            // >
+            tab.content
+            // </div>
+            // </Transition>
         );
     });
 
     const renderedButtons = (
         <>
             {prevTab ? (
-                <Button onClick={() => handleClickTab(prevTab)}>
-                    {"< " + prevTab.name}
+                <Button
+                    onClick={() => handleClickTab(prevTab)}
+                    style={{ width: "130px" }}
+                    secondary
+                >
+                    <AiOutlineLeft />
+                    {prevTab.name}
                 </Button>
             ) : (
                 <div></div>
@@ -110,9 +118,11 @@ function Creator({ tabs, toggleTheme }) {
                                   "The Concord team is not currently taking submissions."
                               )
                 }
-                active
+                style={{ width: "130px" }}
+                primary
             >
-                {nextTab ? nextTab.name + " >" : "Submit"}
+                {nextTab ? nextTab.name : "Submit"}
+                <AiOutlineRight />
             </Button>
         </>
     );

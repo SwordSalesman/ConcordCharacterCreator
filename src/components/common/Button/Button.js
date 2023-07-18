@@ -6,7 +6,8 @@ import { CircularProgress } from "@mui/material";
 function Button({
     onClick,
     icon,
-    active,
+    primary,
+    secondary,
     disabled,
     wide,
     loading,
@@ -24,7 +25,8 @@ function Button({
     return (
         <StyledButton
             onClick={onClick}
-            primary={active}
+            primary={primary}
+            secondary={secondary}
             wide={wide}
             loading={loading}
             disabled={disabled || loading}

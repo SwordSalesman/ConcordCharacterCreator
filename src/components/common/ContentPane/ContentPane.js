@@ -14,20 +14,18 @@ function ContentPane({
     ...rest
 }) {
     const renderedBackground = background ? (
-        <div>
-            <PaneBackgroundImage
-                src={background}
-                mobileShow={mobileShow}
-                imageCenter={imageCenter}
-                alt='Blurred background of a realmic logo'
-            ></PaneBackgroundImage>
-        </div>
+        <PaneBackgroundImage
+            src={background}
+            mobileShow={mobileShow}
+            imageCenter={imageCenter}
+            alt='Blurred background of a realmic logo'
+        ></PaneBackgroundImage>
     ) : null;
 
     return (
         <ContentPaneWrapper {...rest}>
-            {renderedBackground}
             <ContentPaneContent>{children}</ContentPaneContent>
+            {renderedBackground}
         </ContentPaneWrapper>
     );
 }

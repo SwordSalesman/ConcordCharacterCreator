@@ -7,10 +7,10 @@ export const GlobalStyle = createGlobalStyle`
     border-color: ${(props) => props.theme.border};
     transition-duration: 0.2s;
     font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: 18px;
+    font-size: 17px;
 
     @media (max-width: ${(props) => props.theme.small}) {
-      
+      font-size: 19px;  
     }
   }
 

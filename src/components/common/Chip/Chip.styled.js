@@ -37,7 +37,7 @@ export const StyledChip = styled.button`
     &:hover {
         filter: brightness(0.9);
     }
-    background: ${(props) =>
+    background-color: ${(props) =>
         props.selected
             ? props.theme.specialBg
             : props.disabled

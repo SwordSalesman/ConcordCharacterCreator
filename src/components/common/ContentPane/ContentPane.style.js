@@ -24,24 +24,28 @@ export const ContentPaneContent = styled.div`
     display: flex;
     flex-direction: column;
 
+    position: relative;
+    z-index: 2;
+
     width: 100%;
     height: 100%;
 `;
 
 export const PaneBackgroundImage = styled.img`
-    position: fixed;
-    top: 16px;
-    width: 300px;
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: auto;
 
     filter: blur(0px);
-    opacity: 0.08;
+    opacity: 0.1;
+    z-index: 0;
 
-    position: fixed;
-    left: 50%;
     transform: ${(props) =>
         props.imageCenter ? "translate(-50%, 5%)" : "translate(-100%, 5%)"};
-
-    z-index: -100;
 
     @media (max-width: ${(props) => props.theme.small}) {
         ${(props) => !props.mobileShow && "display: none;"}
