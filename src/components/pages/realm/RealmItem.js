@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ThemeProvider, useTheme } from "styled-components";
-import { StyledRealmItem } from "./StyledRealmItem";
+import { StyledRealmItem } from "./RealmItem.style";
 
 function RealmItem({ realm, onSelect, selectedRealm }) {
     const handleClick = () => {

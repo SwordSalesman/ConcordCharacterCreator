@@ -30,9 +30,9 @@ export const dark = {
 
     background: "#14181f",
     backgroundRaised: "#1d2330",
-    text: "rgb(191 200 217)",
-    textSoft: "#929292",
-    textStrong: "rgb(232 239 252)",
+    text: "#bfc8d9",
+    textSoft: "#a8b0c0",
+    textStrong: "#e8eef8",
     border: "#4a515b",
     borderSoft: "#222730",
     shadow: "#0000005d",

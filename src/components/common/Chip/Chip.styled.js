@@ -28,15 +28,17 @@ export const StyledChip = styled.button`
     border-width: 1px;
     border-radius: 20px;
 
+    @media (min-width: ${(props) => props.theme.small}) {
+        &:hover {
+            filter: brightness(0.9);
+        }
+    }
     @media (max-width: ${(props) => props.theme.small}) {
         /* font-size: 26px; */
         /* gap: 10px; */
         padding: 5px 10px 5px 8px;
     }
 
-    &:hover {
-        filter: brightness(0.9);
-    }
     background-color: ${(props) =>
         props.selected
             ? props.theme.specialBg
@@ -56,8 +58,8 @@ export const StyledChip = styled.button`
             ? props.theme.border
             : props.theme.border};
 
-    box-shadow: ${(props) =>
-        props.shadow ? "0 0 5px " + props.theme.shadow : "0"};
+    /* box-shadow: ${(props) =>
+        props.shadow ? "0 0 5px " + props.theme.shadow : "0"}; */
 `;
 
 export const SkillCost = styled.div`

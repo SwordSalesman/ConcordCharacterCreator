@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 export const ReviewPageWrapper = styled.div`
     display: flex;
     justify-content: center;
+    line-height: 1rem;
 
     @media (max-width: ${(props) => props.theme.small}) {
         padding: 0 30px;
@@ -12,7 +13,7 @@ export const ReviewPageWrapper = styled.div`
 // "w-full h-[2px] m-1 bg-gradient-to-r from-transparent via-gray-500 to-transparent"
 export const StyledBorder = styled.div`
     width: 100%;
-    height: 2px;
+    height: 1px;
     background: ${(props) => props.theme.border};
     background: linear-gradient(
         90deg,
@@ -28,9 +29,9 @@ export const ReviewSubtitles = styled.div`
 `;
 
 export const ReviewHeader = styled.div`
-    color: ${(props) => props.theme.textStrong};
-    line-height: 1rem;
-    margin-top: 10px;
+    color: ${(props) => props.theme.textSoft};
+    font-size: 0.8rem;
+    line-height: 0.8rem;
 `;
 
 export const ReviewSection = styled.div`

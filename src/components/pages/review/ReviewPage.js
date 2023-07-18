@@ -46,21 +46,23 @@ function ReviewPage() {
                 imageCenter={true}
                 background={realmFull ? realmImage : null}
             >
-                <div className='flex flex-col items-center mt-2'>
-                    <div className='text-xl leading-6'>
-                        {heroName ? heroName : "Nameless Hero"}
-                    </div>
-                    <ReviewSubtitles>
-                        {realmFull ? realmFull.citizen : "Realmless"}
-                        {archetypes ? " " + archetypes : ""}
-                    </ReviewSubtitles>
-                    {graces && (
+                <div className='flex flex-col items-center mt-2 gap-2'>
+                    <div>
+                        <h2 className='text-xl leading-6'>
+                            {heroName ? heroName : "Nameless Hero"}
+                        </h2>
                         <ReviewSubtitles>
-                            {graces.map((g) => (
-                                <>{g.name + ", Graced By " + g.sphere}</>
-                            ))}
+                            {realmFull ? realmFull.citizen : "Realmless"}
+                            {archetypes ? " " + archetypes : ""}
                         </ReviewSubtitles>
-                    )}
+                        {graces && (
+                            <ReviewSubtitles>
+                                {graces.map((g) => (
+                                    <>{g.name + ", Graced By " + g.sphere}</>
+                                ))}
+                            </ReviewSubtitles>
+                        )}
+                    </div>
                     <StyledBorder />
                     <ReviewItem label='Summits attended'>
                         {gamesPlayed}
