@@ -103,10 +103,10 @@ function Creator({ tabs, toggleTheme }) {
                     onClick={() => handleClickTab(prevTab)}
                     secondary
                 >
-                    <div style={{ width: "15x" }}>
+                    <div>
                         <AiOutlineLeft />
                     </div>
-                    <div style={{ width: "115px" }}>{prevTab.name}</div>
+                    <div style={{ width: "110px" }}>{prevTab.name}</div>
                 </NavigationButton>
             ) : (
                 <div></div>
@@ -122,10 +122,10 @@ function Creator({ tabs, toggleTheme }) {
                 }
                 primary
             >
-                <div style={{ width: "115px" }}>
+                <div style={{ width: "110px" }}>
                     {nextTab ? nextTab.name : "Submit"}
                 </div>
-                <div style={{ width: "15px" }}>
+                <div>
                     <AiOutlineRight />
                 </div>
             </NavigationButton>

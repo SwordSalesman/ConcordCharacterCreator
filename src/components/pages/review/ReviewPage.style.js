@@ -3,11 +3,8 @@ import { styled } from "styled-components";
 export const ReviewPageWrapper = styled.div`
     display: flex;
     justify-content: center;
-    line-height: 1rem;
-
-    @media (max-width: ${(props) => props.theme.small}) {
-        padding: 0 30px;
-    }
+    line-height: 1.1rem;
+    width: 80%;
 `;
 
 // "w-full h-[2px] m-1 bg-gradient-to-r from-transparent via-gray-500 to-transparent"
@@ -25,7 +22,7 @@ export const StyledBorder = styled.div`
 
 export const ReviewSubtitles = styled.div`
     font-style: italic;
-    color: ${(props) => props.theme.text};
+    color: ${(props) => props.theme.textSoft};
 `;
 
 export const ReviewHeader = styled.div`
@@ -42,4 +39,6 @@ export const ReviewSection = styled.div`
     text-align: center;
 `;
 
-export const ReviewContent = styled.div``;
+export const ReviewContent = styled.div`
+    color: ${(props) => props.theme.textStrong};
+`;

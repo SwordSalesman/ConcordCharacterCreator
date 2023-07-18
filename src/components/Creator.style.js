@@ -54,7 +54,7 @@ export const NavigationPaneWrapper = styled.div`
     justify-content: space-between;
 
     /* margin-top: 10px; */
-    padding: 4px 10px;
+    padding: 8px 10px;
     z-index: 10;
 
     background-color: ${(props) => props.theme.background};
@@ -71,6 +71,6 @@ export const NavigationPaneWrapper = styled.div`
 `;
 
 export const NavigationButton = styled(Button)`
-    width: 150px;
-    padding: 4px 10px;
+    width: 130px;
+    padding: 4px 4px;
 `;
