@@ -20,7 +20,9 @@ import {
     addDoc,
     getDoc,
     doc,
+    setDoc,
 } from "firebase/firestore";
+import { getSuggestedQuery } from "@testing-library/react";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -103,6 +105,31 @@ const sendPasswordReset = async (email) => {
     }
 };
 
+const saveUserForm = async (email, form) => {
+    // let timeout = setTimeout(() => {
+    //     throw new Error("Cannot save character");
+    // }, 2000);
+    // await setDoc(doc(db, "characters", email), {
+    //     form: form,
+    // });
+    // clearTimeout(timeout);
+    // return true;
+
+    await setDoc(doc(db, "characters", email), {
+        form: form,
+    });
+};
+
+const getUserForm = async (email) => {
+    const docRef = doc(db, "characters", email);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+};
+
 const logout = () => {
     signOut(auth);
 };
@@ -114,5 +141,7 @@ export {
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordReset,
+    saveUserForm,
+    getUserForm,
     logout,
 };

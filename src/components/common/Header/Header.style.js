@@ -21,7 +21,7 @@ export const HeaderWrapper = styled.div`
     z-index: 10;
 `;
 
-export const ToggleThemeButton = styled(Button)``;
+export const HeaderSmallButton = styled(Button)``;
 
 export const HeaderSigilWrapper = styled.a`
     height: 42px;
@@ -36,7 +36,3 @@ export const HeaderConcordSigil = styled.img`
     width: 25px;
     margin: auto;
 `;
-
-export const SaveButton = styled(Button)``;
-
-export const AccountButton = styled(Button)``;

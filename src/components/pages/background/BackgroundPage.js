@@ -6,6 +6,7 @@ import SectionDivider from "../../../components/common/SectionDivider/SectionDiv
 import Chip from "../../../components/common/Chip/Chip";
 import useRealmImage from "../../../hooks/use-realm-image";
 import { ColumnPageWrapper } from "../../../styles/Global";
+import { styled } from "styled-components";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");
@@ -70,13 +71,13 @@ function BackgroundPage() {
         {
             label: "Identity",
             content: (
-                <>
+                <BackgroundInputWrapper>
                     <TextInput
                         value={heroName}
                         onChange={setHeroName}
                         title='Name'
                         placeholder='Enter your name'
-                    ></TextInput>
+                    />
                     <div className='w-full'>
                         <div className=''>Archetype</div>
                         <div className='flex w-full flex-wrap justify-center'>
@@ -89,7 +90,7 @@ function BackgroundPage() {
                             {renderedGraces}
                         </div>
                     </div>
-                </>
+                </BackgroundInputWrapper>
             ),
             link: "Archetypes",
         },
@@ -97,62 +98,62 @@ function BackgroundPage() {
             label: "Alliances",
             link: "Bands",
             content: (
-                <>
+                <BackgroundInputWrapper>
                     <TextInput
                         value={warband}
                         onChange={setWarband}
                         title='Warband'
                         placeholder='Name of your Warband (if any)'
-                    ></TextInput>
+                    />
                     <TextInput
                         value={sect}
                         onChange={setSect}
                         title='Sect'
                         placeholder='Name of your Sect (if any)'
-                    ></TextInput>
-                </>
+                    />
+                </BackgroundInputWrapper>
             ),
         },
         {
             label: "Objectives",
             content: (
-                <>
+                <BackgroundInputWrapper>
                     <TextInput
                         value={icGoals}
                         onChange={setIcGoals}
                         title='In Character Goals'
                         placeholder='1000 character limit'
                         className='h-16'
-                    ></TextInput>
+                    />
                     <TextInput
                         value={oocGoals}
                         onChange={setOocGoals}
                         title='Out of Character Goals'
                         placeholder='1000 character limit'
                         className='h-16'
-                    ></TextInput>
-                </>
+                    />
+                </BackgroundInputWrapper>
             ),
         },
         {
             label: "Backstory",
             content: (
-                <>
+                <BackgroundInputWrapper>
                     <TextInput
                         value={backstory}
                         onChange={setBackstory}
                         title='Character Backstory'
                         placeholder='1000 character limit'
                         className='h-16'
-                    ></TextInput>
+                    />
                     <TextInput
                         value={investmentDetails}
                         onChange={setInvestmentDetails}
                         title='Investment Description'
                         placeholder='1000 character limit'
                         className='h-16'
-                    ></TextInput>
-                </>
+                    />
+                </BackgroundInputWrapper>
             ),
         },
     ];
@@ -170,3 +171,11 @@ function BackgroundPage() {
 }
 
 export default BackgroundPage;
+
+const BackgroundInputWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+`;

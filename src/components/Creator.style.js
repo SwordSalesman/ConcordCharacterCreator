@@ -36,7 +36,7 @@ export const ContentWrapper = styled.div`
     justify-content: center;
     text-align: center;
     align-items: top;
-    min-height: 400px;
+    min-height: 440px;
 
     width: 95%;
 

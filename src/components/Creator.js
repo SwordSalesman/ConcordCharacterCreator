@@ -13,12 +13,14 @@ import { Transition } from "@headlessui/react";
 import { BiAdjust } from "react-icons/bi";
 import { useTheme } from "styled-components";
 import {
+    AiFillDelete,
     AiOutlineArrowLeft,
     AiOutlineArrowRight,
     AiOutlineLeft,
     AiOutlineRight,
 } from "react-icons/ai";
 import { TabDivider } from "./common/Tabs/TabItem.style";
+import useFormContext from "../hooks/use-form-context";
 
 const transitionClasses = {
     enter: "transition ease-in-out duration-300",
@@ -31,6 +33,7 @@ const transitionClasses = {
 
 function Creator({ tabs, toggleTheme }) {
     const [activeTab, setActiveTab] = useState(tabs[0]);
+    const { resetForm } = useFormContext();
     // const [pendingTab, setPendingTab] = useState(null);
 
     let activeIndex = tabs.indexOf(activeTab);

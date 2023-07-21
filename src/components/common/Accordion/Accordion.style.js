@@ -69,7 +69,7 @@ export const AccordionContent = styled.div`
     transition: all;
     transition-duration: 0.4s;
 
-    max-height: ${(props) => (props.expanded ? "250px" : "0px")};
+    max-height: ${(props) => (props.expanded ? "fit-content" : "0px")};
 
     @media (max-width: ${(props) => props.theme.small}) {
         justify-content: center;
