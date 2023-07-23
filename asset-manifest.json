@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ConcordCharacterCreator/static/css/main.91281d30.css",
-    "main.js": "/ConcordCharacterCreator/static/js/main.9a13773f.js",
+    "main.js": "/ConcordCharacterCreator/static/js/main.416a2d4b.js",
     "static/media/Ginv.png": "/ConcordCharacterCreator/static/media/Ginv.d35bf373416de6a9cfa8.png",
     "static/media/G.png": "/ConcordCharacterCreator/static/media/G.70f6d0c59e0ad646c754.png",
     "static/media/Ainv.png": "/ConcordCharacterCreator/static/media/Ainv.8899085ecba8d58ce2ed.png",
@@ -16,10 +16,10 @@
     "static/media/concord-logo.png": "/ConcordCharacterCreator/static/media/concord-logo.dcda844684e5f37d4354.png",
     "index.html": "/ConcordCharacterCreator/index.html",
     "main.91281d30.css.map": "/ConcordCharacterCreator/static/css/main.91281d30.css.map",
-    "main.9a13773f.js.map": "/ConcordCharacterCreator/static/js/main.9a13773f.js.map"
+    "main.416a2d4b.js.map": "/ConcordCharacterCreator/static/js/main.416a2d4b.js.map"
   },
   "entrypoints": [
     "static/css/main.91281d30.css",
-    "static/js/main.9a13773f.js"
+    "static/js/main.416a2d4b.js"
   ]
 }
