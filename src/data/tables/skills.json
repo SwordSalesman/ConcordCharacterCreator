@@ -1,179 +1,179 @@
 [
-  {
-    "name": "Additional Mana 1",
-    "tree": "Magic",
-    "cost": 1,
-    "costExtra": 1,
-    "prereq": "Magus",
-    "exclusion": "Juggernaut"
-  },
-  {
-    "name": "Additional Spell 1",
-    "tree": "Magic",
-    "cost": 1,
-    "costExtra": 0,
-    "prereq": "Magus"
-  },
-  {
-    "name": "Battle Mage",
-    "tree": "Magic",
-    "cost": 3,
-    "prereq": "Magus",
-    "exclusion": "Bloodmage"
-  },
-  {
-    "name": "Bloodmage",
-    "tree": "Magic",
-    "cost": 3,
-    "prereq": "Magus",
-    "exclusion": "Battle Mage"
-  },
-  {
-    "name": "Magus",
-    "tree": "Magic",
-    "cost": 4
-  },
-  {
-    "name": "Additional Energy 1",
-    "tree": "Combat",
-    "cost": 1,
-    "costExtra": 1
-  },
-  {
-    "name": "Archer",
-    "tree": "Combat",
-    "cost": 3
-  },
-  {
-    "name": "Armoured",
-    "tree": "Combat",
-    "cost": 2
-  },
-  {
-    "name": "Bladehand",
-    "tree": "Combat",
-    "cost": 2
-  },
-  {
-    "name": "Bulwark",
-    "tree": "Combat",
-    "cost": 3
-  },
-  {
-    "name": "Deathless 1",
-    "tree": "Combat",
-    "cost": 1,
-    "costExtra": 1
-  },
-  {
-    "name": "Hand-and-a-half",
-    "tree": "Combat",
-    "cost": 1,
-    "prereq": "Weaponmaster"
-  },
-  {
-    "name": "Impaler",
-    "tree": "Combat",
-    "cost": 3
-  },
-  {
-    "name": "Juggernaut 1",
-    "tree": "Combat",
-    "cost": 2,
-    "costExtra": 2,
-    "exclusion": "Additional Mana"
-  },
-  {
-    "name": "Stay With Me",
-    "tree": "Combat",
-    "cost": 3
-  },
-  {
-    "name": "Weaponmaster",
-    "tree": "Combat",
-    "cost": 2
-  },
-  {
-    "name": "Mender",
-    "tree": "Surgical",
-    "cost": 2
-  },
-  {
-    "name": "Surgeon",
-    "tree": "Surgical",
-    "cost": 4,
-    "prereq": "Mender"
-  },
-  {
-    "name": "Artisan",
-    "tree": "Crafting",
-    "cost": 3
-  },
-  {
-    "name": "Apothecary",
-    "tree": "Crafting",
-    "cost": 3
-  },
-  {
-    "name": "Mastercrafter",
-    "tree": "Crafting",
-    "cost": 3,
-    "prereq": "Artisan"
-  },
-  {
-    "name": "Extra Craft 1",
-    "tree": "Crafting",
-    "cost": 1,
-    "costExtra": 0,
-    "prereq": "Artisan"
-  },
-  {
-    "name": "Extra Recipe 1",
-    "tree": "Crafting",
-    "cost": 1,
-    "costExtra": 0,
-    "prereq": "Apothecary"
-  },
-  {
-    "name": "Divine Lore Anarch 2",
-    "tree": "Religious",
-    "cost": 2,
-    "costExtra": 1
-  },
-  {
-    "name": "Divine Lore Lumos 2",
-    "tree": "Religious",
-    "cost": 2,
-    "costExtra": 1
-  },
-  {
-    "name": "Divine Lore Arcadian 2",
-    "tree": "Religious",
-    "cost": 2,
-    "costExtra": 1
-  },
-  {
-    "name": "Divine Lore Panoply 2",
-    "tree": "Religious",
-    "cost": 2,
-    "costExtra": 1
-  },
-  {
-    "name": "Divine Lore Cervitas 2",
-    "tree": "Religious",
-    "cost": 2,
-    "costExtra": 1
-  },
-  {
-    "name": "Divine Lore Stalia 2",
-    "tree": "Religious",
-    "cost": 2,
-    "costExtra": 1
-  },
-  {
-    "name": "Extra Ceremony",
-    "tree": "Religious",
-    "cost": 1,
-    "costExtra": 0
-  }
+    {
+        "name": "Additional Mana 1",
+        "tree": "Magic",
+        "cost": 1,
+        "costExtra": 1,
+        "prereq": "Magus",
+        "exclusion": "Juggernaut"
+    },
+    {
+        "name": "Additional Spell 1",
+        "tree": "Magic",
+        "cost": 1,
+        "costExtra": 0,
+        "prereq": "Magus"
+    },
+    {
+        "name": "Battle Mage",
+        "tree": "Magic",
+        "cost": 3,
+        "prereq": "Magus",
+        "exclusion": "Bloodmage"
+    },
+    {
+        "name": "Bloodmage",
+        "tree": "Magic",
+        "cost": 3,
+        "prereq": "Magus",
+        "exclusion": "Battle Mage"
+    },
+    {
+        "name": "Magus",
+        "tree": "Magic",
+        "cost": 4
+    },
+    {
+        "name": "Additional Energy 1",
+        "tree": "Combat",
+        "cost": 1,
+        "costExtra": 1
+    },
+    {
+        "name": "Archer",
+        "tree": "Combat",
+        "cost": 3
+    },
+    {
+        "name": "Armoured",
+        "tree": "Combat",
+        "cost": 2
+    },
+    {
+        "name": "Bladehand",
+        "tree": "Combat",
+        "cost": 2
+    },
+    {
+        "name": "Bulwark",
+        "tree": "Combat",
+        "cost": 3
+    },
+    {
+        "name": "Deathless 1",
+        "tree": "Combat",
+        "cost": 1,
+        "costExtra": 1
+    },
+    {
+        "name": "Hand-and-a-half",
+        "tree": "Combat",
+        "cost": 1,
+        "prereq": "Weaponmaster"
+    },
+    {
+        "name": "Impaler",
+        "tree": "Combat",
+        "cost": 3
+    },
+    {
+        "name": "Juggernaut 1",
+        "tree": "Combat",
+        "cost": 2,
+        "costExtra": 2,
+        "exclusion": "Additional Mana"
+    },
+    {
+        "name": "Stay With Me",
+        "tree": "Combat",
+        "cost": 3
+    },
+    {
+        "name": "Weaponmaster",
+        "tree": "Combat",
+        "cost": 2
+    },
+    {
+        "name": "Mender",
+        "tree": "Surgical",
+        "cost": 2
+    },
+    {
+        "name": "Surgeon",
+        "tree": "Surgical",
+        "cost": 4,
+        "prereq": "Mender"
+    },
+    {
+        "name": "Artisan",
+        "tree": "Crafting",
+        "cost": 3
+    },
+    {
+        "name": "Apothecary",
+        "tree": "Crafting",
+        "cost": 3
+    },
+    {
+        "name": "Mastercrafter",
+        "tree": "Crafting",
+        "cost": 3,
+        "prereq": "Artisan"
+    },
+    {
+        "name": "Extra Craft 1",
+        "tree": "Crafting",
+        "cost": 1,
+        "costExtra": 0,
+        "prereq": "Artisan"
+    },
+    {
+        "name": "Extra Recipe 1",
+        "tree": "Crafting",
+        "cost": 1,
+        "costExtra": 0,
+        "prereq": "Apothecary"
+    },
+    {
+        "name": "Divine Lore Anarch 2",
+        "tree": "Religious",
+        "cost": 2,
+        "costExtra": 1
+    },
+    {
+        "name": "Divine Lore Lumos 2",
+        "tree": "Religious",
+        "cost": 2,
+        "costExtra": 1
+    },
+    {
+        "name": "Divine Lore Arcadian 2",
+        "tree": "Religious",
+        "cost": 2,
+        "costExtra": 1
+    },
+    {
+        "name": "Divine Lore Panoply 2",
+        "tree": "Religious",
+        "cost": 2,
+        "costExtra": 1
+    },
+    {
+        "name": "Divine Lore Cervitas 2",
+        "tree": "Religious",
+        "cost": 2,
+        "costExtra": 1
+    },
+    {
+        "name": "Divine Lore Stalia 2",
+        "tree": "Religious",
+        "cost": 2,
+        "costExtra": 1
+    },
+    {
+        "name": "Extra Ceremony 1",
+        "tree": "Religious",
+        "cost": 1,
+        "costExtra": 0
+    }
 ]

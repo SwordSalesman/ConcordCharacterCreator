@@ -1,11 +1,11 @@
 import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
 import Button from "../../common/Button/Button";
-import { GameTally, TitleWrapper } from "./Intro.style";
+import { GameTally, ResetButton, TitleWrapper } from "./Intro.style";
 import { FlexCenter } from "../../../styles/Global";
 
 function IntroPage() {
-    const { gamesPlayed, setGamesPlayed } = useFormContext();
+    const { gamesPlayed, setGamesPlayed, resetForm } = useFormContext();
     // Little bit of extra wiggle room here for planning future builds
     const maxGames = (new Date().getFullYear() - 2019) * 2;
 
@@ -19,6 +19,11 @@ function IntroPage() {
         if (gamesPlayed < maxGames) {
             setGamesPlayed(gamesPlayed + 1);
         }
+    };
+
+    const handleResetButton = () => {
+        window.confirm("Are you sure you want to reset your character?") &&
+            resetForm();
     };
 
     return (
@@ -55,6 +60,17 @@ function IntroPage() {
                     <GameTally>{gamesPlayed || 0}</GameTally>
                     <Button icon='plus' primary onClick={handlePlus}></Button>
                 </FlexCenter>
+            </div>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "right",
+                    marginTop: "20px",
+                }}
+            >
+                <ResetButton onClick={handleResetButton}>
+                    ...start over?
+                </ResetButton>
             </div>
         </div>
     );

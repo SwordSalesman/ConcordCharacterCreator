@@ -5,9 +5,9 @@ import Button from "./common/Button/Button";
 export const CreatorWrapper = styled.div`
     margin: auto;
 
-    width: 100%;
+    /* width: 100%; */
 
-    min-width: 300px;
+    /* min-width: 300px; */
     max-width: 620px;
     display: flex;
     flex-direction: column;

@@ -3,6 +3,7 @@ import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
 import { realms } from "../../../data/tables/realms";
 import useRealmDetails from "../../../hooks/use-realm-details";
+import { RealmDescriptionWrapper } from "./RealmPage.style";
 
 function RealmPage() {
     const { realm, selectRealm } = useFormContext();
@@ -39,9 +40,9 @@ function RealmPage() {
                         <WikiLink path={realmFull.link} />
                     </div>
                     <div className=' m-2 ml-1 mt-4'>
-                        <div className='border-l border-gray-300 m-2 pl-2 text-left'>
+                        <RealmDescriptionWrapper>
                             {realmFull.desc}
-                        </div>
+                        </RealmDescriptionWrapper>
                     </div>
                 </div>
             </div>

@@ -21,9 +21,11 @@ export const StyledChip = styled.button`
     justify-content: center;
     align-items: center;
     gap: 5px;
-    padding: 0 5px 0 3px;
+    padding: 1px 6px 1px 4px;
     margin: 2px;
     transition-duration: 0.2s;
+
+    font-family: sans-serif;
 
     border-width: 1px;
     border-radius: 20px;
@@ -53,7 +55,7 @@ export const StyledChip = styled.button`
             : props.theme.text};
     border-color: ${(props) =>
         props.selected
-            ? props.theme.special
+            ? props.theme.specialOutline
             : props.disabled
             ? props.theme.border
             : props.theme.border};
@@ -68,8 +70,7 @@ export const SkillCost = styled.div`
     border-radius: 20px;
     border-color: inherit;
 
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-        sans-serif;
+    font-family: Calibri, sans-serif;
 
     line-height: 18px;
 

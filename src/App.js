@@ -54,8 +54,6 @@ function App() {
 
         const populateForm = async (email) => {
             const formData = await getUserForm(email);
-            console.log("retrieved data");
-            console.log(formData.form);
             setForm(formData.form);
         };
 

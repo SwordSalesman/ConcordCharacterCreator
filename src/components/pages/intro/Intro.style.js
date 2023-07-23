@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import Button from "../../common/Button/Button";
 
 export const TitleWrapper = styled.h1`
     font-size: 1.2rem;
@@ -9,3 +10,5 @@ export const GameTally = styled.div`
     width: 50px;
     font-family: sans-serif;
 `;
+
+export const ResetButton = styled(Button)``;

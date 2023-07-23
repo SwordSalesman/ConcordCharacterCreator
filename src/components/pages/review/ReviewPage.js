@@ -39,6 +39,24 @@ function ReviewPage() {
     const realmFull = useRealmDetails(realm);
     const realmImage = useRealmImage(realm);
 
+    const renderedSkills =
+        skills?.length > 0
+            ? skills
+                  .filter((s) => {
+                      let num = parseInt(s.name.split(" ").slice(-1));
+                      if (!num) {
+                          return true;
+                      } else {
+                          let name = s.name.split(" ").slice(0, -1).join(" ");
+                          return !skills
+                              .map((skill) => skill.name)
+                              .includes(name + " " + (num + 1));
+                      }
+                  })
+                  .map((s) => " " + s.name)
+                  .toString()
+            : "None";
+
     return (
         <ReviewPageWrapper>
             <ContentPane
@@ -78,11 +96,7 @@ function ReviewPage() {
                     )}
                     {sect && <ReviewItem label='Sect'>{sect}</ReviewItem>}
                     <StyledBorder />
-                    <ReviewItem label='Skills'>
-                        {skills?.length > 0
-                            ? skills.map((s) => " " + s.name).toString()
-                            : "None"}
-                    </ReviewItem>
+                    <ReviewItem label='Skills'>{renderedSkills}</ReviewItem>
                     {spells.length > 0 && (
                         <ReviewItem label='Spells'>
                             {spells.map((s) => " " + s.name).toString()}

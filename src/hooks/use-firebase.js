@@ -21,6 +21,9 @@ import {
     getDoc,
     doc,
     setDoc,
+    limit,
+    snapshotEqual,
+    Firestore,
 } from "firebase/firestore";
 import { getSuggestedQuery } from "@testing-library/react";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -106,15 +109,6 @@ const sendPasswordReset = async (email) => {
 };
 
 const saveUserForm = async (email, form) => {
-    // let timeout = setTimeout(() => {
-    //     throw new Error("Cannot save character");
-    // }, 2000);
-    // await setDoc(doc(db, "characters", email), {
-    //     form: form,
-    // });
-    // clearTimeout(timeout);
-    // return true;
-
     await setDoc(doc(db, "characters", email), {
         form: form,
     });
@@ -130,6 +124,24 @@ const getUserForm = async (email) => {
     }
 };
 
+const getUserName = async () => {
+    console.log(auth.currentUser.email);
+    if (!auth.currentUser) {
+        return;
+    }
+    const q = query(
+        collection(db, "users"),
+        where("email", "==", auth.currentUser.email),
+        limit(1)
+    );
+    const snap = await getDocs(q);
+
+    if (snap.docs.length > 0) {
+        return snap.docs[0].data().name;
+    }
+    return null;
+};
+
 const logout = () => {
     signOut(auth);
 };
@@ -143,5 +155,6 @@ export {
     sendPasswordReset,
     saveUserForm,
     getUserForm,
+    getUserName,
     logout,
 };

@@ -35,7 +35,7 @@ function SkillsPage() {
                 cost: s.cost + s.costExtra,
                 costExtra: s.costExtra,
                 prereq: s.name,
-                exclusion: s.exclusion,
+                exclusion: s.exclusion ? s.exclusion : null,
             };
         });
     const allSkills = extraSkills ? baseSkills.concat(extraSkills) : baseSkills;
@@ -44,7 +44,7 @@ function SkillsPage() {
     const renderedTabs = tabs.map((tab) => {
         const renderedSkills = allSkills
             .filter((skill) => skill.tree === tab.label)
-            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            // .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((skill) => {
                 let selected = skills?.map((s) => s.name).includes(skill.name);
                 return (

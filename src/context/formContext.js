@@ -4,6 +4,7 @@ const FormContext = createContext();
 
 function FormContextProvider({ children }) {
     // State maintained
+    const [unsaved, setUnsaved] = useState(false);
     const [realm, setRealm] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(0);
     const [skills, setSkills] = useState([]);
@@ -191,41 +192,41 @@ function FormContextProvider({ children }) {
     };
 
     // Local Storage management
-    /*
-    useEffect(() => {
-        setRealm(JSON.parse(window.localStorage.getItem("realm")));
-        setGamesPlayed(
-            JSON.parse(window.localStorage.getItem("gamesPlayed")) || 0
-        );
-        setSkills(JSON.parse(window.localStorage.getItem("skills")));
-        setInvestments(JSON.parse(window.localStorage.getItem("investments")));
-        setSpells(JSON.parse(window.localStorage.getItem("spells")));
-        setCrafts(JSON.parse(window.localStorage.getItem("crafts")));
-        setPotions(JSON.parse(window.localStorage.getItem("potions")));
-        setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
-        setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
-        setArchetypes(JSON.parse(window.localStorage.getItem("archetypes")));
-        setGraces(JSON.parse(window.localStorage.getItem("graces")));
-        setWarband(JSON.parse(window.localStorage.getItem("warband")));
-        setSect(JSON.parse(window.localStorage.getItem("sect")));
-        setIcGoals(JSON.parse(window.localStorage.getItem("icGoals")));
-        setOocGoals(JSON.parse(window.localStorage.getItem("oocGoals")));
-        setBackstory(JSON.parse(window.localStorage.getItem("backstory")));
-        setInvestmentDetails(
-            JSON.parse(window.localStorage.getItem("investmentDetails"))
-        );
-    }, []);
+
+    // useEffect(() => {
+    //     setRealm(JSON.parse(window.localStorage.getItem("realm")));
+    //     setGamesPlayed(
+    //         JSON.parse(window.localStorage.getItem("gamesPlayed")) || 0
+    //     );
+    //     setSkills(JSON.parse(window.localStorage.getItem("skills")));
+    //     setInvestments(JSON.parse(window.localStorage.getItem("investments")));
+    //     setSpells(JSON.parse(window.localStorage.getItem("spells")));
+    //     setCrafts(JSON.parse(window.localStorage.getItem("crafts")));
+    //     setPotions(JSON.parse(window.localStorage.getItem("potions")));
+    //     setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
+    //     setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
+    //     setArchetypes(JSON.parse(window.localStorage.getItem("archetypes")));
+    //     setGraces(JSON.parse(window.localStorage.getItem("graces")));
+    //     setWarband(JSON.parse(window.localStorage.getItem("warband")));
+    //     setSect(JSON.parse(window.localStorage.getItem("sect")));
+    //     setIcGoals(JSON.parse(window.localStorage.getItem("icGoals")));
+    //     setOocGoals(JSON.parse(window.localStorage.getItem("oocGoals")));
+    //     setBackstory(JSON.parse(window.localStorage.getItem("backstory")));
+    //     setInvestmentDetails(
+    //         JSON.parse(window.localStorage.getItem("investmentDetails"))
+    //     );
+    // }, []);
+
+    // useEffect(() => {
+    //     window.localStorage.setItem("realm", JSON.stringify(realm));
+    // }, [realm]);
+
+    // useEffect(() => {
+    //     window.localStorage.setItem("gamesPlayed", gamesPlayed);
+    // }, [gamesPlayed]);
 
     useEffect(() => {
-        window.localStorage.setItem("realm", JSON.stringify(realm));
-    }, [realm]);
-
-    useEffect(() => {
-        window.localStorage.setItem("gamesPlayed", gamesPlayed);
-    }, [gamesPlayed]);
-
-    useEffect(() => {
-        window.localStorage.setItem("skills", JSON.stringify(skills));
+        // window.localStorage.setItem("skills", JSON.stringify(skills));
 
         skills?.forEach((s) => {
             if (!validSkillChoice(s) || remainingXp < 0) {
@@ -248,67 +249,93 @@ function FormContextProvider({ children }) {
     }, [skills, remainingXp]);
 
     useEffect(() => {
-        window.localStorage.setItem("investments", JSON.stringify(investments));
-    }, [investments]);
+        if (!unsaved) {
+            setUnsaved(true);
+        }
+    }, [
+        realm,
+        gamesPlayed,
+        skills,
+        investments,
+        spells,
+        crafts,
+        potions,
+        ceremonies,
+        heroName,
+        archetypes,
+        graces,
+        warband,
+        sect,
+        icGoals,
+        oocGoals,
+        backstory,
+        investmentDetails,
+    ]);
 
-    useEffect(() => {
-        window.localStorage.setItem("spells", JSON.stringify(spells));
-    }, [spells]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("investments", JSON.stringify(investments));
+    // }, [investments]);
 
-    useEffect(() => {
-        window.localStorage.setItem("crafts", JSON.stringify(crafts));
-    }, [crafts]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("spells", JSON.stringify(spells));
+    // }, [spells]);
 
-    useEffect(() => {
-        window.localStorage.setItem("potions", JSON.stringify(potions));
-    }, [potions]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("crafts", JSON.stringify(crafts));
+    // }, [crafts]);
 
-    useEffect(() => {
-        window.localStorage.setItem("ceremonies", JSON.stringify(ceremonies));
-    }, [ceremonies]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("potions", JSON.stringify(potions));
+    // }, [potions]);
 
-    useEffect(() => {
-        window.localStorage.setItem("heroName", JSON.stringify(heroName));
-    }, [heroName]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("ceremonies", JSON.stringify(ceremonies));
+    // }, [ceremonies]);
 
-    useEffect(() => {
-        window.localStorage.setItem("archetypes", JSON.stringify(archetypes));
-    }, [archetypes]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("heroName", JSON.stringify(heroName));
+    // }, [heroName]);
 
-    useEffect(() => {
-        window.localStorage.setItem("graces", JSON.stringify(graces));
-    }, [graces]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("archetypes", JSON.stringify(archetypes));
+    // }, [archetypes]);
 
-    useEffect(() => {
-        window.localStorage.setItem("warband", JSON.stringify(warband));
-    }, [warband]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("graces", JSON.stringify(graces));
+    // }, [graces]);
 
-    useEffect(() => {
-        window.localStorage.setItem("sect", JSON.stringify(sect));
-    }, [sect]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("warband", JSON.stringify(warband));
+    // }, [warband]);
 
-    useEffect(() => {
-        window.localStorage.setItem("icGoals", JSON.stringify(icGoals));
-    }, [icGoals]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("sect", JSON.stringify(sect));
+    // }, [sect]);
 
-    useEffect(() => {
-        window.localStorage.setItem("oocGoals", JSON.stringify(oocGoals));
-    }, [oocGoals]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("icGoals", JSON.stringify(icGoals));
+    // }, [icGoals]);
 
-    useEffect(() => {
-        window.localStorage.setItem("backstory", JSON.stringify(backstory));
-    }, [backstory]);
+    // useEffect(() => {
+    //     window.localStorage.setItem("oocGoals", JSON.stringify(oocGoals));
+    // }, [oocGoals]);
 
-    useEffect(() => {
-        window.localStorage.setItem(
-            "investmentDetails",
-            JSON.stringify(investmentDetails)
-        );
-    }, [investmentDetails]);
-    */
+    // useEffect(() => {
+    //     window.localStorage.setItem("backstory", JSON.stringify(backstory));
+    // }, [backstory]);
+
+    // useEffect(() => {
+    //     window.localStorage.setItem(
+    //         "investmentDetails",
+    //         JSON.stringify(investmentDetails)
+    //     );
+    // }, [investmentDetails]);
+
     // Outputs
 
     const formContext = {
+        unsaved,
+        setUnsaved,
         realm,
         selectRealm,
         gamesPlayed,
