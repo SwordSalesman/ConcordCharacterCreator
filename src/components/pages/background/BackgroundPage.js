@@ -7,6 +7,7 @@ import Chip from "../../../components/common/Chip/Chip";
 import useRealmImage from "../../../hooks/use-realm-image";
 import { ColumnPageWrapper } from "../../../styles/Global";
 import { styled } from "styled-components";
+import { ColumnPage } from "../ColumnPageWrapper";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");
@@ -159,14 +160,14 @@ function BackgroundPage() {
     ];
 
     return (
-        <ColumnPageWrapper>
-            <ContentPane background={realmImage} style={{ flex: 1 }}>
+        <>
+            <ContentPane style={{ flex: 1 }}>
                 <SectionDivider left='Tell us about yourself'></SectionDivider>
             </ContentPane>
             <ContentPane style={{ flex: 2 }}>
                 <Accordion items={tabs}></Accordion>
             </ContentPane>
-        </ColumnPageWrapper>
+        </>
     );
 }
 

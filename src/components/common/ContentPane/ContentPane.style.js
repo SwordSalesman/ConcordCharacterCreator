@@ -1,12 +1,13 @@
 import { styled } from "styled-components";
+import { mediaSize } from "../../../styles/Global";
 
 export const ContentPaneWrapper = styled.div`
     position: relative;
 
-    width: 300px;
+    flex: 1;
 
     /* height: fit-content; */
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         margin-bottom: 10px;
         width: 100%;
     }
@@ -21,33 +22,41 @@ export const ContentPaneContent = styled.div`
     -ms-overflow-style: none;
     scrollbar-width: none;
     overflow: auto;
-    display: flex;
-    flex-direction: column;
 
     position: relative;
+    display: flex;
+    flex-direction: column;
     z-index: 2;
-
     width: 100%;
     height: 100%;
 `;
 
 export const PaneBackgroundImage = styled.img`
-    display: none;
+    /* display: none; */
 
     position: absolute;
-    top: 0;
+    top: 40%;
     left: 50%;
-    width: 100%;
-    height: auto;
+
+    width: 300px;
+    height: 300px;
+    /* right: -100%; */
+    /* margin: auto; */
+
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 
     filter: blur(0px);
     opacity: 0.1;
     z-index: 0;
 
-    transform: ${(props) =>
-        props.imageCenter ? "translate(-50%, 5%)" : "translate(-100%, 5%)"};
+    /* transform: ${(props) =>
+        props.imageCenter ? "translate(-50%, 5%)" : "translate(-100%, 5%)"}; */
 
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         ${(props) => !props.mobileShow && "display: none;"}
     }
 `;

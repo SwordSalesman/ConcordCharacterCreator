@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaSize } from "../../../styles/Global";
 
 export const AccordionWrapper = styled.div`
     &::-webkit-scrollbar {
@@ -36,7 +37,7 @@ export const AccordionHeader = styled.button`
         cursor: pointer;
     }
 
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         padding: 8px 11px;
     }
 `;
@@ -56,6 +57,9 @@ export const AccordionContent = styled.div`
     justify-content: left;
     gap: 0px;
 
+    /* background-color: ${(props) => props.theme.background};
+    border-radius: 15px; */
+
     overflow: auto;
     overflow-x: hidden;
     &::-webkit-scrollbar {
@@ -71,7 +75,7 @@ export const AccordionContent = styled.div`
 
     max-height: ${(props) => (props.expanded ? "fit-content" : "0px")};
 
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         justify-content: center;
         max-height: ${(props) => (props.expanded ? "fit-content" : "0px")};
         transition-duration: 0s;

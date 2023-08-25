@@ -1,11 +1,12 @@
 import useFormContext from "../../../hooks/use-form-context";
 import useRealmDetails from "../../../hooks/use-realm-details";
-import useRealmImage from "../../../hooks/use-realm-image";
 import ContentPane from "../../../components/common/ContentPane/ContentPane";
 import {
     ReviewContent,
     ReviewHeader,
     ReviewPageWrapper,
+    ReviewPaneWrapper,
+    ReviewReminder,
     ReviewSection,
     ReviewSubtitles,
     StyledBorder,
@@ -20,7 +21,9 @@ function ReviewItem({ label, children }) {
     );
 }
 
-function ReviewPage() {
+const delimiter = ", ";
+
+function ReviewPage({ user }) {
     const {
         gamesPlayed,
         realm,
@@ -37,7 +40,6 @@ function ReviewPage() {
         sect,
     } = useFormContext();
     const realmFull = useRealmDetails(realm);
-    const realmImage = useRealmImage(realm);
 
     const renderedSkills =
         skills?.length > 0
@@ -53,72 +55,74 @@ function ReviewPage() {
                               .includes(name + " " + (num + 1));
                       }
                   })
-                  .map((s) => " " + s.name)
+                  .map((s) => s.name)
+                  .join(delimiter)
                   .toString()
             : "None";
 
     return (
         <ReviewPageWrapper>
-            <ContentPane
-                mobileShow={true}
-                imageCenter={true}
-                background={realmFull ? realmImage : null}
-            >
-                <div className='flex flex-col items-center mt-2 gap-2'>
-                    <div>
-                        <h2 className='text-xl leading-6'>
-                            {heroName ? heroName : "Nameless Hero"}
-                        </h2>
-                        <ReviewSubtitles>
-                            {realmFull ? realmFull.citizen : "Realmless"}
-                            {archetypes ? " " + archetypes : ""}
-                        </ReviewSubtitles>
-                        {graces && (
+            <ReviewPaneWrapper>
+                <ContentPane mobileShow={true}>
+                    <div className='flex flex-col items-center mt-2 gap-2'>
+                        <div>
+                            <h2 className='text-xl leading-6'>
+                                {heroName ? heroName : "Nameless Hero"}
+                            </h2>
                             <ReviewSubtitles>
-                                {graces.map((g) => (
-                                    <>{g.name + ", Graced By " + g.sphere}</>
-                                ))}
+                                {realmFull ? realmFull.citizen : "Realmless"}
+                                {archetypes ? " " + archetypes : ""}
                             </ReviewSubtitles>
+                            {graces && (
+                                <ReviewSubtitles>
+                                    {graces.map((g) => (
+                                        <>
+                                            {g.name + ", Graced By " + g.sphere}
+                                        </>
+                                    ))}
+                                </ReviewSubtitles>
+                            )}
+                        </div>
+                        <StyledBorder />
+                        <ReviewItem label='Summits attended'>
+                            {gamesPlayed}
+                        </ReviewItem>
+                        {investments && (
+                            <ReviewItem label='Investment'>
+                                {investments.map((i) => i.name).toString()}
+                            </ReviewItem>
+                        )}
+                        {(warband || sect) && <StyledBorder />}
+                        {warband && (
+                            <ReviewItem label='Warband'>{warband}</ReviewItem>
+                        )}
+                        {sect && <ReviewItem label='Sect'>{sect}</ReviewItem>}
+                        <StyledBorder />
+                        <ReviewItem label='Skills'>{renderedSkills}</ReviewItem>
+                        {spells.length > 0 && (
+                            <ReviewItem label='Spells'>
+                                {spells.map((s) => s.name).join(delimiter)}
+                            </ReviewItem>
+                        )}
+                        {crafts.length > 0 && (
+                            <ReviewItem label='Crafts'>
+                                {crafts.map((s) => s.name).join(delimiter)}
+                            </ReviewItem>
+                        )}
+                        {potions.length > 0 && (
+                            <ReviewItem label='Potions'>
+                                {potions.map((s) => s.name).join(delimiter)}
+                            </ReviewItem>
+                        )}
+                        {ceremonies.length > 0 && (
+                            <ReviewItem label='Ceremonies'>
+                                {ceremonies.map((s) => s.name).join(delimiter)}
+                            </ReviewItem>
                         )}
                     </div>
-                    <StyledBorder />
-                    <ReviewItem label='Summits attended'>
-                        {gamesPlayed}
-                    </ReviewItem>
-                    {investments && (
-                        <ReviewItem label='Investment'>
-                            {investments.map((i) => i.name).toString()}
-                        </ReviewItem>
-                    )}
-                    {(warband || sect) && <StyledBorder />}
-                    {warband && (
-                        <ReviewItem label='Warband'>{warband}</ReviewItem>
-                    )}
-                    {sect && <ReviewItem label='Sect'>{sect}</ReviewItem>}
-                    <StyledBorder />
-                    <ReviewItem label='Skills'>{renderedSkills}</ReviewItem>
-                    {spells.length > 0 && (
-                        <ReviewItem label='Spells'>
-                            {spells.map((s) => " " + s.name).toString()}
-                        </ReviewItem>
-                    )}
-                    {crafts.length > 0 && (
-                        <ReviewItem label='Crafts'>
-                            {crafts.map((s) => " " + s.name).toString()}
-                        </ReviewItem>
-                    )}
-                    {potions.length > 0 && (
-                        <ReviewItem label='Potions'>
-                            {potions.map((s) => " " + s.name).toString()}
-                        </ReviewItem>
-                    )}
-                    {ceremonies.length > 0 && (
-                        <ReviewItem label='Ceremonies'>
-                            {ceremonies.map((s) => " " + s.name).toString()}
-                        </ReviewItem>
-                    )}
-                </div>
-            </ContentPane>
+                </ContentPane>
+            </ReviewPaneWrapper>
+            <ReviewReminder>Don't forget to submit!</ReviewReminder>
         </ReviewPageWrapper>
     );
 }

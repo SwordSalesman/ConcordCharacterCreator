@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaSize } from "../../../styles/Global";
 
 /*
     "px-[5px] m-[2px] h-6 w-fit",
@@ -25,17 +26,18 @@ export const StyledChip = styled.button`
     margin: 2px;
     transition-duration: 0.2s;
 
-    font-family: sans-serif;
+    font-size: 0.95rem;
+    font-family: Arial, Helvetica, sans-serif;
 
     border-width: 1px;
     border-radius: 20px;
 
-    @media (min-width: ${(props) => props.theme.small}) {
+    @media (min-width: ${mediaSize.small}px) {
         &:hover {
             filter: brightness(0.9);
         }
     }
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         /* font-size: 26px; */
         /* gap: 10px; */
         padding: 5px 10px 5px 8px;
@@ -69,8 +71,6 @@ export const SkillCost = styled.div`
     border-width: 1px;
     border-radius: 20px;
     border-color: inherit;
-
-    font-family: Calibri, sans-serif;
 
     line-height: 18px;
 

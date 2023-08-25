@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaSize } from "../../../styles/Global";
 
 export const StyledTabItem = styled.button`
     border-bottom: 3px solid;
@@ -22,7 +23,7 @@ export const StyledTabItem = styled.button`
     opacity: ${(props) => (props.primary ? "1.0" : "0.6")};
     flex: 1;
 
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         opacity: ${(props) => (props.primary ? "1.0" : "0.25")};
         border-color: ${(props) =>
             props.primary ? props.theme.special : props.theme.textSoft};

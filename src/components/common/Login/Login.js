@@ -13,6 +13,7 @@ import {
     signInWithGoogle,
 } from "../../../hooks/use-firebase";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "react-hot-toast";
 
 function Login({ show, handleClose, user }) {
     const theme = useTheme();
@@ -34,13 +35,15 @@ function Login({ show, handleClose, user }) {
         setTab(newValue);
     };
 
-    const handlePrimaryButton = () => {
+    const handlePrimaryButton = async () => {
         if (tab === 0) {
             setLoading(true);
-            registerWithEmailAndPassword(name, email, password);
+            await registerWithEmailAndPassword(name, email, password);
+            toast.success("Signed in as " + user.email);
         } else if (tab === 1) {
             setLoading(true);
-            logInWithEmailAndPassword(email, password);
+            await logInWithEmailAndPassword(email, password);
+            toast.success("Signed in as " + user.email);
         }
     };
 
@@ -152,9 +155,11 @@ function Login({ show, handleClose, user }) {
                             <Button
                                 wide
                                 primary
-                                onClick={() => {
+                                onClick={async () => {
                                     setLoading(true);
-                                    signInWithGoogle();
+                                    signInWithGoogle().then(
+                                        toast.success("Signed in as ")
+                                    );
                                 }}
                                 loading={loading}
                             >

@@ -3,9 +3,7 @@ import ContentPane from "../../../components/common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import SkillItem from "./SkillItem";
 import SectionDivider from "../../../components/common/SectionDivider/SectionDivider";
-import { all } from "axios";
 import useRealmImage from "../../../hooks/use-realm-image";
-import { ColumnPageWrapper } from "../../../styles/Global";
 import { SectionWrapper } from "../../../components/common/SectionDivider/SectionDivider.style";
 var tabs = require("../../../data/tables/skillTabs.json");
 var baseSkills = require("../../../data/tables/skills.json");
@@ -78,8 +76,8 @@ function SkillsPage() {
     });
 
     return (
-        <ColumnPageWrapper>
-            <ContentPane background={realmImage}>
+        <>
+            <ContentPane>
                 <SectionDivider left='Remaining XP' right={remainingXp} />
                 {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
                 {renderedSkills?.length > 0 ? (
@@ -93,7 +91,7 @@ function SkillsPage() {
             <ContentPane>
                 <Accordion items={renderedTabs}></Accordion>
             </ContentPane>
-        </ColumnPageWrapper>
+        </>
     );
 }
 

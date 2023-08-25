@@ -3,7 +3,6 @@ import { GlobalStyle, StyledApp } from "./styles/Global";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { light, dark } from "./styles/Theme.styled";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { auth, getUserForm, saveUserForm } from "./hooks/use-firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -15,8 +14,7 @@ import ReviewPage from "./components/pages/review/ReviewPage";
 import Header from "./components/common/Header/Header";
 import IntroPage from "./components/pages/intro/IntroPage";
 import Login from "./components/common/Login/Login";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import useFormContext from "./hooks/use-form-context";
 
 const tabs = [
@@ -34,7 +32,7 @@ function App() {
     );
     const [showLogin, setShowLogin] = useState(false);
     const [user, loading, error] = useAuthState(auth);
-    const { setForm } = useFormContext();
+    const { setForm, getForm } = useFormContext();
 
     const toggleTheme = () => {
         if (theme === light) {
@@ -49,6 +47,22 @@ function App() {
     const handleShowLogin = () => setShowLogin(true);
     const handleCloseLogin = () => setShowLogin(false);
 
+    const handleSave = async () => {
+        toast.promise(saveUserForm(user.email, getForm()), {
+            loading: "Saving",
+            success: "Character saved",
+            error: "Save failed, check network connection",
+        });
+    };
+
+    const handleSubmit = async () => {
+        const form = getForm();
+        saveUserForm(user.email, form).then(
+            // appendSpreadsheet(form),
+            console.error("Unable to save and submit.")
+        );
+    };
+
     useEffect(() => {
         setShowLogin(false);
 
@@ -58,7 +72,6 @@ function App() {
         };
 
         if (user) {
-            toast.success("Signed in as " + user.email);
             populateForm(user.email);
         }
     }, [user]);
@@ -70,9 +83,10 @@ function App() {
                 <Header
                     toggleTheme={toggleTheme}
                     handleShowLogin={handleShowLogin}
+                    handleSave={handleSave}
                     user={user}
                 />
-                <Creator tabs={tabs} />
+                <Creator tabs={tabs} handleSubmit={handleSubmit} />
                 {showLogin && (
                     <Login
                         show={showLogin}

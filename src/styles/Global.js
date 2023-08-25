@@ -1,5 +1,9 @@
 import { createGlobalStyle, styled } from "styled-components";
 
+export const mediaSize = {
+    small: 600,
+};
+
 export const GlobalStyle = createGlobalStyle`
   html, body {
     background-color: ${(props) => props.theme.background};
@@ -9,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Georgia, "Times New Roman", Times, serif;
     font-size: 17px;
 
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
       font-size: 17px;  
     }
   }
@@ -31,12 +35,4 @@ export const StyledApp = styled.div`
 export const FlexCenter = styled.div`
     display: flex;
     justify-content: center;
-`;
-
-export const ColumnPageWrapper = styled.div`
-    height: 100%;
-    @media (min-width: ${(props) => props.theme.small}) {
-        display: flex;
-        justify-content: space-around;
-    }
 `;

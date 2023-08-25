@@ -2,15 +2,12 @@
 // "#c0cad6",
 export const light = {
     name: "light",
-
-    small: "600px",
-
     background: "#ffffff",
     backgroundRaised: "#eff0f3",
     text: "#2f3132",
     textSoft: "#727272",
     textStrong: "#1c1d1d",
-    border: "#a6b7cc",
+    border: "#b9c1cb",
     borderSoft: "#eaeaea",
     shadow: "#2f303173",
     outline: "#7eb3e6",
@@ -26,9 +23,6 @@ export const light = {
 
 export const dark = {
     name: "dark",
-
-    small: "600px",
-
     background: "#14181f",
     backgroundRaised: "#1d2330",
     text: "#bfc8d9",

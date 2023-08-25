@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaSize } from "../../../styles/Global";
 
 export const StyledSectionDivider = styled.div`
     display: flex;
@@ -24,7 +25,7 @@ export const SectionWrapper = styled.div`
     justify-content: center;
     margin-bottom: 5px;
 
-    @media (min-width: ${(props) => props.theme.small}) {
+    @media (min-width: ${mediaSize.small}px) {
         margin-bottom: 15px;
     }
 `;

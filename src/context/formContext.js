@@ -4,7 +4,6 @@ const FormContext = createContext();
 
 function FormContextProvider({ children }) {
     // State maintained
-    const [unsaved, setUnsaved] = useState(false);
     const [realm, setRealm] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(0);
     const [skills, setSkills] = useState([]);
@@ -51,6 +50,8 @@ function FormContextProvider({ children }) {
             investmentDetails: investmentDetails,
         };
     };
+
+    const unsaved = false;
 
     const setForm = (data) => {
         setRealm(data.realm);
@@ -248,30 +249,6 @@ function FormContextProvider({ children }) {
         }
     }, [skills, remainingXp]);
 
-    useEffect(() => {
-        if (!unsaved) {
-            setUnsaved(true);
-        }
-    }, [
-        realm,
-        gamesPlayed,
-        skills,
-        investments,
-        spells,
-        crafts,
-        potions,
-        ceremonies,
-        heroName,
-        archetypes,
-        graces,
-        warband,
-        sect,
-        icGoals,
-        oocGoals,
-        backstory,
-        investmentDetails,
-    ]);
-
     // useEffect(() => {
     //     window.localStorage.setItem("investments", JSON.stringify(investments));
     // }, [investments]);
@@ -335,7 +312,6 @@ function FormContextProvider({ children }) {
 
     const formContext = {
         unsaved,
-        setUnsaved,
         realm,
         selectRealm,
         gamesPlayed,

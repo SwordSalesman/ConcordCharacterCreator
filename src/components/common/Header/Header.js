@@ -10,26 +10,13 @@ import ConcordSigil from "../../../data/images/concord-logo.png";
 import ConcordSigilInv from "../../../data/images/concord-logo-inv.png";
 import { useTheme } from "styled-components";
 import { FaUserCheck, FaUserPlus } from "react-icons/fa";
-import { getUserName, saveUserForm } from "../../../hooks/use-firebase";
-import { toast } from "react-hot-toast";
 import useFormContext from "../../../hooks/use-form-context";
-import { AiFillDelete } from "react-icons/ai";
 
-function Header({ toggleTheme, handleShowLogin, user }) {
+function Header({ toggleTheme, handleShowLogin, handleSave, user }) {
     const theme = useTheme();
-    const { getForm, unsaved, setUnsaved } = useFormContext();
+    const { unsaved } = useFormContext();
 
     // console.log(user);
-
-    const handleSave = async () => {
-        toast
-            .promise(saveUserForm(user.email, getForm()), {
-                loading: "Saving",
-                success: "Character saved",
-                error: "Save failed, check network connection",
-            })
-            .then(setUnsaved(false));
-    };
 
     return (
         <HeaderWrapper>
@@ -75,18 +62,20 @@ function Header({ toggleTheme, handleShowLogin, user }) {
                             justifyContent: "right",
                         }}
                     >
-                        <div
-                            style={{
-                                fontSize: "16px",
-                                transition: "0.2s",
-                                opacity: unsaved ? "0.4" : "0",
-                                width: unsaved ? "60px" : "0px",
-                                height: "1.6rem",
-                                lineHeight: "0.8rem",
-                            }}
-                        >
-                            unsaved changes
-                        </div>
+                        {false && (
+                            <div
+                                style={{
+                                    fontSize: "16px",
+                                    transition: "0.2s",
+                                    opacity: unsaved ? "0.4" : "0",
+                                    width: unsaved ? "60px" : "0px",
+                                    height: "1.6rem",
+                                    lineHeight: "0.8rem",
+                                }}
+                            >
+                                unsaved changes
+                            </div>
+                        )}
                         <HeaderSmallButton onClick={handleSave}>
                             <BiSave />
                         </HeaderSmallButton>

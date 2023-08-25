@@ -1,31 +1,9 @@
-import classNames from "classnames";
-import {
-    ContentPaneContent,
-    ContentPaneWrapper,
-    PaneBackgroundImage,
-} from "./ContentPane.style";
-import { useTheme } from "styled-components";
+import { ContentPaneContent, ContentPaneWrapper } from "./ContentPane.style";
 
-function ContentPane({
-    background,
-    mobileShow,
-    imageCenter,
-    children,
-    ...rest
-}) {
-    const renderedBackground = background ? (
-        <PaneBackgroundImage
-            src={background}
-            mobileShow={mobileShow}
-            imageCenter={imageCenter}
-            alt='Blurred background of a realmic logo'
-        ></PaneBackgroundImage>
-    ) : null;
-
+function ContentPane({ children, ...rest }) {
     return (
         <ContentPaneWrapper {...rest}>
             <ContentPaneContent>{children}</ContentPaneContent>
-            {renderedBackground}
         </ContentPaneWrapper>
     );
 }

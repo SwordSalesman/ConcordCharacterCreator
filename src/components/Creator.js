@@ -1,6 +1,5 @@
 import { useState } from "react";
 import TabItem from "./common/Tabs/TabItem";
-import Button from "./common/Button/Button";
 import {
     ContentWrapper,
     CreatorWrapper,
@@ -8,38 +7,17 @@ import {
     NavigationPaneWrapper,
     TabsWrapper,
 } from "./Creator.style";
-
-import { Transition } from "@headlessui/react";
-import { BiAdjust } from "react-icons/bi";
-import { useTheme } from "styled-components";
-import {
-    AiFillDelete,
-    AiOutlineArrowLeft,
-    AiOutlineArrowRight,
-    AiOutlineLeft,
-    AiOutlineRight,
-} from "react-icons/ai";
-import { TabDivider } from "./common/Tabs/TabItem.style";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import useFormContext from "../hooks/use-form-context";
+import { ColumnPage } from "./pages/ColumnPageWrapper";
+import useRealmImage from "../hooks/use-realm-image";
 
-const transitionClasses = {
-    enter: "transition ease-in-out duration-300",
-    enterFrom: "opacity-0 -translate-2-3",
-    enterTo: "opacity-100 translate-x-0",
-    leave: "transition ease-in-out duration-150",
-    leaveFrom: "opacity-100 translate-x-0",
-    leaveTo: "opacity-0 translate-x-2",
-};
-
-function Creator({ tabs, toggleTheme }) {
+function Creator({ tabs, handleSubmit }) {
+    const { realm } = useFormContext();
     const [activeTab, setActiveTab] = useState(tabs[0]);
-    const { resetForm } = useFormContext();
-    // const [pendingTab, setPendingTab] = useState(null);
+    const realmImage = useRealmImage(realm);
 
     let activeIndex = tabs.indexOf(activeTab);
-    // if (activeIndex === -1) {
-    //     activeIndex = tabs.indexOf(pendingTab);
-    // }
     const prevTab = activeIndex > 0 ? tabs[activeIndex - 1] : null;
     const nextTab =
         activeIndex >= 0 && activeIndex < tabs.length - 1
@@ -51,17 +29,7 @@ function Creator({ tabs, toggleTheme }) {
             return;
         }
         setActiveTab(tab);
-        // setPendingTab(tab);
     };
-
-    // const handleTabLeave = () => {
-    //     if (pendingTab === null) {
-    //         setActiveTab(tabs[0]);
-    //     } else {
-    //         setActiveTab(pendingTab);
-    //         setPendingTab(null);
-    //     }
-    // };
 
     const renderedTabs = tabs.map((tab, index) => {
         return (
@@ -77,26 +45,7 @@ function Creator({ tabs, toggleTheme }) {
     });
 
     const renderedContent = tabs.map((tab, index) => {
-        return (
-            // <Transition
-            //     key={tab.name}
-            //     show={activeTab === tab}
-            //     afterLeave={handleTabLeave}
-            //     {...transitionClasses}
-            //     style={{ width: "100%", height: "100%" }}
-            // >
-            activeTab === tab &&
-            // (
-            // <div
-            //     style={{
-            //         width: "100%",
-            //         height: "100%",
-            //     }}
-            // >
-            tab.content
-            // </div>
-            // </Transition>
-        );
+        return activeTab === tab && tab.content;
     });
 
     const renderedButtons = (
@@ -115,14 +64,7 @@ function Creator({ tabs, toggleTheme }) {
                 <div></div>
             )}
             <NavigationButton
-                onClick={
-                    nextTab
-                        ? () => handleClickTab(nextTab)
-                        : () =>
-                              alert(
-                                  "The Concord team is not currently taking submissions."
-                              )
-                }
+                onClick={nextTab ? () => handleClickTab(nextTab) : handleSubmit}
                 primary
             >
                 <div style={{ width: "110px" }}>
@@ -138,7 +80,11 @@ function Creator({ tabs, toggleTheme }) {
     return (
         <CreatorWrapper>
             <TabsWrapper>{renderedTabs}</TabsWrapper>
-            <ContentWrapper>{renderedContent}</ContentWrapper>
+            <ContentWrapper>
+                <ColumnPage background={realmImage}>
+                    {renderedContent}
+                </ColumnPage>
+            </ContentWrapper>
             <NavigationPaneWrapper>{renderedButtons}</NavigationPaneWrapper>
         </CreatorWrapper>
     );

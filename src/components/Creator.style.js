@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Button from "./common/Button/Button";
+import { mediaSize } from "../styles/Global";
 
 // "m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl"
 export const CreatorWrapper = styled.div`
@@ -24,7 +25,7 @@ export const TabsWrapper = styled.div`
     margin-bottom: 15px;
     width: 95%;
     gap: 12px;
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         width: auto;
         gap: 0px;
     }
@@ -40,10 +41,10 @@ export const ContentWrapper = styled.div`
 
     width: 95%;
 
-    @media (max-width: ${(props) => props.theme.small}) {
+    @media (max-width: ${mediaSize.small}px) {
         margin-bottom: 10px;
     }
-    @media (min-width: ${(props) => props.theme.small}) {
+    @media (min-width: ${mediaSize.small}px) {
         height: 360px;
     }
 `;
@@ -61,7 +62,9 @@ export const NavigationPaneWrapper = styled.div`
     background-color: ${(props) => props.theme.background};
     /* box-shadow: ${(props) => "0 0 15px " + props.theme.shadow}; */
 
-    @media (max-width: ${(props) => props.theme.small}) {
+    height: 50px;
+
+    @media (max-width: ${mediaSize.small}px) {
         border-top: 1px solid ${(props) => props.theme.borderSoft};
 
         position: fixed;

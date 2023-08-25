@@ -52,12 +52,14 @@ function RealmPage() {
     );
 
     return (
-        <div className='flex flex-col mt-1 w-full'>
-            <div className='flex justify-center items-center mb-2'>
-                {renderedLogos}
+        <>
+            <div className='flex flex-col mt-1 w-full z-10'>
+                <div className='flex justify-center items-center mb-8 mt-4'>
+                    {renderedLogos}
+                </div>
+                <div className='text-center'>{content}</div>
             </div>
-            <div className='text-center'>{content}</div>
-        </div>
+        </>
     );
 }
 

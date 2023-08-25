@@ -4,7 +4,6 @@ import useFormContext from "../../../hooks/use-form-context";
 import Chip from "../../common/Chip/Chip";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
 import useRealmImage from "../../../hooks/use-realm-image";
-import { ColumnPageWrapper } from "../../../styles/Global";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 var investmentsData = require("../../../data/tables/investments.json");
 var spellsData = require("../../../data/tables/spells.json");
@@ -181,8 +180,8 @@ function OptionsPage() {
     }
 
     return (
-        <ColumnPageWrapper>
-            <ContentPane background={realmImage}>
+        <>
+            <ContentPane>
                 <SectionDivider left='Investment' right={numInvestments} />
                 <SectionWrapper>
                     {renderedInvestments?.length > 0 ? (
@@ -226,7 +225,7 @@ function OptionsPage() {
             <ContentPane>
                 <Accordion items={renderedTabs}></Accordion>
             </ContentPane>
-        </ColumnPageWrapper>
+        </>
     );
 }
 
