@@ -5,7 +5,7 @@ export const ReviewPageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 60px;
     width: 100%;
     padding: 0 10%;
 `;
@@ -15,16 +15,8 @@ export const ReviewPaneWrapper = styled.div`
     justify-content: center;
     line-height: 1.1rem;
     width: 100%;
-    height: 100%;
-
-    overflow: scroll;
-    &::-webkit-scrollbar {
-        width: 0px !important;
-        background: transparent;
-        display: none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    min-width: 300px;
+    /* height: 100%; */
 `;
 
 export const ReviewReminder = styled.p`
@@ -67,5 +59,6 @@ export const ReviewSection = styled.div`
 
 export const ReviewContent = styled.div`
     color: ${(props) => props.theme.textStrong};
+    line-height: 1.2rem;
     text-wrap: balance;
 `;

@@ -8,6 +8,8 @@ import useRealmImage from "../../../hooks/use-realm-image";
 import { ColumnPageWrapper } from "../../../styles/Global";
 import { styled } from "styled-components";
 import { ColumnPage } from "../ColumnPageWrapper";
+import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
+import { BackgroundPageWrapper } from "./BackgroundPage.style";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");
@@ -17,9 +19,9 @@ function BackgroundPage() {
         realm,
         heroName,
         setHeroName,
-        archetypes,
+        archetype,
         toggleArchetype,
-        graces,
+        grace,
         toggleGrace,
         warband,
         setWarband,
@@ -31,37 +33,45 @@ function BackgroundPage() {
         setOocGoals,
         backstory,
         setBackstory,
-        investmentDetails,
-        setInvestmentDetails,
+        invDetails,
+        setInvDetails,
     } = useFormContext();
     const realmImage = useRealmImage(realm);
 
-    var renderedArchetypes = null;
+    var renderedArchetype = null;
     if (realm) {
-        renderedArchetypes = allArchetypes
+        renderedArchetype = allArchetypes
             .filter((a) => a.realm === realm)
             .map((a) => {
-                let selected = archetypes?.map((selA) => selA).includes(a.name);
+                let selected = archetype
+                    ?.map((selA) => selA.name)
+                    .includes(a.name);
                 return (
                     <Chip
-                        onClick={() => toggleArchetype(a.name)}
+                        onClick={() => toggleArchetype(a)}
                         selected={selected}
-                        inactive={!selected && archetypes?.length >= 1}
+                        inactive={!selected && archetype?.length >= 1}
                     >
                         {a.name}
                     </Chip>
                 );
             });
+    } else {
+        renderedArchetype = (
+            <p style={{ opacity: 0.5, fontStyle: "italic" }}>
+                Select a realm first
+            </p>
+        );
     }
 
-    var renderedGraces = null;
-    renderedGraces = allGraces.map((g) => {
-        let selected = graces?.map((sel) => sel.name).includes(g.name);
+    var renderedGrace = null;
+    renderedGrace = allGraces.map((g) => {
+        let selected = grace?.map((sel) => sel.name).includes(g.name);
         return (
             <Chip
                 onClick={() => toggleGrace(g)}
                 selected={selected}
-                inactive={!selected && graces?.length >= 1}
+                inactive={!selected && grace?.length >= 1}
             >
                 {g.name}
             </Chip>
@@ -82,13 +92,13 @@ function BackgroundPage() {
                     <div className='w-full'>
                         <div className=''>Archetype</div>
                         <div className='flex w-full flex-wrap justify-center'>
-                            {renderedArchetypes}
+                            {renderedArchetype}
                         </div>
                     </div>
                     <div className='w-full'>
                         <div className=''>Grace</div>
                         <div className='flex w-full flex-wrap justify-center'>
-                            {renderedGraces}
+                            {renderedGrace}
                         </div>
                     </div>
                 </BackgroundInputWrapper>
@@ -148,8 +158,8 @@ function BackgroundPage() {
                         className='h-16'
                     />
                     <TextInput
-                        value={investmentDetails}
-                        onChange={setInvestmentDetails}
+                        value={invDetails}
+                        onChange={setInvDetails}
                         title='Investment Description'
                         placeholder='1000 character limit'
                         className='h-16'
@@ -160,14 +170,16 @@ function BackgroundPage() {
     ];
 
     return (
-        <>
-            <ContentPane style={{ flex: 1 }}>
+        <BackgroundPageWrapper>
+            {/* <ContentPane>
+                <SectionWrapper>{heroName}</SectionWrapper>
+              </ContentPane> */}
+            <ContentPane style={{ width: "100%" }}>
                 <SectionDivider left='Tell us about yourself'></SectionDivider>
-            </ContentPane>
-            <ContentPane style={{ flex: 2 }}>
+                <SectionWrapper />
                 <Accordion items={tabs}></Accordion>
             </ContentPane>
-        </>
+        </BackgroundPageWrapper>
     );
 }
 

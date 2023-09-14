@@ -11,6 +11,11 @@ import {
     ReviewSubtitles,
     StyledBorder,
 } from "./ReviewPage.style";
+import {
+    getFullSkillsFromSummary,
+    getSummarisedSkillNames,
+} from "../../../hooks/use-skill-helper";
+const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {
     return (
@@ -28,42 +33,27 @@ function ReviewPage({ user }) {
         gamesPlayed,
         realm,
         skills,
-        investments,
+        investment,
         spells,
         crafts,
         potions,
         ceremonies,
         heroName,
-        archetypes,
-        graces,
+        archetype,
+        grace,
         warband,
         sect,
+        getSimpleForm,
     } = useFormContext();
     const realmFull = useRealmDetails(realm);
 
-    const renderedSkills =
-        skills?.length > 0
-            ? skills
-                  .filter((s) => {
-                      let num = parseInt(s.name.split(" ").slice(-1));
-                      if (!num) {
-                          return true;
-                      } else {
-                          let name = s.name.split(" ").slice(0, -1).join(" ");
-                          return !skills
-                              .map((skill) => skill.name)
-                              .includes(name + " " + (num + 1));
-                      }
-                  })
-                  .map((s) => s.name)
-                  .join(delimiter)
-                  .toString()
-            : "None";
+    const renderedSkills = getSummarisedSkillNames(skills);
+    console.log(getSimpleForm());
 
     return (
         <ReviewPageWrapper>
             <ReviewPaneWrapper>
-                <ContentPane mobileShow={true}>
+                <ContentPane mobileshow='true'>
                     <div className='flex flex-col items-center mt-2 gap-2'>
                         <div>
                             <h2 className='text-xl leading-6'>
@@ -71,15 +61,22 @@ function ReviewPage({ user }) {
                             </h2>
                             <ReviewSubtitles>
                                 {realmFull ? realmFull.citizen : "Realmless"}
-                                {archetypes ? " " + archetypes : ""}
+                                {archetype?.length
+                                    ? " " + archetype[0].name
+                                    : ""}
                             </ReviewSubtitles>
-                            {graces && (
+                            {grace && (
                                 <ReviewSubtitles>
-                                    {graces.map((g) => (
-                                        <>
-                                            {g.name + ", Graced By " + g.sphere}
-                                        </>
-                                    ))}
+                                    {grace.map((g) => {
+                                        const fullGrace = graceData.find(
+                                            (gd) => gd.name === g.name
+                                        );
+                                        return (
+                                            g.name +
+                                            ", Graced By " +
+                                            fullGrace.sphere
+                                        );
+                                    })}
                                 </ReviewSubtitles>
                             )}
                         </div>
@@ -87,9 +84,9 @@ function ReviewPage({ user }) {
                         <ReviewItem label='Summits attended'>
                             {gamesPlayed}
                         </ReviewItem>
-                        {investments && (
+                        {investment && (
                             <ReviewItem label='Investment'>
-                                {investments.map((i) => i.name).toString()}
+                                {investment.map((i) => i.name).toString()}
                             </ReviewItem>
                         )}
                         {(warband || sect) && <StyledBorder />}

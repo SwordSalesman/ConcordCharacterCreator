@@ -13,6 +13,12 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Georgia, "Times New Roman", Times, serif;
     font-size: 17px;
 
+    &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
     @media (max-width: ${mediaSize.small}px) {
       font-size: 17px;  
     }
@@ -25,6 +31,8 @@ export const GlobalStyle = createGlobalStyle`
 
 // "h-[100vh] flex justify-center bg-gradient-to-b from-white to-slate-300 font-serif";
 export const StyledApp = styled.div`
+    margin-top: 50px;
+
     &::-webkit-scrollbar {
         display: none;
     }

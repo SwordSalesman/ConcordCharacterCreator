@@ -13,6 +13,7 @@ function SkillItem({ skill, selectSkill, selected, shadow, inactive }) {
             selected={selected}
             shadow={shadow}
             inactive={inactive}
+            skillstyle='true'
         >
             <SkillCost>{skill.cost}</SkillCost>
             <div>{skill.name}</div>

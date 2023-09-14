@@ -12,6 +12,8 @@ import { useTheme } from "styled-components";
 import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 import useFormContext from "../../../hooks/use-form-context";
 
+const headerSaveButton = false;
+
 function Header({ toggleTheme, handleShowLogin, handleSave, user }) {
     const theme = useTheme();
     const { unsaved } = useFormContext();
@@ -54,7 +56,7 @@ function Header({ toggleTheme, handleShowLogin, handleSave, user }) {
                     justifyContent: "right",
                 }}
             >
-                {user && (
+                {user && headerSaveButton && (
                     <div
                         style={{
                             display: "flex",

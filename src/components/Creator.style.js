@@ -9,25 +9,43 @@ export const CreatorWrapper = styled.div`
     /* width: 100%; */
 
     /* min-width: 300px; */
-    max-width: 620px;
+    width: 95%;
+    max-width: 720px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 
+    /* margin-top: 65px; */
     margin-top: 65px;
     margin-bottom: 65px;
+
+    border: ${(props) => (props.outline ? "2px solid" : "none")};
+    border-color: ${(props) => props.theme.background300};
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    overflow: hidden;
+
+    @media (max-width: ${mediaSize.small}px) {
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        height: 100%;
+        width: 100%;
+        border: none;
+    }
 `;
 
 // "flex justify-center mb-1 border-b-0 border-gray-200 w-full";
 export const TabsWrapper = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin-bottom: 15px;
-    width: 95%;
-    gap: 12px;
+    width: 100%;
+    /* gap: 12px; */
+
+    background-color: ${(props) => props.theme.background300};
+
     @media (max-width: ${mediaSize.small}px) {
-        width: auto;
-        gap: 0px;
     }
 `;
 
@@ -37,39 +55,42 @@ export const ContentWrapper = styled.div`
     justify-content: center;
     text-align: center;
     align-items: top;
-    min-height: 440px;
+    min-height: 500px;
 
-    width: 95%;
+    padding: 0 15px;
+
+    /* width: 200px; */
 
     @media (max-width: ${mediaSize.small}px) {
         margin-bottom: 10px;
     }
     @media (min-width: ${mediaSize.small}px) {
-        height: 360px;
+        /* padding-top: 10px; */
+        /* height: 360px; */
     }
 `;
 
 export const NavigationPaneWrapper = styled.div`
     width: 100%;
+    /* height: 50px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     /* margin-top: 10px; */
-    padding: 0 10px;
+    padding: 10px 10px;
     z-index: 10;
 
     background-color: ${(props) => props.theme.background};
     /* box-shadow: ${(props) => "0 0 15px " + props.theme.shadow}; */
-
-    height: 50px;
 
     @media (max-width: ${mediaSize.small}px) {
         border-top: 1px solid ${(props) => props.theme.borderSoft};
 
         position: fixed;
         bottom: 0;
-        height: 50px;
+        /* height: 50px; */
+        /* padding: 14px 10px; */
         //background-color: ${(props) => props.theme.backgroundRaised};
     }
 `;

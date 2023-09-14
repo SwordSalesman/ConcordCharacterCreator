@@ -1,4 +1,8 @@
 import { createContext, useEffect, useState } from "react";
+import {
+    getFullSkillsFromSummary,
+    getSummarisedSkillNames,
+} from "../hooks/use-skill-helper";
 
 const FormContext = createContext();
 
@@ -7,20 +11,23 @@ function FormContextProvider({ children }) {
     const [realm, setRealm] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(0);
     const [skills, setSkills] = useState([]);
-    const [investments, setInvestments] = useState([]);
+    const [investment, setInvestment] = useState(null);
+    const [invTier, setInvTier] = useState(1);
+    const [invOption, setInvOption] = useState(null);
+    const [invRegion, setInvRegion] = useState(null);
     const [spells, setSpells] = useState([]);
     const [crafts, setCrafts] = useState([]);
     const [potions, setPotions] = useState([]);
     const [ceremonies, setCeremonies] = useState([]);
     const [heroName, setHeroName] = useState(null);
-    const [archetypes, setArchetypes] = useState([]);
-    const [graces, setGraces] = useState([]);
+    const [archetype, setArchetype] = useState(null);
+    const [grace, setGrace] = useState(null);
     const [warband, setWarband] = useState(null);
     const [sect, setSect] = useState(null);
     const [icGoals, setIcGoals] = useState(null);
     const [oocGoals, setOocGoals] = useState(null);
     const [backstory, setBackstory] = useState(null);
-    const [investmentDetails, setInvestmentDetails] = useState(null);
+    const [invDetails, setInvDetails] = useState(null);
 
     // Derived Variables
     const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
@@ -34,20 +41,49 @@ function FormContextProvider({ children }) {
             realm: realm,
             gamesPlayed: gamesPlayed,
             skills: skills,
-            investments: investments,
+            investment: investment,
+            invTier: invTier,
+            invOption: invOption,
+            invRegion: invRegion,
             spells: spells,
             crafts: crafts,
             potions: potions,
             ceremonies: ceremonies,
             heroName: heroName,
-            archetypes: archetypes,
-            graces: graces,
+            archetype: archetype,
+            grace: grace,
             warband: warband,
             sect: sect,
             icGoals: icGoals,
             oocGoals: oocGoals,
             backstory: backstory,
-            investmentDetails: investmentDetails,
+            invDetails: invDetails,
+        };
+    };
+
+    // Get entire state
+    const getSimpleForm = () => {
+        return {
+            realm: realm,
+            gamesPlayed: gamesPlayed,
+            skills: getSummarisedSkillNames(skills),
+            investment: summariseSimpleArray(investment),
+            invTier: invTier,
+            invOption: invOption,
+            invRegion: invRegion,
+            spells: summariseSimpleArray(spells),
+            crafts: summariseSimpleArray(crafts),
+            potions: summariseSimpleArray(potions),
+            ceremonies: summariseSimpleArray(ceremonies),
+            heroName: heroName,
+            archetype: summariseSimpleArray(archetype),
+            grace: summariseSimpleArray(grace),
+            warband: warband,
+            sect: sect,
+            icGoals: icGoals,
+            oocGoals: oocGoals,
+            backstory: backstory,
+            invDetails: invDetails,
         };
     };
 
@@ -57,40 +93,69 @@ function FormContextProvider({ children }) {
         setRealm(data.realm);
         setGamesPlayed(data.gamesPlayed);
         setSkills(data.skills);
-        setInvestments(data.investments);
+        setInvestment(data.investment);
+        setInvOption(data.invOption);
+        setInvRegion(data.invRegion);
+        setInvTier(data.investment);
         setSpells(data.spells);
         setCrafts(data.crafts);
         setPotions(data.potions);
         setCeremonies(data.ceremonies);
         setHeroName(data.heroName);
-        setArchetypes(data.archetypes);
-        setGraces(data.graces);
+        setArchetype(data.archetype);
+        setGrace(data.grace);
         setWarband(data.warband);
         setSect(data.sect);
         setIcGoals(data.icGoals);
         setOocGoals(data.oocGoals);
         setBackstory(data.backstory);
-        setInvestmentDetails(data.investmentDetails);
+        setInvDetails(data.invDetails);
+    };
+
+    const setFormFromSimplifiedData = (data) => {
+        setRealm(data.realm);
+        setGamesPlayed(data.gamesPlayed);
+        setSkills(getFullSkillsFromSummary(data.skills));
+        setInvestment(getSimpleArrayFromSummary(data.investment));
+        setInvOption(data.invOption);
+        setInvRegion(data.invRegion);
+        setInvTier(data.investment);
+        setSpells(getSimpleArrayFromSummary(data.spells));
+        setCrafts(getSimpleArrayFromSummary(data.crafts));
+        setPotions(getSimpleArrayFromSummary(data.potions));
+        setCeremonies(getSimpleArrayFromSummary(data.ceremonies));
+        setHeroName(data.heroName);
+        setArchetype(getSimpleArrayFromSummary(data.archetype));
+        setGrace(getSimpleArrayFromSummary(data.grace));
+        setWarband(data.warband);
+        setSect(data.sect);
+        setIcGoals(data.icGoals);
+        setOocGoals(data.oocGoals);
+        setBackstory(data.backstory);
+        setInvDetails(data.invDetails);
     };
 
     const resetForm = () => {
         setRealm(null);
         setGamesPlayed(0);
         setSkills([]);
-        setInvestments([]);
+        setInvestment(null);
+        setInvOption(null);
+        setInvRegion(null);
+        setInvTier(1);
         setSpells([]);
         setCrafts([]);
         setPotions([]);
         setCeremonies([]);
         setHeroName(null);
-        setArchetypes([]);
-        setGraces([]);
+        setArchetype(null);
+        setGrace(null);
         setWarband(null);
         setSect(null);
         setIcGoals(null);
         setOocGoals(null);
         setBackstory(null);
-        setInvestmentDetails(null);
+        setInvDetails(null);
     };
 
     // Generic functions
@@ -143,11 +208,23 @@ function FormContextProvider({ children }) {
         }
     };
 
+    const summariseSimpleArray = (a) => {
+        if (!a) return null;
+        return a.map((i) => i.name).join(", ");
+    };
+
+    const getSimpleArrayFromSummary = (s) => {
+        if (!s) return null;
+        return s.split(", ").map((i) => {
+            return { name: i };
+        });
+    };
+
     // Handling functions
 
     const selectRealm = (selectedRealm) => {
         setRealm(selectedRealm);
-        setArchetypes([]);
+        setArchetype(null);
     };
 
     // skill should be a skillObj formatted as if from the SkillItem method call
@@ -160,12 +237,33 @@ function FormContextProvider({ children }) {
         return prereqMet && notExcluded;
     };
 
+    // skill should be a skillObj formatted as if from the SkillItem method call
+    const invalidSkillChoice = (skill) => {
+        // check for missing prerequisites
+        if (
+            skill.prereq &&
+            !skills?.map((s) => s.name).includes(skill.prereq)
+        ) {
+            return `Missing prerequisite '${skill.prereq}'`;
+        }
+        // check for exclusion
+        if (
+            skill.exclusion &&
+            skills?.map((s) => s.name).includes(skill.exclusion)
+        ) {
+            return `Conflict with skill '${skill.exclusion}'`;
+        }
+        // check for remaining xp
+        // if ( skill. )
+        return false;
+    };
+
     const toggleSkill = (skill) => {
         toggleItem(skill, skills, setSkills);
     };
 
-    const toggleInvestment = (investment) => {
-        toggleItem(investment, investments, setInvestments);
+    const toggleInvestment = (selectedInvestment) => {
+        toggleItem(selectedInvestment, investment, setInvestment);
     };
 
     const toggleSpell = (spell) => {
@@ -184,12 +282,12 @@ function FormContextProvider({ children }) {
         toggleItem(ceremony, ceremonies, setCeremonies);
     };
 
-    const toggleArchetype = (archetype) => {
-        toggleItem(archetype, archetypes, setArchetypes);
+    const toggleArchetype = (selectedArchetype) => {
+        toggleItem(selectedArchetype, archetype, setArchetype);
     };
 
-    const toggleGrace = (grace) => {
-        toggleItem(grace, graces, setGraces);
+    const toggleGrace = (selectedGrace) => {
+        toggleItem(selectedGrace, grace, setGrace);
     };
 
     // Local Storage management
@@ -200,21 +298,21 @@ function FormContextProvider({ children }) {
     //         JSON.parse(window.localStorage.getItem("gamesPlayed")) || 0
     //     );
     //     setSkills(JSON.parse(window.localStorage.getItem("skills")));
-    //     setInvestments(JSON.parse(window.localStorage.getItem("investments")));
+    //     setInvestment(JSON.parse(window.localStorage.getItem("investment")));
     //     setSpells(JSON.parse(window.localStorage.getItem("spells")));
     //     setCrafts(JSON.parse(window.localStorage.getItem("crafts")));
     //     setPotions(JSON.parse(window.localStorage.getItem("potions")));
     //     setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
     //     setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
-    //     setArchetypes(JSON.parse(window.localStorage.getItem("archetypes")));
-    //     setGraces(JSON.parse(window.localStorage.getItem("graces")));
+    //     setArchetype(JSON.parse(window.localStorage.getItem("archetype")));
+    //     setGrace(JSON.parse(window.localStorage.getItem("grace")));
     //     setWarband(JSON.parse(window.localStorage.getItem("warband")));
     //     setSect(JSON.parse(window.localStorage.getItem("sect")));
     //     setIcGoals(JSON.parse(window.localStorage.getItem("icGoals")));
     //     setOocGoals(JSON.parse(window.localStorage.getItem("oocGoals")));
     //     setBackstory(JSON.parse(window.localStorage.getItem("backstory")));
-    //     setInvestmentDetails(
-    //         JSON.parse(window.localStorage.getItem("investmentDetails"))
+    //     setInvDetails(
+    //         JSON.parse(window.localStorage.getItem("invDetails"))
     //     );
     // }, []);
 
@@ -237,6 +335,10 @@ function FormContextProvider({ children }) {
 
         if (!skills?.map((s) => s.name).includes("Magus")) {
             setSpells([]);
+        } else {
+            if (spells.length < 1) {
+                toggleSpell({ name: "Channel Waystone" });
+            }
         }
         if (!skills?.map((s) => s.name).includes("Apothecary")) {
             setPotions([]);
@@ -250,8 +352,8 @@ function FormContextProvider({ children }) {
     }, [skills, remainingXp]);
 
     // useEffect(() => {
-    //     window.localStorage.setItem("investments", JSON.stringify(investments));
-    // }, [investments]);
+    //     window.localStorage.setItem("investment", JSON.stringify(investment));
+    // }, [investment]);
 
     // useEffect(() => {
     //     window.localStorage.setItem("spells", JSON.stringify(spells));
@@ -274,12 +376,12 @@ function FormContextProvider({ children }) {
     // }, [heroName]);
 
     // useEffect(() => {
-    //     window.localStorage.setItem("archetypes", JSON.stringify(archetypes));
-    // }, [archetypes]);
+    //     window.localStorage.setItem("archetype", JSON.stringify(archetype));
+    // }, [archetype]);
 
     // useEffect(() => {
-    //     window.localStorage.setItem("graces", JSON.stringify(graces));
-    // }, [graces]);
+    //     window.localStorage.setItem("grace", JSON.stringify(grace));
+    // }, [grace]);
 
     // useEffect(() => {
     //     window.localStorage.setItem("warband", JSON.stringify(warband));
@@ -303,10 +405,10 @@ function FormContextProvider({ children }) {
 
     // useEffect(() => {
     //     window.localStorage.setItem(
-    //         "investmentDetails",
-    //         JSON.stringify(investmentDetails)
+    //         "invDetails",
+    //         JSON.stringify(invDetails)
     //     );
-    // }, [investmentDetails]);
+    // }, [invDetails]);
 
     // Outputs
 
@@ -320,7 +422,8 @@ function FormContextProvider({ children }) {
         remainingXp,
         toggleSkill,
         validSkillChoice,
-        investments,
+        invalidSkillChoice,
+        investment,
         toggleInvestment,
         spells,
         toggleSpell,
@@ -332,9 +435,9 @@ function FormContextProvider({ children }) {
         toggleCeremony,
         heroName,
         setHeroName,
-        archetypes,
+        archetype,
         toggleArchetype,
-        graces,
+        grace,
         toggleGrace,
         warband,
         setWarband,
@@ -346,10 +449,12 @@ function FormContextProvider({ children }) {
         setOocGoals,
         backstory,
         setBackstory,
-        investmentDetails,
-        setInvestmentDetails,
+        invDetails,
+        setInvDetails,
         getForm,
+        getSimpleForm,
         setForm,
+        setFormFromSimplifiedData,
         resetForm,
     };
 

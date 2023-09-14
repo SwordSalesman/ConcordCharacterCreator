@@ -1,7 +1,15 @@
 import classNames from "classnames";
 import { StyledChip } from "./Chip.styled";
 
-function Chip({ children, onClick, selected, shadow, inactive, ...rest }) {
+function Chip({
+    children,
+    onClick,
+    selected,
+    skillstyle,
+    shadow,
+    inactive,
+    ...rest
+}) {
     const handleClick = () => {
         if (!inactive) {
             onClick();
@@ -14,6 +22,7 @@ function Chip({ children, onClick, selected, shadow, inactive, ...rest }) {
             shadow={shadow}
             disabled={inactive}
             onClick={handleClick}
+            skillstyle={skillstyle}
             {...rest}
         >
             {children}

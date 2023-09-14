@@ -27,7 +27,7 @@ function IntroPage() {
     };
 
     return (
-        <div>
+        <div style={{ marginTop: "15px" }}>
             <TitleWrapper>
                 <p>Welcome to the </p>
                 <i>
@@ -42,11 +42,10 @@ function IntroPage() {
             </FlexCenter>
             <br />
             <p>
-                Follow the steps and fill in your character details. To save
-                your character for later, and to submit your character to the
-                team, you'll need to sign in on the top right. Your character
-                won't be submitted until you click <i>submit</i> on the final
-                step.
+                Follow the steps and fill in your character details. To save and
+                submit your character to the team, you'll need to sign in on the
+                top right. Your character won't be saved or submitted until you
+                click <i>Submit</i> on the final step.
             </p>
             <br />
             <div>
@@ -65,7 +64,7 @@ function IntroPage() {
                 style={{
                     display: "flex",
                     justifyContent: "right",
-                    marginTop: "20px",
+                    marginTop: "60px",
                 }}
             >
                 <ResetButton onClick={handleResetButton}>

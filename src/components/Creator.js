@@ -11,6 +11,9 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import useFormContext from "../hooks/use-form-context";
 import { ColumnPage } from "./pages/ColumnPageWrapper";
 import useRealmImage from "../hooks/use-realm-image";
+import PageHeader from "./common/PageHeader/PageHeader";
+
+const useTabs = false;
 
 function Creator({ tabs, handleSubmit }) {
     const { realm } = useFormContext();
@@ -78,8 +81,9 @@ function Creator({ tabs, handleSubmit }) {
     );
 
     return (
-        <CreatorWrapper>
+        <CreatorWrapper outline={!useTabs}>
             <TabsWrapper>{renderedTabs}</TabsWrapper>
+            {/* // <PageHeader>{activeTab.name}</PageHeader> */}
             <ContentWrapper>
                 <ColumnPage background={realmImage}>
                     {renderedContent}

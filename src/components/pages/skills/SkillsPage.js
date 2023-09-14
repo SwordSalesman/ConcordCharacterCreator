@@ -5,14 +5,10 @@ import SkillItem from "./SkillItem";
 import SectionDivider from "../../../components/common/SectionDivider/SectionDivider";
 import useRealmImage from "../../../hooks/use-realm-image";
 import { SectionWrapper } from "../../../components/common/SectionDivider/SectionDivider.style";
+import { getNextSkill } from "../../../hooks/use-skill-helper";
+import { SkillPageWrapper } from "./SkillsPage.style";
 var tabs = require("../../../data/tables/skillTabs.json");
 var baseSkills = require("../../../data/tables/skills.json");
-
-function getNextSkillName(name) {
-    let words = name.split(" ");
-    let newNum = (Number.parseInt(words.pop()) + 1).toString();
-    return words.join(" ") + " " + newNum;
-}
 
 function SkillsPage() {
     const { realm, skills, toggleSkill, validSkillChoice, remainingXp } =
@@ -27,14 +23,7 @@ function SkillsPage() {
     const extraSkills = skills
         ?.filter((s) => s.costExtra !== undefined)
         .map((s) => {
-            return {
-                name: getNextSkillName(s.name),
-                tree: s.tree,
-                cost: s.cost + s.costExtra,
-                costExtra: s.costExtra,
-                prereq: s.name,
-                exclusion: s.exclusion ? s.exclusion : null,
-            };
+            return getNextSkill(s);
         });
     const allSkills = extraSkills ? baseSkills.concat(extraSkills) : baseSkills;
 
@@ -45,6 +34,7 @@ function SkillsPage() {
             // .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((skill) => {
                 let selected = skills?.map((s) => s.name).includes(skill.name);
+                // let inactiveReason = invalidSkillChoice(skill);
                 return (
                     <SkillItem
                         skill={skill}
@@ -76,8 +66,8 @@ function SkillsPage() {
     });
 
     return (
-        <>
-            <ContentPane>
+        <SkillPageWrapper>
+            <ContentPane style={{ flex: 4 }}>
                 <SectionDivider left='Remaining XP' right={remainingXp} />
                 {/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
                 {renderedSkills?.length > 0 ? (
@@ -88,10 +78,10 @@ function SkillsPage() {
                     </div>
                 )}
             </ContentPane>
-            <ContentPane>
+            <ContentPane style={{ flex: 5 }}>
                 <Accordion items={renderedTabs}></Accordion>
             </ContentPane>
-        </>
+        </SkillPageWrapper>
     );
 }
 

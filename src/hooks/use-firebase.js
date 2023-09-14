@@ -54,7 +54,7 @@ const signInWithGoogle = async () => {
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
         if (docs.docs.length === 0) {
-            await addDoc(collection(db, "users"), {
+            await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 name: user.displayName,
                 authProvider: "google",
@@ -68,24 +68,21 @@ const signInWithGoogle = async () => {
 };
 
 const logInWithEmailAndPassword = async (email, password) => {
-    try {
-        const userCred = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-        const user = userCred.user;
-    } catch (err) {
-        console.error(err);
-        // alert(err.message);
-    }
+    // try {
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCred.user;
+
+    // } catch (err) {
+    // console.error(err);
+    // alert(err.message);
+    // }
 };
 
 const registerWithEmailAndPassword = async (name, email, password) => {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
-        const userDoc = await addDoc(collection(db, "users"), {
+        const userDoc = await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             name,
             authProvider: "email",
@@ -108,42 +105,51 @@ const sendPasswordReset = async (email) => {
     }
 };
 
-const saveUserForm = async (email, form) => {
-    await setDoc(doc(db, "characters", email), {
-        form: form,
-    });
+const saveUserForm = async (form) => {
+    const name = await getUserName();
+    let fullForm = {
+        player: name,
+        email: auth.currentUser.email,
+        date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
+    };
+    Object.assign(fullForm, form);
+    console.log(fullForm);
+    await setDoc(doc(db, "characters", auth.currentUser.uid), fullForm);
+    return fullForm;
 };
 
 const getUserForm = async (email) => {
-    const docRef = doc(db, "characters", email);
+    const docRef = doc(db, "characters", auth.currentUser.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
         return docSnap.data();
     } else {
         return null;
     }
+    // const charRef = collection(db, "characters");
+    // const q = query(charRef, where("userId", "==", auth.currentUser.uid));
+    // const querySnapshot = await getDocs(q);
+    // if (querySnapshot.length !== 1) {
+    //   return null;
+    // } else {
+    //   querySnapshot.forEach((doc) => {
+    //     return doc.data();
+    //   });
+    // }
 };
 
 const getUserName = async () => {
-    console.log(auth.currentUser.email);
-    if (!auth.currentUser) {
-        return;
+    const docRef = doc(db, "users", auth.currentUser.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data().name;
+    } else {
+        return null;
     }
-    const q = query(
-        collection(db, "users"),
-        where("email", "==", auth.currentUser.email),
-        limit(1)
-    );
-    const snap = await getDocs(q);
-
-    if (snap.docs.length > 0) {
-        return snap.docs[0].data().name;
-    }
-    return null;
 };
 
-const logout = () => {
-    signOut(auth);
+const logout = async () => {
+    await signOut(auth).then();
 };
 
 export {

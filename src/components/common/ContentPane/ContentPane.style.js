@@ -57,6 +57,6 @@ export const PaneBackgroundImage = styled.img`
         props.imageCenter ? "translate(-50%, 5%)" : "translate(-100%, 5%)"}; */
 
     @media (max-width: ${mediaSize.small}px) {
-        ${(props) => !props.mobileShow && "display: none;"}
+        ${(props) => !props.mobileshow && "display: none;"}
     }
 `;

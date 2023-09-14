@@ -15,12 +15,10 @@ export const AccordionWrapper = styled.div`
     gap: 0px;
 `;
 
-/*
-"flex justify-between p-1 px-2 bg-gradient-to-r from-gray-100 to-gray-50 border border-gray-300 rounded items-center cursor-pointer"
-*/
 export const AccordionHeader = styled.button`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 3px 6px;
     margin: 2px 0;
 
@@ -42,14 +40,6 @@ export const AccordionHeader = styled.button`
     }
 `;
 
-/*
-  "m-1",
-  "flex w-full flex-wrap overflow-auto overflow-x-hidden max-h-0",
-  "transition-all duration-[500ms]",
-  {
-    "max-h-52": expanded,
-  }
-*/
 export const AccordionContent = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -71,12 +61,14 @@ export const AccordionContent = styled.div`
     scrollbar-width: none;
 
     transition: all;
-    transition-duration: 0.4s;
+    /* transition-duration: 0.4s; */
 
-    max-height: ${(props) => (props.expanded ? "fit-content" : "0px")};
+    height: ${(props) => (props.expanded ? "fit-content" : "0px")};
+    margin-bottom: ${(props) => (props.expanded ? "10px" : "0px")};
 
     @media (max-width: ${mediaSize.small}px) {
-        justify-content: center;
+        /* justify-content: center; */
+        /* align-items: center; */
         max-height: ${(props) => (props.expanded ? "fit-content" : "0px")};
         transition-duration: 0s;
     }

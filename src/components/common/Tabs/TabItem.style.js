@@ -5,11 +5,10 @@ export const StyledTabItem = styled.button`
     border-bottom: 3px solid;
     border-color: #ffffff00;
 
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    margin-top: 2px;
     height: 30px;
     transition: 0.2s;
-
-    padding: 0;
 
     &::selection {
         border-color: ${(props) => props.theme.outline};
@@ -20,12 +19,15 @@ export const StyledTabItem = styled.button`
     color: ${(props) =>
         props.primary ? props.theme.textStrong : props.theme.text};
 
-    opacity: ${(props) => (props.primary ? "1.0" : "0.6")};
+    opacity: ${(props) => (props.primary ? "1.0" : "0.5")};
     flex: 1;
 
     @media (max-width: ${mediaSize.small}px) {
-        opacity: ${(props) => (props.primary ? "1.0" : "0.25")};
-        border-color: ${(props) =>
-            props.primary ? props.theme.special : props.theme.textSoft};
+        display: ${(props) => (props.primary ? "block" : "none")};
+        border: none;
+        margin: 0;
+        font-size: 1.1rem;
+        /* border-color: ${(props) =>
+            props.primary ? props.theme.special : props.theme.textSoft}; */
     }
 `;

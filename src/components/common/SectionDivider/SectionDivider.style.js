@@ -4,7 +4,8 @@ import { mediaSize } from "../../../styles/Global";
 export const StyledSectionDivider = styled.div`
     display: flex;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
+    margin-top: 6px;
     /* margin: auto;
   margin-top: 0px;
   margin-bottom: 5px;

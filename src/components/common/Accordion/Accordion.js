@@ -9,19 +9,23 @@ import {
 } from "./Accordion.style";
 
 function Accordion({ items }) {
-    const [expandedIndex, setExpandedIndex] = useState(-1);
+    const [expandedIndexes, setExpandedIndexes] = useState(
+        new Array(items.length).fill(false)
+    );
 
     const handleLabelClick = (clickedIndex) => {
-        if (expandedIndex === clickedIndex) {
-            setExpandedIndex(-1);
-        } else {
-            setExpandedIndex(clickedIndex);
-        }
+        const newIndexes = expandedIndexes.map((expandedValue, index) => {
+            if (index === clickedIndex) {
+                return !expandedValue;
+            }
+            return expandedValue;
+        });
+        setExpandedIndexes(newIndexes);
     };
 
     // Render each of the Accordion items
     const renderedItems = items.map((item, index) => {
-        const expanded = index === expandedIndex;
+        const expanded = expandedIndexes[index];
 
         const icon = (
             <div className='flex'>

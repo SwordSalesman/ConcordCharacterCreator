@@ -5,7 +5,8 @@ import Chip from "../../common/Chip/Chip";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
 import useRealmImage from "../../../hooks/use-realm-image";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
-var investmentsData = require("../../../data/tables/investments.json");
+import { SkillPageWrapper } from "../skills/SkillsPage.style";
+var investmentData = require("../../../data/tables/investments.json");
 var spellsData = require("../../../data/tables/spells.json");
 var craftsData = require("../../../data/tables/crafts.json");
 var potionsData = require("../../../data/tables/potions.json");
@@ -59,7 +60,7 @@ function OptionsPage() {
         skills,
         spells,
         toggleSpell,
-        investments,
+        investment,
         toggleInvestment,
         crafts,
         toggleCraft,
@@ -78,7 +79,7 @@ function OptionsPage() {
     const showCeremonies =
         skillNames.filter((s) => s.startsWith("Divine Lore")).length > 0;
 
-    const numInvestments = 1 - (investments ? investments.length : 0);
+    const numInvestment = 1 - (investment ? investment.length : 0);
 
     const maxSpells =
         showSpells &&
@@ -106,7 +107,7 @@ function OptionsPage() {
     const numPotions = maxPotions - (potions ? potions.length : 0);
 
     // Generate the 'selected' items on the left of the screen
-    var renderedInvestments = genSelectedContent(investments, toggleInvestment);
+    var renderedInvestment = genSelectedContent(investment, toggleInvestment);
     var renderedSpells = showSpells
         ? genSelectedContent(spells, toggleSpell)
         : null;
@@ -125,17 +126,17 @@ function OptionsPage() {
         genTabContent(
             "Investment",
             "Investments",
-            investmentsData,
-            investments,
+            investmentData,
+            investment,
             toggleInvestment,
-            numInvestments
+            numInvestment
         ),
     ];
     showSpells &&
         renderedTabs.push(
             genTabContent(
                 "Spells",
-                "Spellcasting",
+                "List_of_Known_Magical_Spells",
                 spellsData,
                 spells,
                 toggleSpell,
@@ -180,12 +181,15 @@ function OptionsPage() {
     }
 
     return (
-        <>
-            <ContentPane>
-                <SectionDivider left='Investment' right={numInvestments} />
+        <SkillPageWrapper>
+            <ContentPane style={{ flex: 4 }}>
+                <SectionDivider
+                    left='Investment'
+                    right={numInvestment > 0 && `(${numInvestment} remaining)`}
+                />
                 <SectionWrapper>
-                    {renderedInvestments?.length > 0 ? (
-                        renderedInvestments
+                    {renderedInvestment?.length > 0 ? (
+                        renderedInvestment
                     ) : (
                         <div className='opacity-60 italic px-10'>
                             {
@@ -196,19 +200,30 @@ function OptionsPage() {
                 </SectionWrapper>
                 {showSpells && (
                     <>
-                        <SectionDivider left='Spells' right={numSpells} />
+                        <SectionDivider
+                            left='Spells'
+                            right={numSpells > 0 && `(${numSpells} remaining)`}
+                        />
                         <SectionWrapper>{renderedSpells}</SectionWrapper>
                     </>
                 )}
                 {showCrafts && (
                     <>
-                        <SectionDivider left='Crafts' right={numCrafts} />
+                        <SectionDivider
+                            left='Crafts'
+                            right={numCrafts > 0 && `(${numCrafts} remaining)`}
+                        />
                         <SectionWrapper>{renderedCrafts}</SectionWrapper>
                     </>
                 )}
                 {showPotions && (
                     <>
-                        <SectionDivider left='Potions' right={numPotions} />
+                        <SectionDivider
+                            left='Potions'
+                            right={
+                                numPotions > 0 && `(${numPotions} remaining)`
+                            }
+                        />
                         <SectionWrapper>{renderedPotions}</SectionWrapper>
                     </>
                 )}
@@ -216,16 +231,19 @@ function OptionsPage() {
                     <>
                         <SectionDivider
                             left={"Mastered Ceremonies"}
-                            right={numCeremonies}
+                            right={
+                                numCeremonies > 0 &&
+                                `(${numCeremonies} remaining)`
+                            }
                         />
                         <SectionWrapper>{renderedCeremonies}</SectionWrapper>
                     </>
                 )}
             </ContentPane>
-            <ContentPane>
+            <ContentPane style={{ flex: 5 }}>
                 <Accordion items={renderedTabs}></Accordion>
             </ContentPane>
-        </>
+        </SkillPageWrapper>
     );
 }
 

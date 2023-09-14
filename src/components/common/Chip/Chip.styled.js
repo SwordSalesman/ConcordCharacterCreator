@@ -30,7 +30,11 @@ export const StyledChip = styled.button`
     font-family: Arial, Helvetica, sans-serif;
 
     border-width: 1px;
-    border-radius: 20px;
+
+    border-radius: ${(props) => (props.skillstyle ? "20px" : "8px")};
+
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 
     @media (min-width: ${mediaSize.small}px) {
         &:hover {

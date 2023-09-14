@@ -16,6 +16,7 @@ import IntroPage from "./components/pages/intro/IntroPage";
 import Login from "./components/common/Login/Login";
 import { Toaster, toast } from "react-hot-toast";
 import useFormContext from "./hooks/use-form-context";
+import { Banner } from "./components/common/Banner/Banner";
 
 const tabs = [
     { name: "Intro", content: <IntroPage /> },
@@ -31,8 +32,10 @@ function App() {
         window.localStorage.getItem("theme") === "dark" ? dark : light
     );
     const [showLogin, setShowLogin] = useState(false);
+    const [dateSubmitted, setDateSubmitted] = useState(null);
     const [user, loading, error] = useAuthState(auth);
-    const { setForm, getForm } = useFormContext();
+    const { getForm, getSimpleForm, setFormFromSimplifiedData } =
+        useFormContext();
 
     const toggleTheme = () => {
         if (theme === light) {
@@ -48,27 +51,27 @@ function App() {
     const handleCloseLogin = () => setShowLogin(false);
 
     const handleSave = async () => {
-        toast.promise(saveUserForm(user.email, getForm()), {
-            loading: "Saving",
-            success: "Character saved",
-            error: "Save failed, check network connection",
+        toast.promise(saveUserForm(getSimpleForm()), {
+            loading: "Submitting",
+            success: "Character submitted!",
+            error: "Submission failed, check network connection",
         });
     };
 
     const handleSubmit = async () => {
-        const form = getForm();
-        saveUserForm(user.email, form).then(
-            // appendSpreadsheet(form),
-            console.error("Unable to save and submit.")
-        );
+        handleSave();
     };
+
+    const showSubmittedBanner = false;
 
     useEffect(() => {
         setShowLogin(false);
 
         const populateForm = async (email) => {
             const formData = await getUserForm(email);
-            setForm(formData.form);
+            console.log(formData);
+            setFormFromSimplifiedData(formData);
+            setDateSubmitted(formData.date);
         };
 
         if (user) {
@@ -86,6 +89,7 @@ function App() {
                     handleSave={handleSave}
                     user={user}
                 />
+                {showSubmittedBanner && <Banner date={dateSubmitted} />}
                 <Creator tabs={tabs} handleSubmit={handleSubmit} />
                 {showLogin && (
                     <Login
