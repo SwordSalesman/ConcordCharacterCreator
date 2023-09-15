@@ -6,7 +6,10 @@ import SectionDivider from "../../common/SectionDivider/SectionDivider";
 import useRealmImage from "../../../hooks/use-realm-image";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { SkillPageWrapper } from "../skills/SkillsPage.style";
+import { AccordionSection } from "../../common/Accordion/AccordionSection";
+import { BackgroundInputWrapper } from "../background/BackgroundPage";
 var investmentData = require("../../../data/tables/investments.json");
+var regionData = require("../../../data/tables/regions.json");
 var spellsData = require("../../../data/tables/spells.json");
 var craftsData = require("../../../data/tables/crafts.json");
 var potionsData = require("../../../data/tables/potions.json");
@@ -44,7 +47,7 @@ const genTabContent = (
 };
 
 const genSelectedContent = (items, toggleFunction) => {
-    if (!items) {
+    if (!items || !items.length) {
         return null;
     }
     return items?.map((i) => (
@@ -62,6 +65,10 @@ function OptionsPage() {
         toggleSpell,
         investment,
         toggleInvestment,
+        invRegion,
+        toggleInvRegion,
+        invOption,
+        toggleInvOption,
         crafts,
         toggleCraft,
         potions,
@@ -80,6 +87,8 @@ function OptionsPage() {
         skillNames.filter((s) => s.startsWith("Divine Lore")).length > 0;
 
     const numInvestment = 1 - (investment ? investment.length : 0);
+    const numInvRegion = 1 - (invRegion ? invRegion.length : 0);
+    const numInvOption = 1 - (invOption ? invOption.length : 0);
 
     const maxSpells =
         showSpells &&
@@ -108,6 +117,8 @@ function OptionsPage() {
 
     // Generate the 'selected' items on the left of the screen
     var renderedInvestment = genSelectedContent(investment, toggleInvestment);
+    var renderedInvOption = genSelectedContent(invOption, toggleInvOption);
+    var renderedInvRegion = genSelectedContent(invRegion, toggleInvRegion);
     var renderedSpells = showSpells
         ? genSelectedContent(spells, toggleSpell)
         : null;
@@ -122,16 +133,85 @@ function OptionsPage() {
         : null;
 
     // Conditionally generate each of the tabs on the right of the screen
-    const renderedTabs = [
-        genTabContent(
-            "Investment",
-            "Investments",
-            investmentData,
-            investment,
-            toggleInvestment,
-            numInvestment
-        ),
-    ];
+    // const renderedTabs = [
+    //     genTabContent(
+    //         "Investment",
+    //         "Investments",
+    //         investmentData,
+    //         investment,
+    //         toggleInvestment,
+    //         numInvestment
+    //     ),
+    // ];
+    const investmentOptions =
+        investment && investment.length
+            ? investmentData.find((i) => i.name === investment[0].name)?.options
+            : null;
+    const investmentTabContent = (
+        <BackgroundInputWrapper>
+            <AccordionSection title='Investment Type'>
+                {investmentData.map((item) => {
+                    let selected = investment
+                        ?.map((i) => i.name)
+                        .includes(item.name);
+                    return (
+                        <Chip
+                            onClick={() =>
+                                toggleInvestment({ name: item.name })
+                            }
+                            selected={selected}
+                            inactive={!selected && numInvestment <= 0}
+                        >
+                            {item.name}
+                        </Chip>
+                    );
+                })}
+            </AccordionSection>
+            {investmentOptions && (
+                <AccordionSection title='Investment Option'>
+                    {investmentOptions.map((item) => {
+                        let selected = invOption
+                            ?.map((i) => i.name)
+                            .includes(item.name);
+                        return (
+                            <Chip
+                                onClick={() =>
+                                    toggleInvOption({ name: item.name })
+                                }
+                                selected={selected}
+                                inactive={!selected && numInvOption <= 0}
+                            >
+                                {item.name}
+                            </Chip>
+                        );
+                    })}
+                </AccordionSection>
+            )}
+            <AccordionSection title='Investment Region'>
+                {regionData.map((item) => {
+                    let selected = invRegion
+                        ?.map((i) => i.name)
+                        .includes(item.name);
+                    return (
+                        <Chip
+                            onClick={() => toggleInvRegion({ name: item.name })}
+                            selected={selected}
+                            inactive={!selected && numInvRegion <= 0}
+                        >
+                            {item.name}
+                        </Chip>
+                    );
+                })}
+            </AccordionSection>
+        </BackgroundInputWrapper>
+    );
+
+    const renderedTabs = [];
+    renderedTabs.push({
+        label: "Investment",
+        content: investmentTabContent,
+        link: "Investments",
+    });
     showSpells &&
         renderedTabs.push(
             genTabContent(
@@ -187,9 +267,15 @@ function OptionsPage() {
                     left='Investment'
                     right={numInvestment > 0 && `(${numInvestment} remaining)`}
                 />
-                <SectionWrapper>
-                    {renderedInvestment?.length > 0 ? (
-                        renderedInvestment
+                <SectionWrapper style={{ gap: "5px" }}>
+                    {renderedInvestment ? (
+                        <>
+                            {renderedInvestment}
+                            {renderedInvRegion && <>in {renderedInvRegion}</>}
+                            {renderedInvOption && (
+                                <>producing {renderedInvOption}</>
+                            )}
+                        </>
                     ) : (
                         <div className='opacity-60 italic px-10'>
                             {

@@ -69,8 +69,8 @@ function FormContextProvider({ children }) {
             skills: getSummarisedSkillNames(skills),
             investment: summariseSimpleArray(investment),
             invTier: invTier,
-            invOption: invOption,
-            invRegion: invRegion,
+            invOption: summariseSimpleArray(invOption),
+            invRegion: summariseSimpleArray(invRegion),
             spells: summariseSimpleArray(spells),
             crafts: summariseSimpleArray(crafts),
             potions: summariseSimpleArray(potions),
@@ -94,9 +94,9 @@ function FormContextProvider({ children }) {
         setGamesPlayed(data.gamesPlayed);
         setSkills(data.skills);
         setInvestment(data.investment);
+        setInvTier(data.invTier);
         setInvOption(data.invOption);
         setInvRegion(data.invRegion);
-        setInvTier(data.investment);
         setSpells(data.spells);
         setCrafts(data.crafts);
         setPotions(data.potions);
@@ -117,9 +117,9 @@ function FormContextProvider({ children }) {
         setGamesPlayed(data.gamesPlayed);
         setSkills(getFullSkillsFromSummary(data.skills));
         setInvestment(getSimpleArrayFromSummary(data.investment));
-        setInvOption(data.invOption);
-        setInvRegion(data.invRegion);
-        setInvTier(data.investment);
+        setInvOption(getSimpleArrayFromSummary(data.invOption));
+        setInvRegion(getSimpleArrayFromSummary(data.invRegion));
+        setInvTier(data.invTier);
         setSpells(getSimpleArrayFromSummary(data.spells));
         setCrafts(getSimpleArrayFromSummary(data.crafts));
         setPotions(getSimpleArrayFromSummary(data.potions));
@@ -264,6 +264,15 @@ function FormContextProvider({ children }) {
 
     const toggleInvestment = (selectedInvestment) => {
         toggleItem(selectedInvestment, investment, setInvestment);
+        setInvOption(null);
+    };
+
+    const toggleInvRegion = (region) => {
+        toggleItem(region, invRegion, setInvRegion);
+    };
+
+    const toggleInvOption = (option) => {
+        toggleItem(option, invOption, setInvOption);
     };
 
     const toggleSpell = (spell) => {
@@ -425,6 +434,12 @@ function FormContextProvider({ children }) {
         invalidSkillChoice,
         investment,
         toggleInvestment,
+        invRegion,
+        toggleInvRegion,
+        invOption,
+        toggleInvOption,
+        invTier,
+        setInvTier,
         spells,
         toggleSpell,
         crafts,

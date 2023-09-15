@@ -48,7 +48,12 @@ function ReviewPage({ user }) {
     const realmFull = useRealmDetails(realm);
 
     const renderedSkills = getSummarisedSkillNames(skills);
-    console.log(getSimpleForm());
+    // console.log(getSimpleForm());
+
+    // This simple check avoids the page crashing during a log in form reset
+    if (!spells) {
+        return;
+    }
 
     return (
         <ReviewPageWrapper>

@@ -185,7 +185,7 @@ function BackgroundPage() {
 
 export default BackgroundPage;
 
-const BackgroundInputWrapper = styled.div`
+export const BackgroundInputWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
