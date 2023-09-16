@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BiChevronDown, BiChevronLeft, BiChevronUp } from "react-icons/bi";
 import WikiLink from "../WikiLink/WikiLink";
 import {
+    AccordionArrow,
     AccordionContent,
     AccordionHeader,
     AccordionWrapper,
@@ -29,9 +30,9 @@ function Accordion({ items }) {
 
         const icon = (
             <div className='flex'>
-                <span className='text-2xl mr-1'>
-                    {expanded ? <BiChevronDown /> : <BiChevronUp />}
-                </span>
+                <AccordionArrow expanded={expanded}>
+                    <BiChevronUp size={25} />
+                </AccordionArrow>
                 {item.link && <WikiLink path={item.link} />}
             </div>
         );

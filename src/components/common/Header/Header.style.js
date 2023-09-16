@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import Button from "../Button/Button";
+import { mediaSize } from "../../../styles/Global";
 
-// "m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl"
 export const HeaderWrapper = styled.div`
     /* height: 36px; */
     height: 50px;
@@ -18,7 +18,7 @@ export const HeaderWrapper = styled.div`
     /* margin-bottom: 30px; */
     position: fixed;
     top: 0;
-    z-index: 10;
+    z-index: 100;
 `;
 
 export const HeaderSmallButton = styled(Button)``;

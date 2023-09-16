@@ -1,5 +1,5 @@
 import Creator from "./components/Creator";
-import { GlobalStyle, StyledApp } from "./styles/Global";
+import { GlobalStyle, ScreenWrapper, StyledApp } from "./styles/Global";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { light, dark } from "./styles/Theme.styled";
@@ -32,6 +32,7 @@ function App() {
         window.localStorage.getItem("theme") === "dark" ? dark : light
     );
     const [showLogin, setShowLogin] = useState(false);
+    const [showBanner, setShowBanner] = useState(false);
     const [dateSubmitted, setDateSubmitted] = useState(null);
     const [user, loading, error] = useAuthState(auth);
     const { getForm, getSimpleForm, setFormFromSimplifiedData } =
@@ -51,7 +52,14 @@ function App() {
     const handleCloseLogin = () => setShowLogin(false);
 
     const handleSave = async () => {
-        toast.promise(saveUserForm(getSimpleForm()), {
+        if (!user) {
+            window.alert(
+                "You must sign in (on the top right) to submit your character."
+            );
+            return;
+        }
+        if (!window.confirm("Are you ready to submit your character?")) return;
+        toast.promise(saveUserForm(getSimpleForm(), setDateSubmitted), {
             loading: "Submitting",
             success: "Character submitted!",
             error: "Submission failed, check network connection",
@@ -62,8 +70,6 @@ function App() {
         handleSave();
     };
 
-    const showSubmittedBanner = false;
-
     useEffect(() => {
         setShowLogin(false);
 
@@ -72,10 +78,21 @@ function App() {
             console.log(formData);
             setFormFromSimplifiedData(formData);
             setDateSubmitted(formData.date);
+
+            // This shows the banner after a delay if the user is yet to submit, otherwise immediately
+            if (!formData.date) {
+                setTimeout(() => {
+                    setShowBanner(true);
+                }, 20000);
+            } else {
+                setShowBanner(true);
+            }
         };
 
         if (user) {
-            populateForm(user.email);
+            let date = populateForm(user.email);
+        } else {
+            setShowBanner(false);
         }
     }, [user]);
 
@@ -89,15 +106,17 @@ function App() {
                     handleSave={handleSave}
                     user={user}
                 />
-                {showSubmittedBanner && <Banner date={dateSubmitted} />}
-                <Creator tabs={tabs} handleSubmit={handleSubmit} />
-                {showLogin && (
-                    <Login
-                        show={showLogin}
-                        handleClose={handleCloseLogin}
-                        user={user}
-                    />
-                )}
+                <ScreenWrapper>
+                    <Banner show={showBanner} dateSubmitted={dateSubmitted} />
+                    <Creator tabs={tabs} handleSubmit={handleSubmit} />
+                    {showLogin && (
+                        <Login
+                            show={showLogin}
+                            handleClose={handleCloseLogin}
+                            user={user}
+                        />
+                    )}
+                </ScreenWrapper>
             </StyledApp>
             <Toaster
                 toastOptions={{

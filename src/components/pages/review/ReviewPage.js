@@ -34,6 +34,9 @@ function ReviewPage({ user }) {
         realm,
         skills,
         investment,
+        invTier,
+        invOption,
+        invRegion,
         spells,
         crafts,
         potions,
@@ -48,10 +51,9 @@ function ReviewPage({ user }) {
     const realmFull = useRealmDetails(realm);
 
     const renderedSkills = getSummarisedSkillNames(skills);
-    // console.log(getSimpleForm());
 
     // This simple check avoids the page crashing during a log in form reset
-    if (!spells) {
+    if (!spells || !crafts || !potions || !ceremonies) {
         return;
     }
 
@@ -91,7 +93,13 @@ function ReviewPage({ user }) {
                         </ReviewItem>
                         {investment && (
                             <ReviewItem label='Investment'>
+                                {invOption && invOption[0]
+                                    ? invOption[0].name + " "
+                                    : ""}
                                 {investment.map((i) => i.name).toString()}
+                                {invRegion && invRegion[0]
+                                    ? " in " + invRegion[0].name
+                                    : ""}
                             </ReviewItem>
                         )}
                         {(warband || sect) && <StyledBorder />}

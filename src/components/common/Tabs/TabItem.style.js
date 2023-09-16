@@ -27,6 +27,7 @@ export const StyledTabItem = styled.button`
         border: none;
         margin: 0;
         font-size: 1.1rem;
+        height: 45px;
         /* border-color: ${(props) =>
             props.primary ? props.theme.special : props.theme.textSoft}; */
     }

@@ -105,16 +105,18 @@ const sendPasswordReset = async (email) => {
     }
 };
 
-const saveUserForm = async (form) => {
+const saveUserForm = async (form, setSubmissionDate) => {
     const name = await getUserName();
+    const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
     let fullForm = {
         player: name,
         email: auth.currentUser.email,
-        date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
+        date: date,
     };
     Object.assign(fullForm, form);
     console.log(fullForm);
     await setDoc(doc(db, "characters", auth.currentUser.uid), fullForm);
+    setSubmissionDate(date);
     return fullForm;
 };
 

@@ -1,22 +1,6 @@
 import { styled } from "styled-components";
 import { mediaSize } from "../../../styles/Global";
 
-/*
-    "px-[5px] m-[2px] h-6 w-fit",
-  "border border-gray-300 rounded-lg",
-  "flex items-center",
-  "cursor-pointer select-none",
-  "whitespace-nowrap",
-  "transition-all",
-  rest.className,
-  {
-    "bg-gray-50 hover:bg-gray-200": !inactive,
-    "drop-shadow bg-white": shadow,
-    "bg-gray-100 text-gray-400 cursor-auto": inactive,
-    "bg-slate-500 hover:bg-slate-400 text-white": selected,
-  }
-*/
-
 export const StyledChip = styled.button`
     display: flex;
     justify-content: center;

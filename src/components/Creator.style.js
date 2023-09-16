@@ -8,7 +8,7 @@ export const CreatorWrapper = styled.div`
 
     /* width: 100%; */
 
-    /* min-width: 300px; */
+    min-width: 300px;
     width: 95%;
     max-width: 720px;
 
@@ -16,8 +16,7 @@ export const CreatorWrapper = styled.div`
     flex-direction: column;
     align-items: center;
 
-    /* margin-top: 65px; */
-    margin-top: 65px;
+    margin-top: 15px;
     margin-bottom: 65px;
 
     border: ${(props) => (props.outline ? "2px solid" : "none")};
@@ -32,6 +31,7 @@ export const CreatorWrapper = styled.div`
         height: 100%;
         width: 100%;
         border: none;
+        margin-top: 0px;
     }
 `;
 
@@ -62,7 +62,7 @@ export const ContentWrapper = styled.div`
     /* width: 200px; */
 
     @media (max-width: ${mediaSize.small}px) {
-        margin-bottom: 10px;
+        margin-bottom: 40px;
     }
     @media (min-width: ${mediaSize.small}px) {
         /* padding-top: 10px; */
@@ -72,26 +72,20 @@ export const ContentWrapper = styled.div`
 
 export const NavigationPaneWrapper = styled.div`
     width: 100%;
-    /* height: 50px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    /* margin-top: 10px; */
     padding: 10px 10px;
     z-index: 10;
 
     background-color: ${(props) => props.theme.background};
-    /* box-shadow: ${(props) => "0 0 15px " + props.theme.shadow}; */
 
     @media (max-width: ${mediaSize.small}px) {
         border-top: 1px solid ${(props) => props.theme.borderSoft};
 
         position: fixed;
         bottom: 0;
-        /* height: 50px; */
-        /* padding: 14px 10px; */
-        //background-color: ${(props) => props.theme.backgroundRaised};
     }
 `;
 

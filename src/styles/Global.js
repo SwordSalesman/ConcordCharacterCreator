@@ -44,3 +44,9 @@ export const FlexCenter = styled.div`
     display: flex;
     justify-content: center;
 `;
+
+export const ScreenWrapper = styled.div`
+    position: absolute;
+    top: 50px;
+    width: 100%;
+`;
