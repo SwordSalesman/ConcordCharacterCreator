@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ConcordCharacterCreator/static/css/main.71fa785f.css",
-    "main.js": "/ConcordCharacterCreator/static/js/main.f3e712e7.js",
+    "main.css": "/ConcordCharacterCreator/static/css/main.e19836dc.css",
+    "main.js": "/ConcordCharacterCreator/static/js/main.f20f3ef5.js",
     "static/media/Binv.png": "/ConcordCharacterCreator/static/media/Binv.e3d6197920eafa7da263.png",
     "static/media/B.png": "/ConcordCharacterCreator/static/media/B.5ac9667936a51b744eb1.png",
     "static/media/Ginv.png": "/ConcordCharacterCreator/static/media/Ginv.40fa47f437daac9a28a1.png",
@@ -12,11 +12,11 @@
     "static/media/A.png": "/ConcordCharacterCreator/static/media/A.9681e401ae3bd7bbaf8e.png",
     "static/media/LMinv.png": "/ConcordCharacterCreator/static/media/LMinv.66ecd4caaf3eff445f18.png",
     "index.html": "/ConcordCharacterCreator/index.html",
-    "main.71fa785f.css.map": "/ConcordCharacterCreator/static/css/main.71fa785f.css.map",
-    "main.f3e712e7.js.map": "/ConcordCharacterCreator/static/js/main.f3e712e7.js.map"
+    "main.e19836dc.css.map": "/ConcordCharacterCreator/static/css/main.e19836dc.css.map",
+    "main.f20f3ef5.js.map": "/ConcordCharacterCreator/static/js/main.f20f3ef5.js.map"
   },
   "entrypoints": [
-    "static/css/main.71fa785f.css",
-    "static/js/main.f3e712e7.js"
+    "static/css/main.e19836dc.css",
+    "static/js/main.f20f3ef5.js"
   ]
 }
