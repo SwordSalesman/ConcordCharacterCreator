@@ -132,7 +132,7 @@ function ReviewPage({ user }) {
                     </div>
                 </ContentPane>
             </ReviewPaneWrapper>
-            <ReviewReminder>Don't forget to submit!</ReviewReminder>
+            {/* <ReviewReminder>Don't forget to submit!</ReviewReminder> */}
         </ReviewPageWrapper>
     );
 }

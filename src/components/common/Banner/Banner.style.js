@@ -55,7 +55,7 @@ export const BannerWrapper = styled.div`
             transform: scale(1);
             opacity: 1;
             height: 70px;
-            margin: 15px 0 0 0;
+            margin: 10px 0 10px 0;
 
             @media (max-width: ${mediaSize.small}px) {
                 margin: 10px 0 10px 0;
@@ -88,7 +88,7 @@ export const BannerContent = styled.div`
     text-wrap: balance;
 
     @media (max-width: ${mediaSize.small}px) {
-        font-size: 0.9rem;
+        font-size: 1rem;
         line-height: 1.2em;
     }
 
