@@ -31,3 +31,7 @@ Firestore is the cloud database which goes hand in hand with Firebase Auth. We u
 #### 🔐 Firestore Access
 
 The Firestore API is public by nature of it being used by the front end. The database is protected by security rules set in the Firestore console. These rules restrict access to the database to only (1) logged in users, (2) which own the document they are accessing === malicious actors can't edit/delete documents unless they made the documents.
+
+## Notes
+
+-   Old homepage setting: https://SwordSalesman.github.io/ConcordCharacterCreator
