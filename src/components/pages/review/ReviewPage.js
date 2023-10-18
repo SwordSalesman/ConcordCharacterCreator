@@ -6,15 +6,11 @@ import {
     ReviewHeader,
     ReviewPageWrapper,
     ReviewPaneWrapper,
-    ReviewReminder,
     ReviewSection,
     ReviewSubtitles,
     StyledBorder,
 } from "./ReviewPage.style";
-import {
-    getFullSkillsFromSummary,
-    getSummarisedSkillNames,
-} from "../../../hooks/use-skill-helper";
+import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
 const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {
@@ -34,7 +30,6 @@ function ReviewPage({ user }) {
         realm,
         skills,
         investment,
-        invTier,
         invOption,
         invRegion,
         spells,
@@ -46,7 +41,6 @@ function ReviewPage({ user }) {
         grace,
         warband,
         sect,
-        getSimpleForm,
     } = useFormContext();
     const realmFull = useRealmDetails(realm);
 

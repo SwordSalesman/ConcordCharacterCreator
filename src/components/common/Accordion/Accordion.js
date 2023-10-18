@@ -1,6 +1,5 @@
-import classNames from "classnames";
-import { useState } from "react";
-import { BiChevronDown, BiChevronLeft, BiChevronUp } from "react-icons/bi";
+import React, { useState } from "react";
+import { BiChevronUp } from "react-icons/bi";
 import WikiLink from "../WikiLink/WikiLink";
 import {
     AccordionArrow,
@@ -38,15 +37,18 @@ function Accordion({ items }) {
         );
 
         return (
-            <>
-                <AccordionHeader onClick={() => handleLabelClick(index)}>
+            <React.Fragment key={index + "wrapper"}>
+                <AccordionHeader
+                    onClick={() => handleLabelClick(index)}
+                    key={index}
+                >
                     {item.label}
                     {icon}
                 </AccordionHeader>
-                <AccordionContent expanded={expanded}>
+                <AccordionContent expanded={expanded} key={index + "c"}>
                     {item.content}
                 </AccordionContent>
-            </>
+            </React.Fragment>
         );
     });
 

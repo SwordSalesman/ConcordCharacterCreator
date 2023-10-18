@@ -214,7 +214,7 @@ function FormContextProvider({ children }) {
     };
 
     const getSimpleArrayFromSummary = (s) => {
-        if (!s) return null;
+        if (!s || s === "") return [];
         return s.split(", ").map((i) => {
             return { name: i };
         });
@@ -358,6 +358,7 @@ function FormContextProvider({ children }) {
         if (!skills?.filter((s) => s.name.startsWith("Divine Lore")).length) {
             setCeremonies([]);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [skills, remainingXp]);
 
     // useEffect(() => {

@@ -1,11 +1,10 @@
 // https://blog.logrocket.com/user-authentication-firebase-react-apps/#:~:text=Integrating%20Firebase%20into%20our%20React%20app&text=const%20app%20%3D%20%E2%80%8B%E2%80%8BinitializeApp,initialize%20authentication%20and%20database%20modules.
 
-import { Modal, Tab, Tabs } from "@mui/material";
+import { Modal, Tab, Tabs, getTableHeadUtilityClass } from "@mui/material";
 import Button from "../Button/Button";
 import { styled, useTheme } from "styled-components";
 import { useEffect, useState } from "react";
 import TextInput from "../TextInput/TextInput";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {
     logInWithEmailAndPassword,
     logout,
@@ -14,6 +13,7 @@ import {
 } from "../../../hooks/use-firebase";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
+import { FieldWarning } from "./Login.style";
 
 const allowGoogleSignIn = false;
 
@@ -25,13 +25,11 @@ function Login({ show, handleClose, user }) {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const [validInputs, setValidInputs] = useState([true, true, true]);
-
-    const submittable =
-        // name.length >= 0 &&
-        /(.+@.+\..+)/.test(email) &&
-        password.length >= 6 &&
-        (tab === 1 || (tab === 0 && name !== ""));
+    const [validInputs, setValidInputs] = useState({
+        validEmail: true,
+        validPassword: true,
+        validName: true,
+    });
 
     useEffect(() => {
         setLoading(false);
@@ -41,7 +39,18 @@ function Login({ show, handleClose, user }) {
         setTab(newValue);
     };
 
+    const validateInputs = () => {
+        const validEmail = /(.+@.+\..+)/.test(email);
+        const validPassword = password.length >= 6;
+        const validName = tab === 1 || (tab === 0 && name !== "");
+
+        setValidInputs({ validEmail, validPassword, validName });
+        return validEmail && validPassword && validName;
+    };
+
     const handlePrimaryButton = async () => {
+        if (!validateInputs()) return;
+
         if (tab === 0) {
             setLoading(true);
             toast.promise(registerWithEmailAndPassword(name, email, password), {
@@ -70,7 +79,6 @@ function Login({ show, handleClose, user }) {
         <Tabs
             value={tab}
             onChange={handleChange}
-            textColor={theme.text}
             centered
             sx={{ minHeight: "0" }}
         >
@@ -80,6 +88,7 @@ function Login({ show, handleClose, user }) {
                     margin: "0",
                     textTransform: "none",
                     minHeight: "26px",
+                    color: theme.text,
                 }}
                 label='Sign Up'
             />
@@ -89,6 +98,7 @@ function Login({ show, handleClose, user }) {
                     margin: "0",
                     textTransform: "none",
                     minHeight: "26px",
+                    color: theme.text,
                 }}
                 label='Log In'
             />
@@ -114,6 +124,9 @@ function Login({ show, handleClose, user }) {
                 trim={true}
                 email={true}
             />
+            {!validInputs.validEmail && (
+                <FieldWarning>Not a valid email address</FieldWarning>
+            )}
             <TextInput
                 value={password}
                 onChange={setPassword}
@@ -121,6 +134,11 @@ function Login({ show, handleClose, user }) {
                 placeholder='Password'
                 password={true}
             />
+            {!validInputs.validPassword && (
+                <FieldWarning>
+                    Password must be at least 6 characters
+                </FieldWarning>
+            )}
         </InputForm>
     );
 
@@ -154,8 +172,8 @@ function Login({ show, handleClose, user }) {
                         <div style={{ width: "100%", padding: "0 10px" }}>
                             <Button
                                 wide={true}
-                                primary={submittable}
-                                disabled={!submittable}
+                                primary
+                                // disabled={!submittable}
                                 onClick={handlePrimaryButton}
                                 loading={loading}
                             >

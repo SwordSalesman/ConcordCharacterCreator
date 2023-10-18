@@ -55,7 +55,7 @@ export function Banner({ show, dateSubmitted }) {
     // Gets date but only "MM-dd"
     const today = new Date().toISOString().slice(5, 10);
 
-    const { prev, next } = useMemo(() => getPrevAndNextGame(today), []);
+    const { prev, next } = useMemo(() => getPrevAndNextGame(today), [today]);
 
     function handleClick() {
         setExpanded((expandValue) => !expandValue);

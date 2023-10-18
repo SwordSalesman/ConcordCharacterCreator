@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import TabItem from "./common/Tabs/TabItem";
 import {
     ContentWrapper,
@@ -11,7 +11,6 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import useFormContext from "../hooks/use-form-context";
 import { ColumnPage } from "./pages/ColumnPageWrapper";
 import useRealmImage from "../hooks/use-realm-image";
-import PageHeader from "./common/PageHeader/PageHeader";
 
 const useTabs = false;
 
@@ -36,19 +35,21 @@ function Creator({ tabs, handleSubmit }) {
 
     const renderedTabs = tabs.map((tab, index) => {
         return (
-            <>
-                <TabItem
-                    key={tab.name}
-                    tab={tab}
-                    onTabSelect={handleClickTab}
-                    active={tab === activeTab}
-                />
-            </>
+            <TabItem
+                key={tab.name}
+                tab={tab}
+                onTabSelect={handleClickTab}
+                active={tab === activeTab}
+            />
         );
     });
 
     const renderedContent = tabs.map((tab, index) => {
-        return activeTab === tab && tab.content;
+        return (
+            activeTab === tab && (
+                <React.Fragment key={index}>{tab.content}</React.Fragment>
+            )
+        );
     });
 
     const renderedButtons = (

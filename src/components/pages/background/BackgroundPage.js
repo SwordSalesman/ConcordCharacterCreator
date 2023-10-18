@@ -51,6 +51,7 @@ function BackgroundPage() {
                         onClick={() => toggleArchetype(a)}
                         selected={selected}
                         inactive={!selected && archetype?.length >= 1}
+                        key={a.name}
                     >
                         {a.name}
                     </Chip>
@@ -72,6 +73,7 @@ function BackgroundPage() {
                 onClick={() => toggleGrace(g)}
                 selected={selected}
                 inactive={!selected && grace?.length >= 1}
+                key={g.name}
             >
                 {g.name}
             </Chip>

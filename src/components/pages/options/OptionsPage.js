@@ -37,6 +37,7 @@ const genTabContent = (
                         onClick={() => toggleFunction({ name: item.name })}
                         selected={selected}
                         inactive={!selected && remainingPicks <= 0}
+                        key={item.name}
                     >
                         {item.name}
                     </Chip>
@@ -51,7 +52,11 @@ const genSelectedContent = (items, toggleFunction) => {
         return null;
     }
     return items?.map((i) => (
-        <Chip onClick={() => toggleFunction({ name: i.name })} shadow>
+        <Chip
+            onClick={() => toggleFunction({ name: i.name })}
+            shadow
+            key={i.name}
+        >
             {i.name}
         </Chip>
     ));
@@ -161,6 +166,7 @@ function OptionsPage() {
                             }
                             selected={selected}
                             inactive={!selected && numInvestment <= 0}
+                            key={item.name}
                         >
                             {item.name}
                         </Chip>
@@ -180,6 +186,7 @@ function OptionsPage() {
                                 }
                                 selected={selected}
                                 inactive={!selected && numInvOption <= 0}
+                                key={item.name}
                             >
                                 {item.name}
                             </Chip>
@@ -197,6 +204,7 @@ function OptionsPage() {
                             onClick={() => toggleInvRegion({ name: item.name })}
                             selected={selected}
                             inactive={!selected && numInvRegion <= 0}
+                            key={item.name}
                         >
                             {item.name}
                         </Chip>

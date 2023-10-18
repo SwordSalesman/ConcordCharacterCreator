@@ -28,7 +28,7 @@ function SkillsPage() {
     const allSkills = extraSkills ? baseSkills.concat(extraSkills) : baseSkills;
 
     // tabs of the Accordian
-    const renderedTabs = tabs.map((tab) => {
+    const renderedTabs = tabs.map((tab, index) => {
         const renderedSkills = allSkills
             .filter((skill) => skill.tree === tab.label)
             // .sort((a, b) => (a.name > b.name ? 1 : -1))
@@ -45,6 +45,7 @@ function SkillsPage() {
                             (!validSkillChoice(skill) ||
                                 skill.cost > remainingXp)
                         }
+                        key={skill.name}
                     ></SkillItem>
                 );
             });

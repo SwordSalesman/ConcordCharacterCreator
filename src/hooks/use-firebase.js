@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import {
     GoogleAuthProvider,
     getAuth,
@@ -17,17 +16,10 @@ import {
     getDocs,
     collection,
     where,
-    addDoc,
     getDoc,
     doc,
     setDoc,
-    limit,
-    snapshotEqual,
-    Firestore,
 } from "firebase/firestore";
-import { getSuggestedQuery } from "@testing-library/react";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 const REACT_APP_FIREBASE_API_KEY = "AIzaSyAyKdRlod7Y0o1c1Yi8IUCxX5BZFYUpSmo";
 
@@ -71,8 +63,8 @@ const signInWithGoogle = async () => {
 
 const logInWithEmailAndPassword = async (email, password) => {
     // try {
-    const userCred = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCred.user;
+    await signInWithEmailAndPassword(auth, email, password);
+    // const user = userCred.user;
 
     // } catch (err) {
     // console.error(err);
@@ -84,7 +76,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
-        const userDoc = await setDoc(doc(db, "users", user.uid), {
+        await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             name,
             authProvider: "email",
