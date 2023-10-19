@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { StyledTabItem } from "./TabItem.style";
 
 function TabItem({ tab, onTabSelect, active }) {

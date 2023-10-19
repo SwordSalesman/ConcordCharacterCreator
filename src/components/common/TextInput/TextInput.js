@@ -1,13 +1,9 @@
-import classNames from "classnames";
 import {
     StyledInputField,
-    StyledPasswordField,
     StyledTextField,
     TextInputTitle,
     TextInputWrapper,
 } from "./TextInput.style";
-import { TextField } from "@mui/material";
-import { useTheme } from "styled-components";
 
 function TextInput({
     value,
@@ -20,8 +16,6 @@ function TextInput({
     email,
     ...rest
 }) {
-    const theme = useTheme();
-
     const handleChange = (event) => {
         const value = trim ? event.target.value.trim() : event.target.value;
         onChange(value);
@@ -50,6 +44,7 @@ function TextInput({
                     variant='outlined'
                     spellcheck='false'
                     maxLength='1000'
+                    minRows={2}
                     maxRows={maxRows}
                     {...rest}
                 />

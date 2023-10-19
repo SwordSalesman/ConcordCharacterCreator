@@ -4,7 +4,6 @@ import {
     HeaderConcordSigil,
     HeaderSigilWrapper,
     HeaderSmallButton,
-    HeaderSpacer,
     HeaderWrapper,
 } from "./Header.style";
 import ConcordSigil from "../../../data/images/concord-logo.png";

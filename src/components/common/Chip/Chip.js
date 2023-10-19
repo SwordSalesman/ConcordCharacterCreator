@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { StyledChip } from "./Chip.styled";
 
 function Chip({

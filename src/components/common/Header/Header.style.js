@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import Button from "../Button/Button";
-import { mediaSize } from "../../../styles/Global";
 
 export const HeaderWrapper = styled.div`
     /* height: 36px; */

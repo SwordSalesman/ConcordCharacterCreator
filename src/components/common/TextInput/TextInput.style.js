@@ -1,4 +1,4 @@
-import { TextField, TextareaAutosize } from "@mui/material";
+import { TextareaAutosize } from "@mui/material";
 import { styled } from "styled-components";
 
 export const TextInputWrapper = styled.div`

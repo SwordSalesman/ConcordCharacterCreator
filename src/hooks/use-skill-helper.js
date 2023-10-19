@@ -64,7 +64,7 @@ export function getFullSkillsFromSummary(summary) {
 
     let additionalSkills = [];
     const skills = names.map((name) => {
-        const { name: baseName, rank } = getSkillNameAndRank(name);
+        const { name: baseName } = getSkillNameAndRank(name);
         const skill = skillsAndNames.find(
             (element) => element.baseName === baseName
         ).skill;

@@ -1,5 +1,4 @@
 import { GiOpenBook } from "react-icons/gi";
-import classNames from "classnames";
 import { StyledWikiLink } from "./WikiLink.style";
 
 const root = "https://wiki.concordlarp.com/index.php/";

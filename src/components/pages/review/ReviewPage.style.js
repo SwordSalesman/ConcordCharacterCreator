@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Button from "../../common/Button/Button";
 
 export const ReviewPageWrapper = styled.div`
     display: flex;

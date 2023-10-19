@@ -3,7 +3,6 @@ import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import Chip from "../../common/Chip/Chip";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
-import useRealmImage from "../../../hooks/use-realm-image";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { SkillPageWrapper } from "../skills/SkillsPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
@@ -64,7 +63,6 @@ const genSelectedContent = (items, toggleFunction) => {
 
 function OptionsPage() {
     const {
-        realm,
         skills,
         spells,
         toggleSpell,
@@ -81,7 +79,6 @@ function OptionsPage() {
         ceremonies,
         toggleCeremony,
     } = useFormContext();
-    const realmImage = useRealmImage(realm);
 
     // Variables
     const skillNames = skills ? skills.map((s) => s.name) : [];

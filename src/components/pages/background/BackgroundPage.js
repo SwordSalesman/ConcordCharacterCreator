@@ -4,10 +4,7 @@ import useFormContext from "../../../hooks/use-form-context";
 import TextInput from "../../../components/common/TextInput/TextInput";
 import SectionDivider from "../../../components/common/SectionDivider/SectionDivider";
 import Chip from "../../../components/common/Chip/Chip";
-import useRealmImage from "../../../hooks/use-realm-image";
-import { ColumnPageWrapper } from "../../../styles/Global";
 import { styled } from "styled-components";
-import { ColumnPage } from "../ColumnPageWrapper";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { BackgroundPageWrapper } from "./BackgroundPage.style";
 
@@ -36,7 +33,6 @@ function BackgroundPage() {
         invDetails,
         setInvDetails,
     } = useFormContext();
-    const realmImage = useRealmImage(realm);
 
     var renderedArchetype = null;
     if (realm) {

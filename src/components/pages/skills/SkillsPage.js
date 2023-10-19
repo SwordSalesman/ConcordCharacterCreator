@@ -3,7 +3,6 @@ import ContentPane from "../../../components/common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import SkillItem from "./SkillItem";
 import SectionDivider from "../../../components/common/SectionDivider/SectionDivider";
-import useRealmImage from "../../../hooks/use-realm-image";
 import { SectionWrapper } from "../../../components/common/SectionDivider/SectionDivider.style";
 import { getNextSkill } from "../../../hooks/use-skill-helper";
 import { SkillPageWrapper } from "./SkillsPage.style";
@@ -11,9 +10,8 @@ var tabs = require("../../../data/tables/skillTabs.json");
 var baseSkills = require("../../../data/tables/skills.json");
 
 function SkillsPage() {
-    const { realm, skills, toggleSkill, validSkillChoice, remainingXp } =
+    const { skills, toggleSkill, validSkillChoice, remainingXp } =
         useFormContext();
-    const realmImage = useRealmImage(realm);
 
     // toggles the selection of the skill, then checks validity for all skills
     const handleClickSkill = (skill) => {
