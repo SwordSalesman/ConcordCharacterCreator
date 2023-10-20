@@ -1,30 +1,80 @@
 [
     {
         "name": "The Tribelands",
-        "realm": "Andash"
+        "realm": "Andash",
+        "link": "The_Tribelands",
+        "territories": [
+            "True Wilds",
+            "Obregon",
+            "Tanebar Sea East",
+            "The Crescent"
+        ]
     },
     {
         "name": "Mukarrem",
-        "realm": "Andash"
+        "realm": "Andash",
+        "link": "Mukarrem",
+        "territories": [
+            "The Priado Expanse",
+            "The Northern Grasses",
+            "Nazafeza"
+        ]
     },
     {
         "name": "Lerona Mere",
-        "realm": "Lerona Mere"
+        "realm": "Lerona Mere",
+        "link": "Lerona_Mere_(The_Region)",
+        "territories": [
+            "Legend City",
+            "Est Speranza",
+            "The Madre Campo",
+            "La Lungo Elsa",
+            "Riverside and Lake Isabella"
+        ]
     },
     {
         "name": "Resinderholz",
-        "realm": "Greenweald Baronies"
+        "realm": "Greenweald Baronies",
+        "link": "Resinderholz",
+        "territories": [
+            "The Ravensreach Wilds",
+            "The Hunters Wood",
+            "The Sableheart",
+            "Eisen",
+            "Wolstad",
+            "Krezenberg"
+        ]
     },
     {
         "name": "Weiland",
-        "realm": "Kingdom of Bordevar"
+        "realm": "Kingdom of Bordevar",
+        "link": "Weiland",
+        "territories": ["Starscar", "Heartsgrave", "Everguarde"]
     },
     {
         "name": "Bolsterlee",
-        "realm": "The Iron Valley"
+        "realm": "The Iron Valley",
+        "link": "Bolsterlee",
+        "territories": [
+            "Highward",
+            "Bayward",
+            "Jaalstead",
+            "Strivington",
+            "The Bailite Woods"
+        ]
     },
     {
         "name": "Windholme",
-        "realm": "The Iron Valley"
+        "realm": "The Iron Valley",
+        "link": "Windholme",
+        "territories": [
+            "Brakkenloh",
+            "Abelard",
+            "Heinsgraf",
+            "The Vale of Stags",
+            "Rumwold",
+            "Cildfrau Eaves",
+            "Steinvault Eaves"
+        ]
     }
 ]

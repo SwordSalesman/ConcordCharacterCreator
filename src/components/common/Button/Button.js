@@ -1,42 +1,29 @@
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { LoaderSpinner, StyledButton } from "./Button.style";
 
 function Button({
     onClick,
-    icon,
     primary,
     secondary,
+    outline,
     disabled,
     wide,
+    round,
     loading,
     children,
     ...rest
 }) {
-    var renderedIcon = null;
-    if (icon === "plus") {
-        renderedIcon = <AiOutlinePlus />;
-    }
-    if (icon === "minus") {
-        renderedIcon = <AiOutlineMinus />;
-    }
-
     return (
         <StyledButton
             onClick={onClick}
             primary={primary}
             secondary={secondary}
+            outline={outline}
             wide={wide}
+            round={round}
             disabled={disabled || loading}
             {...rest}
         >
-            {loading ? (
-                <LoaderSpinner />
-            ) : (
-                <>
-                    {renderedIcon}
-                    {children}
-                </>
-            )}
+            {loading ? <LoaderSpinner /> : children}
         </StyledButton>
     );
 }

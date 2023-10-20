@@ -35,15 +35,18 @@ export const BannerWrapper = styled.div`
     transition: all;
     transition-duration: 0.4s;
 
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+
+    @media (min-width: ${mediaSize.small}px) {
+        animation-name: createBannerDesktop;
+    }
     @media (max-width: ${mediaSize.small}px) {
-        margin: 10px 0 10px 0;
+        animation-name: createBannerMobile;
+        margin: 10px 0;
     }
 
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-    animation-name: createBanner;
-
-    @keyframes createBanner {
+    @keyframes createBannerDesktop {
         from {
             transform: scale(0);
             opacity: 0;
@@ -54,12 +57,24 @@ export const BannerWrapper = styled.div`
         to {
             transform: scale(1);
             opacity: 1;
-            height: 70px;
-            margin: 10px 0 10px 0;
+            ${(props) => (props.expanded ? "70px" : "26px")};
+            margin-top: 15px;
+        }
+    }
 
-            @media (max-width: ${mediaSize.small}px) {
-                margin: 10px 0 10px 0;
-            }
+    @keyframes createBannerMobile {
+        from {
+            transform: scale(0);
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+            ${(props) => (props.expanded ? "70px" : "26px")};
+            margin: 10px 0;
         }
     }
 `;

@@ -1,16 +1,20 @@
 import { styled } from "styled-components";
 
 export const StyledButton = styled.button`
-    border-radius: 4px;
+    border-radius: ${(props) => (props.round ? "100%" : "4px")};
+
     border-style: solid;
-    /* border-width: 1px; */
+    border-color: ${(props) => props.theme.outline};
+    border-width: ${(props) => (props.outline ? "2px" : "0px")};
     width: ${(props) => (props.wide ? "100%" : "fit-content")};
+    min-width: 36px;
 
     padding: 8px 8px;
     transition: 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1em;
 
     border-color: ${(props) =>
         props.primary ? props.theme.specialBg : props.theme.border};

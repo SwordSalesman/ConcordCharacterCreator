@@ -20,7 +20,7 @@ export const GlobalStyle = createGlobalStyle`
   scrollbar-width: none;
 
     @media (max-width: ${mediaSize.small}px) {
-      font-size: 17px;  
+      font-size: 16px;  
     }
   }
 

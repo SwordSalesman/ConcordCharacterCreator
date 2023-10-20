@@ -14,6 +14,7 @@ const winterDate = "06-20";
 const summerDate = "09-30";
 
 function prettifyDate(date) {
+    if (!date) return "";
     return date.split("-").reverse().join("/");
 }
 

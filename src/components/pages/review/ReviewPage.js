@@ -32,6 +32,7 @@ function ReviewPage({ user }) {
         investment,
         invOption,
         invRegion,
+        invTerritory,
         spells,
         crafts,
         potions,
@@ -50,6 +51,25 @@ function ReviewPage({ user }) {
     if (!spells || !crafts || !potions || !ceremonies) {
         return;
     }
+
+    console.debug({
+        gamesPlayed: gamesPlayed,
+        realm: realm,
+        skills: skills,
+        investment: investment,
+        invOption: invOption,
+        invRegion: invRegion,
+        invTerritory: invTerritory,
+        spells: spells,
+        crafts: crafts,
+        potions: potions,
+        ceremonies: ceremonies,
+        heroName: heroName,
+        archetype: archetype,
+        grace: grace,
+        warband: warband,
+        sect: sect,
+    });
 
     return (
         <ReviewPageWrapper>
@@ -88,11 +108,16 @@ function ReviewPage({ user }) {
                         {investment && (
                             <ReviewItem label='Investment'>
                                 {invOption && invOption[0]
-                                    ? invOption[0].name + " "
+                                    ? `${invOption[0].name} `
                                     : ""}
-                                {investment.map((i) => i.name).toString()}
+                                {investment && investment[0]
+                                    ? investment[0].name
+                                    : ""}
+                                {invTerritory && invTerritory[0]
+                                    ? ` in ${invTerritory[0].name}`
+                                    : ""}
                                 {invRegion && invRegion[0]
-                                    ? " in " + invRegion[0].name
+                                    ? `, ${invRegion[0].name}`
                                     : ""}
                             </ReviewItem>
                         )}

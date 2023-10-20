@@ -11,17 +11,18 @@ function FormContextProvider({ children }) {
     const [realm, setRealm] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(0);
     const [skills, setSkills] = useState([]);
-    const [investment, setInvestment] = useState(null);
+    const [investment, setInvestment] = useState([]);
     const [invTier, setInvTier] = useState(1);
-    const [invOption, setInvOption] = useState(null);
-    const [invRegion, setInvRegion] = useState(null);
+    const [invOption, setInvOption] = useState([]);
+    const [invRegion, setInvRegion] = useState([]);
+    const [invTerritory, setInvTerritory] = useState([]);
     const [spells, setSpells] = useState([]);
     const [crafts, setCrafts] = useState([]);
     const [potions, setPotions] = useState([]);
     const [ceremonies, setCeremonies] = useState([]);
     const [heroName, setHeroName] = useState(null);
-    const [archetype, setArchetype] = useState(null);
-    const [grace, setGrace] = useState(null);
+    const [archetype, setArchetype] = useState([]);
+    const [grace, setGrace] = useState([]);
     const [warband, setWarband] = useState(null);
     const [sect, setSect] = useState(null);
     const [icGoals, setIcGoals] = useState(null);
@@ -45,6 +46,7 @@ function FormContextProvider({ children }) {
             invTier: invTier,
             invOption: invOption,
             invRegion: invRegion,
+            invTerritory: invTerritory,
             spells: spells,
             crafts: crafts,
             potions: potions,
@@ -71,6 +73,7 @@ function FormContextProvider({ children }) {
             invTier: invTier,
             invOption: summariseSimpleArray(invOption),
             invRegion: summariseSimpleArray(invRegion),
+            invTerritory: summariseSimpleArray(invTerritory),
             spells: summariseSimpleArray(spells),
             crafts: summariseSimpleArray(crafts),
             potions: summariseSimpleArray(potions),
@@ -97,6 +100,7 @@ function FormContextProvider({ children }) {
         setInvTier(data.invTier);
         setInvOption(data.invOption);
         setInvRegion(data.invRegion);
+        setInvTerritory(data.invTerritory);
         setSpells(data.spells);
         setCrafts(data.crafts);
         setPotions(data.potions);
@@ -119,6 +123,7 @@ function FormContextProvider({ children }) {
         setInvestment(getSimpleArrayFromSummary(data.investment));
         setInvOption(getSimpleArrayFromSummary(data.invOption));
         setInvRegion(getSimpleArrayFromSummary(data.invRegion));
+        setInvTerritory(getSimpleArrayFromSummary(data.invTerritory));
         setInvTier(data.invTier);
         setSpells(getSimpleArrayFromSummary(data.spells));
         setCrafts(getSimpleArrayFromSummary(data.crafts));
@@ -139,17 +144,18 @@ function FormContextProvider({ children }) {
         setRealm(null);
         setGamesPlayed(0);
         setSkills([]);
-        setInvestment(null);
-        setInvOption(null);
-        setInvRegion(null);
+        setInvestment([]);
+        setInvOption([]);
+        setInvRegion([]);
+        setInvTerritory([]);
         setInvTier(1);
         setSpells([]);
         setCrafts([]);
         setPotions([]);
         setCeremonies([]);
         setHeroName(null);
-        setArchetype(null);
-        setGrace(null);
+        setArchetype([]);
+        setGrace([]);
         setWarband(null);
         setSect(null);
         setIcGoals(null);
@@ -227,6 +233,16 @@ function FormContextProvider({ children }) {
         setArchetype(null);
     };
 
+    // Checks if the bare minimum required fields have content in them
+    // Realm, Name, Investment, Backstory
+    // const validateForm = () => {
+    //     const validRealm = realm !== null;
+    //     const validName = heroName.length > 0;
+    //     const validInvestment = {
+    //         type: investment !== null,
+    //     };
+    // };
+
     // skill should be a skillObj formatted as if from the SkillItem method call
     const validSkillChoice = (skill) => {
         let prereqMet =
@@ -269,6 +285,10 @@ function FormContextProvider({ children }) {
 
     const toggleInvRegion = (region) => {
         toggleItem(region, invRegion, setInvRegion);
+    };
+
+    const toggleInvTerritory = (territory) => {
+        toggleItem(territory, invTerritory, setInvTerritory);
     };
 
     const toggleInvOption = (option) => {
@@ -361,6 +381,10 @@ function FormContextProvider({ children }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [skills, remainingXp]);
 
+    useEffect(() => {
+        setInvTerritory([]);
+    }, [invRegion]);
+
     // useEffect(() => {
     //     window.localStorage.setItem("investment", JSON.stringify(investment));
     // }, [investment]);
@@ -437,6 +461,8 @@ function FormContextProvider({ children }) {
         toggleInvestment,
         invRegion,
         toggleInvRegion,
+        invTerritory,
+        toggleInvTerritory,
         invOption,
         toggleInvOption,
         invTier,

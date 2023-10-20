@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 
 export const TextInputWrapper = styled.div`
     width: 100%;
+    margin: 6px 0;
 `;
 
 export const TextInputTitle = styled.div``;
@@ -20,6 +21,9 @@ export const StyledTextField = styled(TextareaAutosize)`
 
     line-height: 1.2rem;
     letter-spacing: -0.2px;
+
+    border: ${(props) =>
+        props.invalid ? `2px solid ${props.theme.error}` : "default"};
 `;
 
 export const StyledInputField = styled.input`
@@ -36,4 +40,13 @@ export const StyledInputField = styled.input`
 
     line-height: 1.2rem;
     letter-spacing: -0.2px;
+
+    border: ${(props) =>
+        props.invalid ? `2px solid ${props.theme.error}` : "default"};
+`;
+
+export const FieldWarning = styled.p`
+    color: ${(props) => props.theme.error};
+    font-style: italic;
+    font-size: 0.8em;
 `;

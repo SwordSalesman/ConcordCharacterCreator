@@ -40,9 +40,9 @@ function Login({ show, handleClose, user }) {
     };
 
     const validateInputs = () => {
+        const validName = tab === 1 || /\w+ \w+/.test(name);
         const validEmail = /(.+@.+\..+)/.test(email);
         const validPassword = password.length >= 6;
-        const validName = tab === 1 || (tab === 0 && name !== "");
 
         setValidInputs({ validEmail, validPassword, validName });
         return validEmail && validPassword && validName;
@@ -111,9 +111,11 @@ function Login({ show, handleClose, user }) {
                 <TextInput
                     value={name}
                     onChange={setName}
-                    placeholder='Name'
-                    title='Name'
+                    placeholder='Full Name'
+                    title='Full Name'
                     maxRows={1}
+                    invalid={!validInputs.validName}
+                    invalidText='Enter first and last name'
                 />
             )}
             <TextInput
@@ -123,22 +125,18 @@ function Login({ show, handleClose, user }) {
                 title='Email'
                 trim={true}
                 email={true}
+                invalid={!validInputs.validEmail}
+                invalidText='Not a valid email address'
             />
-            {!validInputs.validEmail && (
-                <FieldWarning>Not a valid email address</FieldWarning>
-            )}
             <TextInput
                 value={password}
                 onChange={setPassword}
                 title='Password'
                 placeholder='Password'
                 password={true}
+                invalid={!validInputs.validPassword}
+                invalidText='Password must be at least 6 characters'
             />
-            {!validInputs.validPassword && (
-                <FieldWarning>
-                    Password must be at least 6 characters
-                </FieldWarning>
-            )}
         </InputForm>
     );
 

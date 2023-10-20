@@ -1,4 +1,5 @@
 import {
+    FieldWarning,
     StyledInputField,
     StyledTextField,
     TextInputTitle,
@@ -14,6 +15,8 @@ function TextInput({
     trim,
     password,
     email,
+    invalid,
+    invalidText,
     ...rest
 }) {
     const handleChange = (event) => {
@@ -34,6 +37,7 @@ function TextInput({
                     maxLength='1000'
                     maxRows={maxRows}
                     type={password ? "password" : "text"}
+                    invalid={invalid}
                     {...rest}
                 />
             ) : (
@@ -46,9 +50,11 @@ function TextInput({
                     maxLength='1000'
                     minRows={2}
                     maxRows={maxRows}
+                    invalid={invalid}
                     {...rest}
                 />
             )}
+            {invalid ? <FieldWarning>{invalidText}</FieldWarning> : null}
         </TextInputWrapper>
     );
 }

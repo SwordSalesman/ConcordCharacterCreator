@@ -20,6 +20,13 @@ export const StyledSectionDivider = styled.div`
 
 export const StyledSectionValue = styled.div``;
 
+export const SectionLine = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+`;
+
 export const SectionWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;

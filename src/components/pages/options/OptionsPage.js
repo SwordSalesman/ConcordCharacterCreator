@@ -3,7 +3,10 @@ import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import Chip from "../../common/Chip/Chip";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
-import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
+import {
+    SectionLine,
+    SectionWrapper,
+} from "../../common/SectionDivider/SectionDivider.style";
 import { SkillPageWrapper } from "../skills/SkillsPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
@@ -70,6 +73,8 @@ function OptionsPage() {
         toggleInvestment,
         invRegion,
         toggleInvRegion,
+        invTerritory,
+        toggleInvTerritory,
         invOption,
         toggleInvOption,
         crafts,
@@ -90,6 +95,7 @@ function OptionsPage() {
 
     const numInvestment = 1 - (investment ? investment.length : 0);
     const numInvRegion = 1 - (invRegion ? invRegion.length : 0);
+    const numInvTerritory = 1 - (invTerritory ? invTerritory.length : 0);
     const numInvOption = 1 - (invOption ? invOption.length : 0);
 
     const maxSpells =
@@ -121,6 +127,10 @@ function OptionsPage() {
     var renderedInvestment = genSelectedContent(investment, toggleInvestment);
     var renderedInvOption = genSelectedContent(invOption, toggleInvOption);
     var renderedInvRegion = genSelectedContent(invRegion, toggleInvRegion);
+    var renderedInvTerritory = genSelectedContent(
+        invTerritory,
+        toggleInvTerritory
+    );
     var renderedSpells = showSpells
         ? genSelectedContent(spells, toggleSpell)
         : null;
@@ -149,6 +159,9 @@ function OptionsPage() {
         investment && investment.length
             ? investmentData.find((i) => i.name === investment[0].name)?.options
             : null;
+
+    console.log(investment);
+
     const investmentTabContent = (
         <BackgroundInputWrapper>
             <AccordionSection title='Investment Type'>
@@ -191,22 +204,62 @@ function OptionsPage() {
                     })}
                 </AccordionSection>
             )}
-            <AccordionSection title='Investment Region'>
-                {regionData.map((item) => {
+            <AccordionSection title='Investment Region' link='Map_of_Esterra'>
+                {regionData.map((region) => {
                     let selected = invRegion
                         ?.map((i) => i.name)
-                        .includes(item.name);
+                        .includes(region.name);
                     return (
                         <Chip
-                            onClick={() => toggleInvRegion({ name: item.name })}
+                            onClick={() =>
+                                toggleInvRegion({ name: region.name })
+                            }
                             selected={selected}
                             inactive={!selected && numInvRegion <= 0}
-                            key={item.name}
+                            key={region.name}
                         >
-                            {item.name}
+                            {region.name}
                         </Chip>
                     );
                 })}
+            </AccordionSection>
+            <AccordionSection
+                title='Investment Territory'
+                link={
+                    invRegion[0]
+                        ? regionData.find(
+                              (region) => region.name === invRegion[0].name
+                          ).link
+                        : null
+                }
+            >
+                {invRegion && invRegion[0]?.name ? (
+                    regionData
+                        .find((region) => region.name === invRegion[0].name)
+                        .territories.map((territory) => {
+                            let selected = invTerritory
+                                ?.map((i) => i.name)
+                                .includes(territory);
+                            return (
+                                <Chip
+                                    onClick={() =>
+                                        toggleInvTerritory({
+                                            name: territory,
+                                        })
+                                    }
+                                    selected={selected}
+                                    inactive={!selected && numInvTerritory <= 0}
+                                    key={territory}
+                                >
+                                    {territory}
+                                </Chip>
+                            );
+                        })
+                ) : (
+                    <p style={{ opacity: 0.5, fontStyle: "italic" }}>
+                        Select a Region first
+                    </p>
+                )}
             </AccordionSection>
         </BackgroundInputWrapper>
     );
@@ -272,13 +325,30 @@ function OptionsPage() {
                     left='Investment'
                     right={numInvestment > 0 && `(${numInvestment} remaining)`}
                 />
-                <SectionWrapper style={{ gap: "5px" }}>
-                    {renderedInvestment ? (
+                <SectionWrapper>
+                    {renderedInvestment ||
+                    renderedInvOption ||
+                    renderedInvRegion ? (
                         <>
-                            {renderedInvestment}
-                            {renderedInvRegion && <>in {renderedInvRegion}</>}
+                            {renderedInvestment && (
+                                <SectionLine>
+                                    Type: {renderedInvestment}
+                                </SectionLine>
+                            )}
                             {renderedInvOption && (
-                                <>producing {renderedInvOption}</>
+                                <SectionLine>
+                                    Variant: {renderedInvOption}
+                                </SectionLine>
+                            )}
+                            {renderedInvTerritory && (
+                                <SectionLine>
+                                    Territory: {renderedInvTerritory}
+                                </SectionLine>
+                            )}
+                            {renderedInvRegion && (
+                                <SectionLine>
+                                    Region: {renderedInvRegion}
+                                </SectionLine>
                             )}
                         </>
                     ) : (

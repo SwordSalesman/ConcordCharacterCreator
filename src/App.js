@@ -36,7 +36,8 @@ function App() {
     const [showBanner, setShowBanner] = useState(false);
     const [dateSubmitted, setDateSubmitted] = useState(null);
     const [user] = useAuthState(auth);
-    const { getSimpleForm, setFormFromSimplifiedData } = useFormContext();
+    const { getSimpleForm, setFormFromSimplifiedData, resetForm } =
+        useFormContext();
 
     const toggleTheme = () => {
         if (theme === light) {
@@ -91,9 +92,12 @@ function App() {
         if (user) {
             populateForm(user.email);
         } else {
+            setShowBanner(false);
+            setDateSubmitted(null);
+            resetForm();
             setTimeout(() => {
                 setShowBanner(true);
-            }, 20000);
+            }, 30000);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);

@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Button from "./common/Button/Button";
 import { mediaSize } from "../styles/Global";
 
 // "m-6 w-9/10 min-w-[400px] max-w-[800px] h-[500px] drop-shadow-xl p-2 bg-slate-100 rounded-2xl"
@@ -7,6 +6,8 @@ export const CreatorWrapper = styled.div`
     margin: auto;
 
     /* width: 100%; */
+    position: relative;
+    overflow: hidden;
 
     min-width: 300px;
     width: 95%;
@@ -75,13 +76,12 @@ export const NavigationPaneWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    padding: 10px 10px;
+    height: 50px;
+    padding: 0 10px;
     z-index: 10;
 
-    background-color: ${(props) => props.theme.background};
-
     @media (max-width: ${mediaSize.small}px) {
+        background-color: ${(props) => props.theme.background};
         border-top: 1px solid ${(props) => props.theme.borderSoft};
 
         position: fixed;
@@ -89,8 +89,25 @@ export const NavigationPaneWrapper = styled.div`
     }
 `;
 
-export const NavigationButton = styled(Button)`
-    width: 130px;
-    padding: 4px 4px;
-    height: 38px;
+export const RealmBackgroundImage = styled.img`
+    position: absolute;
+
+    width: 500px;
+
+    filter: blur(2px);
+    /* rotate: 20deg; */
+    opacity: 0.1;
+
+    z-index: -1;
+    pointer-events: none;
+
+    bottom: -80px;
+    left: -80px;
+
+    @media (min-width: ${mediaSize.small}px) {
+        height: 500px;
+    }
+    @media (max-width: ${mediaSize.small}px) {
+        position: fixed;
+    }
 `;

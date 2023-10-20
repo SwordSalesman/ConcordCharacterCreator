@@ -17,7 +17,7 @@ export const realms = [
         link: "Andash",
         image: AndashLogo,
         imageInv: AndashLogoInv,
-        desc: "Andash is telling a story of the mixing of cultures, of past and future, and of obligation to your people.",
+        desc: "Descendants of a lost empire, the Andashi tribesfolk have started to reclaim the relics of their past. Flush with newfound wealth and knowledge, they struggle to reclaim the artifacts that will reveal the secrets of their past.",
     },
     {
         name: "Kingdom of Bordevar",
@@ -26,7 +26,7 @@ export const realms = [
         link: "Kingdom_of_Bordevar",
         image: BordevarLogo,
         imageInv: BordevarLogoInv,
-        desc: "The Kingdom of Bordevar is telling a story of national honor, striving for good in a dark world, and what it means when the stories we tell ourselves are found to be lies.",
+        desc: "The Kingless Kingdom has been led astray by its long dead ruler. Now the noble knights of Bordevar must turn to those they turned away. Powerful warriors of good and justice looking for hope and peace.",
     },
     {
         name: "Greenweald Baronies",
@@ -36,7 +36,7 @@ export const realms = [
         link: "Greenweald_Baronies",
         image: GreenwealdLogo,
         imageInv: GreenwealdLogoInv,
-        desc: "The Greenweald Baronies are telling a story of survival against fairytale horror, superstition, and grim determination.",
+        desc: "Secreted away in a vast cursed forest, the Greenweald Baronies battle arcane horrors, cultists and the land themselves for their small pockets of civilisation. Religiously dedicated and superstitious, the pragmatic Wealders will do what it takes to survive.",
     },
     {
         name: "Iron Valley",
@@ -45,7 +45,7 @@ export const realms = [
         link: "The_Iron_Valley",
         image: IronValleyLogo,
         imageInv: IronValleyLogoInv,
-        desc: "The Iron Valley is telling a story of an ancient proud history, a people united, and the strength of community",
+        desc: "Mountainfolk who have lived in their valley for more than a thousand years, the Valley folk are a communal society that values decisiveness, heroism and their legends. Pride as tall as the mountains, might as strong as their fortresses.",
     },
     {
         name: "Lerona Mere",
@@ -54,6 +54,6 @@ export const realms = [
         link: "Lerona_Mere",
         image: LeronaMereLogo,
         imageInv: LeronaMereLogoInv,
-        desc: "Lerona Mere is telling a story of liberty and revolution, of opportunity and of ambition, of corruption and greed.",
+        desc: "The City of Legends was once a despotic trading capital, now the downtrodden have overthrown their masters and revolution has come home to roost. Dynamic and ambitious, the free people of Lerona Mere take life with both hands and a wolfish grin.",
     },
 ];

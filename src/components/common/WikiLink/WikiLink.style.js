@@ -25,7 +25,7 @@ export const StyledWikiLink = styled.div`
     }
 
     color: ${(props) => props.theme.light};
-    background: ${(props) => props.theme.specialBg};
+    background: ${(props) => props.theme.wikiButton};
 
     @media (max-width: ${mediaSize.small}px) {
         width: 30px;

@@ -86,6 +86,8 @@ function BackgroundPage() {
                         onChange={setHeroName}
                         title='Name'
                         placeholder='Enter your name'
+                        // invalid={heroName.length < 1}
+                        // invalidText="Don't forget your name"
                     />
                     <div className='w-full'>
                         <div className=''>Archetype</div>
@@ -169,9 +171,6 @@ function BackgroundPage() {
 
     return (
         <BackgroundPageWrapper>
-            {/* <ContentPane>
-                <SectionWrapper>{heroName}</SectionWrapper>
-              </ContentPane> */}
             <ContentPane style={{ width: "100%" }}>
                 <SectionDivider left='Tell us about yourself'></SectionDivider>
                 <SectionWrapper />
