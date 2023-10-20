@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/ConcordCharacterCreator/static/css/main.e19836dc.css",
-    "main.js": "/ConcordCharacterCreator/static/js/main.f20f3ef5.js",
-    "static/media/Binv.png": "/ConcordCharacterCreator/static/media/Binv.e3d6197920eafa7da263.png",
-    "static/media/B.png": "/ConcordCharacterCreator/static/media/B.5ac9667936a51b744eb1.png",
-    "static/media/Ginv.png": "/ConcordCharacterCreator/static/media/Ginv.40fa47f437daac9a28a1.png",
-    "static/media/G.png": "/ConcordCharacterCreator/static/media/G.2a0204986ec6d61f1b7c.png",
-    "static/media/IVinv.png": "/ConcordCharacterCreator/static/media/IVinv.60fd3b60dd74d3ac163a.png",
-    "static/media/IV.png": "/ConcordCharacterCreator/static/media/IV.ac18d8067ef902130dc7.png",
-    "static/media/Ainv.png": "/ConcordCharacterCreator/static/media/Ainv.b3686f5bcff3266a747b.png",
-    "static/media/A.png": "/ConcordCharacterCreator/static/media/A.9681e401ae3bd7bbaf8e.png",
-    "static/media/LMinv.png": "/ConcordCharacterCreator/static/media/LMinv.66ecd4caaf3eff445f18.png",
-    "index.html": "/ConcordCharacterCreator/index.html",
-    "main.e19836dc.css.map": "/ConcordCharacterCreator/static/css/main.e19836dc.css.map",
-    "main.f20f3ef5.js.map": "/ConcordCharacterCreator/static/js/main.f20f3ef5.js.map"
+    "main.css": "./static/css/main.6bf39818.css",
+    "main.js": "./static/js/main.20673022.js",
+    "static/media/Binv.png": "./static/media/Binv.e3d6197920eafa7da263.png",
+    "static/media/B.png": "./static/media/B.5ac9667936a51b744eb1.png",
+    "static/media/Ginv.png": "./static/media/Ginv.40fa47f437daac9a28a1.png",
+    "static/media/G.png": "./static/media/G.2a0204986ec6d61f1b7c.png",
+    "static/media/IVinv.png": "./static/media/IVinv.60fd3b60dd74d3ac163a.png",
+    "static/media/IV.png": "./static/media/IV.ac18d8067ef902130dc7.png",
+    "static/media/Ainv.png": "./static/media/Ainv.b3686f5bcff3266a747b.png",
+    "static/media/A.png": "./static/media/A.9681e401ae3bd7bbaf8e.png",
+    "static/media/LMinv.png": "./static/media/LMinv.66ecd4caaf3eff445f18.png",
+    "index.html": "./index.html",
+    "main.6bf39818.css.map": "./static/css/main.6bf39818.css.map",
+    "main.20673022.js.map": "./static/js/main.20673022.js.map"
   },
   "entrypoints": [
-    "static/css/main.e19836dc.css",
-    "static/js/main.f20f3ef5.js"
+    "static/css/main.6bf39818.css",
+    "static/js/main.20673022.js"
   ]
 }
