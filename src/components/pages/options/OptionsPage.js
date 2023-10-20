@@ -160,8 +160,6 @@ function OptionsPage() {
             ? investmentData.find((i) => i.name === investment[0].name)?.options
             : null;
 
-    console.log(investment);
-
     const investmentTabContent = (
         <BackgroundInputWrapper>
             <AccordionSection title='Investment Type'>

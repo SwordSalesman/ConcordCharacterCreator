@@ -108,7 +108,6 @@ const saveUserForm = async (form, setSubmissionDate) => {
         date: date,
     };
     Object.assign(fullForm, form);
-    console.log(fullForm);
     await setDoc(doc(db, "characters", auth.currentUser.uid), fullForm);
     setSubmissionDate(date);
     return fullForm;

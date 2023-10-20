@@ -95,8 +95,7 @@ export const RealmBackgroundImage = styled.img`
     width: 500px;
 
     filter: blur(2px);
-    /* rotate: 20deg; */
-    opacity: 0.1;
+    opacity: 0.08;
 
     z-index: -1;
     pointer-events: none;
@@ -109,5 +108,24 @@ export const RealmBackgroundImage = styled.img`
     }
     @media (max-width: ${mediaSize.small}px) {
         position: fixed;
+    }
+
+    animation-duration: 1.2s;
+    animation-timing-function: ease-in-out;
+    animation-name: fadeIn;
+
+    @keyframes fadeIn {
+        from {
+            transform: scale(0.8);
+            left: -120px;
+            bottom: -120px;
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            left: -80px;
+            bottom: -80px;
+            opacity: 0.08;
+        }
     }
 `;

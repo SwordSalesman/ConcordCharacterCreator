@@ -117,6 +117,8 @@ function FormContextProvider({ children }) {
     };
 
     const setFormFromSimplifiedData = (data) => {
+        console.log(data);
+
         setRealm(data.realm);
         setGamesPlayed(data.gamesPlayed);
         setSkills(getFullSkillsFromSummary(data.skills));
@@ -382,7 +384,7 @@ function FormContextProvider({ children }) {
     }, [skills, remainingXp]);
 
     useEffect(() => {
-        setInvTerritory([]);
+        if (invRegion && !invRegion.length) setInvTerritory([]);
     }, [invRegion]);
 
     // useEffect(() => {
