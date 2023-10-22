@@ -23,6 +23,7 @@ export const StyledSectionValue = styled.div``;
 export const SectionLine = styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     width: 100%;
 `;

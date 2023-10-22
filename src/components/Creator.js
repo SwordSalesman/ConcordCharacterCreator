@@ -16,9 +16,11 @@ import Button from "./common/Button/Button";
 const useTabs = false;
 
 function Creator({ tabs, handleSubmit }) {
-    const { realm } = useFormContext();
+    const { realm, validateForm } = useFormContext();
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const realmImage = useRealmImage(realm);
+
+    const { valid } = validateForm();
 
     let activeIndex = tabs.indexOf(activeTab);
     const prevTab = activeIndex > 0 ? tabs[activeIndex - 1] : null;
@@ -68,6 +70,7 @@ function Creator({ tabs, handleSubmit }) {
             <Button
                 primary
                 onClick={nextTab ? () => handleClickTab(nextTab) : handleSubmit}
+                disabled={!nextTab && !valid}
             >
                 <div style={{ width: "100px" }}>
                     {nextTab ? nextTab.name : "Submit"}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
     BannerArrow,
     BannerContent,
@@ -61,6 +61,14 @@ export function Banner({ show, dateSubmitted }) {
     function handleClick() {
         setExpanded((expandValue) => !expandValue);
     }
+
+    function scrollToBanner() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    useEffect(() => {
+        if (show) scrollToBanner();
+    }, [show]);
 
     function getStateMessages() {
         if (submitState === 0) {

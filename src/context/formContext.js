@@ -237,13 +237,16 @@ function FormContextProvider({ children }) {
 
     // Checks if the bare minimum required fields have content in them
     // Realm, Name, Investment, Backstory
-    // const validateForm = () => {
-    //     const validRealm = realm !== null;
-    //     const validName = heroName.length > 0;
-    //     const validInvestment = {
-    //         type: investment !== null,
-    //     };
-    // };
+    const validateForm = () => {
+        const validRealm = realm !== null;
+        const validName = heroName !== null && heroName.trim() !== "";
+        const validInvestment =
+            investment.length === 1 &&
+            invRegion.length === 1 &&
+            invTerritory.length === 1;
+        const valid = validRealm && validName && validInvestment;
+        return { valid, validRealm, validName, validInvestment };
+    };
 
     // skill should be a skillObj formatted as if from the SkillItem method call
     const validSkillChoice = (skill) => {
@@ -298,6 +301,11 @@ function FormContextProvider({ children }) {
     };
 
     const toggleSpell = (spell) => {
+        if (
+            spell.name === "Channel Waystone" &&
+            spells.find((s) => s.name === "Channel Waystone")
+        )
+            return;
         toggleItem(spell, spells, setSpells);
     };
 
@@ -500,6 +508,7 @@ function FormContextProvider({ children }) {
         setForm,
         setFormFromSimplifiedData,
         resetForm,
+        validateForm,
     };
 
     return (

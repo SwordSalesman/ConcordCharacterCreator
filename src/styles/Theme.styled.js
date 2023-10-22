@@ -12,16 +12,16 @@ export const light = {
     borderSoft: "#eaeaea",
     shadow: "#2f303173",
     outline: "#807ee6",
-    special: "#5244d2",
+    special: "#6a44d2",
     specialBg: "#706bae",
     specialOutline: "#494686",
-    specialBgRaised: "#87a7e6",
+    specialBgRaised: "#9487e6",
     specialDull: "#9997c4",
     light: "#f7fbff",
     dark: "#37485a",
     error: "#8d1010",
 
-    wikiButton: "#429786",
+    wikiButton: "#dea65e",
 
     bannerSuccess:
         "linear-gradient(125deg, rgba(147, 201, 134, 1) 0%, rgba(132, 196, 219, 1) 100%);",
@@ -44,13 +44,13 @@ export const dark = {
     special: "#eebe76",
     specialBg: "#ad7832",
     specialOutline: "#eec39d",
-    specialBgRaised: "#e6b587",
+    specialBgRaised: "#d69748",
     specialDull: "#725f50",
     light: "#edf3fa",
     dark: "#273645",
     error: "#e72f2f",
 
-    wikiButton: "#3f8677",
+    wikiButton: "#7560cb",
 
     bannerSuccess:
         "linear-gradient(125deg, rgba(95, 155, 81, 1) 0%, rgba(68, 165, 201, 1) 100%);",

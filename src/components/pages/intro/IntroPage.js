@@ -54,7 +54,11 @@ function IntroPage() {
             <br />
             <TitleWrapper>
                 <TitleWrapper
-                    style={{ fontWeight: "bold", fontStyle: "italic" }}
+                    style={{
+                        fontWeight: "bold",
+                        fontStyle: "italic",
+                        color: theme.special,
+                    }}
                 >
                     How many summits has this character attended?
                 </TitleWrapper>

@@ -47,6 +47,8 @@ export const TabsWrapper = styled.div`
     background-color: ${(props) => props.theme.background300};
 
     @media (max-width: ${mediaSize.small}px) {
+        background: ${(props) =>
+            `linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, ${props.theme.background300} 50%, rgba(0, 0, 0, 0) 100%);`};
     }
 `;
 
@@ -64,6 +66,7 @@ export const ContentWrapper = styled.div`
 
     @media (max-width: ${mediaSize.small}px) {
         margin-bottom: 40px;
+        min-height: 300px;
     }
     @media (min-width: ${mediaSize.small}px) {
         /* padding-top: 10px; */
@@ -94,8 +97,8 @@ export const RealmBackgroundImage = styled.img`
 
     width: 500px;
 
-    filter: blur(2px);
-    opacity: 0.08;
+    filter: blur(3px);
+    opacity: ${(props) => (props.theme.name === "light" ? "0.12" : "0.08")};
 
     z-index: -1;
     pointer-events: none;
@@ -125,7 +128,8 @@ export const RealmBackgroundImage = styled.img`
             transform: scale(1);
             left: -80px;
             bottom: -80px;
-            opacity: 0.08;
+            opacity: ${(props) =>
+                props.theme.name === "light" ? "0.11" : "0.08"};
         }
     }
 `;

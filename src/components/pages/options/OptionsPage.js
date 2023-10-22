@@ -162,7 +162,7 @@ function OptionsPage() {
 
     const investmentTabContent = (
         <BackgroundInputWrapper>
-            <AccordionSection title='Investment Type'>
+            <AccordionSection title='Investment Type' link='Investments'>
                 {investmentData.map((item) => {
                     let selected = investment
                         ?.map((i) => i.name)
@@ -266,7 +266,7 @@ function OptionsPage() {
     renderedTabs.push({
         label: "Investment",
         content: investmentTabContent,
-        link: "Investments",
+        // link: "Investments",
     });
     showSpells &&
         renderedTabs.push(

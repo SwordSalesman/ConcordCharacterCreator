@@ -126,7 +126,7 @@ function Login({ show, handleClose, user }) {
                 trim={true}
                 email={true}
                 invalid={!validInputs.validEmail}
-                invalidText='Not a valid email address'
+                invalidText='Enter a valid email address'
             />
             <TextInput
                 value={password}

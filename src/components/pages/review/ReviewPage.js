@@ -2,6 +2,7 @@ import useFormContext from "../../../hooks/use-form-context";
 import useRealmDetails from "../../../hooks/use-realm-details";
 import ContentPane from "../../../components/common/ContentPane/ContentPane";
 import {
+    InvalidWarning,
     ReviewContent,
     ReviewHeader,
     ReviewPageWrapper,
@@ -42,8 +43,11 @@ function ReviewPage({ user }) {
         grace,
         warband,
         sect,
+        validateForm,
     } = useFormContext();
     const realmFull = useRealmDetails(realm);
+
+    const { valid, validRealm, validName, validInvestment } = validateForm();
 
     const renderedSkills = getSummarisedSkillNames(skills);
 
@@ -71,10 +75,22 @@ function ReviewPage({ user }) {
         sect: sect,
     });
 
+    const invalidWarning = (
+        <InvalidWarning>
+            <p>Before you submit, fill in the following: </p>
+            <ul>
+                {!validName ? <li> - Hero Name</li> : null}
+                {!validRealm ? <li> - Realm</li> : null}
+                {!validInvestment ? <li> - Investment</li> : null}
+            </ul>
+        </InvalidWarning>
+    );
+
     return (
         <ReviewPageWrapper>
             <ReviewPaneWrapper>
                 <ContentPane mobileshow='true'>
+                    {!valid ? invalidWarning : null}
                     <div className='flex flex-col items-center mt-2 gap-2'>
                         <div>
                             <h2 className='text-xl leading-6'>

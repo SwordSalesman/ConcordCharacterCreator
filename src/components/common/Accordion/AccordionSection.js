@@ -21,7 +21,8 @@ const TitleWrapper = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
-    gap: 1em;
+    align-items: center;
+    gap: 10px;
 `;
 
 const ContentWrapper = styled.div`

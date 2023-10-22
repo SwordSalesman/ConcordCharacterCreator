@@ -55,7 +55,7 @@ function App() {
     const handleSave = async () => {
         if (!user) {
             window.alert(
-                "You must sign in (on the top right) to submit your character."
+                "Sign in (on the top right) to submit your character."
             );
             return;
         }
@@ -83,7 +83,7 @@ function App() {
             if (!formData.date) {
                 setTimeout(() => {
                     setShowBanner(true);
-                }, 20000);
+                }, 45000);
             } else {
                 setShowBanner(true);
             }
@@ -97,7 +97,7 @@ function App() {
             resetForm();
             setTimeout(() => {
                 setShowBanner(true);
-            }, 30000);
+            }, 45000);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);

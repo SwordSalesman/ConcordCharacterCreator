@@ -29,7 +29,7 @@ function SkillsPage() {
     const renderedTabs = tabs.map((tab, index) => {
         const renderedSkills = allSkills
             .filter((skill) => skill.tree === tab.label)
-            // .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((skill) => {
                 let selected = skills?.map((s) => s.name).includes(skill.name);
                 // let inactiveReason = invalidSkillChoice(skill);

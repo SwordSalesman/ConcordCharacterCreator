@@ -174,7 +174,6 @@
         "name": "Extra Ceremony (1)",
         "tree": "Religious",
         "cost": 1,
-        "costExtra": 0,
-        "prereq": "Divine Lore"
+        "costExtra": 0
     }
 ]

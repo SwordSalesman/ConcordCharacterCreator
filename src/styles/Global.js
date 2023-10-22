@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     border-color: ${(props) => props.theme.border};
     transition-duration: 0.2s;
     font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: 17px;
+    font-size: 16px;
 
     &::-webkit-scrollbar {
     display: none;

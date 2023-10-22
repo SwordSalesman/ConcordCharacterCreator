@@ -61,3 +61,10 @@ export const ReviewContent = styled.div`
     line-height: 1.2rem;
     text-wrap: balance;
 `;
+
+export const InvalidWarning = styled.div`
+    color: ${(props) => props.theme.error};
+    font-style: italic;
+    margin-bottom: 20px;
+    text-align: left;
+`;
