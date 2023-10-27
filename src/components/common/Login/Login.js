@@ -9,11 +9,13 @@ import {
     logInWithEmailAndPassword,
     logout,
     registerWithEmailAndPassword,
+    sendPasswordReset,
     signInWithGoogle,
 } from "../../../hooks/use-firebase";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
-import { FieldWarning } from "./Login.style";
+import { ModalBox } from "../Modal/Modal.style";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const allowGoogleSignIn = false;
 
@@ -24,6 +26,7 @@ function Login({ show, handleClose, user }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
 
     const [validInputs, setValidInputs] = useState({
         validEmail: true,
@@ -35,36 +38,74 @@ function Login({ show, handleClose, user }) {
         setLoading(false);
     }, [user]);
 
+    useEffect(() => {
+        setShowForgotPassword(false);
+        setLoading(false);
+    }, [tab, show]);
+
     const handleChange = (event, newValue) => {
         setTab(newValue);
     };
 
     const validateInputs = () => {
-        const validName = tab === 1 || /\w+ \w+/.test(name);
+        const validName =
+            tab === 1 || showForgotPassword || /\w+ \w+/.test(name);
         const validEmail = /(.+@.+\..+)/.test(email);
-        const validPassword = password.length >= 6;
+        const validPassword = showForgotPassword || password.length >= 6;
 
         setValidInputs({ validEmail, validPassword, validName });
         return validEmail && validPassword && validName;
     };
 
-    const handlePrimaryButton = async () => {
-        if (!validateInputs()) return;
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
 
-        if (tab === 0) {
-            setLoading(true);
-            toast.promise(registerWithEmailAndPassword(name, email, password), {
-                success: "Signed in as " + user.email,
-                loading: "Signing up...",
-                error: "Failed to sign up, check network connection",
-            });
-        } else if (tab === 1) {
-            setLoading(true);
-            toast.promise(logInWithEmailAndPassword(email, password), {
-                success: "Signed in as " + email,
-                loading: "Signing in...",
-                error: "Failed to sign in, check network connection",
-            });
+        if (validateInputs()) {
+            if (tab === 0) {
+                setLoading(true);
+                toast.promise(
+                    registerWithEmailAndPassword(name, email, password),
+                    {
+                        success: () => {
+                            setLoading(false);
+                            return "Signed in as " + user.email;
+                        },
+                        loading: "Signing up...",
+                        error: (err) => {
+                            setLoading(false);
+                            return `Failed to sign up, ${err}`;
+                        },
+                    }
+                );
+            } else if (tab === 1) {
+                setLoading(true);
+                if (showForgotPassword) {
+                    toast.promise(sendPasswordReset(email), {
+                        success: () => {
+                            setLoading(false);
+                            setShowForgotPassword(false);
+                            return "Sent recovery email to " + email;
+                        },
+                        loading: "Sending recovery email...",
+                        error: (err) => {
+                            setLoading(false);
+                            return `Failed to send email, ${err}`;
+                        },
+                    });
+                } else {
+                    toast.promise(logInWithEmailAndPassword(email, password), {
+                        success: () => {
+                            setLoading(false);
+                            return "Signed in as " + email;
+                        },
+                        loading: "Signing in...",
+                        error: (err) => {
+                            setLoading(false);
+                            return `Failed to sign in, ${err}`;
+                        },
+                    });
+                }
+            }
         }
     };
 
@@ -75,12 +116,46 @@ function Login({ show, handleClose, user }) {
         // }
     };
 
+    const googleSignInButton = allowGoogleSignIn ? (
+        <div style={{ width: "100%", padding: "0 10px" }}>
+            <Button
+                wide
+                primary
+                onClick={async () => {
+                    setLoading(true);
+                    signInWithGoogle().then(toast.success("Signed in as "));
+                }}
+                loading={loading}
+            >
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignContent: "center",
+                        gap: "10px",
+                    }}
+                >
+                    <div
+                        style={{
+                            backgroundColor: "white",
+                            borderRadius: "50%",
+                            padding: "1px",
+                        }}
+                    >
+                        <FcGoogle size={18} />
+                    </div>
+                    <div>Sign in with Google</div>
+                </div>
+            </Button>
+        </div>
+    ) : null;
+
     const tabs = (
         <Tabs
             value={tab}
             onChange={handleChange}
             centered
-            sx={{ minHeight: "0" }}
+            sx={{ minHeight: "0", marginBottom: 2 }}
         >
             <Tab
                 sx={{
@@ -106,14 +181,15 @@ function Login({ show, handleClose, user }) {
     );
 
     const emailForm = (
-        <InputForm>
-            {tab === 0 && (
+        <InputFormFields>
+            {tab === 0 && !showForgotPassword && (
                 <TextInput
                     value={name}
                     onChange={setName}
                     placeholder='Full Name'
                     title='Full Name'
                     maxRows={1}
+                    fixed={true}
                     invalid={!validInputs.validName}
                     invalidText='Enter first and last name'
                 />
@@ -124,21 +200,40 @@ function Login({ show, handleClose, user }) {
                 placeholder='Email'
                 title='Email'
                 trim={true}
-                email={true}
+                fixed={true}
                 invalid={!validInputs.validEmail}
                 invalidText='Enter a valid email address'
             />
-            <TextInput
-                value={password}
-                onChange={setPassword}
-                title='Password'
-                placeholder='Password'
-                password={true}
-                invalid={!validInputs.validPassword}
-                invalidText='Password must be at least 6 characters'
-            />
-        </InputForm>
+            {!showForgotPassword && (
+                <TextInput
+                    value={password}
+                    onChange={setPassword}
+                    title='Password'
+                    placeholder='Password'
+                    password={true}
+                    invalid={!validInputs.validPassword}
+                    invalidText='Password must be at least 6 characters'
+                />
+            )}
+        </InputFormFields>
     );
+
+    const hideForgotPasswordButton = showForgotPassword ? (
+        <div style={{ width: "100%" }}>
+            <Button onClick={() => setShowForgotPassword(false)}>
+                <AiOutlineArrowLeft />
+                <p
+                    style={{
+                        fontSize: "0.8rem",
+                        fontStyle: "italic",
+                        marginLeft: 6,
+                    }}
+                >
+                    Back to Login
+                </p>
+            </Button>
+        </div>
+    ) : null;
 
     return (
         <Modal
@@ -166,69 +261,36 @@ function Login({ show, handleClose, user }) {
                 ) : (
                     <>
                         {tabs}
-                        {emailForm}
-                        <div style={{ width: "100%", padding: "0 10px" }}>
-                            <Button
-                                wide={true}
-                                primary
-                                // disabled={!submittable}
-                                onClick={handlePrimaryButton}
-                                loading={loading}
-                            >
-                                {tab === 0 && "Sign Up"}
-                                {tab === 1 && "Log In"}
-                            </Button>
-                        </div>
-                        {allowGoogleSignIn && (
-                            <div style={{ width: "100%", padding: "0 10px" }}>
+                        {hideForgotPasswordButton}
+                        <InputForm onSubmit={handleFormSubmit}>
+                            {emailForm}
+                            <div style={{ width: "100%", padding: "10px" }}>
                                 <Button
-                                    wide
+                                    wide={true}
                                     primary
-                                    onClick={async () => {
-                                        setLoading(true);
-                                        signInWithGoogle().then(
-                                            toast.success("Signed in as ")
-                                        );
-                                    }}
                                     loading={loading}
+                                    // onClick={(e) => e.preventDefault()}
                                 >
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignContent: "center",
-                                            gap: "10px",
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                backgroundColor: "white",
-                                                borderRadius: "50%",
-                                                padding: "1px",
-                                            }}
-                                        >
-                                            <FcGoogle size={18} />
-                                        </div>
-                                        <div>Sign in with Google</div>
-                                    </div>
+                                    {tab === 0 && "Sign Up"}
+                                    {tab === 1 &&
+                                        (showForgotPassword
+                                            ? "Send recovery email"
+                                            : "Log In")}
                                 </Button>
                             </div>
-                        )}
-                        {tab === 1 && (
-                            <div
-                                style={{
-                                    fontSize: "0.8rem",
-                                    fontStyle: "italic",
-                                }}
-                            >
-                                <a
-                                    href='https://i.guim.co.uk/img/media/327e46c3ab049358fad80575146be9e0e65686e7/0_0_1023_742/master/1023.jpg?width=620&dpr=1&s=none'
-                                    target='_blank'
-                                    rel='noreferrer'
+                        </InputForm>
+                        {googleSignInButton}
+                        {tab === 1 && !showForgotPassword && (
+                            <Button onClick={() => setShowForgotPassword(true)}>
+                                <p
+                                    style={{
+                                        fontSize: "0.8rem",
+                                        fontStyle: "italic",
+                                    }}
                                 >
                                     Forgotten your password?
-                                </a>
-                            </div>
+                                </p>
+                            </Button>
                         )}
                     </>
                 )}
@@ -239,33 +301,14 @@ function Login({ show, handleClose, user }) {
 
 export default Login;
 
-const ModalBox = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
-    background-color: ${(props) => props.theme.background};
-    border: 1px solid ${(props) => props.theme.border};
-    border-radius: 6px;
-    box-shadow: 20px;
-    padding: 10px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-
-    text-align: center;
-    line-height: 1rem;
-
-    box-shadow: 0px 1px 30px 8px ${(props) => props.theme.shadow};
-    -webkit-box-shadow: 0px 1px 30px 8px ${(props) => props.theme.shadow};
-    -moz-box-shadow: 0px 1px 30px 8px ${(props) => props.theme.shadow};
+const InputForm = styled.form`
+    width: 100%;
 `;
 
-const InputForm = styled.div`
+const InputFormFields = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0px;
+    margin-bottom: 10px;
 `;

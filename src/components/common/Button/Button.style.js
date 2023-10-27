@@ -4,8 +4,8 @@ export const StyledButton = styled.button`
     border-radius: ${(props) => (props.round ? "100%" : "4px")};
 
     border-style: solid;
+    border-width: ${(props) => (props.outline ? "1px" : "0px")};
     border-color: ${(props) => props.theme.outline};
-    border-width: ${(props) => (props.outline ? "2px" : "0px")};
     width: ${(props) => (props.wide ? "100%" : "fit-content")};
     min-width: 36px;
 
@@ -15,6 +15,8 @@ export const StyledButton = styled.button`
     align-items: center;
     justify-content: center;
     line-height: 1em;
+
+    user-select: none;
 
     border-color: ${(props) =>
         props.primary ? props.theme.specialBg : props.theme.border};

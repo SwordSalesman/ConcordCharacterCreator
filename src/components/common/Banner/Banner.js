@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
     BannerArrow,
     BannerContent,
@@ -8,41 +8,36 @@ import {
     SummaryText,
 } from "./Banner.style";
 import { BiChevronUp } from "react-icons/bi";
-
-// Probably move this stuff into a helper
-const winterDate = "06-20";
-const summerDate = "09-30";
+import gameData from "../../../data/tables/games.json";
+import { getCurrentDate } from "../../../helpers/date-helper";
 
 function prettifyDate(date) {
     if (!date) return "";
-    return date.split("-").reverse().join("/");
+    const y = date.slice(0, 4);
+    const m = date.slice(5, 7);
+    const d = date.slice(8, 10);
+    return `${d}/${m}/${y}`;
 }
 
-function getPrevAndNextGame(today) {
-    // Only gets the last two digits
-    const currYear = Number.parseInt(new Date().toISOString().slice(2, 4));
-    const lastYearStr = "2" + (currYear - 1).toString();
-    const thisYearStr = "2" + currYear.toString();
-    const nextYearStr = "2" + (currYear + 1).toString();
-
-    if (today < winterDate) {
-        return {
-            prev: { date: summerDate, name: "Summer " + lastYearStr },
-            next: "Winter " + thisYearStr,
-        };
-    } else if (today > summerDate) {
-        return { prev: "Summer " + thisYearStr, next: "Winter " + nextYearStr };
-    } else {
-        return { prev: "Winter " + thisYearStr, next: "Summer " + thisYearStr };
-    }
+function getPrevAndNextGame() {
+    const today = getCurrentDate();
+    let games = null;
+    gameData.forEach((game, index) => {
+        if (game.date > today && !games) {
+            games = {
+                prev: gameData.at(index - 1),
+                next: game,
+            };
+        }
+    });
+    return games;
 }
 
 function getState(prev, dateSubmitted) {
-    if (!dateSubmitted) return 0;
-
-    const prevDate = prev.startsWith("Winter") ? winterDate : summerDate;
-
-    if (dateSubmitted.slice(5) < prevDate) {
+    if (!dateSubmitted) {
+        return 0;
+    }
+    if (dateSubmitted < prev.date) {
         return 1;
     } else {
         return 2;
@@ -53,10 +48,7 @@ export function Banner({ show, dateSubmitted }) {
     const [expanded, setExpanded] = useState(true);
     const [submitState, setSubmitState] = useState(0);
 
-    // Gets date but only "MM-dd"
-    const today = new Date().toISOString().slice(5, 10);
-
-    const { prev, next } = useMemo(() => getPrevAndNextGame(today), [today]);
+    const { prev, next } = useMemo(() => getPrevAndNextGame(), []);
 
     function handleClick() {
         setExpanded((expandValue) => !expandValue);
@@ -73,21 +65,21 @@ export function Banner({ show, dateSubmitted }) {
     function getStateMessages() {
         if (submitState === 0) {
             return {
-                full: `You haven't submitted a character for ${next} - don't forget to submit!`,
+                full: `You haven't submitted a character yet. Don't forget to submit for ${next.name}.`,
                 summary: "Not Submitted",
             };
         } else if (submitState === 1) {
             return {
                 full: `Your last submission was on ${prettifyDate(
                     dateSubmitted
-                )}. Don't forget to submit your character for ${next}`,
+                )}. Don't forget to submit your character for ${next.name}`,
                 summary: "Not Submitted",
             };
         } else if (submitState === 2) {
             return {
-                full: `You're all set! Your submission on ${prettifyDate(
+                full: `Your submission on ${prettifyDate(
                     dateSubmitted
-                )} is ready for ${next}`,
+                )} is ready for ${next.name}`,
                 summary: "Submitted",
             };
         }

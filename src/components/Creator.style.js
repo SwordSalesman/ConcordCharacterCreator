@@ -54,6 +54,8 @@ export const TabsWrapper = styled.div`
 
 // "h-[400px] flex justify-center items-center text-center"
 export const ContentWrapper = styled.div`
+    position: relative;
+
     display: flex;
     justify-content: center;
     text-align: center;
@@ -97,14 +99,17 @@ export const RealmBackgroundImage = styled.img`
 
     width: 500px;
 
-    filter: blur(3px);
-    opacity: ${(props) => (props.theme.name === "light" ? "0.12" : "0.08")};
+    ${(props) =>
+        props.theme.name === "dark"
+            ? `filter: blur(2px); opacity: 0.5;`
+            : `filter: blur(2px); opacity: 0.15;`}
 
     z-index: -1;
     pointer-events: none;
 
     bottom: -80px;
     left: -80px;
+    user-select: none;
 
     @media (min-width: ${mediaSize.small}px) {
         height: 500px;
@@ -115,9 +120,9 @@ export const RealmBackgroundImage = styled.img`
 
     animation-duration: 1.2s;
     animation-timing-function: ease-in-out;
-    animation-name: fadeIn;
+    animation-name: realmLogoFadeIn;
 
-    @keyframes fadeIn {
+    @keyframes realmLogoFadeIn {
         from {
             transform: scale(0.8);
             left: -120px;
@@ -129,7 +134,7 @@ export const RealmBackgroundImage = styled.img`
             left: -80px;
             bottom: -80px;
             opacity: ${(props) =>
-                props.theme.name === "light" ? "0.11" : "0.08"};
+                props.theme.name === "dark" ? "0.5" : "0.15"};
         }
     }
 `;

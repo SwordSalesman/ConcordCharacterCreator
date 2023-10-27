@@ -24,8 +24,61 @@ const genTabContent = (
     selectedItems,
     toggleFunction,
     remainingPicks,
+    subSectionTitle,
     filterFunction = (a) => true
 ) => {
+    const sections = subSectionTitle
+        ? allItems
+              .filter((i) => filterFunction(i))
+              .map((i) => i[subSectionTitle])
+              .filter((value, index, array) => array.indexOf(value) === index)
+              .sort((a, b) => (a > b ? 1 : -1))
+        : null;
+
+    if (sections) {
+        return {
+            label: label,
+            link: link,
+            content: (
+                <BackgroundInputWrapper>
+                    {sections.map((s) => {
+                        return (
+                            <AccordionSection title={s} key={s}>
+                                {allItems
+                                    .filter((item) => filterFunction(item))
+                                    .filter(
+                                        (item) => item[subSectionTitle] === s
+                                    )
+                                    .map((item) => {
+                                        let selected = selectedItems
+                                            ?.map((i) => i.name)
+                                            .includes(item.name);
+                                        return (
+                                            <Chip
+                                                onClick={() =>
+                                                    toggleFunction({
+                                                        name: item.name,
+                                                    })
+                                                }
+                                                selected={selected}
+                                                inactive={
+                                                    !selected &&
+                                                    remainingPicks <= 0
+                                                }
+                                                key={item.name}
+                                            >
+                                                {item.name}
+                                            </Chip>
+                                        );
+                                    })}
+                            </AccordionSection>
+                        );
+                    })}
+                </BackgroundInputWrapper>
+            ),
+        };
+    }
+
     return {
         label: label,
         content: allItems
@@ -276,7 +329,8 @@ function OptionsPage() {
                 spellsData,
                 spells,
                 toggleSpell,
-                numSpells
+                numSpells,
+                "type"
             )
         );
     showCrafts &&
@@ -287,7 +341,8 @@ function OptionsPage() {
                 craftsData,
                 crafts,
                 toggleCraft,
-                numCrafts
+                numCrafts,
+                "rarity"
             )
         );
     showPotions &&
@@ -298,7 +353,8 @@ function OptionsPage() {
                 potionsData,
                 potions,
                 togglePotion,
-                numPotions
+                numPotions,
+                "type"
             )
         );
     if (showCeremonies) {
@@ -311,6 +367,7 @@ function OptionsPage() {
                 ceremonies,
                 toggleCeremony,
                 numCeremonies,
+                "sphere",
                 (c) => skillTitles.includes(c.sphere)
             )
         );

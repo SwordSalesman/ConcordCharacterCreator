@@ -1,86 +1,86 @@
 [
-  {
-    "name": "Al-Asah’s Antidote",
-    "tonic": true
-  },
-  {
-    "name": "Arcmages Spirit",
-    "tonic": true
-  },
-  {
-    "name": "Believers Burning Brew",
-    "tonic": false
-  },
-  {
-    "name": "Blessed Water of the Questing Knight",
-    "tonic": true
-  },
-  {
-    "name": "Caricanium Solution",
-    "tonic": false
-  },
-  {
-    "name": "Concoction of Bright Morning",
-    "tonic": true
-  },
-  {
-    "name": "Concoction of the Cold Night",
-    "tonic": true
-  },
-  {
-    "name": "Conquerors Ale",
-    "tonic": false
-  },
-  {
-    "name": "Elixir Vitae",
-    "tonic": false
-  },
-  {
-    "name": "Fade of the Spheres",
-    "tonic": false
-  },
-  {
-    "name": "Fools Anaesthetic",
-    "tonic": false
-  },
-  {
-    "name": "Guardians Memory",
-    "tonic": true
-  },
-  {
-    "name": "Ironblood tonic",
-    "tonic": true
-  },
-  {
-    "name": "Kaida’s Summer Special",
-    "tonic": false
-  },
-  {
-    "name": "Mageblood",
-    "tonic": false
-  },
-  {
-    "name": "Rhythm of the Spheres",
-    "tonic": true
-  },
-  {
-    "name": "Soulfire",
-    "tonic": true
-  },
-  {
-    "name": "Starblood",
-    "tonic": true
-  },
-  {
-    "name": "Times Absence",
-    "tonic": true
-  },
-  {
-    "name": "Van Demuers Solace",
-    "tonic": false
-  },
-  {
-    "name": "Warbrew",
-    "tonic": false
-  }
+    {
+        "name": "Al-Asah's Antidote",
+        "type": "Tonic"
+    },
+    {
+        "name": "Arcmages Spirit",
+        "type": "Tonic"
+    },
+    {
+        "name": "Believers Burning Brew",
+        "type": "Potion"
+    },
+    {
+        "name": "Blessed Water of the Questing Knight",
+        "type": "Tonic"
+    },
+    {
+        "name": "Caricanium Solution",
+        "type": "Potion"
+    },
+    {
+        "name": "Concoction of Bright Morning",
+        "type": "Tonic"
+    },
+    {
+        "name": "Concoction of the Cold Night",
+        "type": "Tonic"
+    },
+    {
+        "name": "Conquerors Ale",
+        "type": "Potion"
+    },
+    {
+        "name": "Elixir Vitae",
+        "type": "Potion"
+    },
+    {
+        "name": "Fade of the Spheres",
+        "type": "Potion"
+    },
+    {
+        "name": "Fools Anaesthetic",
+        "type": "Potion"
+    },
+    {
+        "name": "Guardians Memory",
+        "type": "Tonic"
+    },
+    {
+        "name": "Ironblood Tonic",
+        "type": "Tonic"
+    },
+    {
+        "name": "Kaida’s Summer Special",
+        "type": "Potion"
+    },
+    {
+        "name": "Mageblood",
+        "type": "Potion"
+    },
+    {
+        "name": "Rhythm of the Spheres",
+        "type": "Tonic"
+    },
+    {
+        "name": "Soulfire",
+        "type": "Tonic"
+    },
+    {
+        "name": "Starblood",
+        "type": "Tonic"
+    },
+    {
+        "name": "Times Absence",
+        "type": "Tonic"
+    },
+    {
+        "name": "Van Demuers Solace",
+        "type": "Potion"
+    },
+    {
+        "name": "Warbrew",
+        "type": "Potion"
+    }
 ]

@@ -15,6 +15,7 @@ export function AccordionSection({ title, link, children }) {
 
 const SectionWrapper = styled.div`
     width: 100%;
+    /* margin: 10px 0; */
 `;
 
 const TitleWrapper = styled.div`

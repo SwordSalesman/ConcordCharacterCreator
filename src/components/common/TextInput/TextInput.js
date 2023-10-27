@@ -14,7 +14,7 @@ function TextInput({
     maxRows,
     trim,
     password,
-    email,
+    fixed,
     invalid,
     invalidText,
     ...rest
@@ -27,7 +27,7 @@ function TextInput({
     return (
         <TextInputWrapper>
             <TextInputTitle>{title}</TextInputTitle>
-            {password || email ? (
+            {password || fixed ? (
                 <StyledInputField
                     value={value || ""}
                     onChange={handleChange}
@@ -38,6 +38,7 @@ function TextInput({
                     maxRows={maxRows}
                     type={password ? "password" : "text"}
                     invalid={invalid}
+                    autoComplete={password ? "current-password" : ""}
                     {...rest}
                 />
             ) : (
@@ -48,7 +49,7 @@ function TextInput({
                     variant='outlined'
                     spellcheck='false'
                     maxLength='1000'
-                    minRows={2}
+                    minRows={3}
                     maxRows={maxRows}
                     invalid={invalid}
                     {...rest}

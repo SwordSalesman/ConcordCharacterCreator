@@ -1,17 +1,14 @@
 import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
 import Button from "../../common/Button/Button";
-import { GameTally, ResetButton, TitleWrapper } from "./Intro.style";
+import { GameTally, TitleWrapper } from "./Intro.style";
 import { FlexCenter } from "../../../styles/Global";
-import { useTheme } from "styled-components";
-import { AiOutlinePlus } from "react-icons/ai";
 import { BiMinus, BiPlus } from "react-icons/bi";
 
 function IntroPage() {
-    const { gamesPlayed, setGamesPlayed, resetForm } = useFormContext();
+    const { gamesPlayed, setGamesPlayed } = useFormContext();
     // Little bit of extra wiggle room here for planning future builds
     const maxGames = (new Date().getFullYear() - 2019) * 2;
-    const theme = useTheme();
 
     const handleMinus = () => {
         if (gamesPlayed > 0) {
@@ -23,11 +20,6 @@ function IntroPage() {
         if (gamesPlayed < maxGames) {
             setGamesPlayed(gamesPlayed + 1);
         }
-    };
-
-    const handleResetButton = () => {
-        window.confirm("Are you sure you want to reset your character?") &&
-            resetForm();
     };
 
     return (
@@ -53,15 +45,16 @@ function IntroPage() {
             </p>
             <br />
             <TitleWrapper>
-                <TitleWrapper
+                <div
                     style={{
                         fontWeight: "bold",
                         fontStyle: "italic",
-                        color: theme.special,
+                        // color: theme.special,
+                        padding: 8,
                     }}
                 >
                     How many summits has this character attended?
-                </TitleWrapper>
+                </div>
                 <FlexCenter
                     style={{
                         margin: "5px 0",
@@ -82,11 +75,7 @@ function IntroPage() {
                     justifyContent: "right",
                     marginTop: "60px",
                 }}
-            >
-                <ResetButton onClick={handleResetButton}>
-                    ...start over?
-                </ResetButton>
-            </div>
+            ></div>
         </div>
     );
 }

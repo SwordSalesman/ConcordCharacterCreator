@@ -18,6 +18,7 @@ import { Toaster, toast } from "react-hot-toast";
 import useFormContext from "./hooks/use-form-context";
 import { Banner } from "./components/common/Banner/Banner";
 import isPropValid from "@emotion/is-prop-valid";
+import ConfirmModal from "./components/common/Modal/ConfirmModal";
 
 const tabs = [
     { name: "Intro", content: <IntroPage /> },
@@ -35,6 +36,8 @@ function App() {
     const [showLogin, setShowLogin] = useState(false);
     const [showBanner, setShowBanner] = useState(false);
     const [dateSubmitted, setDateSubmitted] = useState(null);
+    const [activeTab, setActiveTab] = useState(tabs[0]);
+    const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
     const [user] = useAuthState(auth);
     const { getSimpleForm, setFormFromSimplifiedData, resetForm } =
         useFormContext();
@@ -53,13 +56,6 @@ function App() {
     const handleCloseLogin = () => setShowLogin(false);
 
     const handleSave = async () => {
-        if (!user) {
-            window.alert(
-                "Sign in (on the top right) to submit your character."
-            );
-            return;
-        }
-        if (!window.confirm("Are you ready to submit your character?")) return;
         toast.promise(saveUserForm(getSimpleForm(), setDateSubmitted), {
             loading: "Submitting",
             success: "Character submitted!",
@@ -68,7 +64,11 @@ function App() {
     };
 
     const handleSubmit = async () => {
-        handleSave();
+        if (!user) {
+            handleShowLogin();
+        } else {
+            setShowConfirmSubmit(true);
+        }
     };
 
     useEffect(() => {
@@ -76,6 +76,7 @@ function App() {
 
         const populateForm = async (email) => {
             const formData = await getUserForm(email);
+
             setFormFromSimplifiedData(formData);
             setDateSubmitted(formData.date);
 
@@ -90,8 +91,10 @@ function App() {
         };
 
         if (user) {
+            console.debug(`User logged in: ${user.email}`);
             populateForm(user.email);
         } else {
+            console.debug("No user logged in.");
             setShowBanner(false);
             setDateSubmitted(null);
             resetForm();
@@ -111,6 +114,7 @@ function App() {
                         toggleTheme={toggleTheme}
                         handleShowLogin={handleShowLogin}
                         handleSave={handleSave}
+                        handleLogoClick={() => setActiveTab(tabs[0])}
                         user={user}
                     />
                     <ScreenWrapper>
@@ -118,15 +122,27 @@ function App() {
                             show={showBanner}
                             dateSubmitted={dateSubmitted}
                         />
-                        <Creator tabs={tabs} handleSubmit={handleSubmit} />
-                        {showLogin && (
-                            <Login
-                                show={showLogin}
-                                handleClose={handleCloseLogin}
-                                user={user}
-                            />
-                        )}
+                        <Creator
+                            tabs={tabs}
+                            handleSubmit={handleSubmit}
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                        />
                     </ScreenWrapper>
+                    <Login
+                        show={showLogin}
+                        handleClose={handleCloseLogin}
+                        user={user}
+                    />
+                    <ConfirmModal
+                        title='Save & Submit Character?'
+                        message='You can submit multiple times.'
+                        show={showConfirmSubmit}
+                        handleClose={(response) => {
+                            setShowConfirmSubmit(false);
+                            if (!!response) handleSave();
+                        }}
+                    ></ConfirmModal>
                 </StyledApp>
                 <Toaster
                     toastOptions={{

@@ -1,8 +1,8 @@
 import { StyledTabItem } from "./TabItem.style";
 
-function TabItem({ tab, onTabSelect, active }) {
+function TabItem({ tab, index, onTabSelect, active }) {
     const handleClick = () => {
-        onTabSelect(tab);
+        onTabSelect(tab, index);
     };
 
     return (

@@ -1,24 +1,9 @@
 import { styled } from "styled-components";
 import { mediaSize } from "../../styles/Global";
 
-export function ColumnPageComponent({
-    background,
-    position,
-    mobileshow,
-    children,
-}) {
+export function ColumnPageComponent({ direction, children }) {
     return (
-        <ColumnPageContent>
-            {children}
-            {background && false && (
-                <BackgroundImage
-                    src={background}
-                    mobileshow={mobileshow}
-                    alt='A blurred realmic sigil'
-                    unselectable='on'
-                />
-            )}
-        </ColumnPageContent>
+        <ColumnPageContent direction={direction}>{children}</ColumnPageContent>
     );
 }
 
@@ -36,46 +21,31 @@ export const ColumnPageContent = styled.div`
     @media (max-width: ${mediaSize.small}px) {
         flex-direction: column;
     }
-`;
 
-export const BackgroundImage = styled.img`
-    position: absolute;
-    top: 45%;
-    left: 50%;
+    animation-name: ${(props) =>
+        props.direction === "left" ? "pageSlideInLeft" : "pageSlideInRight"};
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
 
-    width: 350px;
-    height: 350px;
-    /* right: -100%; */
-    /* margin: auto; */
-
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-
-    animation: fadeIn 1s;
-    @keyframes fadeIn {
-        0% {
+    @keyframes pageSlideInLeft {
+        from {
             opacity: 0;
+            left: -15px;
         }
-        100% {
-            opacity: 0.1;
+        to {
+            opacity: 1;
+            left: 0px;
         }
     }
 
-    filter: blur(2px);
-    opacity: 0.1;
-    z-index: 1;
-
-    /* transform: ${(props) =>
-        props.imageCenter ? "translate(-50%, 5%)" : "translate(-100%, 5%)"}; */
-
-    @media (max-width: ${mediaSize.small}px) {
-        ${(props) => !props.mobileshow && "display: none;"}
+    @keyframes pageSlideInRight {
+        from {
+            opacity: 0;
+            left: 15px;
+        }
+        to {
+            opacity: 1;
+            left: 0px;
+        }
     }
 `;

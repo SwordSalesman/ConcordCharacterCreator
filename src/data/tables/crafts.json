@@ -1,704 +1,697 @@
 [
-  {
-    "name": "Escape Route",
-    "type": "Weapon: One Handed",
-    "rarity": "Expert",
-    "materials": 7
-  },
-  {
-    "name": "Apprentices Reliquary",
-    "type": "Reliquary",
-    "rarity": "Expert",
-    "materials": 12
-  },
-  {
-    "name": "Barbarians Brutalizer",
-    "type": "Weapon: Great Weapon",
-    "rarity": "Expert",
-    "materials": 7
-  },
-  {
-    "name": "Battlemages Vestment of Control",
-    "type": "Armour: Medium",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Battlemages Vestment of Force",
-    "type": "Armour: Medium",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Bending Reed Blades",
-    "type": "Weapon: Pair: One Handed",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Blazesap Striker",
-    "type": "Talisman: Tool",
-    "rarity": "Expert",
-    "materials": 11
-  },
-  {
-    "name": "Bloodslick Banner",
-    "type": "Banner",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Broadleaf Spear",
-    "type": "Weapon: Spear",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Magehunters Call",
-    "type": "Weapon: One Handed",
-    "rarity": "Expert",
-    "materials": 7
-  },
-  {
-    "name": "Conqueror's Halberd",
-    "type": "Weapon: Polearm",
-    "rarity": "Expert",
-    "materials": 7
-  },
-  {
-    "name": "Dawns Pestle",
-    "type": "Talisman: Tool",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Opportunists Call",
-    "type": "Weapon: One Handed",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Enduring Shield",
-    "type": "Talisman: Shield",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Elementalists Garb",
-    "type": "Armour: Medium",
-    "rarity": "Expert",
-    "materials": 11
-  },
-  {
-    "name": "Thunderous Awe",
-    "type": "Weapon: One Handed",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Eves Mortar",
-    "type": "Talisman: Tool",
-    "rarity": "Expert",
-    "materials": 9
-  },
-  {
-    "name": "Treacheries Kiss",
-    "type": "Weapon: One Handed",
-    "rarity": "Expert",
-    "materials": 7
-  },
-  {
-    "name": "Gray Wizards Robe",
-    "type": "Armour: Clothes",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Guardian Mage Staff",
-    "type": "Weapon: Polearm",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Mage Legion Standard",
-    "type": "Banner",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Windborn",
-    "type": "Weapon: One Handed",
-    "rarity": "Expert",
-    "materials": 9
-  },
-  {
-    "name": "Manticore Hide Armour",
-    "type": "Armour: Medium",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Nightmare Hide Armour",
-    "type": "Armour: Medium",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Clerics Mace",
-    "type": "Weapon: One Handed",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Phial of the Sun",
-    "type": "Talisman: Tool",
-    "rarity": "Expert",
-    "materials": 8
-  },
-  {
-    "name": "Prime Hunters Bow",
-    "type": "Weapon: Bow",
-    "rarity": "Expert",
-    "materials": 7
-  },
-  {
-    "name": "Strikers Hand",
-    "type": "Weapon: One Handed",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Rootwarder",
-    "type": "Weapon: Polearm",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Scorpions Barb",
-    "type": "Weapon: Polearm",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Scouts Bow",
-    "type": "Weapon: Bow",
-    "rarity": "Expert",
-    "materials": 7
-  },
-  {
-    "name": "Skirmishers Aketon",
-    "type": "Armour: Light",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Slayers Banner",
-    "type": "Banner",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Survivors Platemail",
-    "type": "Armour: Heavy",
-    "rarity": "Expert",
-    "materials": 10
-  },
-  {
-    "name": "Tail of the Beast",
-    "type": "Weapon: Polearm",
-    "rarity": "Expert",
-    "materials": 9
-  },
-  {
-    "name": "Tacticians Demand",
-    "type": "Weapon: One Handed",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Arch Priests Blade",
-    "type": "Weapon: One Handed",
-    "rarity": "Masterwork",
-    "materials": 17
-  },
-  {
-    "name": "Wayfarers Pyx",
-    "type": "Reliquary",
-    "rarity": "Expert",
-    "materials": 12
-  },
-  {
-    "name": "Blade of Peace",
-    "type": "Weapon: One Handed",
-    "rarity": "Masterwork",
-    "materials": 19
-  },
-  {
-    "name": "Blade of War",
-    "type": "Weapon: One Handed",
-    "rarity": "Masterwork",
-    "materials": 15
-  },
-  {
-    "name": "Artisans Oil",
-    "type": "Special",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Battleplate",
-    "type": "Armour: Heavy",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Bonebreaker",
-    "type": "Weapon: Great Weapon",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Boulders Staff",
-    "type": "Weapon: Polearm",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Brandts Blade",
-    "type": "Weapon: One Handed",
-    "rarity": "Masterwork",
-    "materials": 18
-  },
-  {
-    "name": "Crystalhunger Robes",
-    "type": "Armour: Clothes",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Druids Crook",
-    "type": "Weapon: Polearm",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Greatweapon of the Old Ways",
-    "type": "Weapon: Great Weapon",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Guards Watcher",
-    "type": "Weapon: Polearm",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Linebreakers Staff",
-    "type": "Weapon: Polearm",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Marauders Warcoat",
-    "type": "Armour: Medium",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Medics Gambeson",
-    "type": "Armour: Light",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Mountebanks Surprise",
-    "type": "Weapon: Pair: Short Weapon and One Handed Weapon",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Reforging Gavel",
-    "type": "Talisman: Tool",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Saga of the Lost",
-    "type": "Reliquary",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Serpent's Tail",
-    "type": "Weapon: Polearm",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Warriors Right Hand",
-    "type": "Weapon: One Handed",
-    "rarity": "Masterwork",
-    "materials": 13
-  },
-  {
-    "name": "Standard of the Brave",
-    "type": "Banner",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Apprentices Penknife",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Comrades Knife",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Expert",
-    "materials": 5
-  },
-  {
-    "name": "Desperate Times",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Expert",
-    "materials": 4
-  },
-  {
-    "name": "Flameborn Dagger",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Expert",
-    "materials": 4
-  },
-  {
-    "name": "Warmages Blessing",
-    "type": "Talisman: Battlemages Circlet",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Arcane Shears",
-    "type": "Talisman: Tool",
-    "rarity": "Masterwork",
-    "materials": 15
-  },
-  {
-    "name": "Purifying Scalpel",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Expert",
-    "materials": 6
-  },
-  {
-    "name": "Archmage's Staff",
-    "type": "Weapon: Polearm",
-    "rarity": "Masterwork",
-    "materials": 18
-  },
-  {
-    "name": "Armsman's Amulet",
-    "type": "Talisman: Jewellery",
-    "rarity": "Masterwork",
-    "materials": 12
-  },
-  {
-    "name": "Artebazzani Artifact",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Avalanche",
-    "type": "Weapon: Great Weapon",
-    "rarity": "Masterwork",
-    "materials": 19
-  },
-  {
-    "name": "Barons Blessed Cairn",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 30
-  },
-  {
-    "name": "Battlehealers Coat",
-    "type": "Armour: Light",
-    "rarity": "Masterwork",
-    "materials": 12
-  },
-  {
-    "name": "Beggars Key",
-    "type": "Talisman: Jewellery",
-    "rarity": "Masterwork",
-    "materials": 17
-  },
-  {
-    "name": "Acolyte's Assistant",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Setting Blade",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Bloodcloak",
-    "type": "Talisman: Tool",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Bracelet of the Young Ward",
-    "type": "Talisman: Jewellery",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Bramblehafted Spear",
-    "type": "Weapon: Spear",
-    "rarity": "Masterwork",
-    "materials": 11
-  },
-  {
-    "name": "Thieves Good Hand",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Celebrants Chain",
-    "type": "Talisman: Jewellery",
-    "rarity": "Masterwork",
-    "materials": 18
-  },
-  {
-    "name": "Dragonhide Plate",
-    "type": "Armour: Medium",
-    "rarity": "Masterwork",
-    "materials": 15
-  },
-  {
-    "name": "Duelists Obstinate Ally",
-    "type": "Talisman: Shield",
-    "rarity": "Masterwork",
-    "materials": 16
-  },
-  {
-    "name": "Forgemasters Shield",
-    "type": "Talisman: Shield",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Forgesteel Armour",
-    "type": "Armour: Medium",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Guardians Banner",
-    "type": "Banner",
-    "rarity": "Masterwork",
-    "materials": 12
-  },
-  {
-    "name": "Harness of Heartiness",
-    "type": "Armour: Heavy",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Hoplites Spear",
-    "type": "Weapon: Spear",
-    "rarity": "Masterwork",
-    "materials": 13
-  },
-  {
-    "name": "Hunters Ark",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Illuminating Forge",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Immortals Shield",
-    "type": "Talisman: Shield",
-    "rarity": "Masterwork",
-    "materials": 16
-  },
-  {
-    "name": "Legionnaires Commandment",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 25
-  },
-  {
-    "name": "Lich Paragon’s Robe",
-    "type": "Armour: Clothes",
-    "rarity": "Masterwork",
-    "materials": 13
-  },
-  {
-    "name": "Matched Thunderbolts",
-    "type": "Weapon: Pair: One Handed",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Mercenary Banner",
-    "type": "Banner",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Mundane Forcebarrier",
-    "type": "Talisman: Shield",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Opened Eye",
-    "type": "Weapon: Polearm",
-    "rarity": "Masterwork",
-    "materials": 19
-  },
-  {
-    "name": "Philosophers Charm",
-    "type": "Talisman: Jewellery",
-    "rarity": "Masterwork",
-    "materials": 35
-  },
-  {
-    "name": "Pugilists Charm",
-    "type": "Talisman: Jewellery",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Pyromancers Staff",
-    "type": "Weapon: Polearm",
-    "rarity": "Masterwork",
-    "materials": 19
-  },
-  {
-    "name": "Rag of Warfare",
-    "type": "Banner",
-    "rarity": "Masterwork",
-    "materials": 14
-  },
-  {
-    "name": "Robe of the Saviour",
-    "type": "Armour: Clothes",
-    "rarity": "Masterwork",
-    "materials": 17
-  },
-  {
-    "name": "Robes of the Seer",
-    "type": "Armour: Clothes",
-    "rarity": "Masterwork",
-    "materials": 15
-  },
-  {
-    "name": "Runeplate",
-    "type": "Armour: Heavy",
-    "rarity": "Masterwork",
-    "materials": 13
-  },
-  {
-    "name": "Sargents Fist",
-    "type": "Weapon: Great Weapon",
-    "rarity": "Masterwork",
-    "materials": 17
-  },
-  {
-    "name": "Torment’s Blade",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Journeyman",
-    "materials": 0
-  },
-  {
-    "name": "Shattering Stone",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Slayers Blade",
-    "type": "Weapon: Great Weapon",
-    "rarity": "Masterwork",
-    "materials": 12
-  },
-  {
-    "name": "Smiths Polearm",
-    "type": "Weapon: Polearm",
-    "rarity": "Masterwork",
-    "materials": 16
-  },
-  {
-    "name": "Soldiers Hauberk",
-    "type": "Armour: Medium",
-    "rarity": "Masterwork",
-    "materials": 12
-  },
-  {
-    "name": "Squires Mail",
-    "type": "Armour: Light",
-    "rarity": "Masterwork",
-    "materials": 12
-  },
-  {
-    "name": "Standard of the Tower",
-    "type": "Banner",
-    "rarity": "Masterwork",
-    "materials": 15
-  },
-  {
-    "name": "Starlit Pool",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Steel Pillar",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Warfletcher",
-    "type": "Weapon: Bow",
-    "rarity": "Masterwork",
-    "materials": 13
-  },
-  {
-    "name": "Warlocks Longknives",
-    "type": "Weapon: Pair: One Handed",
-    "rarity": "Masterwork",
-    "materials": 16
-  },
-  {
-    "name": "Seers Knife",
-    "type": "Weapon: Short Weapon",
-    "rarity": "Masterwork",
-    "materials": 17
-  },
-  {
-    "name": "Weighted Scales",
-    "type": "Reliquary",
-    "rarity": "Masterwork",
-    "materials": 24
-  },
-  {
-    "name": "Wolverines Bite",
-    "type": "Weapon: Pair: One Handed",
-    "rarity": "Masterwork",
-    "materials": 16
-  }
+    {
+        "name": "Escape Route",
+        "type": "Weapon: One Handed",
+        "rarity": "Expert"
+    },
+    {
+        "name": "Apprentices Reliquary",
+        "type": "Reliquary",
+        "rarity": "Expert",
+        "materials": 12
+    },
+    {
+        "name": "Barbarians Brutalizer",
+        "type": "Weapon: Great Weapon",
+        "rarity": "Expert"
+    },
+    {
+        "name": "Battlemages Vestment of Control",
+        "type": "Armour: Medium",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Battlemages Vestment of Force",
+        "type": "Armour: Medium",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Bending Reed Blades",
+        "type": "Weapon: Pair: One Handed",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Blazesap Striker",
+        "type": "Talisman: Tool",
+        "rarity": "Expert",
+        "materials": 11
+    },
+    {
+        "name": "Bloodslick Banner",
+        "type": "Banner",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Broadleaf Spear",
+        "type": "Weapon: Spear",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Magehunters Call",
+        "type": "Weapon: One Handed",
+        "rarity": "Expert"
+    },
+    {
+        "name": "Conqueror's Halberd",
+        "type": "Weapon: Polearm",
+        "rarity": "Expert"
+    },
+    {
+        "name": "Dawns Pestle",
+        "type": "Talisman: Tool",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Opportunists Call",
+        "type": "Weapon: One Handed",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Enduring Shield",
+        "type": "Talisman: Shield",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Elementalists Garb",
+        "type": "Armour: Medium",
+        "rarity": "Expert",
+        "materials": 11
+    },
+    {
+        "name": "Thunderous Awe",
+        "type": "Weapon: One Handed",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Eves Mortar",
+        "type": "Talisman: Tool",
+        "rarity": "Expert",
+        "materials": 9
+    },
+    {
+        "name": "Treacheries Kiss",
+        "type": "Weapon: One Handed",
+        "rarity": "Expert"
+    },
+    {
+        "name": "Gray Wizards Robe",
+        "type": "Armour: Clothes",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Guardian Mage Staff",
+        "type": "Weapon: Polearm",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Mage Legion Standard",
+        "type": "Banner",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Windborn",
+        "type": "Weapon: One Handed",
+        "rarity": "Expert",
+        "materials": 9
+    },
+    {
+        "name": "Manticore Hide Armour",
+        "type": "Armour: Medium",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Nightmare Hide Armour",
+        "type": "Armour: Medium",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Clerics Mace",
+        "type": "Weapon: One Handed",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Phial of the Sun",
+        "type": "Talisman: Tool",
+        "rarity": "Expert",
+        "materials": 8
+    },
+    {
+        "name": "Prime Hunters Bow",
+        "type": "Weapon: Bow",
+        "rarity": "Expert"
+    },
+    {
+        "name": "Strikers Hand",
+        "type": "Weapon: One Handed",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Rootwarder",
+        "type": "Weapon: Polearm",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Scorpions Barb",
+        "type": "Weapon: Polearm",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Scouts Bow",
+        "type": "Weapon: Bow",
+        "rarity": "Expert"
+    },
+    {
+        "name": "Skirmishers Aketon",
+        "type": "Armour: Light",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Slayers Banner",
+        "type": "Banner",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Survivors Platemail",
+        "type": "Armour: Heavy",
+        "rarity": "Expert",
+        "materials": 10
+    },
+    {
+        "name": "Tail of the Beast",
+        "type": "Weapon: Polearm",
+        "rarity": "Expert",
+        "materials": 9
+    },
+    {
+        "name": "Tacticians Demand",
+        "type": "Weapon: One Handed",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Arch Priests Blade",
+        "type": "Weapon: One Handed",
+        "rarity": "Masterwork",
+        "materials": 17
+    },
+    {
+        "name": "Wayfarers Pyx",
+        "type": "Reliquary",
+        "rarity": "Expert",
+        "materials": 12
+    },
+    {
+        "name": "Blade of Peace",
+        "type": "Weapon: One Handed",
+        "rarity": "Masterwork",
+        "materials": 19
+    },
+    {
+        "name": "Blade of War",
+        "type": "Weapon: One Handed",
+        "rarity": "Masterwork",
+        "materials": 15
+    },
+    {
+        "name": "Artisans Oil",
+        "type": "Special",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Battleplate",
+        "type": "Armour: Heavy",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Bonebreaker",
+        "type": "Weapon: Great Weapon",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Boulders Staff",
+        "type": "Weapon: Polearm",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Brandts Blade",
+        "type": "Weapon: One Handed",
+        "rarity": "Masterwork",
+        "materials": 18
+    },
+    {
+        "name": "Crystalhunger Robes",
+        "type": "Armour: Clothes",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Druids Crook",
+        "type": "Weapon: Polearm",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Greatweapon of the Old Ways",
+        "type": "Weapon: Great Weapon",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Guards Watcher",
+        "type": "Weapon: Polearm",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Linebreakers Staff",
+        "type": "Weapon: Polearm",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Marauders Warcoat",
+        "type": "Armour: Medium",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Medics Gambeson",
+        "type": "Armour: Light",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Mountebanks Surprise",
+        "type": "Weapon: Pair: Short Weapon and One Handed Weapon",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Reforging Gavel",
+        "type": "Talisman: Tool",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Saga of the Lost",
+        "type": "Reliquary",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Serpent's Tail",
+        "type": "Weapon: Polearm",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Warriors Right Hand",
+        "type": "Weapon: One Handed",
+        "rarity": "Masterwork",
+        "materials": 13
+    },
+    {
+        "name": "Standard of the Brave",
+        "type": "Banner",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Apprentices Penknife",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Comrades Knife",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Expert",
+        "materials": 5
+    },
+    {
+        "name": "Desperate Times",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Expert",
+        "materials": 4
+    },
+    {
+        "name": "Flameborn Dagger",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Expert",
+        "materials": 4
+    },
+    {
+        "name": "Warmages Blessing",
+        "type": "Talisman: Battlemages Circlet",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Arcane Shears",
+        "type": "Talisman: Tool",
+        "rarity": "Masterwork",
+        "materials": 15
+    },
+    {
+        "name": "Purifying Scalpel",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Expert",
+        "materials": 6
+    },
+    {
+        "name": "Archmage's Staff",
+        "type": "Weapon: Polearm",
+        "rarity": "Masterwork",
+        "materials": 18
+    },
+    {
+        "name": "Armsman's Amulet",
+        "type": "Talisman: Jewellery",
+        "rarity": "Masterwork",
+        "materials": 12
+    },
+    {
+        "name": "Artebazzani Artifact",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Avalanche",
+        "type": "Weapon: Great Weapon",
+        "rarity": "Masterwork",
+        "materials": 19
+    },
+    {
+        "name": "Barons Blessed Cairn",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 30
+    },
+    {
+        "name": "Battlehealers Coat",
+        "type": "Armour: Light",
+        "rarity": "Masterwork",
+        "materials": 12
+    },
+    {
+        "name": "Beggars Key",
+        "type": "Talisman: Jewellery",
+        "rarity": "Masterwork",
+        "materials": 17
+    },
+    {
+        "name": "Acolyte's Assistant",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Setting Blade",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Bloodcloak",
+        "type": "Talisman: Tool",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Bracelet of the Young Ward",
+        "type": "Talisman: Jewellery",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Bramblehafted Spear",
+        "type": "Weapon: Spear",
+        "rarity": "Masterwork",
+        "materials": 11
+    },
+    {
+        "name": "Thieves Good Hand",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Celebrants Chain",
+        "type": "Talisman: Jewellery",
+        "rarity": "Masterwork",
+        "materials": 18
+    },
+    {
+        "name": "Dragonhide Plate",
+        "type": "Armour: Medium",
+        "rarity": "Masterwork",
+        "materials": 15
+    },
+    {
+        "name": "Duelists Obstinate Ally",
+        "type": "Talisman: Shield",
+        "rarity": "Masterwork",
+        "materials": 16
+    },
+    {
+        "name": "Forgemasters Shield",
+        "type": "Talisman: Shield",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Forgesteel Armour",
+        "type": "Armour: Medium",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Guardians Banner",
+        "type": "Banner",
+        "rarity": "Masterwork",
+        "materials": 12
+    },
+    {
+        "name": "Harness of Heartiness",
+        "type": "Armour: Heavy",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Hoplites Spear",
+        "type": "Weapon: Spear",
+        "rarity": "Masterwork",
+        "materials": 13
+    },
+    {
+        "name": "Hunters Ark",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Illuminating Forge",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Immortals Shield",
+        "type": "Talisman: Shield",
+        "rarity": "Masterwork",
+        "materials": 16
+    },
+    {
+        "name": "Legionnaires Commandment",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 25
+    },
+    {
+        "name": "Lich Paragon’s Robe",
+        "type": "Armour: Clothes",
+        "rarity": "Masterwork",
+        "materials": 13
+    },
+    {
+        "name": "Matched Thunderbolts",
+        "type": "Weapon: Pair: One Handed",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Mercenary Banner",
+        "type": "Banner",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Mundane Forcebarrier",
+        "type": "Talisman: Shield",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Opened Eye",
+        "type": "Weapon: Polearm",
+        "rarity": "Masterwork",
+        "materials": 19
+    },
+    {
+        "name": "Philosophers Charm",
+        "type": "Talisman: Jewellery",
+        "rarity": "Masterwork",
+        "materials": 35
+    },
+    {
+        "name": "Pugilists Charm",
+        "type": "Talisman: Jewellery",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Pyromancers Staff",
+        "type": "Weapon: Polearm",
+        "rarity": "Masterwork",
+        "materials": 19
+    },
+    {
+        "name": "Rag of Warfare",
+        "type": "Banner",
+        "rarity": "Masterwork",
+        "materials": 14
+    },
+    {
+        "name": "Robe of the Saviour",
+        "type": "Armour: Clothes",
+        "rarity": "Masterwork",
+        "materials": 17
+    },
+    {
+        "name": "Robes of the Seer",
+        "type": "Armour: Clothes",
+        "rarity": "Masterwork",
+        "materials": 15
+    },
+    {
+        "name": "Runeplate",
+        "type": "Armour: Heavy",
+        "rarity": "Masterwork",
+        "materials": 13
+    },
+    {
+        "name": "Sargents Fist",
+        "type": "Weapon: Great Weapon",
+        "rarity": "Masterwork",
+        "materials": 17
+    },
+    {
+        "name": "Torment’s Blade",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Journeyman",
+        "materials": 0
+    },
+    {
+        "name": "Shattering Stone",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Slayers Blade",
+        "type": "Weapon: Great Weapon",
+        "rarity": "Masterwork",
+        "materials": 12
+    },
+    {
+        "name": "Smiths Polearm",
+        "type": "Weapon: Polearm",
+        "rarity": "Masterwork",
+        "materials": 16
+    },
+    {
+        "name": "Soldiers Hauberk",
+        "type": "Armour: Medium",
+        "rarity": "Masterwork",
+        "materials": 12
+    },
+    {
+        "name": "Squires Mail",
+        "type": "Armour: Light",
+        "rarity": "Masterwork",
+        "materials": 12
+    },
+    {
+        "name": "Standard of the Tower",
+        "type": "Banner",
+        "rarity": "Masterwork",
+        "materials": 15
+    },
+    {
+        "name": "Starlit Pool",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Steel Pillar",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Warfletcher",
+        "type": "Weapon: Bow",
+        "rarity": "Masterwork",
+        "materials": 13
+    },
+    {
+        "name": "Warlocks Longknives",
+        "type": "Weapon: Pair: One Handed",
+        "rarity": "Masterwork",
+        "materials": 16
+    },
+    {
+        "name": "Seers Knife",
+        "type": "Weapon: Short Weapon",
+        "rarity": "Masterwork",
+        "materials": 17
+    },
+    {
+        "name": "Weighted Scales",
+        "type": "Reliquary",
+        "rarity": "Masterwork",
+        "materials": 24
+    },
+    {
+        "name": "Wolverines Bite",
+        "type": "Weapon: Pair: One Handed",
+        "rarity": "Masterwork",
+        "materials": 16
+    }
 ]

@@ -1,776 +1,776 @@
 [
-  {
-    "sphere": "Anarch",
-    "name": "Freedom of the Soul",
-    "type": "Enchantment",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Anarchic Missive",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Prove the Foundation",
-    "type": "Curse",
-    "Magnitude": 3
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Explosive Force",
-    "type": "Enchantment",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Leave the Past Behind",
-    "type": "-",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Witness the Glorious Day",
-    "type": "Enchantment",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Anarchs Wooden Steed",
-    "type": "-",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Burn the Ashes",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Stormveil",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Churning Cauldron of the Maelstrom",
-    "type": "-",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Unfettered Anarchy",
-    "type": "Curse",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Unending Cascade of Bloods Fire",
-    "type": "Enchantment",
-    "Magnitude": 12
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Rampant Hammer Rhythm",
-    "type": "Enchantment",
-    "Magnitude": 14
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Shatter the Shackles",
-    "type": "-",
-    "Magnitude": "15 + The magnitude of the original curse."
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Still Waters Running Deep",
-    "type": "Enchantment",
-    "Magnitude": 16
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Transmogrification of the Souls Echo",
-    "type": "-",
-    "Magnitude": 25
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Empower Storms of Nature",
-    "type": "Enchantment",
-    "Magnitude": 30
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Otherworldly Challenge",
-    "type": "-",
-    "Magnitude": 30
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Foam and Spittle of the Furious Sea",
-    "type": "Enchantment",
-    "Magnitude": 40
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Anarchs Claim",
-    "type": "Curse",
-    "Magnitude": 80
-  },
-  {
-    "sphere": "Anarch",
-    "name": "Soldiers of Storm and Stone",
-    "type": "Enchantment",
-    "Magnitude": 100
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Missive of Courage",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Strength of the Bull",
-    "type": "Enchantment",
-    "Magnitude": 3
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Swift Leaping Hare",
-    "type": "Enchantment",
-    "Magnitude": 3
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Bless the Warhost",
-    "type": "-",
-    "Magnitude": 5
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Bedecked in Final Glory",
-    "type": "Enchantment",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Raise the Wounded Warrior",
-    "type": "-",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Chamber of the Restful Warrior",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Pythons Presence",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Rally the Fallen",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Surgeons Limited Patience",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Poisoners Blessing",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Chorus of the Righteous",
-    "type": "Enchantment",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Trial of Worthiness",
-    "type": "Curse",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Powerful Growth",
-    "type": "Enchantment",
-    "Magnitude": 12
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Pirates Unity",
-    "type": "Enchantment",
-    "Magnitude": 12
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Tree Falls Weight",
-    "type": "Enchantment",
-    "Magnitude": 15
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Style of the Bronze Colossus",
-    "type": "Enchantment",
-    "Magnitude": 20
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Conclave of Trees and Courage",
-    "type": "Enchantment",
-    "Magnitude": 22
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Warriors Mantle",
-    "type": "Enchantment",
-    "Magnitude": 30
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "Lions Roar",
-    "type": "Enchantment",
-    "Magnitude": 40
-  },
-  {
-    "sphere": "Arcadian",
-    "name": "God of War",
-    "type": "Enchantment",
-    "Magnitude": 100
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Comrades Missive",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Call Winged Messenger",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Break off the Chain of Memory",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Duties Sacrifice",
-    "type": "-",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Aid Once More",
-    "type": "Enchantment",
-    "Magnitude": 5
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Blessing of the Pillar",
-    "type": "Enchantment",
-    "Magnitude": 5
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Bond of Loyalty",
-    "type": "Enchantment",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Cervitas’ Bulwark",
-    "type": "Enchantment",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Chamber of delights",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Shunned by the spheres",
-    "type": "Curse",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Smiths Inspiration",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Words as Deeds",
-    "type": "-",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Blessing of the Legion",
-    "type": "Enchantment",
-    "Magnitude": 12
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Order of the Iron Sargent",
-    "type": "Enchantment",
-    "Magnitude": 13
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Hands of the Healer",
-    "type": "Enchantment",
-    "Magnitude": 15
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Pilgramage to Distant Brethren",
-    "type": "Enchantment",
-    "Magnitude": 15
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Strike the Holy Oath",
-    "type": "-",
-    "Magnitude": 20
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Betrayers Fleshcurse",
-    "type": "Curse",
-    "Magnitude": 35
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "The Weight of your Words.",
-    "type": "Enchantment",
-    "Magnitude": 35
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Bound by Common Cause",
-    "type": "Enchantment",
-    "Magnitude": 60
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Defenders Blessed Cohort",
-    "type": "Enchantment",
-    "Magnitude": 60
-  },
-  {
-    "sphere": "Cervitas",
-    "name": "Arboreal Brotherhood of Rage",
-    "type": "Enchantment",
-    "Magnitude": 120
-  },
-  {
-    "sphere": "Lumos",
-    "name": "The Candle Extinguished",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Believers Missive",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Release the Chain of Memory",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Hearthfire Circle",
-    "type": "-",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Binding of Hope",
-    "type": "-",
-    "Magnitude": 5
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Believers of the True Orator",
-    "type": "Enchantment",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Enlightened Ceremony",
-    "type": "Enchantment",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Like a Moth to a Flame",
-    "type": "Curse",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Embrace the Living Flame",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Lumos",
-    "name": "The Twilight masquerade",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Antithesis of Faith",
-    "type": "Enchantment",
-    "Magnitude": 9
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Vigor of Belief",
-    "type": "Enchantment",
-    "Magnitude": 9
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Grace in Forgiveness",
-    "type": "-",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Revealed to the Initiate",
-    "type": "Enchantment",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Strength of Belief",
-    "type": "Enchantment",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Flame of Healing",
-    "type": "Enchantment",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Inquisitors Seeking Eye",
-    "type": "Enchantment",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Lumos",
-    "name": "The Bright Soul Within",
-    "type": "Enchantment",
-    "Magnitude": 35
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Hopeforged",
-    "type": "-",
-    "Magnitude": 35
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Rivers of Blood and Life",
-    "type": "Enchantment",
-    "Magnitude": 50
-  },
-  {
-    "sphere": "Lumos",
-    "name": "Blessing of Unmade Belief",
-    "type": "Enchantment",
-    "Magnitude": 50
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Knowledgeable Missive",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Secrets of skillful artifice",
-    "type": "Enchantment",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Knowledge of its own Accord",
-    "type": "-",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Signs and Portents",
-    "type": "-",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Being of Like Mind",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Shield of the Stars",
-    "type": "Enchantment",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Departure of the Blessed Falcon",
-    "type": 10,
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Blindfold of the Uninitiated",
-    "type": "Curse",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Crystalline Memory",
-    "type": "-",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Tactician Verses Tactician",
-    "type": "Enchantment",
-    "Magnitude": 10
-  },
-  {
-    "sphere": "Stalia",
-    "name": "True Glimpsing",
-    "type": "-",
-    "Magnitude": 20
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Dream in the Witch House",
-    "type": "-",
-    "Magnitude": 12
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Crown of Stars",
-    "type": "Enchantment",
-    "Magnitude": 14
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Anathemic Call of the Locust",
-    "type": "Curse",
-    "Magnitude": 16
-  },
-  {
-    "sphere": "Stalia",
-    "name": "There is no Welcome Here",
-    "type": "Enchantment",
-    "Magnitude": 16
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Window to the spheres",
-    "type": "Enchantment",
-    "Magnitude": 22
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Curse of Hunter's Pursuit",
-    "type": "Curse",
-    "Magnitude": 30
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Reach into the Abyss",
-    "type": "-",
-    "Magnitude": 30
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Stardust’s Egg",
-    "type": "-",
-    "Magnitude": 50
-  },
-  {
-    "sphere": "Stalia",
-    "name": "Power of Tainted Knowledge",
-    "type": "Enchantment",
-    "Magnitude": 50
-  },
-  {
-    "sphere": "Stalia",
-    "name": "A Moment to Speak",
-    "type": "Enchantment",
-    "Magnitude": 50
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Investors Missive",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Tabula Rasa",
-    "type": "-",
-    "Magnitude": 2
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Wealdsages Skilled Dilution",
-    "type": "-",
-    "Magnitude": 3
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Blessing of New Spring",
-    "type": "Enchantment",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Like for Like",
-    "type": "-",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Verdant Bounty of the Twilight Bayou",
-    "type": "Enchantment",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Words of Regret",
-    "type": "-",
-    "Magnitude": 4
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Benevolence of the Drunken Benefactor",
-    "type": "Curse",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Contract of Mercenary Need",
-    "type": "Enchantment",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Clad in Golden Raiment",
-    "type": "Enchantment",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Sunsets Transmutation",
-    "type": "-",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Contract of Good Faith",
-    "type": "Curse (Special)",
-    "Magnitude": 6
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Audit of Possessors Past",
-    "type": "-",
-    "Magnitude": 8
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Magnates Blessing",
-    "type": "Enchantment",
-    "Magnitude": 13
-  },
-  {
-    "sphere": "Panoply",
-    "name": "A Good Trade",
-    "type": "Enchantment",
-    "Magnitude": 15
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Shadow Vale",
-    "type": "Enchantment",
-    "Magnitude": 16
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Gluttons Curse",
-    "type": "Curse",
-    "Magnitude": 20
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Like Water Through Your Fingers",
-    "type": "Curse",
-    "Magnitude": 30
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Craftsmans Failure",
-    "type": "-",
-    "Magnitude": 35
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Consequences of Indolence",
-    "type": "Curse",
-    "Magnitude": 40
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Fools Gold Fortress",
-    "type": "Enchantment",
-    "Magnitude": 60
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Plague of Idleness",
-    "type": "Enchantment",
-    "Magnitude": 60
-  },
-  {
-    "sphere": "Panoply",
-    "name": "Wondrous Forests of the Night",
-    "type": "Enchantment",
-    "Magnitude": 100
-  }
+    {
+        "sphere": "Anarch",
+        "name": "Freedom of the Soul",
+        "type": "Enchantment",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Anarchic Missive",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Prove the Foundation",
+        "type": "Curse",
+        "Magnitude": 3
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Explosive Force",
+        "type": "Enchantment",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Leave the Past Behind",
+        "type": "-",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Witness the Glorious Day",
+        "type": "Enchantment",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Anarchs Wooden Steed",
+        "type": "-",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Burn the Ashes",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Stormveil",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Churning Cauldron of the Maelstrom",
+        "type": "-",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Unfettered Anarchy",
+        "type": "Curse",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Unending Cascade of Bloods Fire",
+        "type": "Enchantment",
+        "Magnitude": 12
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Rampant Hammer Rhythm",
+        "type": "Enchantment",
+        "Magnitude": 14
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Shatter the Shackles",
+        "type": "-",
+        "Magnitude": "15 + The magnitude of the original curse."
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Still Waters Running Deep",
+        "type": "Enchantment",
+        "Magnitude": 16
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Transmogrification of the Souls Echo",
+        "type": "-",
+        "Magnitude": 25
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Empower Storms of Nature",
+        "type": "Enchantment",
+        "Magnitude": 30
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Otherworldly Challenge",
+        "type": "-",
+        "Magnitude": 30
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Foam and Spittle of the Furious Sea",
+        "type": "Enchantment",
+        "Magnitude": 40
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Anarchs Claim",
+        "type": "Curse",
+        "Magnitude": 80
+    },
+    {
+        "sphere": "Anarch",
+        "name": "Soldiers of Storm and Stone",
+        "type": "Enchantment",
+        "Magnitude": 100
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Missive of Courage",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Strength of the Bull",
+        "type": "Enchantment",
+        "Magnitude": 3
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Swift Leaping Hare",
+        "type": "Enchantment",
+        "Magnitude": 3
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Bless the Warhost",
+        "type": "-",
+        "Magnitude": 5
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Bedecked in Final Glory",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Raise the Wounded Warrior",
+        "type": "-",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Chamber of the Restful Warrior",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Pythons Presence",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Rally the Fallen",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Surgeons Limited Patience",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Poisoners Blessing",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Chorus of the Righteous",
+        "type": "Enchantment",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Trial of Worthiness",
+        "type": "Curse",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Powerful Growth",
+        "type": "Enchantment",
+        "Magnitude": 12
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Pirates Unity",
+        "type": "Enchantment",
+        "Magnitude": 12
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Tree Falls Weight",
+        "type": "Enchantment",
+        "Magnitude": 15
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Style of the Bronze Colossus",
+        "type": "Enchantment",
+        "Magnitude": 20
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Conclave of Trees and Courage",
+        "type": "Enchantment",
+        "Magnitude": 22
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Warriors Mantle",
+        "type": "Enchantment",
+        "Magnitude": 30
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "Lions Roar",
+        "type": "Enchantment",
+        "Magnitude": 40
+    },
+    {
+        "sphere": "Arcadian",
+        "name": "God of War",
+        "type": "Enchantment",
+        "Magnitude": 100
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Comrades Missive",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Call Winged Messenger",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Break off the Chain of Memory",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Duties Sacrifice",
+        "type": "-",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Aid Once More",
+        "type": "Enchantment",
+        "Magnitude": 5
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Blessing of the Pillar",
+        "type": "Enchantment",
+        "Magnitude": 5
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Bond of Loyalty",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Cervitas' Bulwark",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Chamber of delights",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Shunned by the spheres",
+        "type": "Curse",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Smiths Inspiration",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Words as Deeds",
+        "type": "-",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Blessing of the Legion",
+        "type": "Enchantment",
+        "Magnitude": 12
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Order of the Iron Sargent",
+        "type": "Enchantment",
+        "Magnitude": 13
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Hands of the Healer",
+        "type": "Enchantment",
+        "Magnitude": 15
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Pilgramage to Distant Brethren",
+        "type": "Enchantment",
+        "Magnitude": 15
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Strike the Holy Oath",
+        "type": "-",
+        "Magnitude": 20
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Betrayers Fleshcurse",
+        "type": "Curse",
+        "Magnitude": 35
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "The Weight of your Words.",
+        "type": "Enchantment",
+        "Magnitude": 35
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Bound by Common Cause",
+        "type": "Enchantment",
+        "Magnitude": 60
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Defenders Blessed Cohort",
+        "type": "Enchantment",
+        "Magnitude": 60
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Arboreal Brotherhood of Rage",
+        "type": "Enchantment",
+        "Magnitude": 120
+    },
+    {
+        "sphere": "Lumos",
+        "name": "The Candle Extinguished",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Believers Missive",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Release the Chain of Memory",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Hearthfire Circle",
+        "type": "-",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Binding of Hope",
+        "type": "-",
+        "Magnitude": 5
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Believers of the True Orator",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Enlightened Ceremony",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Like a Moth to a Flame",
+        "type": "Curse",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Embrace the Living Flame",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Lumos",
+        "name": "The Twilight masquerade",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Antithesis of Faith",
+        "type": "Enchantment",
+        "Magnitude": 9
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Vigor of Belief",
+        "type": "Enchantment",
+        "Magnitude": 9
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Grace in Forgiveness",
+        "type": "-",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Revealed to the Initiate",
+        "type": "Enchantment",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Strength of Belief",
+        "type": "Enchantment",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Flame of Healing",
+        "type": "Enchantment",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Inquisitors Seeking Eye",
+        "type": "Enchantment",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
+        "name": "The Bright Soul Within",
+        "type": "Enchantment",
+        "Magnitude": 35
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Hopeforged",
+        "type": "-",
+        "Magnitude": 35
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Rivers of Blood and Life",
+        "type": "Enchantment",
+        "Magnitude": 50
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Blessing of Unmade Belief",
+        "type": "Enchantment",
+        "Magnitude": 50
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Knowledgeable Missive",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Secrets of skillful artifice",
+        "type": "Enchantment",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Knowledge of its own Accord",
+        "type": "-",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Signs and Portents",
+        "type": "-",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Being of Like Mind",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Shield of the Stars",
+        "type": "Enchantment",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Departure of the Blessed Falcon",
+        "type": 10,
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Blindfold of the Uninitiated",
+        "type": "Curse",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Crystalline Memory",
+        "type": "-",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Tactician Verses Tactician",
+        "type": "Enchantment",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Stalia",
+        "name": "True Glimpsing",
+        "type": "-",
+        "Magnitude": 20
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Dream in the Witch House",
+        "type": "-",
+        "Magnitude": 12
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Crown of Stars",
+        "type": "Enchantment",
+        "Magnitude": 14
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Anathemic Call of the Locust",
+        "type": "Curse",
+        "Magnitude": 16
+    },
+    {
+        "sphere": "Stalia",
+        "name": "There is no Welcome Here",
+        "type": "Enchantment",
+        "Magnitude": 16
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Window to the spheres",
+        "type": "Enchantment",
+        "Magnitude": 22
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Curse of Hunter's Pursuit",
+        "type": "Curse",
+        "Magnitude": 30
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Reach into the Abyss",
+        "type": "-",
+        "Magnitude": 30
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Stardust's Egg",
+        "type": "-",
+        "Magnitude": 50
+    },
+    {
+        "sphere": "Stalia",
+        "name": "Power of Tainted Knowledge",
+        "type": "Enchantment",
+        "Magnitude": 50
+    },
+    {
+        "sphere": "Stalia",
+        "name": "A Moment to Speak",
+        "type": "Enchantment",
+        "Magnitude": 50
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Investors Missive",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Tabula Rasa",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Wealdsages Skilled Dilution",
+        "type": "-",
+        "Magnitude": 3
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Blessing of New Spring",
+        "type": "Enchantment",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Like for Like",
+        "type": "-",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Verdant Bounty of the Twilight Bayou",
+        "type": "Enchantment",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Words of Regret",
+        "type": "-",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Benevolence of the Drunken Benefactor",
+        "type": "Curse",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Contract of Mercenary Need",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Clad in Golden Raiment",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Sunsets Transmutation",
+        "type": "-",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Contract of Good Faith",
+        "type": "Curse (Special)",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Audit of Possessors Past",
+        "type": "-",
+        "Magnitude": 8
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Magnates Blessing",
+        "type": "Enchantment",
+        "Magnitude": 13
+    },
+    {
+        "sphere": "Panoply",
+        "name": "A Good Trade",
+        "type": "Enchantment",
+        "Magnitude": 15
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Shadow Vale",
+        "type": "Enchantment",
+        "Magnitude": 16
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Gluttons Curse",
+        "type": "Curse",
+        "Magnitude": 20
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Like Water Through Your Fingers",
+        "type": "Curse",
+        "Magnitude": 30
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Craftsmans Failure",
+        "type": "-",
+        "Magnitude": 35
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Consequences of Indolence",
+        "type": "Curse",
+        "Magnitude": 40
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Fools Gold Fortress",
+        "type": "Enchantment",
+        "Magnitude": 60
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Plague of Idleness",
+        "type": "Enchantment",
+        "Magnitude": 60
+    },
+    {
+        "sphere": "Panoply",
+        "name": "Wondrous Forests of the Night",
+        "type": "Enchantment",
+        "Magnitude": 100
+    }
 ]

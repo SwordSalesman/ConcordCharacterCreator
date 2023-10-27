@@ -20,6 +20,7 @@ import {
     doc,
     setDoc,
 } from "firebase/firestore";
+import { getCurrentDate } from "../helpers/date-helper";
 
 const REACT_APP_FIREBASE_API_KEY = "AIzaSyAyKdRlod7Y0o1c1Yi8IUCxX5BZFYUpSmo";
 
@@ -62,14 +63,15 @@ const signInWithGoogle = async () => {
 };
 
 const logInWithEmailAndPassword = async (email, password) => {
-    // try {
-    await signInWithEmailAndPassword(auth, email, password);
-    // const user = userCred.user;
-
-    // } catch (err) {
-    // console.error(err);
-    // alert(err.message);
-    // }
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+        if (err.code === "auth/wrong-password") {
+            throw new Error("incorrect password");
+        } else {
+            throw new Error(err.message);
+        }
+    }
 };
 
 const registerWithEmailAndPassword = async (name, email, password) => {
@@ -92,7 +94,6 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 const sendPasswordReset = async (email) => {
     try {
         await sendPasswordResetEmail(auth, email);
-        alert("Password reset link sent!");
     } catch (err) {
         console.error(err);
         // alert(err.message);
@@ -101,7 +102,7 @@ const sendPasswordReset = async (email) => {
 
 const saveUserForm = async (form, setSubmissionDate) => {
     const name = await getUserName();
-    const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const date = getCurrentDate();
     let fullForm = {
         player: name,
         email: auth.currentUser.email,

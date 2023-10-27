@@ -14,11 +14,15 @@ import useFormContext from "../../../hooks/use-form-context";
 
 const headerSaveButton = false;
 
-function Header({ toggleTheme, handleShowLogin, handleSave, user }) {
+function Header({
+    toggleTheme,
+    handleShowLogin,
+    handleSave,
+    handleLogoClick,
+    user,
+}) {
     const theme = useTheme();
     const { unsaved } = useFormContext();
-
-    // console.log(user);
 
     return (
         <>
@@ -33,12 +37,11 @@ function Header({ toggleTheme, handleShowLogin, handleSave, user }) {
                     </HeaderSmallButton>
                 </div>
 
-                <HeaderSigilWrapper
-                    href='https://wiki.concordlarp.com/index.php/Main_Page'
-                    target='_blank'
-                    rel='noreferrer'
-                >
-                    <Button style={{ height: "100%", width: "100%" }}>
+                <HeaderSigilWrapper>
+                    <Button
+                        style={{ height: "100%", width: "100%" }}
+                        onClick={handleLogoClick}
+                    >
                         <HeaderConcordSigil
                             src={
                                 theme.name === "light"

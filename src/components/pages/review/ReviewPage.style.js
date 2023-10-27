@@ -65,6 +65,6 @@ export const ReviewContent = styled.div`
 export const InvalidWarning = styled.div`
     color: ${(props) => props.theme.error};
     font-style: italic;
-    margin-bottom: 20px;
-    text-align: left;
+    margin-bottom: 10px;
+    text-align: center;
 `;

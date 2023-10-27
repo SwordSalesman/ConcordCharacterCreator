@@ -22,7 +22,7 @@ export const HeaderWrapper = styled.div`
 
 export const HeaderSmallButton = styled(Button)``;
 
-export const HeaderSigilWrapper = styled.a`
+export const HeaderSigilWrapper = styled.div`
     height: 42px;
     width: 42px;
     display: flex;

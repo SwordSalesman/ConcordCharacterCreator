@@ -1,4 +1,3 @@
-import { useTheme } from "styled-components";
 import { StyledRealmItem } from "./RealmItem.style";
 
 function RealmItem({ realm, onSelect, selectedRealm }) {
@@ -17,7 +16,7 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
             <img
                 className='cursor-pointer'
                 alt={realm.name}
-                src={useTheme().name === "light" ? realm.image : realm.imageInv}
+                src={realm.image}
             ></img>
         </StyledRealmItem>
     );

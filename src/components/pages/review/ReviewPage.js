@@ -12,6 +12,8 @@ import {
     StyledBorder,
 } from "./ReviewPage.style";
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
+import ConfirmModal from "../../common/Modal/ConfirmModal";
+import { useState } from "react";
 const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {
@@ -46,9 +48,7 @@ function ReviewPage({ user }) {
         validateForm,
     } = useFormContext();
     const realmFull = useRealmDetails(realm);
-
     const { valid, validRealm, validName, validInvestment } = validateForm();
-
     const renderedSkills = getSummarisedSkillNames(skills);
 
     // This simple check avoids the page crashing during a log in form reset
@@ -56,6 +56,7 @@ function ReviewPage({ user }) {
         return;
     }
 
+    console.debug("Player form:");
     console.debug({
         gamesPlayed: gamesPlayed,
         realm: realm,
@@ -77,11 +78,11 @@ function ReviewPage({ user }) {
 
     const invalidWarning = (
         <InvalidWarning>
-            <p>Before you submit, fill in the following: </p>
+            <p>Required fields:</p>
             <ul>
-                {!validName ? <li> - Hero Name</li> : null}
-                {!validRealm ? <li> - Realm</li> : null}
-                {!validInvestment ? <li> - Investment</li> : null}
+                {!validName ? <li>Hero Name</li> : null}
+                {!validRealm ? <li>Realm</li> : null}
+                {!validInvestment ? <li>Investment</li> : null}
             </ul>
         </InvalidWarning>
     );

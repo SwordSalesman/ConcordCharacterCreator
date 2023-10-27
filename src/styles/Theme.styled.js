@@ -48,7 +48,7 @@ export const dark = {
     specialDull: "#725f50",
     light: "#edf3fa",
     dark: "#273645",
-    error: "#e72f2f",
+    error: "#d95151",
 
     wikiButton: "#7560cb",
 
