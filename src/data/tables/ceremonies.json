@@ -133,6 +133,12 @@
     },
     {
         "sphere": "Arcadian",
+        "name": "Bless the Warhost",
+        "type": "-",
+        "Magnitude": 2
+    },
+    {
+        "sphere": "Arcadian",
         "name": "Strength of the Bull",
         "type": "Enchantment",
         "Magnitude": 3
@@ -145,12 +151,6 @@
     },
     {
         "sphere": "Arcadian",
-        "name": "Bless the Warhost",
-        "type": "-",
-        "Magnitude": 5
-    },
-    {
-        "sphere": "Arcadian",
         "name": "Bedecked in Final Glory",
         "type": "Enchantment",
         "Magnitude": 6
@@ -160,12 +160,6 @@
         "name": "Raise the Wounded Warrior",
         "type": "-",
         "Magnitude": 6
-    },
-    {
-        "sphere": "Arcadian",
-        "name": "Chamber of the Restful Warrior",
-        "type": "Enchantment",
-        "Magnitude": 8
     },
     {
         "sphere": "Arcadian",
@@ -193,6 +187,12 @@
     },
     {
         "sphere": "Arcadian",
+        "name": "Chamber of the Restful Warrior",
+        "type": "Enchantment",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Arcadian",
         "name": "Chorus of the Righteous",
         "type": "Enchantment",
         "Magnitude": 10
@@ -217,13 +217,19 @@
     },
     {
         "sphere": "Arcadian",
+        "name": "Style of the Bronze Colossus",
+        "type": "Enchantment",
+        "Magnitude": 14
+    },
+    {
+        "sphere": "Arcadian",
         "name": "Tree Falls Weight",
         "type": "Enchantment",
         "Magnitude": 15
     },
     {
         "sphere": "Arcadian",
-        "name": "Style of the Bronze Colossus",
+        "name": "Warrior's Mantle",
         "type": "Enchantment",
         "Magnitude": 20
     },
@@ -235,9 +241,9 @@
     },
     {
         "sphere": "Arcadian",
-        "name": "Warriors Mantle",
+        "name": "Ward of Ironclad Vigor",
         "type": "Enchantment",
-        "Magnitude": 30
+        "Magnitude": 25
     },
     {
         "sphere": "Arcadian",
@@ -253,7 +259,7 @@
     },
     {
         "sphere": "Cervitas",
-        "name": "Comrades Missive",
+        "name": "Comrade's Missive",
         "type": "-",
         "Magnitude": 2
     },
@@ -271,7 +277,13 @@
     },
     {
         "sphere": "Cervitas",
-        "name": "Duties Sacrifice",
+        "name": "Duty's Sacrifice",
+        "type": "-",
+        "Magnitude": 4
+    },
+    {
+        "sphere": "Cervitas",
+        "name": "Words as Deeds",
         "type": "-",
         "Magnitude": 4
     },
@@ -301,27 +313,21 @@
     },
     {
         "sphere": "Cervitas",
-        "name": "Chamber of delights",
-        "type": "Enchantment",
-        "Magnitude": 8
-    },
-    {
-        "sphere": "Cervitas",
-        "name": "Shunned by the spheres",
+        "name": "Shunned by the Spheres",
         "type": "Curse",
         "Magnitude": 8
     },
     {
         "sphere": "Cervitas",
-        "name": "Smiths Inspiration",
+        "name": "Smith's Inspiration",
         "type": "Enchantment",
         "Magnitude": 8
     },
     {
         "sphere": "Cervitas",
-        "name": "Words as Deeds",
-        "type": "-",
-        "Magnitude": 8
+        "name": "Chamber of Delights",
+        "type": "Enchantment",
+        "Magnitude": 10
     },
     {
         "sphere": "Cervitas",
@@ -331,7 +337,7 @@
     },
     {
         "sphere": "Cervitas",
-        "name": "Order of the Iron Sargent",
+        "name": "Blessing of the Iron Sargent",
         "type": "Enchantment",
         "Magnitude": 13
     },
@@ -343,25 +349,19 @@
     },
     {
         "sphere": "Cervitas",
-        "name": "Pilgramage to Distant Brethren",
-        "type": "Enchantment",
-        "Magnitude": 15
-    },
-    {
-        "sphere": "Cervitas",
         "name": "Strike the Holy Oath",
         "type": "-",
         "Magnitude": 20
     },
     {
         "sphere": "Cervitas",
-        "name": "Betrayers Fleshcurse",
+        "name": "Betrayer's Fleshcurse",
         "type": "Curse",
         "Magnitude": 35
     },
     {
         "sphere": "Cervitas",
-        "name": "The Weight of your Words.",
+        "name": "Weight of your Words",
         "type": "Enchantment",
         "Magnitude": 35
     },
@@ -369,11 +369,11 @@
         "sphere": "Cervitas",
         "name": "Bound by Common Cause",
         "type": "Enchantment",
-        "Magnitude": 60
+        "Magnitude": 50
     },
     {
         "sphere": "Cervitas",
-        "name": "Defenders Blessed Cohort",
+        "name": "Defender's Blessed Cohort",
         "type": "Enchantment",
         "Magnitude": 60
     },
@@ -391,7 +391,7 @@
     },
     {
         "sphere": "Lumos",
-        "name": "Believers Missive",
+        "name": "Believer's Missive",
         "type": "-",
         "Magnitude": 2
     },
@@ -403,15 +403,15 @@
     },
     {
         "sphere": "Lumos",
-        "name": "Hearthfire Circle",
+        "name": "Binding of Hope",
         "type": "-",
-        "Magnitude": 4
+        "Magnitude": 2
     },
     {
         "sphere": "Lumos",
-        "name": "Binding of Hope",
+        "name": "Hearthfire Circle",
         "type": "-",
-        "Magnitude": 5
+        "Magnitude": 4
     },
     {
         "sphere": "Lumos",
@@ -424,12 +424,6 @@
         "name": "Enlightened Ceremony",
         "type": "Enchantment",
         "Magnitude": 6
-    },
-    {
-        "sphere": "Lumos",
-        "name": "Like a Moth to a Flame",
-        "type": "Curse",
-        "Magnitude": 10
     },
     {
         "sphere": "Lumos",
@@ -457,6 +451,12 @@
     },
     {
         "sphere": "Lumos",
+        "name": "Like a Moth to a Flame",
+        "type": "Curse",
+        "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
         "name": "Grace in Forgiveness",
         "type": "-",
         "Magnitude": 10
@@ -469,21 +469,27 @@
     },
     {
         "sphere": "Lumos",
-        "name": "Strength of Belief",
-        "type": "Enchantment",
-        "Magnitude": 10
-    },
-    {
-        "sphere": "Lumos",
         "name": "Flame of Healing",
         "type": "Enchantment",
         "Magnitude": 10
     },
     {
         "sphere": "Lumos",
+        "name": "Strength of Belief",
+        "type": "Enchantment",
+        "Magnitude": 12
+    },
+    {
+        "sphere": "Lumos",
         "name": "Inquisitors Seeking Eye",
         "type": "Enchantment",
         "Magnitude": 10
+    },
+    {
+        "sphere": "Lumos",
+        "name": "Blessing of Unmade Belief",
+        "type": "Enchantment",
+        "Magnitude": 20
     },
     {
         "sphere": "Lumos",
@@ -504,140 +510,134 @@
         "Magnitude": 50
     },
     {
-        "sphere": "Lumos",
-        "name": "Blessing of Unmade Belief",
-        "type": "Enchantment",
-        "Magnitude": 50
-    },
-    {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Knowledgeable Missive",
         "type": "-",
         "Magnitude": 2
     },
     {
-        "sphere": "Stalia",
-        "name": "Secrets of skillful artifice",
+        "sphere": "Stallia",
+        "name": "Secrets of Skillful Artifice",
         "type": "Enchantment",
         "Magnitude": 4
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Knowledge of its own Accord",
         "type": "-",
         "Magnitude": 6
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Signs and Portents",
         "type": "-",
         "Magnitude": 6
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
+        "name": "Shield of the Stars",
+        "type": "Enchantment",
+        "Magnitude": 6
+    },
+    {
+        "sphere": "Stallia",
         "name": "Being of Like Mind",
         "type": "Enchantment",
         "Magnitude": 8
     },
     {
-        "sphere": "Stalia",
-        "name": "Shield of the Stars",
-        "type": "Enchantment",
-        "Magnitude": 8
-    },
-    {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Departure of the Blessed Falcon",
         "type": 10,
         "Magnitude": 10
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Blindfold of the Uninitiated",
         "type": "Curse",
         "Magnitude": 10
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Crystalline Memory",
         "type": "-",
         "Magnitude": 10
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Tactician Verses Tactician",
         "type": "Enchantment",
-        "Magnitude": 10
+        "Magnitude": 12
     },
     {
-        "sphere": "Stalia",
-        "name": "True Glimpsing",
-        "type": "-",
-        "Magnitude": 20
-    },
-    {
-        "sphere": "Stalia",
-        "name": "Dream in the Witch House",
+        "sphere": "Stallia",
+        "name": "Dream in the Witch's House",
         "type": "-",
         "Magnitude": 12
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Crown of Stars",
         "type": "Enchantment",
         "Magnitude": 14
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Anathemic Call of the Locust",
         "type": "Curse",
-        "Magnitude": 16
+        "Magnitude": 14
     },
     {
-        "sphere": "Stalia",
-        "name": "There is no Welcome Here",
+        "sphere": "Stallia",
+        "name": "There is No Welcome Here",
         "type": "Enchantment",
         "Magnitude": 16
     },
     {
-        "sphere": "Stalia",
-        "name": "Window to the spheres",
+        "sphere": "Stallia",
+        "name": "True Glimpsing",
+        "type": "-",
+        "Magnitude": 16
+    },
+    {
+        "sphere": "Stallia",
+        "name": "Window to the Spheres",
         "type": "Enchantment",
         "Magnitude": 22
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Curse of Hunter's Pursuit",
         "type": "Curse",
-        "Magnitude": 30
+        "Magnitude": 20
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Reach into the Abyss",
         "type": "-",
         "Magnitude": 30
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Stardust's Egg",
         "type": "-",
         "Magnitude": 50
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "Power of Tainted Knowledge",
         "type": "Enchantment",
         "Magnitude": 50
     },
     {
-        "sphere": "Stalia",
+        "sphere": "Stallia",
         "name": "A Moment to Speak",
         "type": "Enchantment",
         "Magnitude": 50
     },
     {
         "sphere": "Panoply",
-        "name": "Investors Missive",
+        "name": "Investor's Missive",
         "type": "-",
         "Magnitude": 2
     },
@@ -661,12 +661,6 @@
     },
     {
         "sphere": "Panoply",
-        "name": "Like for Like",
-        "type": "-",
-        "Magnitude": 4
-    },
-    {
-        "sphere": "Panoply",
         "name": "Verdant Bounty of the Twilight Bayou",
         "type": "Enchantment",
         "Magnitude": 4
@@ -675,13 +669,13 @@
         "sphere": "Panoply",
         "name": "Words of Regret",
         "type": "-",
-        "Magnitude": 4
+        "Magnitude": 2
     },
     {
         "sphere": "Panoply",
         "name": "Benevolence of the Drunken Benefactor",
         "type": "Curse",
-        "Magnitude": 8
+        "Magnitude": 6
     },
     {
         "sphere": "Panoply",
@@ -697,7 +691,7 @@
     },
     {
         "sphere": "Panoply",
-        "name": "Sunsets Transmutation",
+        "name": "Sunset's Transmutation",
         "type": "-",
         "Magnitude": 6
     },
@@ -709,13 +703,13 @@
     },
     {
         "sphere": "Panoply",
-        "name": "Audit of Possessors Past",
+        "name": "Audit of Possessor's Past",
         "type": "-",
         "Magnitude": 8
     },
     {
         "sphere": "Panoply",
-        "name": "Magnates Blessing",
+        "name": "Magnate's Blessing",
         "type": "Enchantment",
         "Magnitude": 13
     },
@@ -733,7 +727,7 @@
     },
     {
         "sphere": "Panoply",
-        "name": "Gluttons Curse",
+        "name": "Glutton's Curse",
         "type": "Curse",
         "Magnitude": 20
     },
@@ -745,19 +739,19 @@
     },
     {
         "sphere": "Panoply",
-        "name": "Craftsmans Failure",
+        "name": "Craftsman's Failure",
         "type": "-",
-        "Magnitude": 35
+        "Magnitude": 20
     },
     {
         "sphere": "Panoply",
         "name": "Consequences of Indolence",
         "type": "Curse",
-        "Magnitude": 40
+        "Magnitude": 25
     },
     {
         "sphere": "Panoply",
-        "name": "Fools Gold Fortress",
+        "name": "Fool's Gold Fortress",
         "type": "Enchantment",
         "Magnitude": 60
     },

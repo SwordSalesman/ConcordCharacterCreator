@@ -1,5 +1,3 @@
-// https://blog.logrocket.com/user-authentication-firebase-react-apps/#:~:text=Integrating%20Firebase%20into%20our%20React%20app&text=const%20app%20%3D%20%E2%80%8B%E2%80%8BinitializeApp,initialize%20authentication%20and%20database%20modules.
-
 import { Modal, Tab, Tabs } from "@mui/material";
 import Button from "../Button/Button";
 import { styled, useTheme } from "styled-components";
@@ -219,7 +217,7 @@ function Login({ show, handleClose, user }) {
     );
 
     const hideForgotPasswordButton = showForgotPassword ? (
-        <div style={{ width: "100%" }}>
+        <div>
             <Button onClick={() => setShowForgotPassword(false)}>
                 <AiOutlineArrowLeft />
                 <p
@@ -241,6 +239,7 @@ function Login({ show, handleClose, user }) {
             onClose={handleClose}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
+            style={{ backdropFilter: "blur(2px)" }}
         >
             <ModalBox>
                 {user ? (
@@ -261,7 +260,6 @@ function Login({ show, handleClose, user }) {
                 ) : (
                     <>
                         {tabs}
-                        {hideForgotPasswordButton}
                         <InputForm onSubmit={handleFormSubmit}>
                             {emailForm}
                             <div style={{ width: "100%", padding: "10px" }}>
@@ -280,6 +278,7 @@ function Login({ show, handleClose, user }) {
                             </div>
                         </InputForm>
                         {googleSignInButton}
+                        {hideForgotPasswordButton}
                         {tab === 1 && !showForgotPassword && (
                             <Button onClick={() => setShowForgotPassword(true)}>
                                 <p

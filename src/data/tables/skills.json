@@ -72,11 +72,6 @@
         "prereq": "Weaponmaster"
     },
     {
-        "name": "Impaler",
-        "tree": "Combat",
-        "cost": 3
-    },
-    {
         "name": "Juggernaut (1)",
         "tree": "Combat",
         "cost": 2,
@@ -165,7 +160,7 @@
         "costExtra": 1
     },
     {
-        "name": "Divine Lore Stalia (2)",
+        "name": "Divine Lore Stallia (2)",
         "tree": "Religious",
         "cost": 2,
         "costExtra": 1

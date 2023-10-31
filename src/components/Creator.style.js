@@ -129,12 +129,5 @@ export const RealmBackgroundImage = styled.img`
             bottom: -120px;
             opacity: 0;
         }
-        to {
-            transform: scale(1);
-            left: -80px;
-            bottom: -80px;
-            opacity: ${(props) =>
-                props.theme.name === "dark" ? "0.5" : "0.15"};
-        }
     }
 `;

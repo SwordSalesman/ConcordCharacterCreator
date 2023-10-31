@@ -7,6 +7,8 @@ import Chip from "../../../components/common/Chip/Chip";
 import { styled } from "styled-components";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { BackgroundPageWrapper } from "./BackgroundPage.style";
+import { AccordionSection } from "../../common/Accordion/AccordionSection";
+import useRealmDetails from "../../../hooks/use-realm-details";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");
@@ -33,7 +35,9 @@ function BackgroundPage() {
         invDetails,
         setInvDetails,
     } = useFormContext();
+    const fullRealm = useRealmDetails(realm);
 
+    var archetypeLink = fullRealm ? fullRealm.archetypeLink : null;
     var renderedArchetype = null;
     if (realm) {
         renderedArchetype = allArchetypes
@@ -89,21 +93,14 @@ function BackgroundPage() {
                         // invalid={heroName.length < 1}
                         // invalidText="Don't forget your name"
                     />
-                    <div className='w-full'>
-                        <div className=''>Archetype</div>
-                        <div className='flex w-full flex-wrap justify-center'>
-                            {renderedArchetype}
-                        </div>
-                    </div>
-                    <div className='w-full'>
-                        <div className=''>Grace</div>
-                        <div className='flex w-full flex-wrap justify-center'>
-                            {renderedGrace}
-                        </div>
-                    </div>
+                    <AccordionSection title='Archetype' link={archetypeLink}>
+                        {renderedArchetype}
+                    </AccordionSection>
+                    <AccordionSection title='Grace' link='Graces'>
+                        {renderedGrace}
+                    </AccordionSection>
                 </BackgroundInputWrapper>
             ),
-            link: "Archetypes",
         },
         {
             label: "Alliances",

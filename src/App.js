@@ -72,6 +72,13 @@ function App() {
     };
 
     useEffect(() => {
+        console.debug(
+            `Environment: '${process.env.NODE_ENV}'
+Debug text: '${process.env.REACT_APP_DEBUG_TEXT}'`
+        );
+    }, []);
+
+    useEffect(() => {
         setShowLogin(false);
 
         const populateForm = async (email) => {
@@ -79,6 +86,8 @@ function App() {
 
             setFormFromSimplifiedData(formData);
             setDateSubmitted(formData.date);
+            console.debug(`Data retrieved:`);
+            console.debug(formData);
 
             // This shows the banner after a delay if the user is yet to submit, otherwise immediately
             if (!formData.date) {

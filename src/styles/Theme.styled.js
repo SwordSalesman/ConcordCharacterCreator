@@ -12,7 +12,7 @@ export const light = {
     borderSoft: "#eaeaea",
     shadow: "#2f303173",
     outline: "#807ee6",
-    special: "#6a44d2",
+    special: "#684ecf",
     specialBg: "#706bae",
     specialOutline: "#494686",
     specialBgRaised: "#9487e6",
@@ -22,7 +22,6 @@ export const light = {
     error: "#8d1010",
 
     wikiButton: "#dea65e",
-
     bannerSuccess:
         "linear-gradient(125deg, rgba(147, 201, 134, 1) 0%, rgba(132, 196, 219, 1) 100%);",
     bannerWarning:
@@ -51,7 +50,6 @@ export const dark = {
     error: "#d95151",
 
     wikiButton: "#7560cb",
-
     bannerSuccess:
         "linear-gradient(125deg, rgba(95, 155, 81, 1) 0%, rgba(68, 165, 201, 1) 100%);",
     bannerWarning:

@@ -1,74 +1,74 @@
 [
-  {
-    "name": "Arcane Holding",
-    "type": "Support"
-  },
-  {
-    "name": "Channel Waystone",
-    "type": "Support"
-  },
-  {
-    "name": "Deadspeaker",
-    "type": "Support"
-  },
-  {
-    "name": "Empower",
-    "type": "Support"
-  },
-  {
-    "name": "Heal",
-    "type": "Support"
-  },
-  {
-    "name": "Shield",
-    "type": "Support"
-  },
-  {
-    "name": "Mend Limb",
-    "type": "Support"
-  },
-  {
-    "name": "Purify",
-    "type": "Support"
-  },
-  {
-    "name": "Recall",
-    "type": "Support"
-  },
-  {
-    "name": "Reforge",
-    "type": "Support"
-  },
-  {
-    "name": "Damage",
-    "type": "Combat"
-  },
-  {
-    "name": "Fear",
-    "type": "Combat"
-  },
-  {
-    "name": "Fire",
-    "type": "Combat"
-  },
-  {
-    "name": "Knockback",
-    "type": "Combat"
-  },
-  {
-    "name": "Shackle",
-    "type": "Combat"
-  },
-  {
-    "name": "Silence",
-    "type": "Combat"
-  },
-  {
-    "name": "Stun",
-    "type": "Combat"
-  },
-  {
-    "name": "Venom",
-    "type": "Combat"
-  }
+    {
+        "name": "Arcane Holding",
+        "type": "Support"
+    },
+    {
+        "name": "Channel Waystone",
+        "type": "Support"
+    },
+    {
+        "name": "Deadspeaker",
+        "type": "Support"
+    },
+    {
+        "name": "Empower",
+        "type": "Support"
+    },
+    {
+        "name": "Heal",
+        "type": "Support"
+    },
+    {
+        "name": "Shield",
+        "type": "Support"
+    },
+    {
+        "name": "Mend Limb",
+        "type": "Support"
+    },
+    {
+        "name": "Purify",
+        "type": "Support"
+    },
+    {
+        "name": "Recall",
+        "type": "Support"
+    },
+    {
+        "name": "Reforge",
+        "type": "Support"
+    },
+    {
+        "name": "Damage",
+        "type": "Combat"
+    },
+    {
+        "name": "Fear",
+        "type": "Combat"
+    },
+    {
+        "name": "Fire",
+        "type": "Combat"
+    },
+    {
+        "name": "Knockback",
+        "type": "Combat"
+    },
+    {
+        "name": "Shackle",
+        "type": "Combat"
+    },
+    {
+        "name": "Silence",
+        "type": "Combat"
+    },
+    {
+        "name": "Stun",
+        "type": "Combat"
+    },
+    {
+        "name": "Venom",
+        "type": "Combat"
+    }
 ]

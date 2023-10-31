@@ -22,18 +22,16 @@ import {
 } from "firebase/firestore";
 import { getCurrentDate } from "../helpers/date-helper";
 
-const REACT_APP_FIREBASE_API_KEY = "AIzaSyAyKdRlod7Y0o1c1Yi8IUCxX5BZFYUpSmo";
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: REACT_APP_FIREBASE_API_KEY,
-    authDomain: "concordcharactercreator.firebaseapp.com",
-    projectId: "concordcharactercreator",
-    storageBucket: "concordcharactercreator.appspot.com",
-    messagingSenderId: "484164261481",
-    appId: "1:484164261481:web:aab00c456e1af74596f4f8",
-    measurementId: "G-ERSKW9DCL8",
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

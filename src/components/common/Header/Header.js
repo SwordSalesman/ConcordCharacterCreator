@@ -24,10 +24,19 @@ function Header({
     const theme = useTheme();
     const { unsaved } = useFormContext();
 
+    const isDev = process.env.NODE_ENV === "development";
+
     return (
         <>
             <HeaderWrapper>
-                <div style={{ display: "flex", flex: 1, gap: "4px" }}>
+                <div
+                    style={{
+                        display: "flex",
+                        flex: 1,
+                        gap: "4px",
+                        alignItems: "center",
+                    }}
+                >
                     <HeaderSmallButton
                         onClick={() => {
                             toggleTheme();
@@ -35,6 +44,7 @@ function Header({
                     >
                         <BiAdjust />
                     </HeaderSmallButton>
+                    {isDev ? <p style={{ fontSize: "0.7em" }}>[dev]</p> : null}
                 </div>
 
                 <HeaderSigilWrapper>
@@ -94,6 +104,7 @@ function Header({
                                 alignContent: "center",
                                 lineHeight: "1.3rem",
                                 gap: "8px",
+                                alignItems: "center",
                             }}
                         >
                             {!user && (

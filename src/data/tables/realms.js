@@ -12,6 +12,7 @@ export const realms = [
         link: "Andash",
         image: AndashLogo,
         desc: "Descendants of a lost empire, the Andashi tribesfolk have started to reclaim the relics of their past. Flush with newfound wealth and knowledge, they struggle to reclaim the artifacts that will reveal the secrets of their past.",
+        archetypeLink: "Andashi_Archetypes",
     },
     {
         name: "Kingdom of Bordevar",
@@ -20,6 +21,7 @@ export const realms = [
         link: "Kingdom_of_Bordevar",
         image: BordevarLogo,
         desc: "The Kingless Kingdom has been led astray by its long dead ruler. Now the noble knights of Bordevar must turn to those they turned away. Powerful warriors of good and justice looking for hope and peace.",
+        archetypeLink: "Bordevarian_Archetypes",
     },
     {
         name: "Greenweald Baronies",
@@ -29,6 +31,7 @@ export const realms = [
         link: "Greenweald_Baronies",
         image: GreenwealdLogo,
         desc: "Secreted away in a vast cursed forest, the Greenweald Baronies battle arcane horrors, cultists and the land themselves for their small pockets of civilisation. Religiously dedicated and superstitious, the pragmatic Wealders will do what it takes to survive.",
+        archetypeLink: "Greenweald_Baronies_Archetypes",
     },
     {
         name: "Iron Valley",
@@ -37,6 +40,7 @@ export const realms = [
         link: "The_Iron_Valley",
         image: IronValleyLogo,
         desc: "Mountainfolk who have lived in their valley for more than a thousand years, the Valley folk are a communal society that values decisiveness, heroism and their legends. Pride as tall as the mountains, might as strong as their fortresses.",
+        archetypeLink: "Iron_Valley_Archetypes",
     },
     {
         name: "Lerona Mere",
@@ -45,5 +49,6 @@ export const realms = [
         link: "Lerona_Mere",
         image: LeronaMereLogo,
         desc: "The City of Legends was once a despotic trading capital, now the downtrodden have overthrown their masters and revolution has come home to roost. Dynamic and ambitious, the free people of Lerona Mere take life with both hands and a wolfish grin.",
+        archetypeLink: "Lerona_Mere_Archetypes",
     },
 ];
