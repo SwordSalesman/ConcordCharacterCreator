@@ -24,7 +24,7 @@ function Header({
     const theme = useTheme();
     const { unsaved } = useFormContext();
 
-    const isDev = process.env.NODE_ENV === "development";
+    const isDev = process.env.REACT_APP_DEBUG_TEXT === "DevMode";
 
     return (
         <>
