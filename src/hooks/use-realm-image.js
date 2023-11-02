@@ -1,4 +1,3 @@
-import { useTheme } from "styled-components";
 import useRealmDetails from "./use-realm-details";
 
 export default function useRealmImage(name) {

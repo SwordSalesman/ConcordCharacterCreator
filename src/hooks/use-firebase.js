@@ -8,7 +8,6 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
     signOut,
-    sendEmailVerification,
 } from "firebase/auth";
 import {
     getFirestore,
@@ -56,7 +55,6 @@ const signInWithGoogle = async () => {
         }
     } catch (err) {
         console.error(err);
-        // alert(err.message);
     }
 };
 
@@ -81,11 +79,15 @@ const registerWithEmailAndPassword = async (name, email, password) => {
             name,
             authProvider: "email",
             email,
+            role: 4,
         });
-        await sendEmailVerification(user);
+        return;
     } catch (err) {
-        console.error(err);
-        // alert(err.message);
+        if (err.code === "auth/email-already-in-use") {
+            throw new Error("Email already in used");
+        } else {
+            throw new Error(err.message);
+        }
     }
 };
 
@@ -94,7 +96,6 @@ const sendPasswordReset = async (email) => {
         await sendPasswordResetEmail(auth, email);
     } catch (err) {
         console.error(err);
-        // alert(err.message);
     }
 };
 
@@ -120,16 +121,6 @@ const getUserForm = async (email) => {
     } else {
         return null;
     }
-    // const charRef = collection(db, "characters");
-    // const q = query(charRef, where("userId", "==", auth.currentUser.uid));
-    // const querySnapshot = await getDocs(q);
-    // if (querySnapshot.length !== 1) {
-    //   return null;
-    // } else {
-    //   querySnapshot.forEach((doc) => {
-    //     return doc.data();
-    //   });
-    // }
 };
 
 const getUserName = async () => {

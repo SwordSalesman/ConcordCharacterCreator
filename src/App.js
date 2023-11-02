@@ -72,10 +72,8 @@ function App() {
     };
 
     useEffect(() => {
-        console.debug(
-            `Environment: '${process.env.NODE_ENV}'
-Debug text: '${process.env.REACT_APP_DEBUG_TEXT}'`
-        );
+        console.debug(`Environment: '${process.env.NODE_ENV}'`);
+        console.debug(`Debug text: '${process.env.REACT_APP_DEBUG_TEXT}'`);
     }, []);
 
     useEffect(() => {
@@ -84,18 +82,18 @@ Debug text: '${process.env.REACT_APP_DEBUG_TEXT}'`
         const populateForm = async (email) => {
             const formData = await getUserForm(email);
 
-            setFormFromSimplifiedData(formData);
-            setDateSubmitted(formData.date);
-            console.debug(`Data retrieved:`);
-            console.debug(formData);
+            if (formData) {
+                setFormFromSimplifiedData(formData);
+                setDateSubmitted(formData.date);
+                console.debug(`Data retrieved:`);
+                console.debug(formData);
 
-            // This shows the banner after a delay if the user is yet to submit, otherwise immediately
-            if (!formData.date) {
+                setShowBanner(true);
+            } else {
+                console.debug(`No form submission found for user`);
                 setTimeout(() => {
                     setShowBanner(true);
                 }, 45000);
-            } else {
-                setShowBanner(true);
             }
         };
 

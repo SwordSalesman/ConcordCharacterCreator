@@ -43,7 +43,7 @@ export const BannerWrapper = styled.div`
     }
     @media (max-width: ${mediaSize.small}px) {
         animation-name: createBannerMobile;
-        margin: 10px 0;
+        margin-top: 10px;
     }
 
     @keyframes createBannerDesktop {
@@ -74,7 +74,7 @@ export const BannerWrapper = styled.div`
             transform: scale(1);
             opacity: 1;
             ${(props) => (props.expanded ? "70px" : "26px")};
-            margin: 10px 0;
+            margin-top: 10px;
         }
     }
 `;

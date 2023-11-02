@@ -66,7 +66,7 @@ function Login({ show, handleClose, user }) {
                     {
                         success: () => {
                             setLoading(false);
-                            return "Signed in as " + user.email;
+                            return `Welcome, ${name}!`;
                         },
                         loading: "Signing up...",
                         error: (err) => {
@@ -108,10 +108,8 @@ function Login({ show, handleClose, user }) {
     };
 
     const handleLogout = () => {
-        // if (window.confirm("Are you sure you want to sign out?")) {
         setLoading(true);
         logout().then(toast.success("Logged out"));
-        // }
     };
 
     const googleSignInButton = allowGoogleSignIn ? (

@@ -20,7 +20,6 @@ export const StyledTextField = styled(TextareaAutosize)`
     transition: 0.2s;
 
     line-height: 1.2rem;
-    letter-spacing: -0.2px;
 
     border: ${(props) =>
         props.invalid ? `2px solid ${props.theme.error}` : "default"};

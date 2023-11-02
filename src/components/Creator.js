@@ -20,7 +20,6 @@ function Creator({ tabs, activeTab, setActiveTab, handleSubmit }) {
     const { realm, validateForm, resetForm } = useFormContext();
     const realmImage = useRealmImage(realm);
     const [direction, setDirection] = useState("right");
-    const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
     const [showConfirmReset, setShowConfirmReset] = useState(false);
 
     const { valid } = validateForm();
@@ -31,13 +30,6 @@ function Creator({ tabs, activeTab, setActiveTab, handleSubmit }) {
         activeIndex >= 0 && activeIndex < tabs.length - 1
             ? tabs[activeIndex + 1]
             : null;
-
-    const handleSubmitClose = (response) => {
-        setShowConfirmSubmit(false);
-        if (!!response) {
-            handleSubmit();
-        }
-    };
 
     const handleResetClose = (response) => {
         setShowConfirmReset(false);

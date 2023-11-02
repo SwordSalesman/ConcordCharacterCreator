@@ -117,6 +117,7 @@ function FormContextProvider({ children }) {
     };
 
     const setFormFromSimplifiedData = (data) => {
+        if (!data) return;
         setRealm(data.realm);
         setGamesPlayed(data.gamesPlayed);
         setSkills(getFullSkillsFromSummary(data.skills));

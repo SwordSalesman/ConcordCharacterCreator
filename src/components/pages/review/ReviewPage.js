@@ -12,8 +12,6 @@ import {
     StyledBorder,
 } from "./ReviewPage.style";
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
-import ConfirmModal from "../../common/Modal/ConfirmModal";
-import { useState } from "react";
 const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {

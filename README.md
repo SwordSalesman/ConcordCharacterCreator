@@ -34,4 +34,9 @@ The Firestore API is public by nature of it being used by the front end. The dat
 
 ## Notes
 
--   Old homepage setting: https://SwordSalesman.github.io/ConcordCharacterCreator
+User Authorisation levels:
+
+1. Super Admin (Can view and edit everything)
+2. Admin (Can view everything, can edit select things)
+3. Team (Can view everything, can only edit their own entries)
+4. Player (Can only view and edit only their own entries)

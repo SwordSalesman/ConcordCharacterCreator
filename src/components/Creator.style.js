@@ -32,7 +32,7 @@ export const CreatorWrapper = styled.div`
         height: 100%;
         width: 100%;
         border: none;
-        margin-top: 0px;
+        margin-top: 10px;
     }
 `;
 
