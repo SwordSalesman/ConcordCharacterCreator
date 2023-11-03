@@ -103,12 +103,14 @@ function Creator({ tabs, activeTab, setActiveTab, handleSubmit }) {
                 }
                 disabled={!nextTab && !valid}
             >
-                <div style={{ width: "100px" }}>
-                    {nextTab ? nextTab.name : "Submit"}
+                <div style={{ width: nextTab ? "100px" : "116px" }}>
+                    {nextTab ? nextTab.name : "Save & Submit"}
                 </div>
-                <div>
-                    <AiOutlineRight />
-                </div>
+                {nextTab ? (
+                    <div>
+                        <AiOutlineRight />
+                    </div>
+                ) : null}
             </Button>
         </>
     );
