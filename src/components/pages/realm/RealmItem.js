@@ -1,6 +1,9 @@
+import { useTheme } from "styled-components";
 import { StyledRealmItem } from "./RealmItem.style";
 
 function RealmItem({ realm, onSelect, selectedRealm }) {
+    const theme = useTheme();
+
     const handleClick = () => {
         onSelect(realm);
     };
@@ -12,6 +15,7 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
             onClick={handleClick}
             active={active}
             selection={selectedRealm}
+            themeName={theme.name}
         >
             <img
                 className='cursor-pointer'

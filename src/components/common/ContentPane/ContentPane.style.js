@@ -49,7 +49,6 @@ export const PaneBackgroundImage = styled.img`
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 
-    filter: blur(0px);
     opacity: 0.1;
     z-index: 0;
 

@@ -237,7 +237,6 @@ function Login({ show, handleClose, user }) {
             onClose={handleClose}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
-            style={{ backdropFilter: "blur(2px)" }}
         >
             <ModalBox>
                 {user ? (

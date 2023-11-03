@@ -10,7 +10,6 @@ function ConfirmModal({ show, handleClose, title, message, options }) {
             onClose={() => handleClose(false)}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
-            style={{ backdropFilter: "blur(2px)" }}
         >
             <ModalBox>
                 <ModalText>

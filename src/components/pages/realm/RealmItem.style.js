@@ -25,7 +25,7 @@ export const StyledRealmItem = styled.button`
 
     img {
         ${(props) =>
-            props.theme.name === "dark"
+            props.themeName === "dark"
                 ? "filter: brightness(10)"
                 : "filter: brightness(0.2)"};
     }
