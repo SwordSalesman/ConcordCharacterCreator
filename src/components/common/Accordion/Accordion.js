@@ -28,7 +28,7 @@ function Accordion({ items }) {
         const expanded = expandedIndexes[index];
 
         const icon = (
-            <div className='flex'>
+            <div style={{ display: "flex" }}>
                 <AccordionArrow expanded={expanded}>
                     <BiChevronUp size={25} />
                 </AccordionArrow>

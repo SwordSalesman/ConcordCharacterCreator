@@ -11,18 +11,14 @@ import ConcordSigilInv from "../../../data/images/concord-logo-inv.png";
 import { useTheme } from "styled-components";
 import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 import useFormContext from "../../../hooks/use-form-context";
+import useUserContext from "../../../hooks/use-user-context";
 
 const headerSaveButton = false;
 
-function Header({
-    toggleTheme,
-    handleShowLogin,
-    handleSave,
-    handleLogoClick,
-    user,
-}) {
+function Header({ toggleTheme, handleShowLogin, handleSave, handleLogoClick }) {
     const theme = useTheme();
     const { unsaved } = useFormContext();
+    const { user } = useUserContext();
 
     const isDev = process.env.REACT_APP_DEBUG_TEXT === "DevMode";
 

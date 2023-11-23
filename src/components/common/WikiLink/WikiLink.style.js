@@ -1,16 +1,6 @@
 import { styled } from "styled-components";
 import { mediaSize } from "../../../styles/Global";
 
-/*
-  const classes = classNames(
-  "text-white opacity-50 bg-slate-500 hover:bg-slate-400",
-  "rounded-lg w-[25px] h-[25px] text-xl",
-  "cursor-help transition-all",
-  "flex justify-center items-center",
-  rest.className
-);
-*/
-
 export const StyledWikiLink = styled.div`
     border-radius: 10px;
     width: 25px;

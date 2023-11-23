@@ -17,11 +17,7 @@ function RealmItem({ realm, onSelect, selectedRealm }) {
             selection={selectedRealm}
             themeName={theme.name}
         >
-            <img
-                className='cursor-pointer'
-                alt={realm.name}
-                src={realm.image}
-            ></img>
+            <img alt={realm.name} src={realm.image}></img>
         </StyledRealmItem>
     );
 }

@@ -99,8 +99,7 @@ const sendPasswordReset = async (email) => {
     }
 };
 
-const saveUserForm = async (form, setSubmissionDate) => {
-    const name = await getUserName();
+const saveUserForm = async (form, setSubmissionDate, name) => {
     const date = getCurrentDate();
     let fullForm = {
         player: name,
@@ -123,11 +122,16 @@ const getUserForm = async (email) => {
     }
 };
 
-const getUserName = async () => {
+const getUserDetails = async () => {
     const docRef = doc(db, "users", auth.currentUser.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-        return docSnap.data().name;
+        const details = {
+            name: docSnap.data().name,
+            role: docSnap.data().role,
+            uid: docSnap.data().uid,
+        };
+        return details;
     } else {
         return null;
     }
@@ -146,6 +150,6 @@ export {
     sendPasswordReset,
     saveUserForm,
     getUserForm,
-    getUserName,
+    getUserDetails,
     logout,
 };

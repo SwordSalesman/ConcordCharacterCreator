@@ -3,8 +3,7 @@ import { GlobalStyle, ScreenWrapper, StyledApp } from "./styles/Global";
 import { useEffect, useState } from "react";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { light, dark } from "./styles/Theme.styled";
-import { auth, getUserForm, saveUserForm } from "./hooks/use-firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { getUserForm, saveUserForm } from "./hooks/use-firebase";
 
 import RealmPage from "./components/pages/realm/RealmPage";
 import SkillsPage from "./components/pages/skills/SkillsPage";
@@ -19,6 +18,7 @@ import useFormContext from "./hooks/use-form-context";
 import { Banner } from "./components/common/Banner/Banner";
 import isPropValid from "@emotion/is-prop-valid";
 import ConfirmModal from "./components/common/Modal/ConfirmModal";
+import useUserContext from "./hooks/use-user-context";
 
 const tabs = [
     { name: "Intro", content: <IntroPage /> },
@@ -38,7 +38,7 @@ function App() {
     const [dateSubmitted, setDateSubmitted] = useState(null);
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
-    const [user] = useAuthState(auth);
+    const { user, name } = useUserContext();
     const { getSimpleForm, setFormFromSimplifiedData, resetForm } =
         useFormContext();
 
@@ -56,7 +56,7 @@ function App() {
     const handleCloseLogin = () => setShowLogin(false);
 
     const handleSave = async () => {
-        toast.promise(saveUserForm(getSimpleForm(), setDateSubmitted), {
+        toast.promise(saveUserForm(getSimpleForm(), setDateSubmitted, name), {
             loading: "Submitting",
             success: "Character submitted!",
             error: "Submission failed, check network connection",
@@ -122,7 +122,6 @@ function App() {
                         handleShowLogin={handleShowLogin}
                         handleSave={handleSave}
                         handleLogoClick={() => setActiveTab(tabs[0])}
-                        user={user}
                     />
                     <ScreenWrapper>
                         <Banner
@@ -136,11 +135,7 @@ function App() {
                             setActiveTab={setActiveTab}
                         />
                     </ScreenWrapper>
-                    <Login
-                        show={showLogin}
-                        handleClose={handleCloseLogin}
-                        user={user}
-                    />
+                    <Login show={showLogin} handleClose={handleCloseLogin} />
                     <ConfirmModal
                         title='Save & Submit Character?'
                         message='You can submit multiple times.'

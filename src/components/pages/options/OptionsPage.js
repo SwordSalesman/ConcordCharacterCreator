@@ -407,7 +407,13 @@ function OptionsPage() {
                             )}
                         </>
                     ) : (
-                        <div className='opacity-60 italic px-10'>
+                        <div
+                            style={{
+                                opacity: 0.7,
+                                fontStyle: "italic",
+                                padding: "0 20px",
+                            }}
+                        >
                             {
                                 "Select your Investment, as well as any other options you may need."
                             }

@@ -14,10 +14,11 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-hot-toast";
 import { ModalBox } from "../Modal/Modal.style";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import useUserContext from "../../../hooks/use-user-context";
 
 const allowGoogleSignIn = false;
 
-function Login({ show, handleClose, user }) {
+function Login({ show, handleClose }) {
     const theme = useTheme();
     const [tab, setTab] = useState(0);
     const [name, setName] = useState("");
@@ -25,6 +26,7 @@ function Login({ show, handleClose, user }) {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
+    const { user, name: username } = useUserContext();
 
     const [validInputs, setValidInputs] = useState({
         validEmail: true,
@@ -94,7 +96,7 @@ function Login({ show, handleClose, user }) {
                     toast.promise(logInWithEmailAndPassword(email, password), {
                         success: () => {
                             setLoading(false);
-                            return "Signed in as " + email;
+                            return `Signed in as ${username} (${email})`;
                         },
                         loading: "Signing in...",
                         error: (err) => {
@@ -242,9 +244,14 @@ function Login({ show, handleClose, user }) {
             <ModalBox>
                 {user ? (
                     <div>
-                        <div style={{ margin: "2px 0 10px 0" }}>
-                            <p>Signed in as</p>
-                            <b>{user.email}</b>
+                        <div
+                            style={{
+                                margin: "2px 0 10px 0",
+                                lineHeight: "1.4em",
+                            }}
+                        >
+                            <p>{`Signed in as ${username}`}</p>
+                            <p>{user.email}</p>
                         </div>
                         <Button
                             wide
