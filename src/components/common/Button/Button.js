@@ -1,4 +1,5 @@
 import { LoaderSpinner, StyledButton } from "./Button.style";
+import React from "react";
 
 function Button({
     onClick,
@@ -8,6 +9,7 @@ function Button({
     disabled,
     wide,
     round,
+    small,
     loading,
     children,
     ...rest
@@ -20,6 +22,7 @@ function Button({
             outline={outline}
             wide={wide}
             round={round}
+            small={small}
             disabled={disabled || loading}
             {...rest}
         >

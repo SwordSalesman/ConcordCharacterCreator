@@ -11,7 +11,7 @@ export const TextInputTitle = styled.div``;
 export const StyledTextField = styled(TextareaAutosize)`
     background-color: ${(props) => props.theme.backgroundRaised};
     resize: none;
-    width: 95%;
+    width: 100%;
     padding: 5px 5px;
     color: ${(props) => props.theme.text};
 
@@ -23,12 +23,14 @@ export const StyledTextField = styled(TextareaAutosize)`
 
     border: ${(props) =>
         props.invalid ? `2px solid ${props.theme.error}` : "default"};
+
+    opacity: ${(props) => (props.disabled ? "0.7" : "1")};
 `;
 
 export const StyledInputField = styled.input`
     background-color: ${(props) => props.theme.backgroundRaised};
     resize: none;
-    width: 95%;
+    width: 100%;
     color: ${(props) => props.theme.text};
 
     padding: 5px 5px;

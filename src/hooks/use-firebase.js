@@ -38,6 +38,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// FIREBASE AUTH **************************************************************
+
 const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async () => {
     try {
@@ -99,6 +101,12 @@ const sendPasswordReset = async (email) => {
     }
 };
 
+const logout = async () => {
+    await signOut(auth).then();
+};
+
+// FIRESTORE PUTTING **************************************************************
+
 const saveUserForm = async (form, setSubmissionDate, name) => {
     const date = getCurrentDate();
     let fullForm = {
@@ -111,6 +119,20 @@ const saveUserForm = async (form, setSubmissionDate, name) => {
     setSubmissionDate(date);
     return fullForm;
 };
+
+const saveApproval = async (name, comment, status, subjectUid) => {
+    const date = getCurrentDate();
+    let approval = {
+        author: name,
+        date: date,
+        comment: comment,
+        status: status,
+    };
+    await setDoc(doc(db, "approvals", subjectUid), approval);
+    return approval;
+};
+
+// FIRESTORE GETTING **************************************************************
 
 const getUserForm = async (email) => {
     const docRef = doc(db, "characters", auth.currentUser.uid);
@@ -137,8 +159,54 @@ const getUserDetails = async () => {
     }
 };
 
-const logout = async () => {
-    await signOut(auth).then();
+const getUserApproval = async () => {
+    const docRef = doc(db, "approvals", auth.currentUser.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+};
+
+const getApproval = async (uid) => {
+    const docRef = doc(db, "approvals", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+};
+
+const getCharacterList = async () => {
+    const charactersRef = collection(db, "characters");
+    const q = query(charactersRef);
+    try {
+        const querySnap = await getDocs(q);
+        let list = [];
+        querySnap.forEach((doc) => {
+            list.push({ id: doc.id, ...doc.data() });
+        });
+        return list;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const getApprovalList = async () => {
+    const approvalsRef = collection(db, "approvals");
+    const q = query(approvalsRef);
+    try {
+        const querySnap = await getDocs(q);
+        let list = [];
+        querySnap.forEach((doc) => {
+            list.push({ id: doc.id, ...doc.data() });
+        });
+        return list;
+    } catch (err) {
+        console.error(err);
+    }
 };
 
 export {
@@ -151,5 +219,10 @@ export {
     saveUserForm,
     getUserForm,
     getUserDetails,
+    getCharacterList,
+    saveApproval,
+    getApproval,
+    getUserApproval,
+    getApprovalList,
     logout,
 };

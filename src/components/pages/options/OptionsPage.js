@@ -10,6 +10,7 @@ import {
 import { SkillPageWrapper } from "../skills/SkillsPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
+import React from "react";
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");
 var spellsData = require("../../../data/tables/spells.json");

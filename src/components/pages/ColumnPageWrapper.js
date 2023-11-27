@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { mediaSize } from "../../styles/Global";
+import React from "react";
 
 export function ColumnPageComponent({ direction, children }) {
     return (

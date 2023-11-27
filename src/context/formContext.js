@@ -3,6 +3,7 @@ import {
     getFullSkillsFromSummary,
     getSummarisedSkillNames,
 } from "../hooks/use-skill-helper";
+import React from "react";
 
 const FormContext = createContext();
 

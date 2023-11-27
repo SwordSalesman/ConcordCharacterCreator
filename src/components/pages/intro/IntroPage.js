@@ -4,6 +4,7 @@ import Button from "../../common/Button/Button";
 import { GameTally, TitleWrapper } from "./Intro.style";
 import { FlexCenter } from "../../../styles/Global";
 import { BiMinus, BiPlus } from "react-icons/bi";
+import React from "react";
 
 function IntroPage() {
     const { gamesPlayed, setGamesPlayed } = useFormContext();

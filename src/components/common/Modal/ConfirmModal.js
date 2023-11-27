@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Modal } from "@mui/material";
+import React from "react";
 import { ModalBox, ModalRow, ModalText } from "./Modal.style";
 import Button from "../Button/Button";
 

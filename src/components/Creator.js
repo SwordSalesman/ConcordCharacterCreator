@@ -11,16 +11,48 @@ import useFormContext from "../hooks/use-form-context";
 import { ColumnPage } from "./pages/ColumnPageWrapper";
 import useRealmImage from "../hooks/use-realm-image";
 import Button from "./common/Button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmModal from "./common/Modal/ConfirmModal";
+import useUserContext from "../hooks/use-user-context";
+import { Banner } from "./common/Banner/Banner";
+import { getUserForm, saveUserForm } from "../hooks/use-firebase";
+import toast from "react-hot-toast";
+import React from "react";
+import IntroPage from "./pages/intro/IntroPage";
+import RealmPage from "./pages/realm/RealmPage";
+import SkillsPage from "./pages/skills/SkillsPage";
+import OptionsPage from "./pages/options/OptionsPage";
+import BackgroundPage from "./pages/background/BackgroundPage";
+import ReviewPage from "./pages/review/ReviewPage";
 
 const useTabs = false;
+const tabs = [
+    { name: "Intro", content: <IntroPage /> },
+    { name: "Realm", content: <RealmPage /> },
+    { name: "Skills", content: <SkillsPage /> },
+    { name: "Options", content: <OptionsPage /> },
+    { name: "Background", content: <BackgroundPage /> },
+    { name: "Review", content: <ReviewPage /> },
+];
 
-function Creator({ tabs, activeTab, setActiveTab, handleSubmit }) {
-    const { realm, validateForm, resetForm } = useFormContext();
+function Creator({ handleShowLogin }) {
+    const { user, name } = useUserContext();
+    const {
+        getSimpleForm,
+        setFormFromSimplifiedData,
+        resetForm,
+        realm,
+        validateForm,
+    } = useFormContext();
     const realmImage = useRealmImage(realm);
+
+    const [showBanner, setShowBanner] = useState(false);
+    const [dateSubmitted, setDateSubmitted] = useState(null);
+    const [activeTab, setActiveTab] = useState(tabs[0]);
     const [direction, setDirection] = useState("right");
+
     const [showConfirmReset, setShowConfirmReset] = useState(false);
+    const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
 
     const { valid } = validateForm();
 
@@ -30,6 +62,54 @@ function Creator({ tabs, activeTab, setActiveTab, handleSubmit }) {
         activeIndex >= 0 && activeIndex < tabs.length - 1
             ? tabs[activeIndex + 1]
             : null;
+
+    useEffect(() => {
+        const populateForm = async (email) => {
+            const formData = await getUserForm(email);
+
+            if (formData) {
+                setFormFromSimplifiedData(formData);
+                setDateSubmitted(formData.date);
+                console.debug(`Data retrieved:`);
+                console.debug(formData);
+
+                setShowBanner(true);
+            } else {
+                console.debug(`No form submission found for user`);
+                setTimeout(() => {
+                    setShowBanner(true);
+                }, 45000);
+            }
+        };
+
+        if (user) {
+            populateForm(user.email);
+        } else {
+            setShowBanner(false);
+            setDateSubmitted(null);
+            resetForm();
+            setTimeout(() => {
+                setShowBanner(true);
+            }, 45000);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
+
+    const handleSave = async () => {
+        toast.promise(saveUserForm(getSimpleForm(), setDateSubmitted, name), {
+            loading: "Submitting",
+            success: "Character submitted!",
+            error: "Submission failed, check network connection",
+        });
+    };
+
+    const handleSubmit = async () => {
+        if (!user) {
+            handleShowLogin();
+        } else {
+            setShowConfirmSubmit(true);
+        }
+    };
 
     const handleResetClose = (response) => {
         setShowConfirmReset(false);
@@ -117,6 +197,8 @@ function Creator({ tabs, activeTab, setActiveTab, handleSubmit }) {
 
     return (
         <>
+            <Banner show={showBanner} dateSubmitted={dateSubmitted} />
+
             <CreatorWrapper outline={!useTabs}>
                 <TabsWrapper>{renderedTabs}</TabsWrapper>
                 {/* // <PageHeader>{activeTab.name}</PageHeader> */}
@@ -130,6 +212,16 @@ function Creator({ tabs, activeTab, setActiveTab, handleSubmit }) {
                 message="Your changes won't be saved until you submit."
                 show={showConfirmReset}
                 handleClose={handleResetClose}
+            ></ConfirmModal>
+
+            <ConfirmModal
+                title='Save & Submit Character?'
+                message='You can submit multiple times.'
+                show={showConfirmSubmit}
+                handleClose={(response) => {
+                    setShowConfirmSubmit(false);
+                    if (!!response) handleSave();
+                }}
             ></ConfirmModal>
         </>
     );

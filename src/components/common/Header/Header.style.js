@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Button from "../Button/Button";
 
 export const HeaderWrapper = styled.div`
     /* height: 36px; */
@@ -20,9 +19,19 @@ export const HeaderWrapper = styled.div`
     z-index: 100;
 `;
 
-export const HeaderSmallButton = styled(Button)``;
+export const HeaderButtonContent = styled.div`
+    display: flex;
+    align-content: center;
+    align-items: center;
+    /* line-height: 1.3rem; */
+    gap: 6px;
 
-export const HeaderSigilWrapper = styled.div`
+    p {
+        font-size: 0.9rem;
+    }
+`;
+
+export const HeaderSigilWrapper = styled.a`
     height: 42px;
     width: 42px;
     display: flex;

@@ -5,6 +5,7 @@ import {
     TextInputTitle,
     TextInputWrapper,
 } from "./TextInput.style";
+import React from "react";
 
 function TextInput({
     value,

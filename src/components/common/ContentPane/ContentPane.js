@@ -1,4 +1,5 @@
 import { ContentPaneContent, ContentPaneWrapper } from "./ContentPane.style";
+import React from "react";
 
 function ContentPane({ children, ...rest }) {
     return (

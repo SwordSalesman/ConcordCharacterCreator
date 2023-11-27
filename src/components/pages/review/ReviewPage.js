@@ -12,6 +12,7 @@ import {
     StyledBorder,
 } from "./ReviewPage.style";
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
+import React from "react";
 const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {

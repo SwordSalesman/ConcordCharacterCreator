@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import WikiLink from "../WikiLink/WikiLink";
+import React from "react";
 
 export function AccordionSection({ title, link, children }) {
     return (

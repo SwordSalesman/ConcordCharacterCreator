@@ -9,7 +9,7 @@ export const StyledButton = styled.button`
     width: ${(props) => (props.wide ? "100%" : "fit-content")};
     min-width: 36px;
 
-    padding: 8px 8px;
+    padding: ${(props) => (props.small ? "2px 4px" : "8px")};
     transition: 0.2s;
     display: flex;
     align-items: center;

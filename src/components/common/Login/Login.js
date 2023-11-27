@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import { styled, useTheme } from "styled-components";
 import { useEffect, useState } from "react";
 import TextInput from "../TextInput/TextInput";
+import React from "react";
 import {
     logInWithEmailAndPassword,
     logout,
@@ -26,7 +27,7 @@ function Login({ show, handleClose }) {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
-    const { user, name: username } = useUserContext();
+    const { user, name: username, isAdmin } = useUserContext();
 
     const [validInputs, setValidInputs] = useState({
         validEmail: true,
@@ -250,6 +251,7 @@ function Login({ show, handleClose }) {
                                 lineHeight: "1.4em",
                             }}
                         >
+                            {isAdmin ? <b>Admin User</b> : null}
                             <p>{`Signed in as ${username}`}</p>
                             <p>{user.email}</p>
                         </div>

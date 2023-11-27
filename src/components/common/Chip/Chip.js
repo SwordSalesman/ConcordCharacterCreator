@@ -1,4 +1,5 @@
 import { StyledChip } from "./Chip.styled";
+import React from "react";
 
 function Chip({
     children,
