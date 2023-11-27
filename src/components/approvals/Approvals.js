@@ -84,6 +84,7 @@ function Approvals() {
                                 (dateOrder ? 1 : -1)
                         )}
                     handleSelect={setSelectedChar}
+                    activeCharacter={selectedChar}
                 />
             </ApprovalListWrapper>
             <ApprovalSelectWrapper>

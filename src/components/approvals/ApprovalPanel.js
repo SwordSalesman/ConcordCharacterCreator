@@ -151,8 +151,8 @@ const VerticalFade = styled.div`
     z-index: 3;
     background: linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0) 0%,
-        ${(props) => props.theme.background} 100%
+        rgba(255, 0, 0, 0) 0%,
+        ${(props) => props.theme.background} 90%
     );
 `;
 

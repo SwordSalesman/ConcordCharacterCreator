@@ -15,11 +15,7 @@ import { useEffect, useState } from "react";
 import ConfirmModal from "./common/Modal/ConfirmModal";
 import useUserContext from "../hooks/use-user-context";
 import { Banner } from "./common/Banner/Banner";
-import {
-    getUserForm,
-    getUserFormAndApproval,
-    saveUserForm,
-} from "../hooks/use-firebase";
+import { getUserFormAndApproval, saveUserForm } from "../hooks/use-firebase";
 import toast from "react-hot-toast";
 import React from "react";
 import IntroPage from "./pages/intro/IntroPage";
@@ -39,7 +35,7 @@ const tabs = [
     { name: "Review", content: <ReviewPage /> },
 ];
 
-function Creator({ handleShowLogin }) {
+function Creator({ handleShowLogin, handleCloseLogin }) {
     const { user, name } = useUserContext();
     const {
         getSimpleForm,
@@ -88,6 +84,7 @@ function Creator({ handleShowLogin }) {
             }
         };
 
+        handleCloseLogin();
         if (user) {
             populateForm();
         } else {

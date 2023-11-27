@@ -7,7 +7,8 @@ export const CharacterListWrapper = styled.ul`
 export const ListItem = styled.li`
     padding: 8px;
     border-bottom: 1px solid ${(props) => props.theme.border};
-    background-color: ${(props) => props.theme.background};
+    background-color: ${(props) =>
+        props.active ? props.theme.background300 : props.theme.background};
     cursor: pointer;
 
     line-height: 1em;
@@ -43,7 +44,11 @@ export const TitleGradient = styled.div`
     background: linear-gradient(
         90deg,
         rgba(0, 0, 0, 0) 0%,
-        ${(props) => props.theme.background} 30%
+        ${(props) =>
+                props.active
+                    ? props.theme.background300
+                    : props.theme.background}
+            30%
     );
 `;
 

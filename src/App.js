@@ -53,6 +53,7 @@ function App() {
                                     element={
                                         <Creator
                                             handleShowLogin={handleShowLogin}
+                                            handleCloseLogin={handleCloseLogin}
                                         />
                                     }
                                 />

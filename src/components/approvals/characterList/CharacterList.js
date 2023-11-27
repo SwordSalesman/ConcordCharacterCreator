@@ -8,14 +8,21 @@ import {
     TitleGradient,
 } from "./CharacterList.style";
 
-function CharacterList({ characters, handleSelect }) {
+function CharacterList({ characters, handleSelect, activeCharacter }) {
     const renderedList =
         characters.length > 0
             ? characters.map((c, i) => {
+                  const active =
+                      activeCharacter?.heroName === c.heroName &&
+                      activeCharacter?.email === c.email;
                   return (
-                      <ListItem key={i} onClick={() => handleSelect(c)}>
+                      <ListItem
+                          key={i}
+                          onClick={() => handleSelect(c)}
+                          active={active}
+                      >
                           <ListItemTitle>
-                              <TitleGradient />
+                              <TitleGradient active={active} />
                               <b>{c.heroName}</b>
                           </ListItemTitle>
                           <ListItemRow>

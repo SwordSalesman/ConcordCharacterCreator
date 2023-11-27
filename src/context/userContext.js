@@ -21,6 +21,10 @@ function UserContextProvider({ children }) {
     useEffect(() => {
         if (user) {
             resolveName();
+        } else {
+            setName("");
+            setRole(5);
+            setIsAdmin(false);
         }
     }, [user]);
 

@@ -55,7 +55,7 @@ const CharacterCardWrapper = styled.div`
     font-size: 0.9em;
     padding: 10px;
     overflow-y: scroll;
-    padding-bottom: 20px;
+    padding-bottom: 34px;
     &::-webkit-scrollbar {
         display: none;
     }

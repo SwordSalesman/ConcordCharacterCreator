@@ -9,12 +9,7 @@ import {
 import ConcordSigil from "../../../data/images/concord-logo.png";
 import ConcordSigilInv from "../../../data/images/concord-logo-inv.png";
 import { useTheme } from "styled-components";
-import {
-    FaAddressCard,
-    FaStamp,
-    FaUserCheck,
-    FaUserPlus,
-} from "react-icons/fa";
+import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 import useUserContext from "../../../hooks/use-user-context";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
