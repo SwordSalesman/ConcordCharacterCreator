@@ -18,21 +18,21 @@ function ListFilter({ dateOrder, toggleDateOrder, filter, selectFilter }) {
                     secondary={true}
                     onClick={() => selectFilter(PENDING)}
                 >
-                    ‼️
+                    👀
                 </Button>
                 <Button
                     primary={filter === APPROVED}
                     secondary={true}
                     onClick={() => selectFilter(APPROVED)}
                 >
-                    ✓
+                    👍
                 </Button>
                 <Button
                     primary={filter === DENIED}
                     secondary={true}
                     onClick={() => selectFilter(DENIED)}
                 >
-                    X
+                    👎
                 </Button>
             </StatusFilter>
         </ListFilterWrapper>
@@ -72,4 +72,5 @@ const StatusFilter = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 0.9em;
 `;
