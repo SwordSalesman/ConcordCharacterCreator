@@ -134,11 +134,25 @@ const saveApproval = async (name, comment, status, subjectUid) => {
 
 // FIRESTORE GETTING **************************************************************
 
-const getUserForm = async (email) => {
+const getUserForm = async () => {
     const docRef = doc(db, "characters", auth.currentUser.uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
         return docSnap.data();
+    } else {
+        return null;
+    }
+};
+
+const getUserFormAndApproval = async () => {
+    const formRef = doc(db, "characters", auth.currentUser.uid);
+    const apprRef = doc(db, "approvals", auth.currentUser.uid);
+    const formSnap = await getDoc(formRef);
+    const apprSnap = await getDoc(apprRef);
+    if (formSnap.exists() && apprSnap.exists()) {
+        const form = formSnap.data();
+        const appr = apprSnap.data();
+        return { ...form, approval: appr };
     } else {
         return null;
     }
@@ -218,6 +232,7 @@ export {
     sendPasswordReset,
     saveUserForm,
     getUserForm,
+    getUserFormAndApproval,
     getUserDetails,
     getCharacterList,
     saveApproval,

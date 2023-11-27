@@ -15,7 +15,11 @@ import { useEffect, useState } from "react";
 import ConfirmModal from "./common/Modal/ConfirmModal";
 import useUserContext from "../hooks/use-user-context";
 import { Banner } from "./common/Banner/Banner";
-import { getUserForm, saveUserForm } from "../hooks/use-firebase";
+import {
+    getUserForm,
+    getUserFormAndApproval,
+    saveUserForm,
+} from "../hooks/use-firebase";
 import toast from "react-hot-toast";
 import React from "react";
 import IntroPage from "./pages/intro/IntroPage";
@@ -48,6 +52,7 @@ function Creator({ handleShowLogin }) {
 
     const [showBanner, setShowBanner] = useState(false);
     const [dateSubmitted, setDateSubmitted] = useState(null);
+    const [approval, setApproval] = useState(null);
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [direction, setDirection] = useState("right");
 
@@ -64,12 +69,13 @@ function Creator({ handleShowLogin }) {
             : null;
 
     useEffect(() => {
-        const populateForm = async (email) => {
-            const formData = await getUserForm(email);
+        const populateForm = async () => {
+            const formData = await getUserFormAndApproval();
 
             if (formData) {
                 setFormFromSimplifiedData(formData);
                 setDateSubmitted(formData.date);
+                setApproval(formData.approval);
                 console.debug(`Data retrieved:`);
                 console.debug(formData);
 
@@ -83,7 +89,7 @@ function Creator({ handleShowLogin }) {
         };
 
         if (user) {
-            populateForm(user.email);
+            populateForm();
         } else {
             setShowBanner(false);
             setDateSubmitted(null);
@@ -197,7 +203,11 @@ function Creator({ handleShowLogin }) {
 
     return (
         <>
-            <Banner show={showBanner} dateSubmitted={dateSubmitted} />
+            <Banner
+                show={showBanner}
+                dateSubmitted={dateSubmitted}
+                approval={approval}
+            />
 
             <CreatorWrapper outline={!useTabs}>
                 <TabsWrapper>{renderedTabs}</TabsWrapper>

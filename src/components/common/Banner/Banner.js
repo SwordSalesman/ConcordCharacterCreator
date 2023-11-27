@@ -44,7 +44,7 @@ function getState(prev, dateSubmitted) {
     }
 }
 
-export function Banner({ show, dateSubmitted }) {
+export function Banner({ show, dateSubmitted, approval }) {
     const [expanded, setExpanded] = useState(true);
     const [submitState, setSubmitState] = useState(0);
 
@@ -106,7 +106,10 @@ export function Banner({ show, dateSubmitted }) {
                     <BiChevronUp size={30} />
                 </BannerArrow>
                 <BannerContent>
-                    <FullText expanded={expanded}>{messages.full}</FullText>
+                    <FullText expanded={expanded}>
+                        {messages.full}
+                        <p>{approval ? approval.status : null}</p>
+                    </FullText>
                     <SummaryText expanded={expanded}>
                         {messages.summary}
                     </SummaryText>
