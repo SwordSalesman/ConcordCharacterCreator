@@ -108,7 +108,7 @@ export function Banner({ show, dateSubmitted, approval }) {
                 <BannerContent>
                     <FullText expanded={expanded}>
                         {messages.full}
-                        <p>{approval ? approval.status : null}</p>
+                        {/* <p>{approval ? approval.status : null}</p> */}
                     </FullText>
                     <SummaryText expanded={expanded}>
                         {messages.summary}
