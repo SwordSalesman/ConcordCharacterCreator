@@ -65,6 +65,7 @@ const CharacterCardWrapper = styled.div`
 
 const CharTitle = styled.h1`
     font-size: 1.5em;
+    line-height: 1.2em;
     font-style: bold;
     font-family: Georgia, "Times New Roman", Times, serif;
 `;

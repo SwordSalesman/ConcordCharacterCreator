@@ -36,14 +36,14 @@ export const ListItemTitle = styled.div`
 
 export const TitleGradient = styled.div`
     height: 100%;
-    width: 80px;
+    width: 90px;
     position: absolute;
     right: 0;
     z-index: 2;
     background: linear-gradient(
         90deg,
         rgba(0, 0, 0, 0) 0%,
-        ${(props) => props.theme.background} 50%
+        ${(props) => props.theme.background} 30%
     );
 `;
 

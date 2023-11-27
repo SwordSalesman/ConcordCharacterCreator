@@ -29,9 +29,9 @@ function CharacterList({ characters, handleSelect }) {
                   );
               })
             : null;
-              // <p style={{ textAlign: "center", paddingTop: "20px" }}>
-              //     Loading submissions...
-              // </p>
+    // <p style={{ textAlign: "center", paddingTop: "20px" }}>
+    //     Loading submissions...
+    // </p>
 
     return <CharacterListWrapper>{renderedList}</CharacterListWrapper>;
 }

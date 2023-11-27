@@ -75,9 +75,9 @@ function ApprovalPanel({ character, handleApproval }) {
         {
             name: APPROVED,
             icon: <p>👍</p>,
-            color: "rgb(37, 124, 59)",
+            color: "rgb(69, 132, 85)",
         },
-        { name: DENIED, icon: <p>👎</p>, color: "rgb(129, 29, 29)" },
+        { name: DENIED, icon: <p>👎</p>, color: "rgb(148, 46, 46)" },
     ].map((s) => {
         return (
             <StatusOption

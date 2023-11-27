@@ -50,7 +50,7 @@ const ListFilterWrapper = styled.div`
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 3;
+    z-index: 6;
     background-color: ${(props) => props.theme.backgroundRaised};
 `;
 

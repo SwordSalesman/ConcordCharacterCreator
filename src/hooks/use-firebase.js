@@ -149,10 +149,13 @@ const getUserFormAndApproval = async () => {
     const apprRef = doc(db, "approvals", auth.currentUser.uid);
     const formSnap = await getDoc(formRef);
     const apprSnap = await getDoc(apprRef);
-    if (formSnap.exists() && apprSnap.exists()) {
+    if (formSnap.exists()) {
         const form = formSnap.data();
-        const appr = apprSnap.data();
-        return { ...form, approval: appr };
+        if (apprSnap.exists()) {
+            const appr = apprSnap.data();
+            return { ...form, approval: appr };
+        }
+        return { ...form, approval: null };
     } else {
         return null;
     }
