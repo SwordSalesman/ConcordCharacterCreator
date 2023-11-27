@@ -78,8 +78,10 @@ function Approvals() {
                             }
                             return c.approval?.status === filter;
                         })
-                        .sort((a, b) =>
-                            a.date.localeCompare(b.date) * dateOrder ? 1 : -1
+                        .sort(
+                            (a, b) =>
+                                a.date.localeCompare(b.date) *
+                                (dateOrder ? 1 : -1)
                         )}
                     handleSelect={setSelectedChar}
                 />
