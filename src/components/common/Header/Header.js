@@ -1,7 +1,6 @@
 import { BiAdjust, BiSolidBadgeCheck } from "react-icons/bi";
 import Button from "../Button/Button";
 import {
-    ColouredBadge,
     HeaderButtonContent,
     HeaderConcordSigil,
     HeaderSigilWrapper,

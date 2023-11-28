@@ -14,10 +14,12 @@ function CharacterCard({ character }) {
                 <FaIdBadge />
                 Identifiers
             </CharSectionTitle>
-            <p>Realm: {character.realm}</p>
+            <li>Realm: {character.realm}</li>
             {character.archetype ? (
-                <p>Archetype: {character.archetype}</p>
+                <li>Archetype: {character.archetype}</li>
             ) : null}
+            {character.warband ? <li>Warband: {character.warband}</li> : null}
+            {character.sect ? <li>Sect: {character.sect}</li> : null}
             {character.grace ? <p>Grace: {character.grace}</p> : null}
             <CharSectionTitle>
                 <ImQuill />
