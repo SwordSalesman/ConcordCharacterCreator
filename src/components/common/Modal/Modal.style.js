@@ -5,7 +5,10 @@ export const ModalBox = styled.div`
     top: 50%;
     left: 50%;
     transform: scale(1) translate(-50%, -50%);
-    width: 350px;
+
+    min-width: 350px;
+    width: ${(props) => (props.wide ? "fit-content" : "350px")};
+
     background-color: ${(props) => props.theme.background};
     border: 1px solid ${(props) => props.theme.border};
     border-radius: 6px;
@@ -22,7 +25,7 @@ export const ModalBox = styled.div`
     -webkit-box-shadow: 0px 1px 30px 8px ${(props) => props.theme.shadow};
     -moz-box-shadow: 0px 1px 30px 8px ${(props) => props.theme.shadow};
 
-    animation-duration: 0.2s;
+    animation-duration: 0.25s;
     animation-timing-function: ease-in-out;
     animation-name: modalFadeIn;
 

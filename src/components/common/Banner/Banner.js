@@ -8,39 +8,24 @@ import {
     SummaryText,
 } from "./Banner.style";
 import { BiChevronUp } from "react-icons/bi";
-import gameData from "../../../data/tables/games.json";
-import { getCurrentDate } from "../../../helpers/date-helper";
+import { getPrevAndNextGame, prettifyDate } from "../../../helpers/date-helper";
+import { APPROVED, DENIED } from "../../../helpers/constants";
 
-function prettifyDate(date) {
-    if (!date) return "";
-    const y = date.slice(0, 4);
-    const m = date.slice(5, 7);
-    const d = date.slice(8, 10);
-    return `${d}/${m}/${y}`;
-}
-
-function getPrevAndNextGame() {
-    const today = getCurrentDate();
-    let games = null;
-    gameData.forEach((game, index) => {
-        if (game.date > today && !games) {
-            games = {
-                prev: gameData.at(index - 1),
-                next: game,
-            };
-        }
-    });
-    return games;
-}
-
-function getState(prev, dateSubmitted) {
+function getApprovalState(prev, dateSubmitted, approval) {
     if (!dateSubmitted) {
-        return 0;
+        return 0; // Not Submitted
     }
-    if (dateSubmitted < prev.date) {
-        return 1;
-    } else {
-        return 2;
+    if (!approval?.date || !approval?.status || approval.date < dateSubmitted) {
+        return 1; // Awaiting Review
+    }
+    if (approval.status === DENIED) {
+        return 2; // Changes Requested
+    }
+    if (dateSubmitted < prev.date && approval.status === APPROVED) {
+        return 3; // Old but Approved
+    }
+    if (dateSubmitted > prev.date && approval.status === APPROVED) {
+        return 4; // Approved
     }
 }
 
@@ -70,24 +55,40 @@ export function Banner({ show, dateSubmitted, approval }) {
             };
         } else if (submitState === 1) {
             return {
-                full: `Your last submission was on ${prettifyDate(
+                full: `Your submission on ${prettifyDate(
                     dateSubmitted
-                )}. Don't forget to submit your character for ${next.name}`,
-                summary: "Not Submitted",
+                )} is waiting to be reviewed by the team.`,
+                summary: "Awaiting Review",
             };
         } else if (submitState === 2) {
             return {
                 full: `Your submission on ${prettifyDate(
                     dateSubmitted
-                )} is ready for ${next.name}`,
+                )} has had changes requested.`,
+                summary: "Changes Requested",
+            };
+        } else if (submitState === 3) {
+            return {
+                full: `Your submission on ${prettifyDate(
+                    dateSubmitted
+                )} was approved for a previous game, and is ready for ${
+                    next.name
+                }`,
+                summary: "Submitted",
+            };
+        } else if (submitState === 4) {
+            return {
+                full: `Your submission on ${prettifyDate(
+                    dateSubmitted
+                )} is approved ready for ${next.name}`,
                 summary: "Submitted",
             };
         }
     }
 
     useEffect(() => {
-        setSubmitState(getState(prev, dateSubmitted));
-    }, [prev, dateSubmitted]);
+        setSubmitState(getApprovalState(prev, dateSubmitted, approval));
+    }, [prev, dateSubmitted, approval]);
 
     const messages = getStateMessages(submitState);
 
@@ -95,12 +96,21 @@ export function Banner({ show, dateSubmitted, approval }) {
         return <></>;
     }
 
+    return <></>;
+
+    const type =
+        submitState === 3 || submitState === 4
+            ? "success"
+            : submitState === 2 || submitState === 0
+            ? "error"
+            : "warning";
+
     return (
         <BannerSpacer>
             <BannerWrapper
                 expanded={expanded}
                 onClick={handleClick}
-                type={submitState === 2 ? "success" : "warning"}
+                type={type}
             >
                 <BannerArrow expanded={expanded}>
                     <BiChevronUp size={30} />

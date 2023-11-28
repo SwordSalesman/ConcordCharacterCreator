@@ -4,11 +4,16 @@ import {
     getSummarisedSkillNames,
 } from "../hooks/use-skill-helper";
 import React from "react";
+import { getUserFormAndApproval } from "../hooks/use-firebase";
+import useUserContext from "../hooks/use-user-context";
 
 const FormContext = createContext();
 
 function FormContextProvider({ children }) {
+    const { user } = useUserContext();
     // State maintained
+    const [approval, setApproval] = useState(null);
+    const [date, setDate] = useState(null);
     const [realm, setRealm] = useState(null);
     const [gamesPlayed, setGamesPlayed] = useState(0);
     const [skills, setSkills] = useState([]);
@@ -40,6 +45,7 @@ function FormContextProvider({ children }) {
     // Get entire state
     const getForm = () => {
         return {
+            date: date,
             realm: realm,
             gamesPlayed: gamesPlayed,
             skills: skills,
@@ -67,6 +73,7 @@ function FormContextProvider({ children }) {
     // Get entire state
     const getSimpleForm = () => {
         return {
+            date: date,
             realm: realm,
             gamesPlayed: gamesPlayed,
             skills: getSummarisedSkillNames(skills),
@@ -93,7 +100,8 @@ function FormContextProvider({ children }) {
 
     const unsaved = false;
 
-    const setForm = (data) => {
+    const setFormFromFullData = (data) => {
+        setDate(data.date);
         setRealm(data.realm);
         setGamesPlayed(data.gamesPlayed);
         setSkills(data.skills);
@@ -119,6 +127,7 @@ function FormContextProvider({ children }) {
 
     const setFormFromSimplifiedData = (data) => {
         if (!data) return;
+        setDate(data.date);
         setRealm(data.realm);
         setGamesPlayed(data.gamesPlayed);
         setSkills(getFullSkillsFromSummary(data.skills));
@@ -143,6 +152,7 @@ function FormContextProvider({ children }) {
     };
 
     const resetForm = () => {
+        setApproval(null);
         setRealm(null);
         setGamesPlayed(0);
         setSkills([]);
@@ -165,6 +175,26 @@ function FormContextProvider({ children }) {
         setBackstory(null);
         setInvDetails(null);
     };
+
+    // Load Data
+    useEffect(() => {
+        async function downloadForm() {
+            const newForm = await getUserFormAndApproval();
+            if (newForm) {
+                setFormFromSimplifiedData(newForm);
+                setApproval(newForm.approval);
+            }
+        }
+
+        if (user) {
+            downloadForm();
+        } else {
+            resetForm();
+            setApproval(null);
+            setDate(null);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
 
     // Generic functions
 
@@ -458,6 +488,8 @@ function FormContextProvider({ children }) {
 
     const formContext = {
         unsaved,
+        date,
+        setDate,
         realm,
         selectRealm,
         gamesPlayed,
@@ -505,9 +537,11 @@ function FormContextProvider({ children }) {
         setInvDetails,
         getForm,
         getSimpleForm,
-        setForm,
+        setFormFromFullData,
         setFormFromSimplifiedData,
         resetForm,
+        approval,
+        setApproval,
         validateForm,
     };
 

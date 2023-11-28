@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { useEffect, useState } from "react";
 import TextInput from "../common/TextInput/TextInput";
 import Button from "../common/Button/Button";
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { APPROVED, DENIED } from "../../helpers/constants";
 
 function ApprovalPanel({ character, handleApproval }) {
+    const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const [author, setAuthor] = useState("");
     const [date, setDate] = useState("");
@@ -74,10 +75,16 @@ function ApprovalPanel({ character, handleApproval }) {
     const statusOptions = [
         {
             name: APPROVED,
+            label: "Approve",
             icon: <p>👍</p>,
-            color: "rgb(69, 132, 85)",
+            color: theme.success,
         },
-        { name: DENIED, icon: <p>👎</p>, color: "rgb(148, 46, 46)" },
+        {
+            name: DENIED,
+            label: "Request Changes",
+            icon: <p>👎</p>,
+            color: theme.error,
+        },
     ].map((s) => {
         return (
             <StatusOption
@@ -87,7 +94,7 @@ function ApprovalPanel({ character, handleApproval }) {
                 disabled={!character || loading}
             >
                 {s.icon}
-                <p>{s.name}</p>
+                <p>{s.label}</p>
             </StatusOption>
         );
     });

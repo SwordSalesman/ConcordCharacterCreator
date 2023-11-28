@@ -1,4 +1,7 @@
-import { BiCoinStack, BiUser } from "react-icons/bi";
+import { BiSolidCastle } from "react-icons/bi";
+import { FaIdBadge } from "react-icons/fa";
+import { RiTodoFill } from "react-icons/ri";
+
 import { ImQuill } from "react-icons/im";
 import styled from "styled-components";
 
@@ -7,9 +10,8 @@ function CharacterCard({ character }) {
         <CharacterCardWrapper>
             <CharTitle>{character.heroName}</CharTitle>
             <p>Played by {character.player}</p>
-            <br />
             <CharSectionTitle>
-                <BiUser />
+                <FaIdBadge />
                 Identifiers
             </CharSectionTitle>
             <p>Realm: {character.realm}</p>
@@ -17,15 +19,13 @@ function CharacterCard({ character }) {
                 <p>Archetype: {character.archetype}</p>
             ) : null}
             {character.grace ? <p>Grace: {character.grace}</p> : null}
-            <br />
             <CharSectionTitle>
                 <ImQuill />
                 Backstory
             </CharSectionTitle>
             <p>{character.backstory ?? <i>No backstory given</i>}</p>
-            <br />
             <CharSectionTitle>
-                <BiCoinStack />
+                <BiSolidCastle />
                 Investment
             </CharSectionTitle>
             <i>
@@ -34,6 +34,11 @@ function CharacterCard({ character }) {
                 {character.invRegion}
             </i>
             <p>{character.invDetails ?? <i>No description given</i>}</p>
+            <CharSectionTitle>
+                <RiTodoFill />
+                In Character Goals
+            </CharSectionTitle>
+            <p>{character.icGoals ?? <i>No in character goals given</i>}</p>
         </CharacterCardWrapper>
     ) : (
         <BlankWrapper>
@@ -76,4 +81,5 @@ export const CharSectionTitle = styled.h2`
     align-items: center;
     gap: 6px;
     font-size: 1.1em;
+    margin-top: 1.1em;
 `;

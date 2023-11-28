@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import ConfirmModal from "./common/Modal/ConfirmModal";
 import useUserContext from "../hooks/use-user-context";
 import { Banner } from "./common/Banner/Banner";
-import { getUserFormAndApproval, saveUserForm } from "../hooks/use-firebase";
+import { saveUserForm } from "../hooks/use-firebase";
 import toast from "react-hot-toast";
 import React from "react";
 import IntroPage from "./pages/intro/IntroPage";
@@ -39,16 +39,15 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
     const { user, name } = useUserContext();
     const {
         getSimpleForm,
-        setFormFromSimplifiedData,
         resetForm,
         realm,
         validateForm,
+        date,
+        setDate,
+        approval,
     } = useFormContext();
     const realmImage = useRealmImage(realm);
-
     const [showBanner, setShowBanner] = useState(false);
-    const [dateSubmitted, setDateSubmitted] = useState(null);
-    const [approval, setApproval] = useState(null);
     const [activeTab, setActiveTab] = useState(tabs[0]);
     const [direction, setDirection] = useState("right");
 
@@ -65,41 +64,24 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
             : null;
 
     useEffect(() => {
-        const populateForm = async () => {
-            const formData = await getUserFormAndApproval();
-
-            if (formData) {
-                setFormFromSimplifiedData(formData);
-                setDateSubmitted(formData.date);
-                setApproval(formData.approval);
-                console.debug(`Data retrieved:`);
-                console.debug(formData);
-
-                setShowBanner(true);
-            } else {
-                console.debug(`No form submission found for user`);
-                setTimeout(() => {
-                    setShowBanner(true);
-                }, 45000);
-            }
-        };
-
         handleCloseLogin();
-        if (user) {
-            populateForm();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
+
+    useEffect(() => {
+        if (user && date) {
+            setShowBanner(true);
         } else {
             setShowBanner(false);
-            setDateSubmitted(null);
-            resetForm();
             setTimeout(() => {
                 setShowBanner(true);
             }, 45000);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
+    }, [user, date]);
 
     const handleSave = async () => {
-        toast.promise(saveUserForm(getSimpleForm(), setDateSubmitted, name), {
+        toast.promise(saveUserForm(getSimpleForm(), setDate, name), {
             loading: "Submitting",
             success: "Character submitted!",
             error: "Submission failed, check network connection",
@@ -202,7 +184,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
         <>
             <Banner
                 show={showBanner}
-                dateSubmitted={dateSubmitted}
+                dateSubmitted={date}
                 approval={approval}
             />
 

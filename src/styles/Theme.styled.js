@@ -19,13 +19,17 @@ export const light = {
     specialDull: "#9997c4",
     light: "#f7fbff",
     dark: "#37485a",
-    error: "#8d1010",
+    success: "#22b346",
+    warning: "#dea65e",
+    error: "#a53939",
 
     wikiButton: "#dea65e",
     bannerSuccess:
         "linear-gradient(125deg, rgba(147, 201, 134, 1) 0%, rgba(132, 196, 219, 1) 100%);",
     bannerWarning:
-        "linear-gradient(125deg, rgba(200, 134, 145, 1) 0%, rgba(232, 192, 131, 1) 100%);",
+        "linear-gradient(125deg, rgba(204, 142, 119, 1) 0%, rgba(232, 205, 131, 1) 100%);",
+    bannerError:
+        "linear-gradient(125deg, rgba(200, 134, 166, 1) 0%, rgba(232, 161, 131, 1) 100%);",
 };
 
 export const dark = {
@@ -47,11 +51,15 @@ export const dark = {
     specialDull: "#725f50",
     light: "#edf3fa",
     dark: "#273645",
+    success: "#47ba56",
+    warning: "#d69748",
     error: "#d95151",
 
     wikiButton: "#7560cb",
     bannerSuccess:
         "linear-gradient(125deg, rgba(95, 155, 81, 1) 0%, rgba(68, 165, 201, 1) 100%);",
     bannerWarning:
-        "linear-gradient(125deg, rgba(170, 91, 104, 1) 0%, rgba(207, 155, 76, 1) 100%);",
+        "linear-gradient(125deg, rgba(190, 109, 84, 1) 0%, rgba(207, 166, 76, 1) 100%);",
+    bannerError:
+        "linear-gradient(125deg, rgba(170, 94, 113, 1) 0%, rgba(206, 124, 94, 1) 100%);",
 };

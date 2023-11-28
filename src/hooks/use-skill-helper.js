@@ -55,6 +55,8 @@ export function getSummarisedSkillNames(skills) {
 //  of the skills that summary represents.
 // skill: {name, tree, cost, costExtra, prereq?, exclusion?}
 export function getFullSkillsFromSummary(summary) {
+    if (summary === "None") return [];
+
     const names = summary.split(", ");
 
     const skillsAndNames = skillData.map((s) => {

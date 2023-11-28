@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const CharacterListWrapper = styled.ul`
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 `;
 
 export const ListItem = styled.li`

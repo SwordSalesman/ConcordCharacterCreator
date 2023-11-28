@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { mediaSize } from "../../../styles/Global";
 
 export const HeaderWrapper = styled.div`
     /* height: 36px; */
@@ -24,10 +25,21 @@ export const HeaderButtonContent = styled.div`
     align-content: center;
     align-items: center;
     /* line-height: 1.3rem; */
-    gap: 6px;
+    gap: 4px;
+
+    transition-duration: 0.3s;
+    color: ${(props) => props.color};
 
     p {
         font-size: 0.9rem;
+        line-height: 1rem;
+    }
+
+    @media (max-width: ${mediaSize.small}px) {
+        p {
+            line-height: 0.9em;
+            width: min-content;
+        }
     }
 `;
 

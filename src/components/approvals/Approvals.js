@@ -16,7 +16,7 @@ import ApprovalPanel from "./ApprovalPanel";
 function Approvals() {
     const [characters, setCharacters] = useState([]);
     const [selectedChar, setSelectedChar] = useState(null);
-    const [filter, setFilter] = useState(null);
+    const [filter, setFilter] = useState(PENDING);
     const [dateOrder, setDateOrder] = useState(true);
     const { isAdmin } = useUserContext();
 
@@ -56,6 +56,20 @@ function Approvals() {
         setDateOrder(!dateOrder);
     }
 
+    const sortedFilteredCharacters = characters
+        .filter((c) => {
+            if (!filter) return true;
+            if (
+                filter === PENDING &&
+                (!c.approval?.status ||
+                    c.date.localeCompare(c.approval?.date) > 0)
+            ) {
+                return true;
+            }
+            return c.approval?.status === filter;
+        })
+        .sort((a, b) => a.date.localeCompare(b.date) * (dateOrder ? 1 : -1));
+
     return isAdmin ? (
         <ApprovalsWrapper>
             <ApprovalListWrapper>
@@ -66,23 +80,7 @@ function Approvals() {
                     toggleDateOrder={toggleDateOrder}
                 />
                 <CharacterList
-                    characters={characters
-                        .filter((c) => {
-                            if (!filter) return true;
-                            if (
-                                filter === PENDING &&
-                                (!c.approval?.status ||
-                                    c.date.localeCompare(c.approval?.date) > 0)
-                            ) {
-                                return true;
-                            }
-                            return c.approval?.status === filter;
-                        })
-                        .sort(
-                            (a, b) =>
-                                a.date.localeCompare(b.date) *
-                                (dateOrder ? 1 : -1)
-                        )}
+                    characters={sortedFilteredCharacters}
                     handleSelect={setSelectedChar}
                     activeCharacter={selectedChar}
                 />

@@ -14,9 +14,10 @@ export const BannerWrapper = styled.div`
     color: white;
     border-radius: 12px;
     position: relative;
+    font-size: 0.9em;
 
     height: ${(props) => (props.expanded ? "70px" : "26px")};
-    width: ${(props) => (props.expanded ? "95%" : "160px")};
+    width: ${(props) => (props.expanded ? "95%" : "190px")};
     max-width: 720px;
     overflow: hidden;
 
@@ -30,6 +31,11 @@ export const BannerWrapper = styled.div`
         props.type === "warning" &&
         css`
             background: ${(props) => props.theme.bannerWarning};
+        `}
+    ${(props) =>
+        props.type === "error" &&
+        css`
+            background: ${(props) => props.theme.bannerError};
         `}
 
     transition: all;
