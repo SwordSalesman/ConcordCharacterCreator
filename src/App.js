@@ -6,7 +6,7 @@ import Header from "./components/common/Header/Header";
 import { Toaster } from "react-hot-toast";
 import isPropValid from "@emotion/is-prop-valid";
 import Login from "./components/common/Login/Login";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PATH_APPROVALS, PATH_HOME } from "./helpers/constants";
 import Creator from "./components/Creator";
 import Approvals from "./components/approvals/Approvals";
@@ -66,7 +66,10 @@ function App() {
                                         element={<Approvals />}
                                     />
                                 </Route>
-                                <Route path=':any' element={<Creator />} />
+                                <Route
+                                    path=':any'
+                                    element={<Navigate to={PATH_HOME} />}
+                                />
                             </Routes>
                             <Login
                                 show={showLogin}
