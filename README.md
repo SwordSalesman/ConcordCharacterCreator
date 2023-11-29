@@ -36,7 +36,8 @@ The Firestore API is public by nature of it being used by the front end. The dat
 
 User Authorisation levels:
 
-1. Super Admin (Can view and edit everything)
-2. Admin (Can view everything, can edit select things)
-3. Team (Can view everything, can only edit their own entries)
-4. Player (Can only view and edit only their own entries)
+4. Admin (Can view everything, can edit everything)
+5. Editor (Can view everything, can edit select things)
+6. Viewer (Can view everything, can edit only their things)
+7. Player (Can view and edit only their own things)
+8. Guest (Can't do anything)

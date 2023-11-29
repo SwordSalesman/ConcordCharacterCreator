@@ -19,7 +19,7 @@ export const light = {
     specialDull: "#9997c4",
     light: "#f7fbff",
     dark: "#37485a",
-    success: "#22b346",
+    success: "#45ae3d",
     warning: "#dea65e",
     error: "#a53939",
 

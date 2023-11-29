@@ -8,6 +8,7 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
     signOut,
+    deleteUser,
 } from "firebase/auth";
 import {
     getFirestore,
@@ -73,18 +74,29 @@ const logInWithEmailAndPassword = async (email, password) => {
 };
 
 const registerWithEmailAndPassword = async (name, email, password) => {
+    let res;
     try {
-        const res = await createUserWithEmailAndPassword(auth, email, password);
+        res = await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+        if (err.code === "auth/email-already-in-use") {
+            throw new Error("Email already in use");
+        } else {
+            throw new Error(err.message);
+        }
+    }
+    try {
         const user = res.user;
         await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             name,
             authProvider: "email",
             email,
-            role: 4,
+            role: 1,
         });
         return;
     } catch (err) {
+        // Delete the auth user in the case that the doc rules were violated but the auth ones weren't
+        deleteUser(res.user);
         if (err.code === "auth/email-already-in-use") {
             throw new Error("Email already in used");
         } else {

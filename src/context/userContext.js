@@ -3,27 +3,29 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, getUserDetails } from "../hooks/use-firebase";
 import React from "react";
 
+const DEFAULT_ROLE = 0;
+
 const UserContext = createContext();
 
 function UserContextProvider({ children }) {
     const [user] = useAuthState(auth);
     const [name, setName] = useState("");
-    const [role, setRole] = useState(4);
+    const [role, setRole] = useState(DEFAULT_ROLE);
     const [isAdmin, setIsAdmin] = useState(false);
 
-    async function resolveName() {
+    async function updateUserDetails() {
         const details = await getUserDetails();
         setName(details.name);
         setRole(details.role);
-        setIsAdmin(details.role < 3);
+        setIsAdmin(details.role >= 3);
     }
 
     useEffect(() => {
         if (user) {
-            resolveName();
+            updateUserDetails();
         } else {
             setName("");
-            setRole(5);
+            setRole(DEFAULT_ROLE);
             setIsAdmin(false);
         }
     }, [user]);
