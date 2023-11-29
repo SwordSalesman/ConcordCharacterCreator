@@ -38,7 +38,7 @@ const MaintenanceScreenWrapper = styled.div`
 const MaintenanceScreenContent = styled.div`
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 30%;
     width: 90%;
     height: 90%;
     translate: -50% -50%;
@@ -74,18 +74,17 @@ const ConcordRepairSymbol = styled.div`
         right: 50%;
 
         animation: hammer-hit ease-in-out 3s infinite normal none;
-        animation-delay: 1.85s;
 
         @keyframes hammer-hit {
             0%,
             100% {
-                transform: rotate() translate(0, 0);
+                transform: rotate(0) translate(0, 0);
                 /* transform-origin: right; */
             }
 
             10%,
             90% {
-                transform: rotate() translate(0, 0);
+                transform: rotate(0) translate(0, 0);
                 /* transform-origin: right; */
             }
 
@@ -109,6 +108,7 @@ const ConcordRepairSymbol = styled.div`
         left: 50%;
 
         animation: sigil-quiver ease-in-out 3s infinite normal none;
+        animation-delay: 1.15s;
 
         @keyframes sigil-quiver {
             0%,
