@@ -4,14 +4,22 @@ import App from "./App";
 import "./index.css";
 import { FormContextProvider } from "./context/formContext.js";
 import { UserContextProvider } from "./context/userContext.js";
+import MaintenanceScreen from "./components/MaintenanceScreen.js";
 
 const el = document.getElementById("root");
 const root = ReactDOM.createRoot(el);
 
-root.render(
-    <UserContextProvider>
-        <FormContextProvider>
-            <App />
-        </FormContextProvider>
-    </UserContextProvider>
-);
+let site;
+if (process.env.REACT_APP_MAINTENANCE_MODE === "TRUE") {
+    site = <MaintenanceScreen />;
+} else {
+    site = (
+        <UserContextProvider>
+            <FormContextProvider>
+                <App />
+            </FormContextProvider>
+        </UserContextProvider>
+    );
+}
+
+root.render(site);
