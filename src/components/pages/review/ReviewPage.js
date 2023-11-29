@@ -139,7 +139,7 @@ function ReviewPage({ user }) {
                         )}
                         {(warband || sect) && <StyledBorder />}
                         {warband && (
-                            <ReviewItem label='Warband'>{warband}</ReviewItem>
+                            <ReviewItem label='Band'>{warband}</ReviewItem>
                         )}
                         {sect && <ReviewItem label='Sect'>{sect}</ReviewItem>}
                         <StyledBorder />

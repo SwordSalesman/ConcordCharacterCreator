@@ -68,13 +68,14 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
+    // Turning off banner for now
     useEffect(() => {
         if (user && date) {
-            setShowBanner(true);
+            // setShowBanner(true);
         } else {
             setShowBanner(false);
             setTimeout(() => {
-                setShowBanner(true);
+                // setShowBanner(true);
             }, 45000);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

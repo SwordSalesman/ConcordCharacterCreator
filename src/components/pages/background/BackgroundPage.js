@@ -104,14 +104,14 @@ function BackgroundPage() {
         },
         {
             label: "Alliances",
-            link: "Bands",
+            link: "Player_Groups",
             content: (
                 <BackgroundInputWrapper>
                     <TextInput
                         value={warband}
                         onChange={setWarband}
-                        title='Warband'
-                        placeholder='Name of your Warband (if any)'
+                        title='Band'
+                        placeholder='Name of your Band (if any)'
                     />
                     <TextInput
                         value={sect}

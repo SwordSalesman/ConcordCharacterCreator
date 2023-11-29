@@ -18,7 +18,7 @@ function CharacterCard({ character }) {
             {character.archetype ? (
                 <li>Archetype: {character.archetype}</li>
             ) : null}
-            {character.warband ? <li>Warband: {character.warband}</li> : null}
+            {character.warband ? <li>Band: {character.warband}</li> : null}
             {character.sect ? <li>Sect: {character.sect}</li> : null}
             {character.grace ? <p>Grace: {character.grace}</p> : null}
             <CharSectionTitle>

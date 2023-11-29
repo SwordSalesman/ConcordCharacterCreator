@@ -96,8 +96,6 @@ export function Banner({ show, dateSubmitted, approval }) {
         return <></>;
     }
 
-    return <></>;
-
     const type =
         submitState === 3 || submitState === 4
             ? "success"
