@@ -1,19 +1,34 @@
 import { BiSolidCastle } from "react-icons/bi";
 import { FaIdBadge } from "react-icons/fa";
-import { RiTodoFill } from "react-icons/ri";
+import { RiSwordFill, RiTodoFill } from "react-icons/ri";
 
 import { ImQuill } from "react-icons/im";
 import styled from "styled-components";
+import { GiScrollUnfurled, GiSpellBook } from "react-icons/gi";
+import toast from "react-hot-toast";
 
 function CharacterCard({ character }) {
+    const skills = character?.skills?.split(", ");
+
+    function copyText(text) {
+        navigator.clipboard.writeText(text);
+        toast.success(`Copied '${text}' to clipboard`);
+    }
+
     return character ? (
         <CharacterCardWrapper>
             <CharTitle>{character.heroName}</CharTitle>
-            <p>Played by {character.player}</p>
+            <NameAndEmail>
+                <p>Played by {character.player} </p>
+                <EmailLink onClick={() => copyText(character.email)}>
+                    <u>({character.email})</u>
+                </EmailLink>
+            </NameAndEmail>
             <CharSectionTitle>
                 <FaIdBadge />
                 Identifiers
             </CharSectionTitle>
+            <li>Summits Attended: {character.gamesPlayed}</li>
             <li>Realm: {character.realm}</li>
             {character.archetype ? (
                 <li>Archetype: {character.archetype}</li>
@@ -21,6 +36,42 @@ function CharacterCard({ character }) {
             {character.warband ? <li>Band: {character.warband}</li> : null}
             {character.sect ? <li>Sect: {character.sect}</li> : null}
             {character.grace ? <p>Grace: {character.grace}</p> : null}
+            <CharSectionTitle>
+                <RiSwordFill />
+                Skills
+            </CharSectionTitle>
+            {skills?.length > 0 ? (
+                skills.map((s) => {
+                    return <li>{s}</li>;
+                })
+            ) : (
+                <i>No skills</i>
+            )}
+            <CharSectionTitle>
+                <GiSpellBook />
+                Options
+            </CharSectionTitle>
+            {character.spells ||
+            character.crafts ||
+            character.potions ||
+            character.ceremonies ? (
+                <>
+                    {character.spells ? (
+                        <li>Spells: {character.spells}</li>
+                    ) : null}
+                    {character.crafts ? (
+                        <li>Crafts: {character.crafts}</li>
+                    ) : null}
+                    {character.potions ? (
+                        <li>Potions: {character.potions}</li>
+                    ) : null}
+                    {character.ceremonies ? (
+                        <li>Ceremonies: {character.ceremonies}</li>
+                    ) : null}
+                </>
+            ) : (
+                <i>No options selected</i>
+            )}
             <CharSectionTitle>
                 <ImQuill />
                 Backstory
@@ -37,10 +88,17 @@ function CharacterCard({ character }) {
             </i>
             <p>{character.invDetails ?? <i>No description given</i>}</p>
             <CharSectionTitle>
-                <RiTodoFill />
+                <GiScrollUnfurled />
                 In Character Goals
             </CharSectionTitle>
             <p>{character.icGoals ?? <i>No in character goals given</i>}</p>
+            <CharSectionTitle>
+                <RiTodoFill />
+                Out of Character Goals
+            </CharSectionTitle>
+            <p>
+                {character.oocGoals ?? <i>No out of character goals given</i>}
+            </p>
         </CharacterCardWrapper>
     ) : (
         <BlankWrapper>
@@ -82,6 +140,19 @@ export const CharSectionTitle = styled.h2`
     flex-direction: row;
     align-items: center;
     gap: 6px;
+    font-weight: 600;
     font-size: 1.1em;
     margin-top: 1.1em;
+`;
+
+export const NameAndEmail = styled.div`
+    font-size: 1.05em;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+`;
+
+export const EmailLink = styled.div`
+    cursor: pointer;
+    font-style: italic;
 `;
