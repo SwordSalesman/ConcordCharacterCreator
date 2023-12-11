@@ -3,7 +3,13 @@ import styled from "styled-components";
 import Button from "../common/Button/Button";
 import { APPROVED, DENIED, PENDING } from "../../helpers/constants";
 
-function ListFilter({ dateOrder, toggleDateOrder, filter, selectFilter }) {
+function ListFilter({
+    dateOrder,
+    toggleDateOrder,
+    filter,
+    selectFilter,
+    counts,
+}) {
     return (
         <ListFilterWrapper>
             <DateOrderer onClick={toggleDateOrder}>
@@ -18,21 +24,21 @@ function ListFilter({ dateOrder, toggleDateOrder, filter, selectFilter }) {
                     secondary={true}
                     onClick={() => selectFilter(PENDING)}
                 >
-                    👀
+                    👀 {counts.pending}
                 </Button>
                 <Button
                     primary={filter === APPROVED}
                     secondary={true}
                     onClick={() => selectFilter(APPROVED)}
                 >
-                    👍
+                    👍 {counts.approved}
                 </Button>
                 <Button
                     primary={filter === DENIED}
                     secondary={true}
                     onClick={() => selectFilter(DENIED)}
                 >
-                    👎
+                    👎 {counts.denied}
                 </Button>
             </StatusFilter>
         </ListFilterWrapper>

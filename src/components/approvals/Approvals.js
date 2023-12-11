@@ -7,7 +7,7 @@ import {
 } from "./Approvals.style";
 import useUserContext from "../../hooks/use-user-context";
 import { Navigate } from "react-router-dom";
-import { PATH_HOME, PENDING } from "../../helpers/constants";
+import { APPROVED, DENIED, PATH_HOME, PENDING } from "../../helpers/constants";
 import CharacterList from "./characterList/CharacterList";
 import ListFilter from "./ListFilter";
 import CharacterCard from "./CharacterCard";
@@ -19,6 +19,12 @@ function Approvals() {
     const [filter, setFilter] = useState(PENDING);
     const [dateOrder, setDateOrder] = useState(true);
     const { isAdmin } = useUserContext();
+    const [counts, setCounts] = useState({
+        pending: 0,
+        approved: 0,
+        denied: 0,
+        total: 0,
+    });
 
     useEffect(() => {
         async function fetchCharacters() {
@@ -31,9 +37,13 @@ function Approvals() {
                     return { ...c, approval: approval };
                 });
                 setCharacters(newChars);
+                calcCounts(newChars);
             }
         }
-        isAdmin && fetchCharacters();
+        if (isAdmin) {
+            fetchCharacters();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdmin]);
 
     function handleSelectFilter(f) {
@@ -44,12 +54,34 @@ function Approvals() {
         }
     }
 
+    function calcCounts(chars) {
+        const pendingCount = chars.filter((c) => {
+            return (
+                !c.approval?.status ||
+                c.date.localeCompare(c.approval?.date) > 0
+            );
+        }).length;
+        const approvedCount = chars.filter((c) => {
+            return c.approval?.status === APPROVED;
+        }).length;
+        const deniedCount = chars.filter((c) => {
+            return c.approval?.status === DENIED;
+        }).length;
+        setCounts({
+            pending: pendingCount,
+            approved: approvedCount,
+            denied: deniedCount,
+            total: chars.length,
+        });
+    }
+
     function handleApproval(approval) {
         const newChars = characters.map((c) => {
             if (c.id !== approval.id) return c;
             return { ...c, approval: approval };
         });
         setCharacters(newChars);
+        calcCounts(newChars);
     }
 
     function toggleDateOrder() {
@@ -78,6 +110,7 @@ function Approvals() {
                     selectFilter={handleSelectFilter}
                     dateOrder={dateOrder}
                     toggleDateOrder={toggleDateOrder}
+                    counts={counts}
                 />
                 <CharacterList
                     characters={sortedFilteredCharacters}
