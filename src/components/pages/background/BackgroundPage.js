@@ -131,14 +131,14 @@ function BackgroundPage() {
                         onChange={setIcGoals}
                         title='In Character Goals'
                         placeholder='1000 character limit'
-                        style={{ height: "4em" }}
+                        style={{ minHeight: "3em" }}
                     />
                     <TextInput
                         value={oocGoals}
                         onChange={setOocGoals}
                         title='Out of Character Goals'
                         placeholder='1000 character limit'
-                        style={{ height: "4em" }}
+                        style={{ minHeight: "3em" }}
                     />
                 </BackgroundInputWrapper>
             ),
@@ -152,14 +152,14 @@ function BackgroundPage() {
                         onChange={setBackstory}
                         title='Character Backstory'
                         placeholder='1000 character limit'
-                        style={{ height: "4em" }}
+                        style={{ minHeight: "3em" }}
                     />
                     <TextInput
                         value={invDetails}
                         onChange={setInvDetails}
                         title='Investment Description'
                         placeholder='1000 character limit'
-                        style={{ height: "4em" }}
+                        style={{ minHeight: "3em" }}
                     />
                 </BackgroundInputWrapper>
             ),
