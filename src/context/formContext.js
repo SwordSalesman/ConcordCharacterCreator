@@ -334,8 +334,9 @@ function FormContextProvider({ children }) {
         if (
             spell.name === "Channel Waystone" &&
             spells.find((s) => s.name === "Channel Waystone")
-        )
+        ) {
             return;
+        }
         toggleItem(spell, spells, setSpells);
     };
 

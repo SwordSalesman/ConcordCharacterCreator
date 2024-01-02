@@ -60,10 +60,15 @@
         "cost": 3
     },
     {
-        "name": "Deathless (1)",
+        "name": "Deathless",
         "tree": "Combat",
-        "cost": 1,
-        "costExtra": 1
+        "cost": 1
+    },
+    {
+        "name": "Unstoppable",
+        "tree": "Combat",
+        "cost": 2,
+        "prereq": "Deathless"
     },
     {
         "name": "Hand-and-a-half",

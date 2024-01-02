@@ -65,22 +65,34 @@ export function getFullSkillsFromSummary(summary) {
     });
 
     let additionalSkills = [];
+    // name = "Juggernaut (2)"
     const skills = names.map((name) => {
+        // baseName = "Juggernaut"
         const { name: baseName } = getSkillNameAndRank(name);
-        const skill = skillsAndNames.find(
+        const skillMatch = skillsAndNames.find(
             (element) => element.baseName === baseName
-        ).skill;
+        );
 
+        // This needs to be here to account for skill being removed from the pool
+        if (skillMatch === undefined) {
+            return null;
+        }
+
+        const skill = skillMatch.skill;
+
+        // currSkill = {name: "Juggernaut", ...}
         let currSkill = skill;
-        let i = 0;
-        while (currSkill.name !== name && i < 10) {
-            currSkill = getNextSkill(currSkill);
-            additionalSkills.push(currSkill);
-            i++;
+        if (currSkill.costExtra !== undefined) {
+            let i = 0;
+            while (currSkill.name !== name && i < 10) {
+                currSkill = getNextSkill(currSkill);
+                additionalSkills.push(currSkill);
+                i++;
+            }
         }
 
         return skill;
     });
 
-    return skills.concat(additionalSkills);
+    return skills.filter((s) => s !== null).concat(additionalSkills);
 }

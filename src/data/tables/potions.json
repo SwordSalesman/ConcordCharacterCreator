@@ -82,5 +82,10 @@
     {
         "name": "Warbrew",
         "type": "Potion"
+    },
+    {
+        "name": "Stormseeker",
+        "type": "Potion",
+        "realm": "Lerona Mere"
     }
 ]

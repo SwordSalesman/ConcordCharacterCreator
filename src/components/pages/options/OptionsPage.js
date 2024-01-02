@@ -26,6 +26,7 @@ const genTabContent = (
     toggleFunction,
     remainingPicks,
     subSectionTitle,
+    realm,
     filterFunction = (a) => true
 ) => {
     const sections = subSectionTitle
@@ -54,6 +55,8 @@ const genTabContent = (
                                         let selected = selectedItems
                                             ?.map((i) => i.name)
                                             .includes(item.name);
+                                        let invalidRealm =
+                                            item.realm && item.realm !== realm;
                                         return (
                                             <Chip
                                                 onClick={() =>
@@ -63,8 +66,9 @@ const genTabContent = (
                                                 }
                                                 selected={selected}
                                                 inactive={
-                                                    !selected &&
-                                                    remainingPicks <= 0
+                                                    (!selected &&
+                                                        remainingPicks <= 0) ||
+                                                    invalidRealm
                                                 }
                                                 key={item.name}
                                             >
@@ -137,6 +141,7 @@ function OptionsPage() {
         togglePotion,
         ceremonies,
         toggleCeremony,
+        realm,
     } = useFormContext();
 
     // Variables
@@ -331,7 +336,8 @@ function OptionsPage() {
                 spells,
                 toggleSpell,
                 numSpells,
-                "type"
+                "type",
+                realm
             )
         );
     showCrafts &&
@@ -343,7 +349,8 @@ function OptionsPage() {
                 crafts,
                 toggleCraft,
                 numCrafts,
-                "rarity"
+                "rarity",
+                realm
             )
         );
     showPotions &&
@@ -355,7 +362,8 @@ function OptionsPage() {
                 potions,
                 togglePotion,
                 numPotions,
-                "type"
+                "type",
+                realm
             )
         );
     if (showCeremonies) {
@@ -369,6 +377,7 @@ function OptionsPage() {
                 toggleCeremony,
                 numCeremonies,
                 "sphere",
+                realm,
                 (c) => skillTitles.includes(c.sphere)
             )
         );

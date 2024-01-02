@@ -1,6 +1,6 @@
 [
     {
-        "name": "Arcane Holding",
+        "name": "Detect Magic",
         "type": "Support"
     },
     {
@@ -20,10 +20,6 @@
         "type": "Support"
     },
     {
-        "name": "Shield",
-        "type": "Support"
-    },
-    {
         "name": "Mend Limb",
         "type": "Support"
     },
@@ -33,7 +29,7 @@
     },
     {
         "name": "Recall",
-        "type": "Support"
+        "type": "Unique"
     },
     {
         "name": "Reforge",
