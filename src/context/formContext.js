@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import {
-    getFullSkillsFromSummary,
-    getSummarisedSkillNames,
+	getFullSkillsFromSummary,
+	getSummarisedSkillNames,
 } from "../hooks/use-skill-helper";
 import React from "react";
 import { getUserFormAndApproval } from "../hooks/use-firebase";
@@ -10,547 +10,567 @@ import useUserContext from "../hooks/use-user-context";
 const FormContext = createContext();
 
 function FormContextProvider({ children }) {
-    const { user } = useUserContext();
-    // State maintained
-    const [approval, setApproval] = useState(null);
-    const [date, setDate] = useState(null);
-    const [realm, setRealm] = useState(null);
-    const [gamesPlayed, setGamesPlayed] = useState(0);
-    const [skills, setSkills] = useState([]);
-    const [investment, setInvestment] = useState([]);
-    const [invTier, setInvTier] = useState(1);
-    const [invOption, setInvOption] = useState([]);
-    const [invRegion, setInvRegion] = useState([]);
-    const [invTerritory, setInvTerritory] = useState([]);
-    const [spells, setSpells] = useState([]);
-    const [crafts, setCrafts] = useState([]);
-    const [potions, setPotions] = useState([]);
-    const [ceremonies, setCeremonies] = useState([]);
-    const [heroName, setHeroName] = useState(null);
-    const [archetype, setArchetype] = useState([]);
-    const [grace, setGrace] = useState([]);
-    const [warband, setWarband] = useState(null);
-    const [sect, setSect] = useState(null);
-    const [icGoals, setIcGoals] = useState(null);
-    const [oocGoals, setOocGoals] = useState(null);
-    const [backstory, setBackstory] = useState(null);
-    const [invDetails, setInvDetails] = useState(null);
+	const { user } = useUserContext();
+	// State maintained
+	const [approval, setApproval] = useState(null);
+	const [date, setDate] = useState(null);
+	const [realm, setRealm] = useState(null);
+	const [gamesPlayed, setGamesPlayed] = useState(0);
+	const [skills, setSkills] = useState([]);
+	const [investment, setInvestment] = useState([]);
+	const [invTier, setInvTier] = useState(1);
+	const [invOption, setInvOption] = useState([]);
+	const [invRegion, setInvRegion] = useState([]);
+	const [invTerritory, setInvTerritory] = useState([]);
+	const [spells, setSpells] = useState([]);
+	const [crafts, setCrafts] = useState([]);
+	const [potions, setPotions] = useState([]);
+	const [ceremonies, setCeremonies] = useState([]);
+	const [startingItem, setStartingItem] = useState([]);
+	const [heroName, setHeroName] = useState(null);
+	const [archetype, setArchetype] = useState([]);
+	const [grace, setGrace] = useState([]);
+	const [warband, setWarband] = useState(null);
+	const [sect, setSect] = useState(null);
+	const [icGoals, setIcGoals] = useState(null);
+	const [oocGoals, setOocGoals] = useState(null);
+	const [backstory, setBackstory] = useState(null);
+	const [invDetails, setInvDetails] = useState(null);
 
-    // Derived Variables
-    const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
-    const remainingXp =
-        totalXp -
-        (skills ? skills.map((s) => s.cost).reduce((a, b) => a + b, 0) : 0);
+	// Derived Variables
+	const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
+	const remainingXp =
+		totalXp -
+		(skills ? skills.map((s) => s.cost).reduce((a, b) => a + b, 0) : 0);
 
-    // Get entire state
-    const getForm = () => {
-        return {
-            date: date,
-            realm: realm,
-            gamesPlayed: gamesPlayed,
-            skills: skills,
-            investment: investment,
-            invTier: invTier,
-            invOption: invOption,
-            invRegion: invRegion,
-            invTerritory: invTerritory,
-            spells: spells,
-            crafts: crafts,
-            potions: potions,
-            ceremonies: ceremonies,
-            heroName: heroName,
-            archetype: archetype,
-            grace: grace,
-            warband: warband,
-            sect: sect,
-            icGoals: icGoals,
-            oocGoals: oocGoals,
-            backstory: backstory,
-            invDetails: invDetails,
-        };
-    };
+	// Get entire state
+	const getForm = () => {
+		return {
+			date: date,
+			realm: realm,
+			gamesPlayed: gamesPlayed,
+			skills: skills,
+			investment: investment,
+			invTier: invTier,
+			invOption: invOption,
+			invRegion: invRegion,
+			invTerritory: invTerritory,
+			spells: spells,
+			crafts: crafts,
+			potions: potions,
+			ceremonies: ceremonies,
+			startingItem: startingItem,
+			heroName: heroName,
+			archetype: archetype,
+			grace: grace,
+			warband: warband,
+			sect: sect,
+			icGoals: icGoals,
+			oocGoals: oocGoals,
+			backstory: backstory,
+			invDetails: invDetails,
+		};
+	};
 
-    // Get entire state
-    const getSimpleForm = () => {
-        return {
-            date: date,
-            realm: realm,
-            gamesPlayed: gamesPlayed,
-            skills: getSummarisedSkillNames(skills),
-            investment: summariseSimpleArray(investment),
-            invTier: invTier,
-            invOption: summariseSimpleArray(invOption),
-            invRegion: summariseSimpleArray(invRegion),
-            invTerritory: summariseSimpleArray(invTerritory),
-            spells: summariseSimpleArray(spells),
-            crafts: summariseSimpleArray(crafts),
-            potions: summariseSimpleArray(potions),
-            ceremonies: summariseSimpleArray(ceremonies),
-            heroName: heroName,
-            archetype: summariseSimpleArray(archetype),
-            grace: summariseSimpleArray(grace),
-            warband: warband,
-            sect: sect,
-            icGoals: icGoals,
-            oocGoals: oocGoals,
-            backstory: backstory,
-            invDetails: invDetails,
-        };
-    };
+	// Get entire state
+	const getSimpleForm = () => {
+		return {
+			date: date,
+			realm: realm,
+			gamesPlayed: gamesPlayed,
+			skills: getSummarisedSkillNames(skills),
+			investment: summariseSimpleArray(investment),
+			invTier: invTier,
+			invOption: summariseSimpleArray(invOption),
+			invRegion: summariseSimpleArray(invRegion),
+			invTerritory: summariseSimpleArray(invTerritory),
+			spells: summariseSimpleArray(spells),
+			crafts: summariseSimpleArray(crafts),
+			potions: summariseSimpleArray(potions),
+			ceremonies: summariseSimpleArray(ceremonies),
+			startingItem: summariseSimpleArray(startingItem),
+			heroName: heroName,
+			archetype: summariseSimpleArray(archetype),
+			grace: summariseSimpleArray(grace),
+			warband: warband,
+			sect: sect,
+			icGoals: icGoals,
+			oocGoals: oocGoals,
+			backstory: backstory,
+			invDetails: invDetails,
+		};
+	};
 
-    const unsaved = false;
+	const unsaved = false;
 
-    const setFormFromFullData = (data) => {
-        setDate(data.date);
-        setRealm(data.realm);
-        setGamesPlayed(data.gamesPlayed);
-        setSkills(data.skills);
-        setInvestment(data.investment);
-        setInvTier(data.invTier);
-        setInvOption(data.invOption);
-        setInvRegion(data.invRegion);
-        setInvTerritory(data.invTerritory);
-        setSpells(data.spells);
-        setCrafts(data.crafts);
-        setPotions(data.potions);
-        setCeremonies(data.ceremonies);
-        setHeroName(data.heroName);
-        setArchetype(data.archetype);
-        setGrace(data.grace);
-        setWarband(data.warband);
-        setSect(data.sect);
-        setIcGoals(data.icGoals);
-        setOocGoals(data.oocGoals);
-        setBackstory(data.backstory);
-        setInvDetails(data.invDetails);
-    };
+	const setFormFromFullData = (data) => {
+		setDate(data.date);
+		setRealm(data.realm);
+		setGamesPlayed(data.gamesPlayed);
+		setSkills(data.skills);
+		setInvestment(data.investment);
+		setInvTier(data.invTier);
+		setInvOption(data.invOption);
+		setInvRegion(data.invRegion);
+		setInvTerritory(data.invTerritory);
+		setSpells(data.spells);
+		setCrafts(data.crafts);
+		setPotions(data.potions);
+		setCeremonies(data.ceremonies);
+		setStartingItem(data.startingItem);
+		setHeroName(data.heroName);
+		setArchetype(data.archetype);
+		setGrace(data.grace);
+		setWarband(data.warband);
+		setSect(data.sect);
+		setIcGoals(data.icGoals);
+		setOocGoals(data.oocGoals);
+		setBackstory(data.backstory);
+		setInvDetails(data.invDetails);
+	};
 
-    const setFormFromSimplifiedData = (data) => {
-        if (!data) return;
-        setDate(data.date);
-        setRealm(data.realm);
-        setGamesPlayed(data.gamesPlayed);
-        setSkills(getFullSkillsFromSummary(data.skills));
-        setInvestment(getSimpleArrayFromSummary(data.investment));
-        setInvOption(getSimpleArrayFromSummary(data.invOption));
-        setInvRegion(getSimpleArrayFromSummary(data.invRegion));
-        setInvTerritory(getSimpleArrayFromSummary(data.invTerritory));
-        setInvTier(data.invTier);
-        setSpells(getSimpleArrayFromSummary(data.spells));
-        setCrafts(getSimpleArrayFromSummary(data.crafts));
-        setPotions(getSimpleArrayFromSummary(data.potions));
-        setCeremonies(getSimpleArrayFromSummary(data.ceremonies));
-        setHeroName(data.heroName);
-        setArchetype(getSimpleArrayFromSummary(data.archetype));
-        setGrace(getSimpleArrayFromSummary(data.grace));
-        setWarband(data.warband);
-        setSect(data.sect);
-        setIcGoals(data.icGoals);
-        setOocGoals(data.oocGoals);
-        setBackstory(data.backstory);
-        setInvDetails(data.invDetails);
-    };
+	const setFormFromSimplifiedData = (data) => {
+		if (!data) return;
+		setDate(data.date);
+		setRealm(data.realm);
+		setGamesPlayed(data.gamesPlayed);
+		setSkills(getFullSkillsFromSummary(data.skills));
+		setInvestment(getSimpleArrayFromSummary(data.investment));
+		setInvOption(getSimpleArrayFromSummary(data.invOption));
+		setInvRegion(getSimpleArrayFromSummary(data.invRegion));
+		setInvTerritory(getSimpleArrayFromSummary(data.invTerritory));
+		setInvTier(data.invTier);
+		setSpells(getSimpleArrayFromSummary(data.spells));
+		setCrafts(getSimpleArrayFromSummary(data.crafts));
+		setPotions(getSimpleArrayFromSummary(data.potions));
+		setCeremonies(getSimpleArrayFromSummary(data.ceremonies));
+		setStartingItem(getSimpleArrayFromSummary(data.startingItem));
+		setHeroName(data.heroName);
+		setArchetype(getSimpleArrayFromSummary(data.archetype));
+		setGrace(getSimpleArrayFromSummary(data.grace));
+		setWarband(data.warband);
+		setSect(data.sect);
+		setIcGoals(data.icGoals);
+		setOocGoals(data.oocGoals);
+		setBackstory(data.backstory);
+		setInvDetails(data.invDetails);
+	};
 
-    const resetForm = () => {
-        setApproval(null);
-        setRealm(null);
-        setGamesPlayed(0);
-        setSkills([]);
-        setInvestment([]);
-        setInvOption([]);
-        setInvRegion([]);
-        setInvTerritory([]);
-        setInvTier(1);
-        setSpells([]);
-        setCrafts([]);
-        setPotions([]);
-        setCeremonies([]);
-        setHeroName(null);
-        setArchetype([]);
-        setGrace([]);
-        setWarband(null);
-        setSect(null);
-        setIcGoals(null);
-        setOocGoals(null);
-        setBackstory(null);
-        setInvDetails(null);
-    };
+	const resetForm = () => {
+		setApproval(null);
+		setRealm(null);
+		setGamesPlayed(0);
+		setSkills([]);
+		setInvestment([]);
+		setInvOption([]);
+		setInvRegion([]);
+		setInvTerritory([]);
+		setInvTier(1);
+		setSpells([]);
+		setCrafts([]);
+		setPotions([]);
+		setCeremonies([]);
+		setStartingItem([]);
+		setHeroName(null);
+		setArchetype([]);
+		setGrace([]);
+		setWarband(null);
+		setSect(null);
+		setIcGoals(null);
+		setOocGoals(null);
+		setBackstory(null);
+		setInvDetails(null);
+	};
 
-    // Load Data
-    useEffect(() => {
-        async function downloadForm() {
-            const newForm = await getUserFormAndApproval();
-            if (newForm) {
-                setFormFromSimplifiedData(newForm);
-                setApproval(newForm.approval);
-            }
-        }
+	// Load Data
+	useEffect(() => {
+		async function downloadForm() {
+			const newForm = await getUserFormAndApproval();
+			if (newForm) {
+				setFormFromSimplifiedData(newForm);
+				setApproval(newForm.approval);
+			}
+		}
 
-        if (user) {
-            downloadForm();
-        } else {
-            resetForm();
-            setApproval(null);
-            setDate(null);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
+		if (user) {
+			downloadForm();
+		} else {
+			resetForm();
+			setApproval(null);
+			setDate(null);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
 
-    // Generic functions
+	// Generic functions
 
-    const selectItem = (
-        item,
-        itemSet,
-        setItems,
-        equateItems = (a, b) => {
-            return a.name === b.name;
-        }
-    ) => {
-        if (!itemSet) {
-            setItems([item]);
-        } else if (itemSet?.filter((i) => equateItems(i, item)).length > 0) {
-            return;
-        } else {
-            setItems([...itemSet, item]);
-        }
-    };
+	const selectItem = (
+		item,
+		itemSet,
+		setItems,
+		equateItems = (a, b) => {
+			return a.name === b.name;
+		}
+	) => {
+		if (!itemSet) {
+			setItems([item]);
+		} else if (itemSet?.filter((i) => equateItems(i, item)).length > 0) {
+			return;
+		} else {
+			setItems([...itemSet, item]);
+		}
+	};
 
-    const removeItem = (
-        item,
-        itemSet,
-        setItems,
-        equateItems = (a, b) => {
-            return a.name === b.name;
-        }
-    ) => {
-        if (!itemSet) {
-            return;
-        } else {
-            setItems(itemSet.filter((i) => !equateItems(i, item)));
-        }
-    };
+	const removeItem = (
+		item,
+		itemSet,
+		setItems,
+		equateItems = (a, b) => {
+			return a.name === b.name;
+		}
+	) => {
+		if (!itemSet) {
+			return;
+		} else {
+			setItems(itemSet.filter((i) => !equateItems(i, item)));
+		}
+	};
 
-    const toggleItem = (
-        item,
-        itemSet,
-        setItems,
-        itemId = (i) => i.name,
-        equateItems = (a, b) => {
-            return a.name === b.name;
-        }
-    ) => {
-        if (itemSet?.map((i) => itemId(i)).includes(itemId(item))) {
-            removeItem(item, itemSet, setItems, equateItems);
-        } else {
-            selectItem(item, itemSet, setItems, equateItems);
-        }
-    };
+	const toggleItem = (
+		item,
+		itemSet,
+		setItems,
+		itemId = (i) => i.name,
+		equateItems = (a, b) => {
+			return a.name === b.name;
+		}
+	) => {
+		if (itemSet?.map((i) => itemId(i)).includes(itemId(item))) {
+			removeItem(item, itemSet, setItems, equateItems);
+		} else {
+			selectItem(item, itemSet, setItems, equateItems);
+		}
+	};
 
-    const summariseSimpleArray = (a) => {
-        if (!a) return null;
-        return a.map((i) => i.name).join(", ");
-    };
+	const summariseSimpleArray = (a) => {
+		if (!a) return null;
+		return a.map((i) => i.name).join(", ");
+	};
 
-    const getSimpleArrayFromSummary = (s) => {
-        if (!s || s === "") return [];
-        return s.split(", ").map((i) => {
-            return { name: i };
-        });
-    };
+	const getSimpleArrayFromSummary = (s) => {
+		if (!s || s === "") return [];
+		return s.split(", ").map((i) => {
+			return { name: i };
+		});
+	};
 
-    // Handling functions
+	// Handling functions
 
-    const selectRealm = (selectedRealm) => {
-        setRealm(selectedRealm);
-        setArchetype(null);
-    };
+	const selectRealm = (selectedRealm) => {
+		setRealm(selectedRealm);
+		setArchetype(null);
+	};
 
-    // Checks if the bare minimum required fields have content in them
-    // Realm, Name, Investment, Backstory
-    const validateForm = () => {
-        const validRealm = realm !== null;
-        const validName = heroName !== null && heroName.trim() !== "";
-        const validInvestment =
-            investment.length === 1 &&
-            invRegion.length === 1 &&
-            invTerritory.length === 1;
-        const valid = validRealm && validName && validInvestment;
-        return { valid, validRealm, validName, validInvestment };
-    };
+	// Checks if the bare minimum required fields have content in them
+	// Realm, Name, Investment, Backstory
+	const validateForm = () => {
+		const validRealm = realm !== null;
+		const validName = heroName !== null && heroName.trim() !== "";
+		const validInvestment =
+			investment.length === 1 &&
+			invRegion.length === 1 &&
+			invTerritory.length === 1;
+		const valid = validRealm && validName && validInvestment;
+		return { valid, validRealm, validName, validInvestment };
+	};
 
-    // skill should be a skillObj formatted as if from the SkillItem method call
-    const validSkillChoice = (skill) => {
-        let prereqMet =
-            !skill.prereq || skills?.map((s) => s.name).includes(skill.prereq);
-        let notExcluded =
-            !skill.exclusion ||
-            !skills?.map((s) => s.name).includes(skill.exclusion);
-        return prereqMet && notExcluded;
-    };
+	// skill should be a skillObj formatted as if from the SkillItem method call
+	const validSkillChoice = (skill) => {
+		let prereqMet =
+			!skill.prereq || skills?.map((s) => s.name).includes(skill.prereq);
+		let notExcluded =
+			!skill.exclusion ||
+			!skills?.map((s) => s.name).includes(skill.exclusion);
+		return prereqMet && notExcluded;
+	};
 
-    // skill should be a skillObj formatted as if from the SkillItem method call
-    const invalidSkillChoice = (skill) => {
-        // check for missing prerequisites
-        if (
-            skill.prereq &&
-            !skills?.map((s) => s.name).includes(skill.prereq)
-        ) {
-            return `Missing prerequisite '${skill.prereq}'`;
-        }
-        // check for exclusion
-        if (
-            skill.exclusion &&
-            skills?.map((s) => s.name).includes(skill.exclusion)
-        ) {
-            return `Conflict with skill '${skill.exclusion}'`;
-        }
-        // check for remaining xp
-        // if ( skill. )
-        return false;
-    };
+	// skill should be a skillObj formatted as if from the SkillItem method call
+	const invalidSkillChoice = (skill) => {
+		// check for missing prerequisites
+		if (
+			skill.prereq &&
+			!skills?.map((s) => s.name).includes(skill.prereq)
+		) {
+			return `Missing prerequisite '${skill.prereq}'`;
+		}
+		// check for exclusion
+		if (
+			skill.exclusion &&
+			skills?.map((s) => s.name).includes(skill.exclusion)
+		) {
+			return `Conflict with skill '${skill.exclusion}'`;
+		}
+		// check for remaining xp
+		// if ( skill. )
+		return false;
+	};
 
-    const toggleSkill = (skill) => {
-        toggleItem(skill, skills, setSkills);
-    };
+	const toggleSkill = (skill) => {
+		toggleItem(skill, skills, setSkills);
+	};
 
-    const toggleInvestment = (selectedInvestment) => {
-        toggleItem(selectedInvestment, investment, setInvestment);
-        setInvOption(null);
-    };
+	const toggleInvestment = (selectedInvestment) => {
+		toggleItem(selectedInvestment, investment, setInvestment);
+		setInvOption(null);
+	};
 
-    const toggleInvRegion = (region) => {
-        toggleItem(region, invRegion, setInvRegion);
-    };
+	const toggleInvRegion = (region) => {
+		toggleItem(region, invRegion, setInvRegion);
+	};
 
-    const toggleInvTerritory = (territory) => {
-        toggleItem(territory, invTerritory, setInvTerritory);
-    };
+	const toggleInvTerritory = (territory) => {
+		toggleItem(territory, invTerritory, setInvTerritory);
+	};
 
-    const toggleInvOption = (option) => {
-        toggleItem(option, invOption, setInvOption);
-    };
+	const toggleInvOption = (option) => {
+		toggleItem(option, invOption, setInvOption);
+	};
 
-    const toggleSpell = (spell) => {
-        if (
-            spell.name === "Channel Waystone" &&
-            spells.find((s) => s.name === "Channel Waystone")
-        ) {
-            return;
-        }
-        toggleItem(spell, spells, setSpells);
-    };
+	const toggleSpell = (spell) => {
+		if (
+			spell.name === "Channel Waystone" &&
+			spells.find((s) => s.name === "Channel Waystone")
+		) {
+			return;
+		}
+		toggleItem(spell, spells, setSpells);
+	};
 
-    const toggleCraft = (craft) => {
-        toggleItem(craft, crafts, setCrafts);
-    };
+	const toggleCraft = (craft) => {
+		if (
+			craft.name === "Artisans Oil" &&
+			crafts.find((c) => c.name === "Artisans Oil")
+		) {
+			return;
+		}
+		toggleItem(craft, crafts, setCrafts);
+	};
 
-    const togglePotion = (potion) => {
-        toggleItem(potion, potions, setPotions);
-    };
+	const togglePotion = (potion) => {
+		toggleItem(potion, potions, setPotions);
+	};
 
-    const toggleCeremony = (ceremony) => {
-        toggleItem(ceremony, ceremonies, setCeremonies);
-    };
+	const toggleCeremony = (ceremony) => {
+		toggleItem(ceremony, ceremonies, setCeremonies);
+	};
 
-    const toggleArchetype = (selectedArchetype) => {
-        toggleItem(selectedArchetype, archetype, setArchetype);
-    };
+	const toggleStartingItem = (item) => {
+		toggleItem(item, startingItem, setStartingItem);
+	};
 
-    const toggleGrace = (selectedGrace) => {
-        toggleItem(selectedGrace, grace, setGrace);
-    };
+	const toggleArchetype = (selectedArchetype) => {
+		toggleItem(selectedArchetype, archetype, setArchetype);
+	};
 
-    // Local Storage management
+	const toggleGrace = (selectedGrace) => {
+		toggleItem(selectedGrace, grace, setGrace);
+	};
 
-    // useEffect(() => {
-    //     setRealm(JSON.parse(window.localStorage.getItem("realm")));
-    //     setGamesPlayed(
-    //         JSON.parse(window.localStorage.getItem("gamesPlayed")) || 0
-    //     );
-    //     setSkills(JSON.parse(window.localStorage.getItem("skills")));
-    //     setInvestment(JSON.parse(window.localStorage.getItem("investment")));
-    //     setSpells(JSON.parse(window.localStorage.getItem("spells")));
-    //     setCrafts(JSON.parse(window.localStorage.getItem("crafts")));
-    //     setPotions(JSON.parse(window.localStorage.getItem("potions")));
-    //     setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
-    //     setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
-    //     setArchetype(JSON.parse(window.localStorage.getItem("archetype")));
-    //     setGrace(JSON.parse(window.localStorage.getItem("grace")));
-    //     setWarband(JSON.parse(window.localStorage.getItem("warband")));
-    //     setSect(JSON.parse(window.localStorage.getItem("sect")));
-    //     setIcGoals(JSON.parse(window.localStorage.getItem("icGoals")));
-    //     setOocGoals(JSON.parse(window.localStorage.getItem("oocGoals")));
-    //     setBackstory(JSON.parse(window.localStorage.getItem("backstory")));
-    //     setInvDetails(
-    //         JSON.parse(window.localStorage.getItem("invDetails"))
-    //     );
-    // }, []);
+	// Local Storage management
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("realm", JSON.stringify(realm));
-    // }, [realm]);
+	// useEffect(() => {
+	//     setRealm(JSON.parse(window.localStorage.getItem("realm")));
+	//     setGamesPlayed(
+	//         JSON.parse(window.localStorage.getItem("gamesPlayed")) || 0
+	//     );
+	//     setSkills(JSON.parse(window.localStorage.getItem("skills")));
+	//     setInvestment(JSON.parse(window.localStorage.getItem("investment")));
+	//     setSpells(JSON.parse(window.localStorage.getItem("spells")));
+	//     setCrafts(JSON.parse(window.localStorage.getItem("crafts")));
+	//     setPotions(JSON.parse(window.localStorage.getItem("potions")));
+	//     setCeremonies(JSON.parse(window.localStorage.getItem("ceremonies")));
+	//     setHeroName(JSON.parse(window.localStorage.getItem("heroName")));
+	//     setArchetype(JSON.parse(window.localStorage.getItem("archetype")));
+	//     setGrace(JSON.parse(window.localStorage.getItem("grace")));
+	//     setWarband(JSON.parse(window.localStorage.getItem("warband")));
+	//     setSect(JSON.parse(window.localStorage.getItem("sect")));
+	//     setIcGoals(JSON.parse(window.localStorage.getItem("icGoals")));
+	//     setOocGoals(JSON.parse(window.localStorage.getItem("oocGoals")));
+	//     setBackstory(JSON.parse(window.localStorage.getItem("backstory")));
+	//     setInvDetails(
+	//         JSON.parse(window.localStorage.getItem("invDetails"))
+	//     );
+	// }, []);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("gamesPlayed", gamesPlayed);
-    // }, [gamesPlayed]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("realm", JSON.stringify(realm));
+	// }, [realm]);
 
-    useEffect(() => {
-        // window.localStorage.setItem("skills", JSON.stringify(skills));
+	// useEffect(() => {
+	//     window.localStorage.setItem("gamesPlayed", gamesPlayed);
+	// }, [gamesPlayed]);
 
-        skills?.forEach((s) => {
-            if (!validSkillChoice(s) || remainingXp < 0) {
-                toggleSkill(s);
-            }
-        });
+	useEffect(() => {
+		// window.localStorage.setItem("skills", JSON.stringify(skills));
 
-        if (!skills?.map((s) => s.name).includes("Magus")) {
-            setSpells([]);
-        } else {
-            if (spells.length < 1) {
-                toggleSpell({ name: "Channel Waystone" });
-            }
-        }
-        if (!skills?.map((s) => s.name).includes("Apothecary")) {
-            setPotions([]);
-        }
-        if (!skills?.map((s) => s.name).includes("Artisan")) {
-            setCrafts([]);
-        }
-        if (!skills?.filter((s) => s.name.startsWith("Divine Lore")).length) {
-            setCeremonies([]);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [skills, remainingXp]);
+		skills?.forEach((s) => {
+			if (!validSkillChoice(s) || remainingXp < 0) {
+				toggleSkill(s);
+			}
+		});
 
-    useEffect(() => {
-        if (invRegion && !invRegion.length) setInvTerritory([]);
-    }, [invRegion]);
+		if (!skills?.map((s) => s.name).includes("Magus")) {
+			setSpells([]);
+		} else {
+			toggleSpell({ name: "Channel Waystone" });
+		}
+		if (!skills?.map((s) => s.name).includes("Apothecary")) {
+			setPotions([]);
+		}
+		if (!skills?.map((s) => s.name).includes("Artisan")) {
+			setCrafts([]);
+			setStartingItem([]);
+		} else {
+			toggleCraft({ name: "Artisans Oil" });
+		}
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("investment", JSON.stringify(investment));
-    // }, [investment]);
+		if (!skills?.filter((s) => s.name.startsWith("Divine Lore")).length) {
+			setCeremonies([]);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [skills, remainingXp]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("spells", JSON.stringify(spells));
-    // }, [spells]);
+	useEffect(() => {
+		if (invRegion && !invRegion.length) setInvTerritory([]);
+	}, [invRegion]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("crafts", JSON.stringify(crafts));
-    // }, [crafts]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("investment", JSON.stringify(investment));
+	// }, [investment]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("potions", JSON.stringify(potions));
-    // }, [potions]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("spells", JSON.stringify(spells));
+	// }, [spells]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("ceremonies", JSON.stringify(ceremonies));
-    // }, [ceremonies]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("crafts", JSON.stringify(crafts));
+	// }, [crafts]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("heroName", JSON.stringify(heroName));
-    // }, [heroName]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("potions", JSON.stringify(potions));
+	// }, [potions]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("archetype", JSON.stringify(archetype));
-    // }, [archetype]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("ceremonies", JSON.stringify(ceremonies));
+	// }, [ceremonies]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("grace", JSON.stringify(grace));
-    // }, [grace]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("heroName", JSON.stringify(heroName));
+	// }, [heroName]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("warband", JSON.stringify(warband));
-    // }, [warband]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("archetype", JSON.stringify(archetype));
+	// }, [archetype]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("sect", JSON.stringify(sect));
-    // }, [sect]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("grace", JSON.stringify(grace));
+	// }, [grace]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("icGoals", JSON.stringify(icGoals));
-    // }, [icGoals]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("warband", JSON.stringify(warband));
+	// }, [warband]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("oocGoals", JSON.stringify(oocGoals));
-    // }, [oocGoals]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("sect", JSON.stringify(sect));
+	// }, [sect]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("backstory", JSON.stringify(backstory));
-    // }, [backstory]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("icGoals", JSON.stringify(icGoals));
+	// }, [icGoals]);
 
-    // useEffect(() => {
-    //     window.localStorage.setItem(
-    //         "invDetails",
-    //         JSON.stringify(invDetails)
-    //     );
-    // }, [invDetails]);
+	// useEffect(() => {
+	//     window.localStorage.setItem("oocGoals", JSON.stringify(oocGoals));
+	// }, [oocGoals]);
 
-    // Outputs
+	// useEffect(() => {
+	//     window.localStorage.setItem("backstory", JSON.stringify(backstory));
+	// }, [backstory]);
 
-    const formContext = {
-        unsaved,
-        date,
-        setDate,
-        realm,
-        selectRealm,
-        gamesPlayed,
-        setGamesPlayed,
-        skills,
-        remainingXp,
-        toggleSkill,
-        validSkillChoice,
-        invalidSkillChoice,
-        investment,
-        toggleInvestment,
-        invRegion,
-        toggleInvRegion,
-        invTerritory,
-        toggleInvTerritory,
-        invOption,
-        toggleInvOption,
-        invTier,
-        setInvTier,
-        spells,
-        toggleSpell,
-        crafts,
-        toggleCraft,
-        potions,
-        togglePotion,
-        ceremonies,
-        toggleCeremony,
-        heroName,
-        setHeroName,
-        archetype,
-        toggleArchetype,
-        grace,
-        toggleGrace,
-        warband,
-        setWarband,
-        sect,
-        setSect,
-        icGoals,
-        setIcGoals,
-        oocGoals,
-        setOocGoals,
-        backstory,
-        setBackstory,
-        invDetails,
-        setInvDetails,
-        getForm,
-        getSimpleForm,
-        setFormFromFullData,
-        setFormFromSimplifiedData,
-        resetForm,
-        approval,
-        setApproval,
-        validateForm,
-    };
+	// useEffect(() => {
+	//     window.localStorage.setItem(
+	//         "invDetails",
+	//         JSON.stringify(invDetails)
+	//     );
+	// }, [invDetails]);
 
-    return (
-        <FormContext.Provider value={formContext}>
-            {children}
-        </FormContext.Provider>
-    );
+	// Outputs
+
+	const formContext = {
+		unsaved,
+		date,
+		setDate,
+		realm,
+		selectRealm,
+		gamesPlayed,
+		setGamesPlayed,
+		skills,
+		remainingXp,
+		toggleSkill,
+		validSkillChoice,
+		invalidSkillChoice,
+		investment,
+		toggleInvestment,
+		invRegion,
+		toggleInvRegion,
+		invTerritory,
+		toggleInvTerritory,
+		invOption,
+		toggleInvOption,
+		invTier,
+		setInvTier,
+		spells,
+		toggleSpell,
+		crafts,
+		toggleCraft,
+		potions,
+		togglePotion,
+		ceremonies,
+		toggleCeremony,
+		startingItem,
+		toggleStartingItem,
+		heroName,
+		setHeroName,
+		archetype,
+		toggleArchetype,
+		grace,
+		toggleGrace,
+		warband,
+		setWarband,
+		sect,
+		setSect,
+		icGoals,
+		setIcGoals,
+		oocGoals,
+		setOocGoals,
+		backstory,
+		setBackstory,
+		invDetails,
+		setInvDetails,
+		getForm,
+		getSimpleForm,
+		setFormFromFullData,
+		setFormFromSimplifiedData,
+		resetForm,
+		approval,
+		setApproval,
+		validateForm,
+	};
+
+	return (
+		<FormContext.Provider value={formContext}>
+			{children}
+		</FormContext.Provider>
+	);
 }
 
 export { FormContextProvider };
