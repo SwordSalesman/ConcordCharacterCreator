@@ -1,10 +1,10 @@
 import TabItem from "./common/Tabs/TabItem";
 import {
-    ContentWrapper,
-    CreatorWrapper,
-    NavigationPaneWrapper,
-    RealmBackgroundImage,
-    TabsWrapper,
+	ContentWrapper,
+	CreatorWrapper,
+	NavigationPaneWrapper,
+	RealmBackgroundImage,
+	TabsWrapper,
 } from "./Creator.style";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import useFormContext from "../hooks/use-form-context";
@@ -27,194 +27,218 @@ import ReviewPage from "./pages/review/ReviewPage";
 
 const useTabs = false;
 const tabs = [
-    { name: "Intro", content: <IntroPage /> },
-    { name: "Realm", content: <RealmPage /> },
-    { name: "Skills", content: <SkillsPage /> },
-    { name: "Options", content: <OptionsPage /> },
-    { name: "Background", content: <BackgroundPage /> },
-    { name: "Review", content: <ReviewPage /> },
+	{ name: "Intro", content: <IntroPage /> },
+	{ name: "Realm", content: <RealmPage /> },
+	{ name: "Skills", content: <SkillsPage /> },
+	{ name: "Options", content: <OptionsPage /> },
+	{ name: "Background", content: <BackgroundPage /> },
+	{ name: "Review", content: <ReviewPage /> },
 ];
 
 function Creator({ handleShowLogin, handleCloseLogin }) {
-    const { user, name } = useUserContext();
-    const {
-        getSimpleForm,
-        resetForm,
-        realm,
-        validateForm,
-        date,
-        setDate,
-        approval,
-    } = useFormContext();
-    const realmImage = useRealmImage(realm);
-    const [showBanner, setShowBanner] = useState(false);
-    const [activeTab, setActiveTab] = useState(tabs[0]);
-    const [direction, setDirection] = useState("right");
+	const { user, name } = useUserContext();
+	const {
+		getSimpleForm,
+		resetForm,
+		realm,
+		validateForm,
+		date,
+		setDate,
+		approval,
+	} = useFormContext();
+	const realmImage = useRealmImage(realm);
+	const [showBanner, setShowBanner] = useState(true);
+	const [activeTab, setActiveTab] = useState(tabs[0]);
+	const [direction, setDirection] = useState("right");
 
-    const [showConfirmReset, setShowConfirmReset] = useState(false);
-    const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
+	const [showConfirmReset, setShowConfirmReset] = useState(false);
+	const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
 
-    const { valid } = validateForm();
+	const { valid } = validateForm();
 
-    let activeIndex = tabs.indexOf(activeTab);
-    const prevTab = activeIndex > 0 ? tabs[activeIndex - 1] : null;
-    const nextTab =
-        activeIndex >= 0 && activeIndex < tabs.length - 1
-            ? tabs[activeIndex + 1]
-            : null;
+	let activeIndex = tabs.indexOf(activeTab);
+	const prevTab = activeIndex > 0 ? tabs[activeIndex - 1] : null;
+	const nextTab =
+		activeIndex >= 0 && activeIndex < tabs.length - 1
+			? tabs[activeIndex + 1]
+			: null;
 
-    useEffect(() => {
-        handleCloseLogin();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
+	useEffect(() => {
+		handleCloseLogin();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
 
-    // Turning off banner for now
-    useEffect(() => {
-        if (user && date) {
-            // setShowBanner(true);
-        } else {
-            setShowBanner(false);
-            setTimeout(() => {
-                // setShowBanner(true);
-            }, 45000);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user, date]);
+	// Turning off banner for now
+	useEffect(() => {
+		if (user && date) {
+			// setShowBanner(true);
+		} else {
+			// setShowBanner(false);
+			setTimeout(() => {
+				// setShowBanner(true);
+			}, 45000);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user, date]);
 
-    const handleSave = async () => {
-        toast.promise(saveUserForm(getSimpleForm(), setDate, name), {
-            loading: "Submitting",
-            success: "Character submitted!",
-            error: "Submission failed, check network connection",
-        });
-    };
+	const handleSave = async () => {
+		toast.promise(saveUserForm(getSimpleForm(), setDate, name), {
+			loading: "Submitting",
+			success: "Character submitted!",
+			error: "Submission failed, check network connection",
+		});
+	};
 
-    const handleSubmit = async () => {
-        if (!user) {
-            handleShowLogin();
-        } else {
-            setShowConfirmSubmit(true);
-        }
-    };
+	const handleSubmit = async () => {
+		if (!user) {
+			handleShowLogin();
+		} else {
+			setShowConfirmSubmit(true);
+		}
+	};
 
-    const handleResetClose = (response) => {
-        setShowConfirmReset(false);
-        if (!!response) {
-            resetForm();
-        }
-    };
+	const handleResetClose = (response) => {
+		setShowConfirmReset(false);
+		if (!!response) {
+			resetForm();
+		}
+	};
 
-    const handleClickTab = (tab, index) => {
-        if (activeTab === tab) {
-            return;
-        }
-        let activeIndex = tabs.indexOf(activeTab);
-        if (index > activeIndex) {
-            setDirection("right");
-        } else {
-            setDirection("left");
-        }
-        setActiveTab(tab);
-    };
+	const handleClickTab = (tab, index) => {
+		if (activeTab === tab) {
+			return;
+		}
+		let activeIndex = tabs.indexOf(activeTab);
+		if (index > activeIndex) {
+			setDirection("right");
+		} else {
+			setDirection("left");
+		}
+		setActiveTab(tab);
+	};
 
-    const renderedTabs = tabs.map((tab, index) => {
-        return (
-            <TabItem
-                key={tab.name}
-                tab={tab}
-                index={index}
-                onTabSelect={handleClickTab}
-                active={tab === activeTab}
-            />
-        );
-    });
+	const renderedTabs = tabs.map((tab, index) => {
+		return (
+			<TabItem
+				key={tab.name}
+				tab={tab}
+				index={index}
+				onTabSelect={handleClickTab}
+				active={tab === activeTab}
+			/>
+		);
+	});
 
-    const renderedContent = tabs.map((tab, index) => {
-        return (
-            activeTab === tab && (
-                <ColumnPage direction={direction} key={index}>
-                    {tab.content}
-                </ColumnPage>
-            )
-        );
-    });
+	const renderedContent = tabs.map((tab, index) => {
+		return (
+			activeTab === tab && (
+				<ColumnPage direction={direction} key={index}>
+					{tab.content}
+				</ColumnPage>
+			)
+		);
+	});
 
-    const renderedButtons = (
-        <>
-            <Button
-                secondary
-                onClick={
-                    prevTab
-                        ? () => {
-                              handleClickTab(prevTab);
-                              setDirection("left");
-                          }
-                        : () => setShowConfirmReset(true)
-                }
-            >
-                <div>{prevTab ? <AiOutlineLeft /> : null}</div>
-                <div style={{ width: "100px" }}>
-                    {prevTab ? prevTab.name : "Reset Form"}
-                </div>
-            </Button>
-            <Button
-                primary
-                onClick={
-                    nextTab
-                        ? () => {
-                              handleClickTab(nextTab);
-                              setDirection("right");
-                          }
-                        : handleSubmit
-                }
-                disabled={!nextTab && !valid}
-            >
-                <div style={{ width: nextTab ? "100px" : "116px" }}>
-                    {nextTab ? nextTab.name : "Save & Submit"}
-                </div>
-                {nextTab ? (
-                    <div>
-                        <AiOutlineRight />
-                    </div>
-                ) : null}
-            </Button>
-        </>
-    );
+	const renderedButtons = (
+		<>
+			<Button
+				secondary
+				onClick={
+					prevTab
+						? () => {
+								handleClickTab(prevTab);
+								setDirection("left");
+						  }
+						: () => setShowConfirmReset(true)
+				}
+			>
+				<div>{prevTab ? <AiOutlineLeft /> : null}</div>
+				<div style={{ width: "100px" }}>
+					{prevTab ? prevTab.name : "Reset Form"}
+				</div>
+			</Button>
+			<Button
+				primary
+				onClick={
+					nextTab
+						? () => {
+								handleClickTab(nextTab);
+								setDirection("right");
+						  }
+						: handleSubmit
+				}
+				disabled={!nextTab && !valid}
+			>
+				<div style={{ width: nextTab ? "100px" : "116px" }}>
+					{nextTab ? nextTab.name : "Save & Submit"}
+				</div>
+				{nextTab ? (
+					<div>
+						<AiOutlineRight />
+					</div>
+				) : null}
+			</Button>
+		</>
+	);
 
-    return (
-        <>
-            <Banner
-                show={showBanner}
-                dateSubmitted={date}
-                approval={approval}
-            />
+	const submissionsOpen =
+		Date.now() < new Date("2024-03-18T23:59:59.000+08:00");
 
-            <CreatorWrapper outline={!useTabs}>
-                <TabsWrapper>{renderedTabs}</TabsWrapper>
-                {/* // <PageHeader>{activeTab.name}</PageHeader> */}
-                <ContentWrapper>{renderedContent}</ContentWrapper>
-                <NavigationPaneWrapper>{renderedButtons}</NavigationPaneWrapper>
-                {realmImage ? <RealmBackgroundImage src={realmImage} /> : null}
-            </CreatorWrapper>
+	return (
+		<>
+			<Banner
+				show={showBanner}
+				full={
+					submissionsOpen ? (
+						<p>
+							Submissions will close <b>March 18th.</b> Make sure
+							you submit your character and changes before then!
+						</p>
+					) : (
+						<p>
+							<b>Submissions are closed.</b> You may still use
+							this form and submit your character, but the team is
+							not guaranteed to approve your character or provide
+							a character bag.
+						</p>
+					)
+				}
+				summary={
+					submissionsOpen ? (
+						<p>Last Submit Date</p>
+					) : (
+						<p>Submissions Closed</p>
+					)
+				}
+				type={submissionsOpen ? "warning" : "error"}
+			/>
 
-            <ConfirmModal
-                title='Reset Character?'
-                message="Your changes won't be saved until you submit."
-                show={showConfirmReset}
-                handleClose={handleResetClose}
-            ></ConfirmModal>
+			<CreatorWrapper outline={!useTabs}>
+				<TabsWrapper>{renderedTabs}</TabsWrapper>
+				{/* // <PageHeader>{activeTab.name}</PageHeader> */}
+				<ContentWrapper>{renderedContent}</ContentWrapper>
+				<NavigationPaneWrapper>{renderedButtons}</NavigationPaneWrapper>
+				{realmImage ? <RealmBackgroundImage src={realmImage} /> : null}
+			</CreatorWrapper>
 
-            <ConfirmModal
-                title='Save & Submit Character?'
-                message='You can submit multiple times.'
-                show={showConfirmSubmit}
-                handleClose={(response) => {
-                    setShowConfirmSubmit(false);
-                    if (!!response) handleSave();
-                }}
-            ></ConfirmModal>
-        </>
-    );
+			<ConfirmModal
+				title='Reset Character?'
+				message="Your changes won't be saved until you submit."
+				show={showConfirmReset}
+				handleClose={handleResetClose}
+			></ConfirmModal>
+
+			<ConfirmModal
+				title='Save & Submit Character?'
+				message='You can submit multiple times.'
+				show={showConfirmSubmit}
+				handleClose={(response) => {
+					setShowConfirmSubmit(false);
+					if (!!response) handleSave();
+				}}
+			></ConfirmModal>
+		</>
+	);
 }
 
 export default Creator;

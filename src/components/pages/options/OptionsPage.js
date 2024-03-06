@@ -10,7 +10,7 @@ import {
 import { SkillPageWrapper } from "../skills/SkillsPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
-import React from "react";
+import React, { useMemo } from "react";
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");
 var spellsData = require("../../../data/tables/spells.json");
@@ -168,7 +168,9 @@ function OptionsPage() {
 	} = useFormContext();
 
 	// Variables
-	const skillNames = skills ? skills.map((s) => s.name) : [];
+	const skillNames = useMemo(() => {
+		return skills ? skills.map((s) => s.name) : [];
+	}, [skills]);
 	const showSpells = skillNames.includes("Magus");
 	const showCrafts = skillNames.includes("Artisan");
 	const showPotions = skillNames.includes("Apothecary");
@@ -180,30 +182,38 @@ function OptionsPage() {
 	const numInvTerritory = 1 - (invTerritory ? invTerritory.length : 0);
 	const numInvOption = 1 - (invOption ? invOption.length : 0);
 
-	const maxSpells =
-		showSpells &&
-		skillNames.includes("Magus") * 2 +
+	const maxSpells = useMemo(() => {
+		return (
+			skillNames.includes("Magus") * 2 +
 			skillNames.filter((s) => s.startsWith("Additional Spell")).length *
-				1;
+				1
+		);
+	}, [skillNames]);
 	const numSpells = maxSpells - (spells ? spells.length : 0);
 
-	const maxCeremonies =
-		showCeremonies &&
-		(skillNames.filter((s) => s.startsWith("Divine Lore")).length + 1) * 2 +
-			skillNames.filter((s) => s.startsWith("Extra Ceremony")).length * 2;
+	const maxCeremonies = useMemo(() => {
+		return (
+			skillNames.filter((s) => s.startsWith("Divine Lore")).length * 2 +
+			skillNames.filter((s) => s.startsWith("Extra Ceremony")).length * 2
+		);
+	}, [skillNames]);
 	const numCeremonies = maxCeremonies - (ceremonies ? ceremonies.length : 0);
 
-	const maxCrafts =
-		showCrafts &&
-		skillNames.filter((s) => s.startsWith("Artisan")).length * 5 +
-			skillNames.filter((s) => s.startsWith("Extra Craft")).length * 2;
+	const maxCrafts = useMemo(() => {
+		return (
+			skillNames.filter((s) => s.startsWith("Artisan")).length * 5 +
+			skillNames.filter((s) => s.startsWith("Extra Craft")).length * 2
+		);
+	}, [skillNames]);
 	const numCrafts = maxCrafts - (crafts ? crafts.length : 0);
 	const numStartingItems = 1 - (startingItem ? startingItem.length : 0);
 
-	const maxPotions =
-		showPotions &&
-		skillNames.filter((s) => s.startsWith("Apothecary")).length * 3 +
-			skillNames.filter((s) => s.startsWith("Extra Recipe")).length * 2;
+	const maxPotions = useMemo(() => {
+		return (
+			skillNames.filter((s) => s.startsWith("Apothecary")).length * 3 +
+			skillNames.filter((s) => s.startsWith("Extra Recipe")).length * 2
+		);
+	}, [skillNames]);
 	const numPotions = maxPotions - (potions ? potions.length : 0);
 
 	// Generate the 'selected' items on the left of the screen

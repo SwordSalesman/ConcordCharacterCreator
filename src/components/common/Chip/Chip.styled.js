@@ -41,7 +41,7 @@ export const StyledChip = styled.button`
 			if (props.disabled) {
 				return props.theme.backgroundRaised;
 			}
-			return props.background;
+			return props.theme.background;
 		}
 	}};
 	color: ${(props) => {
