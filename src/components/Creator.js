@@ -37,17 +37,9 @@ const tabs = [
 
 function Creator({ handleShowLogin, handleCloseLogin }) {
 	const { user, name } = useUserContext();
-	const {
-		getSimpleForm,
-		resetForm,
-		realm,
-		validateForm,
-		date,
-		setDate,
-		approval,
-	} = useFormContext();
+	const { getSimpleForm, resetForm, realm, validateForm, date, setDate } =
+		useFormContext();
 	const realmImage = useRealmImage(realm);
-	const [showBanner, setShowBanner] = useState(true);
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const [direction, setDirection] = useState("right");
 
@@ -187,7 +179,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	return (
 		<>
 			<Banner
-				show={showBanner}
+				show={false}
 				full={
 					submissionsOpen ? (
 						<p>

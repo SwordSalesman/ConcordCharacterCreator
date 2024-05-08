@@ -9,6 +9,7 @@ import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style
 import { BackgroundPageWrapper } from "./BackgroundPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import useRealmDetails from "../../../hooks/use-realm-details";
+import { useEffect, useState } from "react";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");
@@ -36,49 +37,86 @@ function BackgroundPage() {
 		setInvDetails,
 	} = useFormContext();
 	const fullRealm = useRealmDetails(realm);
+	const [renderedArchetype, setRenderedArchetype] = useState([]);
+	const [renderedGrace, setRenderedGrace] = useState([]);
 
 	var archetypeLink = fullRealm ? fullRealm.archetypeLink : null;
-	var renderedArchetype = null;
-	if (realm) {
-		renderedArchetype = allArchetypes
-			.filter((a) => a.realm === realm)
-			.map((a) => {
-				let selected = archetype
-					?.map((selA) => selA.name)
-					.includes(a.name);
-				return (
-					<Chip
-						onClick={() => toggleArchetype(a)}
-						selected={selected}
-						inactive={!selected && archetype?.length >= 1}
-						key={a.name}
-					>
-						{a.name}
-					</Chip>
-				);
-			});
-	} else {
-		renderedArchetype = (
-			<p style={{ opacity: 0.5, fontStyle: "italic" }}>
-				Select a realm first
-			</p>
-		);
-	}
 
-	var renderedGrace = null;
-	renderedGrace = allGraces.map((g) => {
-		let selected = grace?.map((sel) => sel.name).includes(g.name);
-		return (
+	useEffect(() => {
+		var newRender = null;
+		if (realm) {
+			newRender = allArchetypes
+				.filter((a) => a.realm === realm)
+				.map((a) => {
+					let selected = archetype
+						?.map((selA) => selA.name)
+						.includes(a.name);
+					return (
+						<Chip
+							onClick={() => toggleArchetype(a)}
+							selected={selected}
+							inactive={!selected && archetype?.length >= 1}
+							key={a.name}
+						>
+							{a.name}
+						</Chip>
+					);
+				});
+			const noArchetype = !archetype || archetype?.length < 1;
+			newRender.unshift(
+				<Chip
+					selected={noArchetype}
+					onClick={() => {
+						if (noArchetype) return;
+						toggleArchetype(archetype[0]);
+					}}
+					key={"No Archetype"}
+				>
+					{"No Archetype"}
+				</Chip>
+			);
+		} else {
+			newRender = (
+				<p style={{ opacity: 0.5, fontStyle: "italic" }}>
+					Select a realm first
+				</p>
+			);
+		}
+		setRenderedArchetype(newRender);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [realm, archetype]);
+
+	useEffect(() => {
+		var newRender = null;
+		newRender = allGraces.map((g) => {
+			let selected = grace?.map((sel) => sel.name).includes(g.name);
+			return (
+				<Chip
+					onClick={() => toggleGrace(g)}
+					selected={selected}
+					inactive={!selected && grace?.length >= 1}
+					key={g.name}
+				>
+					{g.name}
+				</Chip>
+			);
+		});
+		const noGrace = !grace || grace?.length < 1;
+		newRender.unshift(
 			<Chip
-				onClick={() => toggleGrace(g)}
-				selected={selected}
-				inactive={!selected && grace?.length >= 1}
-				key={g.name}
+				selected={noGrace}
+				key={"No Grace"}
+				onClick={() => {
+					if (noGrace) return;
+					toggleGrace(grace[0]);
+				}}
 			>
-				{g.name}
+				{"No Grace"}
 			</Chip>
 		);
-	});
+		setRenderedGrace(newRender);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [realm, grace]);
 
 	const tabs = [
 		{

@@ -32,6 +32,7 @@ function ReviewPage({ user }) {
 		realm,
 		skills,
 		investment,
+		invTier,
 		invOption,
 		invRegion,
 		invTerritory,
@@ -62,6 +63,7 @@ function ReviewPage({ user }) {
 		realm: realm,
 		skills: skills,
 		investment: investment,
+		invTier: invTier,
 		invOption: invOption,
 		invRegion: invRegion,
 		invTerritory: invTerritory,
@@ -125,12 +127,11 @@ function ReviewPage({ user }) {
 						</ReviewItem>
 						{investment && (
 							<ReviewItem label='Investment'>
+								{`Tier ${invTier} `}
 								{invOption && invOption[0]
 									? `${invOption[0].name} `
 									: ""}
-								{investment && investment[0]
-									? investment[0].name
-									: ""}
+								{investment[0] ? investment[0].name : ""}
 								{invTerritory && invTerritory[0]
 									? ` in ${invTerritory[0].name}`
 									: ""}

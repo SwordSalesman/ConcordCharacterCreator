@@ -11,6 +11,10 @@ import { SkillPageWrapper } from "../skills/SkillsPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
 import React, { useMemo } from "react";
+import { FlexCenter } from "../../../styles/Global";
+import Button from "../../common/Button/Button";
+import { BiMinus, BiPlus } from "react-icons/bi";
+import { GameTally } from "../intro/Intro.style";
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");
 var spellsData = require("../../../data/tables/spells.json");
@@ -150,6 +154,8 @@ function OptionsPage() {
 		toggleSpell,
 		investment,
 		toggleInvestment,
+		invTier,
+		setInvTier,
 		invRegion,
 		toggleInvRegion,
 		invTerritory,
@@ -256,6 +262,18 @@ function OptionsPage() {
 			? investmentData.find((i) => i.name === investment[0].name)?.options
 			: null;
 
+	const handleMinus = () => {
+		if (invTier > 1) {
+			setInvTier(invTier - 1);
+		}
+	};
+
+	const handlePlus = () => {
+		if (invTier < 10) {
+			setInvTier(invTier + 1);
+		}
+	};
+
 	const investmentTabContent = (
 		<BackgroundInputWrapper>
 			<AccordionSection title='Investment Type' link='Investments'>
@@ -276,6 +294,21 @@ function OptionsPage() {
 						</Chip>
 					);
 				})}
+			</AccordionSection>
+			<AccordionSection title='Investment Tier'>
+				<FlexCenter
+					style={{
+						margin: "5px 0",
+					}}
+				>
+					<Button secondary onClick={handleMinus}>
+						<BiMinus />
+					</Button>
+					<GameTally>{invTier}</GameTally>
+					<Button secondary onClick={handlePlus}>
+						<BiPlus />
+					</Button>
+				</FlexCenter>
 			</AccordionSection>
 			{investmentOptions && (
 				<AccordionSection title='Investment Option'>
