@@ -17,7 +17,7 @@
 	{
 		"rarity": "Journeyman",
 		"name": "Bonebreaker",
-		"type": "Weapon: Great weapon"
+		"type": "Weapon: Great Weapon"
 	},
 	{
 		"rarity": "Journeyman",
@@ -27,7 +27,7 @@
 	{
 		"rarity": "Journeyman",
 		"name": "Clerics Mace",
-		"type": "Weapon One Handed"
+		"type": "Weapon: One Handed"
 	},
 	{
 		"rarity": "Journeyman",
@@ -87,7 +87,7 @@
 	{
 		"rarity": "Journeyman",
 		"name": "Setting Blade",
-		"type": "Weapon Short Weapon"
+		"type": "Weapon: Short Weapon"
 	},
 	{
 		"rarity": "Journeyman",
@@ -107,7 +107,7 @@
 	{
 		"rarity": "Journeyman",
 		"name": "Torment’s Blade",
-		"type": "Weapon: Short weapon"
+		"type": "Weapon: Short Weapon"
 	},
 	{
 		"rarity": "Journeyman",
@@ -133,7 +133,7 @@
 	{
 		"rarity": "Expert",
 		"name": "Barbarians Brutalizer",
-		"type": "Weapon: Greatweapon"
+		"type": "Weapon: Great Weapon"
 	},
 	{
 		"rarity": "Expert",
@@ -148,7 +148,7 @@
 	{
 		"rarity": "Expert",
 		"name": "Bending Reed Blades",
-		"type": "Weapon: Pair One Handed"
+		"type": "Weapon Pair: One Handed"
 	},
 	{
 		"rarity": "Expert",
@@ -178,7 +178,7 @@
 	{
 		"rarity": "Expert",
 		"name": "Desperate Times",
-		"type": "Weapon: Short"
+		"type": "Weapon: Short Weapon"
 	},
 	{
 		"rarity": "Expert",
@@ -253,7 +253,7 @@
 	{
 		"rarity": "Expert",
 		"name": "Purifying Scalpel",
-		"type": "Weapon: Short"
+		"type": "Weapon: Short Weapon"
 	},
 	{
 		"rarity": "Expert",
@@ -314,7 +314,7 @@
 	{
 		"rarity": "Masterwork",
 		"name": "Arcane Shears",
-		"type": "Talisman: Tools"
+		"type": "Talisman: Tool"
 	},
 	{
 		"rarity": "Masterwork",
@@ -364,7 +364,7 @@
 	{
 		"rarity": "Masterwork",
 		"name": "Bracelet of the Young Ward",
-		"type": "Talisman: Jewelery"
+		"type": "Talisman: Jewellery"
 	},
 	{
 		"rarity": "Masterwork",
@@ -484,7 +484,7 @@
 	{
 		"rarity": "Masterwork",
 		"name": "Robes of the Seer",
-		"type": "Armour: Robe"
+		"type": "Armour: Clothes"
 	},
 	{
 		"rarity": "Masterwork",
@@ -494,12 +494,12 @@
 	{
 		"rarity": "Masterwork",
 		"name": "Sargents Fist",
-		"type": "Weapon: Great weapon"
+		"type": "Weapon: Great Weapon"
 	},
 	{
 		"rarity": "Masterwork",
 		"name": "Seers Knife",
-		"type": "Weapon: Short"
+		"type": "Weapon: Short Weapon"
 	},
 	{
 		"rarity": "Masterwork",
@@ -574,6 +574,6 @@
 	{
 		"rarity": "Masterwork",
 		"name": "Wolverines Bite",
-		"type": "Weapon: Pair One Handed"
+		"type": "Weapon Pair: One Handed"
 	}
 ]

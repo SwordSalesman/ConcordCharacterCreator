@@ -5,7 +5,7 @@ export const StyledChip = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 5px;
+	gap: 3px;
 	padding: 1px 6px 1px 4px;
 	margin: 2px;
 	transition-duration: 0.2s;

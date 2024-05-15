@@ -15,12 +15,80 @@ import { FlexCenter } from "../../../styles/Global";
 import Button from "../../common/Button/Button";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { GameTally } from "../intro/Intro.style";
+import {
+	GiArmorVest,
+	GiBattleAxe,
+	GiBroadDagger,
+	GiBroadsword,
+	GiCheckedShield,
+	GiChestArmor,
+	GiCrenelCrown,
+	GiCrossedSwords,
+	GiCrystalWand,
+	GiGemNecklace,
+	GiHammerNails,
+	GiIncense,
+	GiNinjaArmor,
+	GiPocketBow,
+	GiPotionBall,
+	GiRobe,
+	GiTatteredBanner,
+} from "react-icons/gi";
+import { getRegionRealm } from "../../../helpers/data-helper";
+
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");
 var spellsData = require("../../../data/tables/spells.json");
 var craftsData = require("../../../data/tables/crafts.json");
 var potionsData = require("../../../data/tables/potions.json");
 var ceremoniesData = require("../../../data/tables/ceremonies.json");
+
+const chipIcons = true;
+
+function chipIcon(type) {
+	if (!chipIcons) return <></>;
+
+	switch (type) {
+		case "Weapon: One Handed":
+			return <GiBroadsword />;
+		case "Weapon: Great Weapon":
+			return <GiBattleAxe />;
+		case "Weapon: Short Weapon":
+			return <GiBroadDagger />;
+		case "Weapon: Polearm":
+		case "Weapon: Stave":
+			return <GiCrystalWand />;
+		case "Weapon Pair: Short Weapon and One Handed Weapon":
+		case "Weapon Pair: One Handed":
+			return <GiCrossedSwords />;
+		case "Weapon: Bow":
+			return <GiPocketBow />;
+		case "Armour: Light":
+			return <GiNinjaArmor />;
+		case "Armour: Medium":
+			return <GiChestArmor />;
+		case "Armour: Heavy":
+			return <GiArmorVest />;
+		case "Armour: Clothes":
+			return <GiRobe />;
+		case "Talisman: Tool":
+			return <GiHammerNails />;
+		case "Talisman: Shield":
+			return <GiCheckedShield />;
+		case "Talisman: Jewellery":
+			return <GiGemNecklace />;
+		case "Talisman: Battlemages Circlet":
+			return <GiCrenelCrown />;
+		case "Banner":
+			return <GiTatteredBanner />;
+		case "Reliquary":
+			return <GiIncense />;
+		case "Special":
+			return <GiPotionBall />;
+		default:
+			return <></>;
+	}
+}
 
 const genTabContent = (
 	label,
@@ -34,13 +102,18 @@ const genTabContent = (
 	comment,
 	filterFunction = (a) => true
 ) => {
-	const sections = subSectionTitle
-		? allItems
-				.filter((i) => filterFunction(i))
-				.map((i) => i[subSectionTitle])
-				.filter((value, index, array) => array.indexOf(value) === index)
-				.sort((a, b) => (a > b ? 1 : -1))
-		: null;
+	const sections =
+		label === "Artisan Crafts"
+			? ["Journeyman", "Expert", "Masterwork"]
+			: subSectionTitle
+			? allItems
+					.filter((i) => filterFunction(i))
+					.map((i) => i[subSectionTitle])
+					.filter(
+						(value, index, array) => array.indexOf(value) === index
+					)
+					.sort((a, b) => (a < b ? 1 : -1))
+			: null;
 
 	if (sections) {
 		return {
@@ -63,6 +136,7 @@ const genTabContent = (
 											.includes(item.name);
 										let invalidRealm =
 											item.realm && item.realm !== realm;
+
 										return (
 											<Chip
 												onClick={() =>
@@ -77,13 +151,15 @@ const genTabContent = (
 													invalidRealm ||
 													(label ===
 														"Artisan Crafts" &&
-														(item.name ===
-															"Channel Waystone" ||
-															item.name ===
-																"Artisans Oil"))
+														item.name ===
+															"Artisans Oil") ||
+													item.name ===
+														"Channel Waystone"
 												}
 												key={item.name}
 											>
+												{label === "Artisan Crafts" &&
+													chipIcon(item.type)}
 												{item.name}
 											</Chip>
 										);
@@ -132,19 +208,21 @@ const genSelectedContent = (items, toggleFunction, noDisable) => {
 	if (!items || !items.length) {
 		return null;
 	}
-	return items?.map((i) => (
-		<Chip
-			onClick={() => toggleFunction({ name: i.name })}
-			shadow
-			key={i.name}
-			disabled={
-				!noDisable &&
-				(i.name === "Channel Waystone" || i.name === "Artisans Oil")
-			}
-		>
-			{i.name}
-		</Chip>
-	));
+	return items?.map((i) => {
+		return (
+			<Chip
+				onClick={() => toggleFunction({ name: i.name })}
+				shadow
+				key={i.name}
+				disabled={
+					!noDisable &&
+					(i.name === "Channel Waystone" || i.name === "Artisans Oil")
+				}
+			>
+				{i.name}
+			</Chip>
+		);
+	});
 };
 
 function OptionsPage() {
@@ -230,21 +308,31 @@ function OptionsPage() {
 		invTerritory,
 		toggleInvTerritory
 	);
-	var renderedSpells = showSpells
-		? genSelectedContent(spells, toggleSpell)
-		: null;
-	var renderedCrafts = showCrafts
-		? genSelectedContent(crafts, toggleCraft)
-		: null;
-	var renderedStartingItem = showCrafts
-		? genSelectedContent(startingItem, toggleStartingItem, true)
-		: null;
-	var renderedPotions = showPotions
-		? genSelectedContent(potions, togglePotion)
-		: null;
-	var renderedCeremonies = showCeremonies
-		? genSelectedContent(ceremonies, toggleCeremony)
-		: null;
+
+	var renderedSpells = useMemo(() => {
+		return showSpells ? genSelectedContent(spells, toggleSpell) : null;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [spells]);
+	var renderedCrafts = useMemo(() => {
+		return showCrafts ? genSelectedContent(crafts, toggleCraft) : null;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [crafts]);
+	var renderedStartingItem = useMemo(() => {
+		return showCrafts
+			? genSelectedContent(startingItem, toggleStartingItem, true)
+			: null;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [startingItem]);
+	var renderedPotions = useMemo(() => {
+		return showPotions ? genSelectedContent(potions, togglePotion) : null;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [potions]);
+	var renderedCeremonies = useMemo(() => {
+		return showCeremonies
+			? genSelectedContent(ceremonies, toggleCeremony)
+			: null;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ceremonies]);
 
 	// Conditionally generate each of the tabs on the right of the screen
 	// const renderedTabs = [
@@ -273,6 +361,16 @@ function OptionsPage() {
 			setInvTier(invTier + 1);
 		}
 	};
+
+	function investmentRegionWarning() {
+		const invRealm = getRegionRealm(invRegion[0]?.name);
+		if (invRealm && realm !== invRealm) {
+			console.log(realm, invRealm);
+
+			return "Your investment is in a region not held by your Realm, so it will function at half capacity.";
+		}
+		return "";
+	}
 
 	const investmentTabContent = (
 		<BackgroundInputWrapper>
@@ -331,7 +429,11 @@ function OptionsPage() {
 					})}
 				</AccordionSection>
 			)}
-			<AccordionSection title="Investment Region" link="Map_of_Esterra">
+			<AccordionSection
+				title="Investment Region"
+				link="Map_of_Esterra"
+				warning={investmentRegionWarning()}
+			>
 				{regionData.map((region) => {
 					let selected = invRegion
 						?.map((i) => i.name)

@@ -53,7 +53,7 @@
 	},
 	{
 		"name": "Bolsterlee",
-		"realm": "The Iron Valley",
+		"realm": "Iron Valley",
 		"link": "Bolsterlee",
 		"territories": [
 			"Highward",
@@ -65,7 +65,7 @@
 	},
 	{
 		"name": "Windholme",
-		"realm": "The Iron Valley",
+		"realm": "Iron Valley",
 		"link": "Windholme",
 		"territories": [
 			"Brakkenloh",
