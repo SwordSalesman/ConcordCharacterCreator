@@ -119,12 +119,12 @@ function ApprovalPanel({ character, handleApproval }) {
 				<TextInput
 					value={comment}
 					onChange={setComment}
-					placeholder='This will be shown to the player'
-					title='Comments'
+					placeholder="This will be shown to the player"
+					title="Comments"
 					fixed={false}
 					disabled={!character || loading}
 					invalid={!validInputs.validComment}
-					invalidText='Denied submissions should include a comment'
+					invalidText="Denied submissions should include a comment"
 				/>
 				<Button
 					style={{ marginTop: "15px" }}

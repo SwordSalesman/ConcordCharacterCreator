@@ -1,91 +1,91 @@
 [
-    {
-        "name": "Al-Asah's Antidote",
-        "type": "Tonic"
-    },
-    {
-        "name": "Arcmages Spirit",
-        "type": "Tonic"
-    },
-    {
-        "name": "Believers Burning Brew",
-        "type": "Potion"
-    },
-    {
-        "name": "Blessed Water of the Questing Knight",
-        "type": "Tonic"
-    },
-    {
-        "name": "Caricanium Solution",
-        "type": "Potion"
-    },
-    {
-        "name": "Concoction of Bright Morning",
-        "type": "Tonic"
-    },
-    {
-        "name": "Concoction of the Cold Night",
-        "type": "Tonic"
-    },
-    {
-        "name": "Conquerors Ale",
-        "type": "Potion"
-    },
-    {
-        "name": "Elixir Vitae",
-        "type": "Potion"
-    },
-    {
-        "name": "Fade of the Spheres",
-        "type": "Potion"
-    },
-    {
-        "name": "Fools Anaesthetic",
-        "type": "Potion"
-    },
-    {
-        "name": "Guardians Memory",
-        "type": "Tonic"
-    },
-    {
-        "name": "Leechbane (Ironblood Tonic)",
-        "type": "Tonic"
-    },
-    {
-        "name": "Kaida's Summer Special",
-        "type": "Potion"
-    },
-    {
-        "name": "Mageblood",
-        "type": "Potion"
-    },
-    {
-        "name": "Rhythm of the Spheres",
-        "type": "Tonic"
-    },
-    {
-        "name": "Soulfire",
-        "type": "Tonic"
-    },
-    {
-        "name": "Starblood",
-        "type": "Tonic"
-    },
-    {
-        "name": "Times Absence",
-        "type": "Tonic"
-    },
-    {
-        "name": "Van Demuers Solace",
-        "type": "Potion"
-    },
-    {
-        "name": "Warbrew",
-        "type": "Potion"
-    },
-    {
-        "name": "Stormseeker",
-        "type": "Potion",
-        "realm": "Lerona Mere"
-    }
+	{
+		"name": "Al-Asah's Antidote",
+		"type": "Tonic"
+	},
+	{
+		"name": "Arcmages Spirit",
+		"type": "Tonic"
+	},
+	{
+		"name": "Believers Burning Brew",
+		"type": "Potion"
+	},
+	{
+		"name": "Blessed Water of the Questing Knight",
+		"type": "Tonic"
+	},
+	{
+		"name": "Caricanium Solution",
+		"type": "Potion"
+	},
+	{
+		"name": "Concoction of Bright Morning",
+		"type": "Tonic"
+	},
+	{
+		"name": "Concoction of the Cold Night",
+		"type": "Tonic"
+	},
+	{
+		"name": "Conquerors Ale",
+		"type": "Potion"
+	},
+	{
+		"name": "Elixir Vitae",
+		"type": "Potion"
+	},
+	{
+		"name": "Fade of the Spheres",
+		"type": "Potion"
+	},
+	{
+		"name": "Fools Anaesthetic",
+		"type": "Potion"
+	},
+	{
+		"name": "Guardians Memory",
+		"type": "Tonic"
+	},
+	{
+		"name": "Leechbane (Ironblood Tonic)",
+		"type": "Tonic"
+	},
+	{
+		"name": "Kaida's Summer Special",
+		"type": "Potion"
+	},
+	{
+		"name": "Mageblood",
+		"type": "Potion"
+	},
+	{
+		"name": "Rhythm of the Spheres",
+		"type": "Tonic"
+	},
+	{
+		"name": "Soulfire",
+		"type": "Tonic"
+	},
+	{
+		"name": "Starblood",
+		"type": "Tonic"
+	},
+	{
+		"name": "Times Absence",
+		"type": "Tonic"
+	},
+	{
+		"name": "Van Demuers Solace",
+		"type": "Potion"
+	},
+	{
+		"name": "Warbrew",
+		"type": "Potion"
+	},
+	{
+		"name": "Stormseeker",
+		"type": "Potion",
+		"realm": "Lerona Mere"
+	}
 ]

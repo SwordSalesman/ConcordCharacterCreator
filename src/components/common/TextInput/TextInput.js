@@ -33,9 +33,9 @@ function TextInput({
 					value={value || ""}
 					onChange={handleChange}
 					placeholder={placeholder}
-					variant='outlined'
-					spellcheck='false'
-					maxLength='3000'
+					variant="outlined"
+					spellcheck="false"
+					maxLength="3000"
 					maxRows={maxRows}
 					type={password ? "password" : "text"}
 					invalid={invalid}
@@ -47,9 +47,9 @@ function TextInput({
 					value={value || ""}
 					onChange={handleChange}
 					placeholder={placeholder}
-					variant='outlined'
-					spellcheck='false'
-					maxLength='3000'
+					variant="outlined"
+					spellcheck="false"
+					maxLength="3000"
 					minRows={3}
 					maxRows={maxRows}
 					invalid={invalid}

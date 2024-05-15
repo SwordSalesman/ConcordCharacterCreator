@@ -11,15 +11,15 @@ const root = ReactDOM.createRoot(el);
 
 let site;
 if (process.env.REACT_APP_MAINTENANCE_MODE === "TRUE") {
-    site = <MaintenanceScreen />;
+	site = <MaintenanceScreen />;
 } else {
-    site = (
-        <UserContextProvider>
-            <FormContextProvider>
-                <App />
-            </FormContextProvider>
-        </UserContextProvider>
-    );
+	site = (
+		<UserContextProvider>
+			<FormContextProvider>
+				<App />
+			</FormContextProvider>
+		</UserContextProvider>
+	);
 }
 
 root.render(site);

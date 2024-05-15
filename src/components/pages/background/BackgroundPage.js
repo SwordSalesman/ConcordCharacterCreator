@@ -126,15 +126,15 @@ function BackgroundPage() {
 					<TextInput
 						value={heroName}
 						onChange={setHeroName}
-						title='Name'
-						placeholder='Enter your name'
+						title="Name"
+						placeholder="Enter your name"
 						// invalid={heroName.length < 1}
 						// invalidText="Don't forget your name"
 					/>
-					<AccordionSection title='Archetype' link={archetypeLink}>
+					<AccordionSection title="Archetype" link={archetypeLink}>
 						{renderedArchetype}
 					</AccordionSection>
-					<AccordionSection title='Grace' link='Graces'>
+					<AccordionSection title="Grace" link="Graces">
 						{renderedGrace}
 					</AccordionSection>
 				</BackgroundInputWrapper>
@@ -148,14 +148,14 @@ function BackgroundPage() {
 					<TextInput
 						value={warband}
 						onChange={setWarband}
-						title='Band'
-						placeholder='Name of your Band (if any)'
+						title="Band"
+						placeholder="Name of your Band (if any)"
 					/>
 					<TextInput
 						value={sect}
 						onChange={setSect}
-						title='Sect'
-						placeholder='Name of your Sect (if any)'
+						title="Sect"
+						placeholder="Name of your Sect (if any)"
 					/>
 				</BackgroundInputWrapper>
 			),
@@ -167,15 +167,15 @@ function BackgroundPage() {
 					<TextInput
 						value={icGoals}
 						onChange={setIcGoals}
-						title='In Character Goals'
-						placeholder='3000 character limit'
+						title="In Character Goals"
+						placeholder="3000 character limit"
 						style={{ minHeight: "3em" }}
 					/>
 					<TextInput
 						value={oocGoals}
 						onChange={setOocGoals}
-						title='Out of Character Goals'
-						placeholder='3000 character limit'
+						title="Out of Character Goals"
+						placeholder="3000 character limit"
 						style={{ minHeight: "3em" }}
 					/>
 				</BackgroundInputWrapper>
@@ -188,15 +188,15 @@ function BackgroundPage() {
 					<TextInput
 						value={backstory}
 						onChange={setBackstory}
-						title='Character Backstory'
-						placeholder='3000 character limit'
+						title="Character Backstory"
+						placeholder="3000 character limit"
 						style={{ minHeight: "3em" }}
 					/>
 					<TextInput
 						value={invDetails}
 						onChange={setInvDetails}
-						title='Investment Description'
-						placeholder='3000 character limit'
+						title="Investment Description"
+						placeholder="3000 character limit"
 						style={{ minHeight: "3em" }}
 					/>
 				</BackgroundInputWrapper>
@@ -207,7 +207,7 @@ function BackgroundPage() {
 	return (
 		<BackgroundPageWrapper>
 			<ContentPane style={{ width: "100%" }}>
-				<SectionDivider left='Tell us about yourself'></SectionDivider>
+				<SectionDivider left="Tell us about yourself"></SectionDivider>
 				<SectionWrapper />
 				<Accordion items={tabs}></Accordion>
 			</ContentPane>

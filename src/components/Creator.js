@@ -214,15 +214,15 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 			</CreatorWrapper>
 
 			<ConfirmModal
-				title='Reset Character?'
+				title="Reset Character?"
 				message="Your changes won't be saved until you submit."
 				show={showConfirmReset}
 				handleClose={handleResetClose}
 			></ConfirmModal>
 
 			<ConfirmModal
-				title='Save & Submit Character?'
-				message='You can submit multiple times.'
+				title="Save & Submit Character?"
+				message="You can submit multiple times."
 				show={showConfirmSubmit}
 				handleClose={(response) => {
 					setShowConfirmSubmit(false);

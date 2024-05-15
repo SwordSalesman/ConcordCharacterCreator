@@ -1,7 +1,7 @@
 import { createGlobalStyle, styled } from "styled-components";
 
 export const mediaSize = {
-    small: 600,
+	small: 600,
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -31,23 +31,23 @@ export const GlobalStyle = createGlobalStyle`
 
 // "h-[100vh] flex justify-center bg-gradient-to-b from-white to-slate-300 font-serif";
 export const StyledApp = styled.div`
-    margin-top: 50px;
+	margin-top: 50px;
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 `;
 
 export const FlexCenter = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const ScreenWrapper = styled.div`
-    position: absolute;
-    top: 50px;
-    width: 100%;
+	position: absolute;
+	top: 50px;
+	width: 100%;
 `;

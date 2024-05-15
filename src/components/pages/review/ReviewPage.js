@@ -93,11 +93,11 @@ function ReviewPage({ user }) {
 	return (
 		<ReviewPageWrapper>
 			<ReviewPaneWrapper>
-				<ContentPane mobileshow='true'>
+				<ContentPane mobileshow="true">
 					{!valid ? invalidWarning : null}
-					<div className='flex flex-col items-center mt-2 gap-2'>
+					<div className="flex flex-col items-center mt-2 gap-2">
 						<div>
-							<h2 className='text-xl leading-6'>
+							<h2 className="text-xl leading-6">
 								{heroName ? heroName : "Nameless Hero"}
 							</h2>
 							<ReviewSubtitles>
@@ -122,11 +122,11 @@ function ReviewPage({ user }) {
 							)}
 						</div>
 						<StyledBorder />
-						<ReviewItem label='Summits attended'>
+						<ReviewItem label="Summits attended">
 							{gamesPlayed}
 						</ReviewItem>
 						{investment && (
-							<ReviewItem label='Investment'>
+							<ReviewItem label="Investment">
 								{`Tier ${invTier} `}
 								{invOption && invOption[0]
 									? `${invOption[0].name} `
@@ -142,35 +142,35 @@ function ReviewPage({ user }) {
 						)}
 						{(warband || sect) && <StyledBorder />}
 						{warband && (
-							<ReviewItem label='Band'>{warband}</ReviewItem>
+							<ReviewItem label="Band">{warband}</ReviewItem>
 						)}
-						{sect && <ReviewItem label='Sect'>{sect}</ReviewItem>}
+						{sect && <ReviewItem label="Sect">{sect}</ReviewItem>}
 						<StyledBorder />
-						<ReviewItem label='Skills'>{renderedSkills}</ReviewItem>
+						<ReviewItem label="Skills">{renderedSkills}</ReviewItem>
 						{spells.length > 0 && (
-							<ReviewItem label='Spells'>
+							<ReviewItem label="Spells">
 								{spells.map((s) => s.name).join(delimiter)}
 							</ReviewItem>
 						)}
 						{crafts.length > 0 && (
-							<ReviewItem label='Crafts'>
+							<ReviewItem label="Crafts">
 								{crafts.map((s) => s.name).join(delimiter)}
 							</ReviewItem>
 						)}
 						{startingItem.length && (
-							<ReviewItem label='Starting Item'>
+							<ReviewItem label="Starting Item">
 								{startingItem
 									.map((s) => s.name)
 									.join(delimiter)}
 							</ReviewItem>
 						)}
 						{potions.length > 0 && (
-							<ReviewItem label='Potions'>
+							<ReviewItem label="Potions">
 								{potions.map((s) => s.name).join(delimiter)}
 							</ReviewItem>
 						)}
 						{ceremonies.length > 0 && (
-							<ReviewItem label='Ceremonies'>
+							<ReviewItem label="Ceremonies">
 								{ceremonies.map((s) => s.name).join(delimiter)}
 							</ReviewItem>
 						)}

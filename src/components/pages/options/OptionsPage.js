@@ -276,7 +276,7 @@ function OptionsPage() {
 
 	const investmentTabContent = (
 		<BackgroundInputWrapper>
-			<AccordionSection title='Investment Type' link='Investments'>
+			<AccordionSection title="Investment Type" link="Investments">
 				{investmentData.map((item) => {
 					let selected = investment
 						?.map((i) => i.name)
@@ -295,7 +295,7 @@ function OptionsPage() {
 					);
 				})}
 			</AccordionSection>
-			<AccordionSection title='Investment Tier'>
+			<AccordionSection title="Investment Tier">
 				<FlexCenter
 					style={{
 						margin: "5px 0",
@@ -311,7 +311,7 @@ function OptionsPage() {
 				</FlexCenter>
 			</AccordionSection>
 			{investmentOptions && (
-				<AccordionSection title='Investment Option'>
+				<AccordionSection title="Investment Option">
 					{investmentOptions.map((item) => {
 						let selected = invOption
 							?.map((i) => i.name)
@@ -331,7 +331,7 @@ function OptionsPage() {
 					})}
 				</AccordionSection>
 			)}
-			<AccordionSection title='Investment Region' link='Map_of_Esterra'>
+			<AccordionSection title="Investment Region" link="Map_of_Esterra">
 				{regionData.map((region) => {
 					let selected = invRegion
 						?.map((i) => i.name)
@@ -351,7 +351,7 @@ function OptionsPage() {
 				})}
 			</AccordionSection>
 			<AccordionSection
-				title='Investment Territory'
+				title="Investment Territory"
 				link={
 					invRegion[0]
 						? regionData.find(
@@ -477,7 +477,7 @@ function OptionsPage() {
 		<SkillPageWrapper>
 			<ContentPane style={{ flex: 4 }}>
 				<SectionDivider
-					left='Investment'
+					left="Investment"
 					right={numInvestment > 0 && `(${numInvestment} remaining)`}
 				/>
 				<SectionWrapper>
@@ -523,7 +523,7 @@ function OptionsPage() {
 				{showSpells && (
 					<>
 						<SectionDivider
-							left='Spells'
+							left="Spells"
 							right={numSpells > 0 && `(${numSpells} remaining)`}
 						/>
 						<SectionWrapper>{renderedSpells}</SectionWrapper>
@@ -532,12 +532,12 @@ function OptionsPage() {
 				{showCrafts && (
 					<>
 						<SectionDivider
-							left='Crafts'
+							left="Crafts"
 							right={numCrafts > 0 && `(${numCrafts} remaining)`}
 						/>
 						<SectionWrapper>{renderedCrafts}</SectionWrapper>
 						<SectionDivider
-							left='Starting Item'
+							left="Starting Item"
 							right={
 								numStartingItems > 0 &&
 								`(${numStartingItems} remaining)`
@@ -549,7 +549,7 @@ function OptionsPage() {
 				{showPotions && (
 					<>
 						<SectionDivider
-							left='Potions'
+							left="Potions"
 							right={
 								numPotions > 0 && `(${numPotions} remaining)`
 							}
