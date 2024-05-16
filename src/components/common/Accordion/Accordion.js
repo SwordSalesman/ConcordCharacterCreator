@@ -9,9 +9,7 @@ import {
 } from "./Accordion.style";
 
 function Accordion({ items }) {
-	const [expandedIndexes, setExpandedIndexes] = useState(
-		new Array(items.length).fill(false)
-	);
+	const [expandedIndexes, setExpandedIndexes] = useState(new Array(items.length).fill(false));
 
 	const handleLabelClick = (clickedIndex) => {
 		const newIndexes = expandedIndexes.map((expandedValue, index) => {
@@ -38,10 +36,7 @@ function Accordion({ items }) {
 
 		return (
 			<React.Fragment key={index + "wrapper"}>
-				<AccordionHeader
-					onClick={() => handleLabelClick(index)}
-					key={index}
-				>
+				<AccordionHeader onClick={() => handleLabelClick(index)} key={index}>
 					{item.label}
 					{icon}
 				</AccordionHeader>

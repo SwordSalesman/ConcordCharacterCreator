@@ -39,10 +39,9 @@ function IntroPage() {
 			</FlexCenter>
 			<br />
 			<p>
-				To save and submit your character to the team, you'll need to
-				sign in on the top right. Your character won't be saved or
-				submitted until you click <i>Save & Submit</i> on the final
-				step.
+				To save and submit your character to the team, you'll need to sign in on the top
+				right. Your character won't be saved or submitted until you click{" "}
+				<i>Save & Submit</i> on the final step.
 			</p>
 			<br />
 			<TitleWrapper>

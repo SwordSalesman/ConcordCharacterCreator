@@ -16,11 +16,7 @@ function CharacterList({ characters, handleSelect, activeCharacter }) {
 						activeCharacter?.heroName === c.heroName &&
 						activeCharacter?.email === c.email;
 					return (
-						<ListItem
-							key={i}
-							onClick={() => handleSelect(c)}
-							active={active}
-						>
+						<ListItem key={i} onClick={() => handleSelect(c)} active={active}>
 							<ListItemTitle>
 								<TitleGradient active={active} />
 								<b>{c.heroName}</b>
@@ -29,9 +25,7 @@ function CharacterList({ characters, handleSelect, activeCharacter }) {
 								<p>{c.player}</p>
 								<p>{c.date}</p>
 							</ListItemRow>
-							<ApprovalStatus>
-								{c.approval?.status ?? PENDING}
-							</ApprovalStatus>
+							<ApprovalStatus>{c.approval?.status ?? PENDING}</ApprovalStatus>
 						</ListItem>
 					);
 			  })

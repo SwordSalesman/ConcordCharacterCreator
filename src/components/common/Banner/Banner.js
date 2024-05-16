@@ -30,11 +30,7 @@ export function Banner({ show, full, summary, type }) {
 
 	return (
 		<BannerSpacer>
-			<BannerWrapper
-				expanded={expanded}
-				onClick={handleClick}
-				type={type ?? "warning"}
-			>
+			<BannerWrapper expanded={expanded} onClick={handleClick} type={type ?? "warning"}>
 				<BannerArrow expanded={expanded}>
 					<BiChevronUp size={30} />
 				</BannerArrow>

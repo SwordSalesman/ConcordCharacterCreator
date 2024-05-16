@@ -21,9 +21,7 @@ export const ListItem = styled.li`
 
 	&:hover {
 		/* background-color: ${(props) => props.theme.backgroundRaised}; */
-		filter: brightness(
-			${(props) => (props.theme.name === "light" ? "0.95" : "1.1")}
-		);
+		filter: brightness(${(props) => (props.theme.name === "light" ? "0.95" : "1.1")});
 	}
 
 	overflow: hidden;
@@ -49,11 +47,7 @@ export const TitleGradient = styled.div`
 	background: linear-gradient(
 		90deg,
 		rgba(0, 0, 0, 0) 0%,
-		${(props) =>
-				props.active
-					? props.theme.background300
-					: props.theme.background}
-			30%
+		${(props) => (props.active ? props.theme.background300 : props.theme.background)} 30%
 	);
 `;
 

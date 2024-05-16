@@ -64,8 +64,7 @@ export const StyledChip = styled.button`
 			? props.theme.border
 			: props.theme.border};
 
-	/* box-shadow: ${(props) =>
-		props.shadow ? "0 0 5px " + props.theme.shadow : "0"}; */
+	/* box-shadow: ${(props) => (props.shadow ? "0 0 5px " + props.theme.shadow : "0")}; */
 `;
 
 export const SkillCost = styled.div`

@@ -1,7 +1,4 @@
-import {
-	StyledSectionDivider,
-	StyledSectionValue,
-} from "./SectionDivider.style";
+import { StyledSectionDivider, StyledSectionValue } from "./SectionDivider.style";
 
 function SectionDivider({ left, right, ...rest }) {
 	return (

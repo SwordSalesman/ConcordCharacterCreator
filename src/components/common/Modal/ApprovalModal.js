@@ -6,14 +6,7 @@ import Button from "../Button/Button";
 import { APPROVED, DENIED } from "../../../helpers/constants";
 import { StyledBorder } from "../../pages/review/ReviewPage.style";
 
-function ApprovalModal({
-	show,
-	handleClose,
-	submissionDate,
-	approval,
-	highlightColor,
-	options,
-}) {
+function ApprovalModal({ show, handleClose, submissionDate, approval, highlightColor, options }) {
 	let title = "Approval Pending";
 	let submissionInfo = `Latest submission ${submissionDate}`;
 	let subtitle = "Your character is set to be approved by the team";

@@ -3,22 +3,13 @@
 		"name": "The Tribelands",
 		"realm": "Andash",
 		"link": "The_Tribelands",
-		"territories": [
-			"True Wilds",
-			"Obregon",
-			"Tanebar Sea East",
-			"The Crescent"
-		]
+		"territories": ["True Wilds", "Obregon", "Tanebar Sea East", "The Crescent"]
 	},
 	{
 		"name": "Mukarrem",
 		"realm": "Andash",
 		"link": "Mukarrem",
-		"territories": [
-			"The Priado Expanse",
-			"The Northern Grasses",
-			"Nazafeza"
-		]
+		"territories": ["The Priado Expanse", "The Northern Grasses", "Nazafeza"]
 	},
 	{
 		"name": "Lerona Mere",
@@ -55,13 +46,7 @@
 		"name": "Bolsterlee",
 		"realm": "Iron Valley",
 		"link": "Bolsterlee",
-		"territories": [
-			"Highward",
-			"Bayward",
-			"Jaalstead",
-			"Strivington",
-			"The Bailite Woods"
-		]
+		"territories": ["Highward", "Bayward", "Jaalstead", "Strivington", "The Bailite Woods"]
 	},
 	{
 		"name": "Windholme",

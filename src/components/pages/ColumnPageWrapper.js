@@ -3,9 +3,7 @@ import { mediaSize } from "../../styles/Global";
 import React from "react";
 
 export function ColumnPageComponent({ direction, children }) {
-	return (
-		<ColumnPageContent direction={direction}>{children}</ColumnPageContent>
-	);
+	return <ColumnPageContent direction={direction}>{children}</ColumnPageContent>;
 }
 
 export const ColumnPage = styled(ColumnPageComponent)`

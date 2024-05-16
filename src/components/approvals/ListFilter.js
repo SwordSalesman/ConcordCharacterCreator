@@ -3,13 +3,7 @@ import styled from "styled-components";
 import Button from "../common/Button/Button";
 import { APPROVED, DENIED, PENDING } from "../../helpers/constants";
 
-function ListFilter({
-	dateOrder,
-	toggleDateOrder,
-	filter,
-	selectFilter,
-	counts,
-}) {
+function ListFilter({ dateOrder, toggleDateOrder, filter, selectFilter, counts }) {
 	return (
 		<ListFilterWrapper>
 			<DateOrderer onClick={toggleDateOrder}>

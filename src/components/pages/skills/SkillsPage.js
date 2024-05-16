@@ -10,8 +10,7 @@ var tabs = require("../../../data/tables/skillTabs.json");
 var baseSkills = require("../../../data/tables/skills.json");
 
 function SkillsPage() {
-	const { skills, toggleSkill, validSkillChoice, remainingXp } =
-		useFormContext();
+	const { skills, toggleSkill, validSkillChoice, remainingXp } = useFormContext();
 
 	// toggles the selection of the skill, then checks validity for all skills
 	const handleClickSkill = (skill) => {
@@ -39,9 +38,7 @@ function SkillsPage() {
 						selectSkill={handleClickSkill}
 						selected={selected}
 						inactive={
-							!selected &&
-							(!validSkillChoice(skill) ||
-								skill.cost > remainingXp)
+							!selected && (!validSkillChoice(skill) || skill.cost > remainingXp)
 						}
 						key={skill.name}
 					></SkillItem>
@@ -55,11 +52,7 @@ function SkillsPage() {
 	const renderedSkills = skills?.map((skill) => {
 		return (
 			<div key={skill.name + skill.cost}>
-				<SkillItem
-					skill={skill}
-					selectSkill={handleClickSkill}
-					shadow
-				></SkillItem>
+				<SkillItem skill={skill} selectSkill={handleClickSkill} shadow></SkillItem>
 			</div>
 		);
 	});

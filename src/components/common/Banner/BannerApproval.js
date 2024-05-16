@@ -71,16 +71,14 @@ export function BannerApproval({ show, dateSubmitted, approval }) {
 			return {
 				full: `Your submission on ${prettifyDate(
 					dateSubmitted
-				)} was approved for a previous game, and is ready for ${
-					next.name
-				}`,
+				)} was approved for a previous game, and is ready for ${next.name}`,
 				summary: "Submitted",
 			};
 		} else if (submitState === 4) {
 			return {
-				full: `Your submission on ${prettifyDate(
-					dateSubmitted
-				)} is approved ready for ${next.name}`,
+				full: `Your submission on ${prettifyDate(dateSubmitted)} is approved ready for ${
+					next.name
+				}`,
 				summary: "Submitted",
 			};
 		}
@@ -105,11 +103,7 @@ export function BannerApproval({ show, dateSubmitted, approval }) {
 
 	return (
 		<BannerSpacer>
-			<BannerWrapper
-				expanded={expanded}
-				onClick={handleClick}
-				type={type}
-			>
+			<BannerWrapper expanded={expanded} onClick={handleClick} type={type}>
 				<BannerArrow expanded={expanded}>
 					<BiChevronUp size={30} />
 				</BannerArrow>
@@ -118,9 +112,7 @@ export function BannerApproval({ show, dateSubmitted, approval }) {
 						{messages.full}
 						{/* <p>{approval ? approval.status : null}</p> */}
 					</FullText>
-					<SummaryText expanded={expanded}>
-						{messages.summary}
-					</SummaryText>
+					<SummaryText expanded={expanded}>{messages.summary}</SummaryText>
 				</BannerContent>
 			</BannerWrapper>
 		</BannerSpacer>

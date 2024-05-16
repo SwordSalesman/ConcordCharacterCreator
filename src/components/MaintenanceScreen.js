@@ -17,8 +17,8 @@ function MaintenanceScreen() {
 				<Title>Under Maintenance</Title>
 				<TextBlock>
 					<p>
-						The character creator is having some work done, check
-						back here shortly. Sorry for the inconvenience!
+						The character creator is having some work done, check back here shortly.
+						Sorry for the inconvenience!
 					</p>
 					<i>- Concord Web Team</i>
 				</TextBlock>

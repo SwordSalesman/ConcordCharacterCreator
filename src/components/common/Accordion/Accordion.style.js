@@ -79,6 +79,5 @@ export const AccordionArrow = styled.div`
 
 	transition-duration: 0.3s;
 
-	transform: ${(props) =>
-		props.expanded ? "rotate(0deg)" : "rotate(-180deg)"};
+	transform: ${(props) => (props.expanded ? "rotate(0deg)" : "rotate(-180deg)")};
 `;

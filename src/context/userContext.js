@@ -37,11 +37,7 @@ function UserContextProvider({ children }) {
 		isAdmin,
 	};
 
-	return (
-		<UserContext.Provider value={userContext}>
-			{children}
-		</UserContext.Provider>
-	);
+	return <UserContext.Provider value={userContext}>{children}</UserContext.Provider>;
 }
 
 export { UserContextProvider };

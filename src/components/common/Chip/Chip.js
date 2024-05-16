@@ -1,15 +1,7 @@
 import { StyledChip } from "./Chip.styled";
 import React from "react";
 
-function Chip({
-	children,
-	onClick,
-	selected,
-	skillstyle,
-	shadow,
-	inactive,
-	...rest
-}) {
+function Chip({ children, onClick, selected, skillstyle, shadow, inactive, ...rest }) {
 	const handleClick = () => {
 		if (!inactive) {
 			onClick();

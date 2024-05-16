@@ -14,10 +14,8 @@ export const StyledTabItem = styled.button`
 		border-color: ${(props) => props.theme.outline};
 	}
 
-	border-color: ${(props) =>
-		props.primary ? props.theme.special : "#ffffff00"};
-	color: ${(props) =>
-		props.primary ? props.theme.textStrong : props.theme.text};
+	border-color: ${(props) => (props.primary ? props.theme.special : "#ffffff00")};
+	color: ${(props) => (props.primary ? props.theme.textStrong : props.theme.text)};
 
 	opacity: ${(props) => (props.primary ? "1.0" : "0.5")};
 	flex: 1;

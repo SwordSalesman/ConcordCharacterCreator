@@ -48,9 +48,7 @@ function BackgroundPage() {
 			newRender = allArchetypes
 				.filter((a) => a.realm === realm)
 				.map((a) => {
-					let selected = archetype
-						?.map((selA) => selA.name)
-						.includes(a.name);
+					let selected = archetype?.map((selA) => selA.name).includes(a.name);
 					return (
 						<Chip
 							onClick={() => toggleArchetype(a)}
@@ -76,11 +74,7 @@ function BackgroundPage() {
 				</Chip>
 			);
 		} else {
-			newRender = (
-				<p style={{ opacity: 0.5, fontStyle: "italic" }}>
-					Select a realm first
-				</p>
-			);
+			newRender = <p style={{ opacity: 0.5, fontStyle: "italic" }}>Select a realm first</p>;
 		}
 		setRenderedArchetype(newRender);
 		// eslint-disable-next-line react-hooks/exhaustive-deps

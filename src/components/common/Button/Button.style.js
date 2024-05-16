@@ -18,8 +18,7 @@ export const StyledButton = styled.button`
 
 	user-select: none;
 
-	border-color: ${(props) =>
-		props.primary ? props.theme.specialBg : props.theme.border};
+	border-color: ${(props) => (props.primary ? props.theme.specialBg : props.theme.border)};
 	background-color: ${(props) => {
 		if (props.disabled) {
 			return props.theme.backgroundRaised;

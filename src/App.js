@@ -57,24 +57,12 @@ function App() {
 										/>
 									}
 								/>
-								<Route
-									path={`${PATH_APPROVALS}`}
-									element={<Approvals />}
-								>
-									<Route
-										path=":uid"
-										element={<Approvals />}
-									/>
+								<Route path={`${PATH_APPROVALS}`} element={<Approvals />}>
+									<Route path=":uid" element={<Approvals />} />
 								</Route>
-								<Route
-									path=":any"
-									element={<Navigate to={PATH_HOME} />}
-								/>
+								<Route path=":any" element={<Navigate to={PATH_HOME} />} />
 							</Routes>
-							<Login
-								show={showLogin}
-								handleClose={handleCloseLogin}
-							/>
+							<Login show={showLogin} handleClose={handleCloseLogin} />
 						</ScreenWrapper>
 					</BrowserRouter>
 					<Toaster

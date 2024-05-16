@@ -28,8 +28,7 @@ export const light = {
 		"linear-gradient(125deg, rgba(147, 201, 134, 1) 0%, rgba(132, 196, 219, 1) 100%);",
 	bannerWarning:
 		"linear-gradient(125deg, rgba(189, 123, 99, 1) 0%, rgba(222, 184, 118, 1) 100%);",
-	bannerError:
-		"linear-gradient(125deg, rgba(182, 117, 138, 1) 0%, rgba(232, 161, 131, 1) 100%);",
+	bannerError: "linear-gradient(125deg, rgba(182, 117, 138, 1) 0%, rgba(232, 161, 131, 1) 100%);",
 };
 
 export const dark = {
@@ -56,10 +55,7 @@ export const dark = {
 	error: "#d95151",
 
 	wikiButton: "#7560cb",
-	bannerSuccess:
-		"linear-gradient(125deg, rgba(95, 155, 81, 1) 0%, rgba(68, 165, 201, 1) 100%);",
-	bannerWarning:
-		"linear-gradient(125deg, rgba(190, 109, 84, 1) 0%, rgba(207, 166, 76, 1) 100%);",
-	bannerError:
-		"linear-gradient(125deg, rgba(170, 94, 113, 1) 0%, rgba(206, 124, 94, 1) 100%);",
+	bannerSuccess: "linear-gradient(125deg, rgba(95, 155, 81, 1) 0%, rgba(68, 165, 201, 1) 100%);",
+	bannerWarning: "linear-gradient(125deg, rgba(190, 109, 84, 1) 0%, rgba(207, 166, 76, 1) 100%);",
+	bannerError: "linear-gradient(125deg, rgba(170, 94, 113, 1) 0%, rgba(206, 124, 94, 1) 100%);",
 };

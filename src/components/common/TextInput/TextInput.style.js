@@ -21,8 +21,7 @@ export const StyledTextField = styled(TextareaAutosize)`
 
 	line-height: 1.2rem;
 
-	border: ${(props) =>
-		props.invalid ? `2px solid ${props.theme.error}` : "default"};
+	border: ${(props) => (props.invalid ? `2px solid ${props.theme.error}` : "default")};
 
 	opacity: ${(props) => (props.disabled ? "0.7" : "1")};
 `;
@@ -42,8 +41,7 @@ export const StyledInputField = styled.input`
 	line-height: 1.2rem;
 	letter-spacing: -0.2px;
 
-	border: ${(props) =>
-		props.invalid ? `2px solid ${props.theme.error}` : "default"};
+	border: ${(props) => (props.invalid ? `2px solid ${props.theme.error}` : "default")};
 `;
 
 export const FieldWarning = styled.p`

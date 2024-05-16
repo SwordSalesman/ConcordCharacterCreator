@@ -92,8 +92,7 @@ export const BannerArrow = styled.div`
 
 	transition-duration: 0.4s;
 
-	transform: ${(props) =>
-		props.expanded ? "rotate(0deg)" : "rotate(-180deg)"};
+	transform: ${(props) => (props.expanded ? "rotate(0deg)" : "rotate(-180deg)")};
 `;
 
 export const BannerContent = styled.div`

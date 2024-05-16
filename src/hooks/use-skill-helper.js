@@ -69,9 +69,7 @@ export function getFullSkillsFromSummary(summary) {
 	const skills = names.map((name) => {
 		// baseName = "Juggernaut"
 		const { name: baseName } = getSkillNameAndRank(name);
-		const skillMatch = skillsAndNames.find(
-			(element) => element.baseName === baseName
-		);
+		const skillMatch = skillsAndNames.find((element) => element.baseName === baseName);
 
 		// This needs to be here to account for skill being removed from the pool
 		if (skillMatch === undefined) {

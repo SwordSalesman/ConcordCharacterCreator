@@ -49,8 +49,7 @@ function Login({ show, handleClose }) {
 	};
 
 	const validateInputs = () => {
-		const validName =
-			tab === 1 || showForgotPassword || /\w+ \w+/.test(name);
+		const validName = tab === 1 || showForgotPassword || /\w+ \w+/.test(name);
 		const validEmail = /(.+@.+\..+)/.test(email);
 		const validPassword = showForgotPassword || password.length >= 6;
 
@@ -64,20 +63,17 @@ function Login({ show, handleClose }) {
 		if (validateInputs()) {
 			if (tab === 0) {
 				setLoading(true);
-				toast.promise(
-					registerWithEmailAndPassword(name, email, password),
-					{
-						success: () => {
-							setLoading(false);
-							return `Welcome, ${name}!`;
-						},
-						loading: "Signing up...",
-						error: (err) => {
-							setLoading(false);
-							return `Failed to sign up, ${err}`;
-						},
-					}
-				);
+				toast.promise(registerWithEmailAndPassword(name, email, password), {
+					success: () => {
+						setLoading(false);
+						return `Welcome, ${name}!`;
+					},
+					loading: "Signing up...",
+					error: (err) => {
+						setLoading(false);
+						return `Failed to sign up, ${err}`;
+					},
+				});
 			} else if (tab === 1) {
 				setLoading(true);
 				if (showForgotPassword) {
@@ -150,12 +146,7 @@ function Login({ show, handleClose }) {
 	) : null;
 
 	const tabs = (
-		<Tabs
-			value={tab}
-			onChange={handleChange}
-			centered
-			sx={{ minHeight: "0", marginBottom: 2 }}
-		>
+		<Tabs value={tab} onChange={handleChange} centered sx={{ minHeight: "0", marginBottom: 2 }}>
 			<Tab
 				sx={{
 					padding: "6px 0 6px 0",
@@ -255,12 +246,7 @@ function Login({ show, handleClose }) {
 							<p>{`Signed in as ${username}`}</p>
 							<p>{user.email}</p>
 						</div>
-						<Button
-							wide
-							primary
-							onClick={handleLogout}
-							loading={loading}
-						>
+						<Button wide primary onClick={handleLogout} loading={loading}>
 							Sign Out
 						</Button>
 					</div>
@@ -278,9 +264,7 @@ function Login({ show, handleClose }) {
 								>
 									{tab === 0 && "Sign Up"}
 									{tab === 1 &&
-										(showForgotPassword
-											? "Send recovery email"
-											: "Log In")}
+										(showForgotPassword ? "Send recovery email" : "Log In")}
 								</Button>
 							</div>
 						</InputForm>

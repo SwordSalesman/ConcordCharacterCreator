@@ -13,12 +13,7 @@ import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 import useUserContext from "../../../hooks/use-user-context";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-	APPROVED,
-	DENIED,
-	PATH_APPROVALS,
-	PATH_HOME,
-} from "../../../helpers/constants";
+import { APPROVED, DENIED, PATH_APPROVALS, PATH_HOME } from "../../../helpers/constants";
 import useFormContext from "../../../hooks/use-form-context";
 import ApprovalModal from "../Modal/ApprovalModal";
 
@@ -134,11 +129,7 @@ function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 						// onClick={handleLogoClick}
 					>
 						<HeaderConcordSigil
-							src={
-								theme.name === "light"
-									? ConcordSigil
-									: ConcordSigilInv
-							}
+							src={theme.name === "light" ? ConcordSigil : ConcordSigilInv}
 						/>
 					</Button>
 				</HeaderSigilWrapper>
