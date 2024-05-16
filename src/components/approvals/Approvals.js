@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCharacterList, getApprovalList } from "../../hooks/use-firebase";
-import {
-	ApprovalListWrapper,
-	ApprovalSelectWrapper,
-	ApprovalsWrapper,
-} from "./Approvals.style";
+import { ApprovalListWrapper, ApprovalSelectWrapper, ApprovalsWrapper } from "./Approvals.style";
 import useUserContext from "../../hooks/use-user-context";
 import { Navigate } from "react-router-dom";
 import { APPROVED, DENIED, PATH_HOME, PENDING } from "../../helpers/constants";
@@ -56,10 +52,7 @@ function Approvals() {
 
 	function calcCounts(chars) {
 		const pendingCount = chars.filter((c) => {
-			return (
-				!c.approval?.status ||
-				c.date.localeCompare(c.approval?.date) > 0
-			);
+			return !c.approval?.status || c.date.localeCompare(c.approval?.date) > 0;
 		}).length;
 		const approvedCount = chars.filter((c) => {
 			return c.approval?.status === APPROVED;
@@ -78,7 +71,7 @@ function Approvals() {
 	function handleApproval(approval) {
 		const newChars = characters.map((c) => {
 			if (c.id !== approval.id) return c;
-			return { ...c, approval: approval };
+			return { ...c, approval: approval, changes: "" };
 		});
 		setCharacters(newChars);
 		calcCounts(newChars);
@@ -93,8 +86,7 @@ function Approvals() {
 			if (!filter) return true;
 			if (
 				filter === PENDING &&
-				(!c.approval?.status ||
-					c.date.localeCompare(c.approval?.date) > 0)
+				(!c.approval?.status || c.date.localeCompare(c.approval?.date) > 0)
 			) {
 				return true;
 			}
@@ -120,10 +112,7 @@ function Approvals() {
 			</ApprovalListWrapper>
 			<ApprovalSelectWrapper>
 				<CharacterCard character={selectedChar} />
-				<ApprovalPanel
-					character={selectedChar}
-					handleApproval={handleApproval}
-				/>
+				<ApprovalPanel character={selectedChar} handleApproval={handleApproval} />
 			</ApprovalSelectWrapper>
 		</ApprovalsWrapper>
 	) : (

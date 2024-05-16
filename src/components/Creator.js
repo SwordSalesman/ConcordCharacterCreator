@@ -37,8 +37,7 @@ const tabs = [
 
 function Creator({ handleShowLogin, handleCloseLogin }) {
 	const { user, name } = useUserContext();
-	const { getSimpleForm, resetForm, realm, validateForm, date, setDate } =
-		useFormContext();
+	const { getSimpleForm, resetForm, realm, validateForm, date, setDate } = useFormContext();
 	const realmImage = useRealmImage(realm);
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const [direction, setDirection] = useState("right");
@@ -51,9 +50,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	let activeIndex = tabs.indexOf(activeTab);
 	const prevTab = activeIndex > 0 ? tabs[activeIndex - 1] : null;
 	const nextTab =
-		activeIndex >= 0 && activeIndex < tabs.length - 1
-			? tabs[activeIndex + 1]
-			: null;
+		activeIndex >= 0 && activeIndex < tabs.length - 1 ? tabs[activeIndex + 1] : null;
 
 	useEffect(() => {
 		handleCloseLogin();
@@ -145,9 +142,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 				}
 			>
 				<div>{prevTab ? <AiOutlineLeft /> : null}</div>
-				<div style={{ width: "100px" }}>
-					{prevTab ? prevTab.name : "Reset Form"}
-				</div>
+				<div style={{ width: "100px" }}>{prevTab ? prevTab.name : "Reset Form"}</div>
 			</Button>
 			<Button
 				primary
@@ -173,8 +168,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 		</>
 	);
 
-	const submissionsOpen =
-		Date.now() < new Date("2024-03-18T23:59:59.000+08:00");
+	const submissionsOpen = Date.now() < new Date("2024-03-18T23:59:59.000+08:00");
 
 	return (
 		<>
@@ -183,25 +177,18 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 				full={
 					submissionsOpen ? (
 						<p>
-							Submissions will close <b>March 18th.</b> Make sure
-							you submit your character and changes before then!
+							Submissions will close <b>March 18th.</b> Make sure you submit your
+							character and changes before then!
 						</p>
 					) : (
 						<p>
-							<b>Submissions are closed.</b> You may still use
-							this form and submit your character, but the team is
-							not guaranteed to approve your character or provide
-							a character bag.
+							<b>Submissions are closed.</b> You may still use this form and submit
+							your character, but the team is not guaranteed to approve your character
+							or provide a character bag.
 						</p>
 					)
 				}
-				summary={
-					submissionsOpen ? (
-						<p>Last Submit Date</p>
-					) : (
-						<p>Submissions Closed</p>
-					)
-				}
+				summary={submissionsOpen ? <p>Last Submit Date</p> : <p>Submissions Closed</p>}
 				type={submissionsOpen ? "warning" : "error"}
 			/>
 

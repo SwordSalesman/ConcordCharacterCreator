@@ -1,17 +1,17 @@
 import { createContext, useEffect, useState } from "react";
-import {
-	getFullSkillsFromSummary,
-	getSummarisedSkillNames,
-} from "../hooks/use-skill-helper";
+import { getFullSkillsFromSummary, getSummarisedSkillNames } from "../hooks/use-skill-helper";
 import React from "react";
 import { getUserFormAndApproval } from "../hooks/use-firebase";
 import useUserContext from "../hooks/use-user-context";
+import { getSimpleArrayFromSummary, summariseSimpleArray } from "../helpers/data-helper";
 
 const FormContext = createContext();
 
 function FormContextProvider({ children }) {
 	const { user } = useUserContext();
 	// State maintained
+	const [initialForm, setInitialForm] = useState({});
+	const [changes, setChanges] = useState([]);
 	const [approval, setApproval] = useState(null);
 	const [date, setDate] = useState(null);
 	const [realm, setRealm] = useState(null);
@@ -40,11 +40,11 @@ function FormContextProvider({ children }) {
 	// Derived Variables
 	const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
 	const remainingXp =
-		totalXp -
-		(skills ? skills.map((s) => s.cost).reduce((a, b) => a + b, 0) : 0);
+		totalXp - (skills ? skills.map((s) => s.cost).reduce((a, b) => a + b, 0) : 0);
 
 	// Get entire state
 	const getForm = () => {
+		const newChanges = updateChangedFields();
 		return {
 			date: date,
 			realm: realm,
@@ -69,11 +69,11 @@ function FormContextProvider({ children }) {
 			oocGoals: oocGoals,
 			backstory: backstory,
 			invDetails: invDetails,
+			changes: newChanges,
 		};
 	};
 
-	// Get entire state
-	const getSimpleForm = () => {
+	const getSimpleFormInternal = () => {
 		return {
 			date: date,
 			realm: realm,
@@ -98,7 +98,14 @@ function FormContextProvider({ children }) {
 			oocGoals: oocGoals,
 			backstory: backstory,
 			invDetails: invDetails,
+			changes: summariseSimpleArray(changes),
 		};
+	};
+
+	const getSimpleForm = () => {
+		const newChanges = summariseSimpleArray(updateChangedFields());
+		const simpleForm = getSimpleFormInternal();
+		return { ...simpleForm, changes: newChanges };
 	};
 
 	const unsaved = false;
@@ -127,10 +134,41 @@ function FormContextProvider({ children }) {
 		setOocGoals(data.oocGoals);
 		setBackstory(data.backstory);
 		setInvDetails(data.invDetails);
+		setChanges(data.changes);
 	};
 
-	const setFormFromSimplifiedData = (data) => {
+	const setFormFromSimplifiedData = (data, initialLoad) => {
 		if (!data) return;
+
+		if (initialLoad) {
+			setInitialForm({
+				date: data.date,
+				realm: data.realm,
+				gamesPlayed: data.gamesPlayed,
+				skills: data.skills,
+				investment: data.investment,
+				invOption: data.invOption,
+				invRegion: data.invRegion,
+				invTerritory: data.invTerritory,
+				invTier: data.invTier,
+				spells: data.spells,
+				crafts: data.crafts,
+				potions: data.potions,
+				ceremonies: data.ceremonies,
+				startingItem: data.startingItem,
+				heroName: data.heroName,
+				archetype: data.archetype,
+				grace: data.grace,
+				warband: data.warband,
+				sect: data.sect,
+				icGoals: data.icGoals,
+				oocGoals: data.oocGoals,
+				backstory: data.backstory,
+				invDetails: data.invDetails,
+				changes: data.changes,
+			});
+		}
+
 		setDate(data.date);
 		setRealm(data.realm);
 		setGamesPlayed(data.gamesPlayed);
@@ -154,10 +192,12 @@ function FormContextProvider({ children }) {
 		setOocGoals(data.oocGoals);
 		setBackstory(data.backstory);
 		setInvDetails(data.invDetails);
+		setChanges(getSimpleArrayFromSummary(data.changes));
 	};
 
 	const resetForm = () => {
 		setApproval(null);
+		setChanges([]);
 		setRealm(null);
 		setGamesPlayed(0);
 		setSkills([]);
@@ -187,7 +227,7 @@ function FormContextProvider({ children }) {
 		async function downloadForm() {
 			const newForm = await getUserFormAndApproval();
 			if (newForm) {
-				setFormFromSimplifiedData(newForm);
+				setFormFromSimplifiedData(newForm, true);
 				setApproval(newForm.approval);
 			}
 		}
@@ -252,18 +292,6 @@ function FormContextProvider({ children }) {
 		}
 	};
 
-	const summariseSimpleArray = (a) => {
-		if (!a) return null;
-		return a.map((i) => i.name).join(", ");
-	};
-
-	const getSimpleArrayFromSummary = (s) => {
-		if (!s || s === "") return [];
-		return s.split(", ").map((i) => {
-			return { name: i };
-		});
-	};
-
 	// Handling functions
 
 	const selectRealm = (selectedRealm) => {
@@ -277,42 +305,68 @@ function FormContextProvider({ children }) {
 		const validRealm = realm !== null;
 		const validName = heroName !== null && heroName.trim() !== "";
 		const validInvestment =
-			investment.length === 1 &&
-			invRegion.length === 1 &&
-			invTerritory.length === 1;
+			investment.length === 1 && invRegion.length === 1 && invTerritory.length === 1;
 		const valid = validRealm && validName && validInvestment;
 		return { valid, validRealm, validName, validInvestment };
 	};
 
 	// skill should be a skillObj formatted as if from the SkillItem method call
 	const validSkillChoice = (skill) => {
-		let prereqMet =
-			!skill.prereq || skills?.map((s) => s.name).includes(skill.prereq);
-		let notExcluded =
-			!skill.exclusion ||
-			!skills?.map((s) => s.name).includes(skill.exclusion);
+		let prereqMet = !skill.prereq || skills?.map((s) => s.name).includes(skill.prereq);
+		let notExcluded = !skill.exclusion || !skills?.map((s) => s.name).includes(skill.exclusion);
 		return prereqMet && notExcluded;
 	};
 
 	// skill should be a skillObj formatted as if from the SkillItem method call
 	const invalidSkillChoice = (skill) => {
 		// check for missing prerequisites
-		if (
-			skill.prereq &&
-			!skills?.map((s) => s.name).includes(skill.prereq)
-		) {
+		if (skill.prereq && !skills?.map((s) => s.name).includes(skill.prereq)) {
 			return `Missing prerequisite '${skill.prereq}'`;
 		}
 		// check for exclusion
-		if (
-			skill.exclusion &&
-			skills?.map((s) => s.name).includes(skill.exclusion)
-		) {
+		if (skill.exclusion && skills?.map((s) => s.name).includes(skill.exclusion)) {
 			return `Conflict with skill '${skill.exclusion}'`;
 		}
 		// check for remaining xp
 		// if ( skill. )
 		return false;
+	};
+
+	const updateChangedFields = () => {
+		const simpleForm = getSimpleFormInternal();
+
+		const currChanges = [];
+		if (simpleForm.date !== initialForm.date) currChanges.push("date");
+		if (simpleForm.realm !== initialForm.realm) currChanges.push("realm");
+		if (simpleForm.gamesPlayed !== initialForm.gamesPlayed) currChanges.push("gamesPlayed");
+		if (simpleForm.skills !== initialForm.skills) currChanges.push("skills");
+		if (simpleForm.investment !== initialForm.investment) currChanges.push("investment");
+		if (simpleForm.invOption !== initialForm.invOption) currChanges.push("invOption");
+		if (simpleForm.invRegion !== initialForm.invRegion) currChanges.push("invRegion");
+		if (simpleForm.invTerritory !== initialForm.invTerritory) currChanges.push("invTerritory");
+		if (simpleForm.invTier !== initialForm.invTier) currChanges.push("invTier");
+		if (simpleForm.spells !== initialForm.spells) currChanges.push("spells");
+		if (simpleForm.crafts !== initialForm.crafts) currChanges.push("crafts");
+		if (simpleForm.potions !== initialForm.potions) currChanges.push("potions");
+		if (simpleForm.ceremonies !== initialForm.ceremonies) currChanges.push("ceremonies");
+		if (simpleForm.startingItem !== initialForm.startingItem) currChanges.push("startingItem");
+		if (simpleForm.heroName !== initialForm.heroName) currChanges.push("heroName");
+		if (simpleForm.archetype !== initialForm.archetype) currChanges.push("archetype");
+		if (simpleForm.grace !== initialForm.grace) currChanges.push("grace");
+		if (simpleForm.warband !== initialForm.warband) currChanges.push("warband");
+		if (simpleForm.sect !== initialForm.sect) currChanges.push("sect");
+		if (simpleForm.icGoals !== initialForm.icGoals) currChanges.push("icGoals");
+		if (simpleForm.oocGoals !== initialForm.oocGoals) currChanges.push("oocGoals");
+		if (simpleForm.backstory !== initialForm.backstory) currChanges.push("backstory");
+		if (simpleForm.invDetails !== initialForm.invDetails) currChanges.push("invDetails");
+
+		const netChanges = changes ?? [];
+		currChanges.forEach((c) => {
+			if (netChanges.filter((nc) => nc.name === c)) netChanges.push({ name: c });
+		});
+
+		setChanges(netChanges);
+		return netChanges;
 	};
 
 	const toggleSkill = (skill) => {
@@ -347,10 +401,7 @@ function FormContextProvider({ children }) {
 	};
 
 	const toggleCraft = (craft) => {
-		if (
-			craft.name === "Artisans Oil" &&
-			crafts.find((c) => c.name === "Artisans Oil")
-		) {
+		if (craft.name === "Artisans Oil" && crafts.find((c) => c.name === "Artisans Oil")) {
 			return;
 		}
 		toggleItem(craft, crafts, setCrafts);
@@ -564,13 +615,11 @@ function FormContextProvider({ children }) {
 		approval,
 		setApproval,
 		validateForm,
+		changes,
+		updateChangedFields,
 	};
 
-	return (
-		<FormContext.Provider value={formContext}>
-			{children}
-		</FormContext.Provider>
-	);
+	return <FormContext.Provider value={formContext}>{children}</FormContext.Provider>;
 }
 
 export { FormContextProvider };

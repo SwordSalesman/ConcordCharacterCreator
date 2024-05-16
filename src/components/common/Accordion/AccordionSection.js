@@ -54,13 +54,14 @@ const SectionWarning = styled.div`
 	gap: 6px;
 
 	font-size: 0.8em;
+	line-height: 1.3em;
 	font-style: italic;
 	text-align: left;
 	padding: 4px 8px;
 	margin: 4px;
 	margin-bottom: 6px;
 	border-radius: 10px;
-	background-color: ${(props) => `${props.theme.error}40`};
+	background-color: ${(props) => `${props.theme.error}50`};
 
 	animation: warningFadeIn 0.5s;
 

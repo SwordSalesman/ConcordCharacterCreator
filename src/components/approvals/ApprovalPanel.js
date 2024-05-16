@@ -33,9 +33,7 @@ function ApprovalPanel({ character, handleApproval }) {
 					handleApproval({ ...approval, id: character.id });
 					setAuthor(name);
 					setDate(approval.date);
-					return status === APPROVED
-						? "Approval submitted"
-						: "Changes requested";
+					return status === APPROVED ? "Approval submitted" : "Changes requested";
 				},
 				loading: "Submitting...",
 				error: (err) => {
@@ -113,9 +111,7 @@ function ApprovalPanel({ character, handleApproval }) {
 					<i>Pending review</i>
 				)}
 
-				<StatusOptions error={!validInputs.validStatus}>
-					{statusOptions}
-				</StatusOptions>
+				<StatusOptions error={!validInputs.validStatus}>{statusOptions}</StatusOptions>
 				<TextInput
 					value={comment}
 					onChange={setComment}
@@ -126,11 +122,7 @@ function ApprovalPanel({ character, handleApproval }) {
 					invalid={!validInputs.validComment}
 					invalidText="Denied submissions should include a comment"
 				/>
-				<Button
-					style={{ marginTop: "15px" }}
-					outline
-					disabled={!character || loading}
-				>
+				<Button style={{ marginTop: "15px" }} outline disabled={!character || loading}>
 					Submit
 				</Button>
 			</ApprovalForm>
@@ -191,8 +183,7 @@ const StatusOption = styled.div`
 
 	border: 1px solid ${(props) => props.theme.border};
 	border-radius: 6px;
-	background-color: ${(props) =>
-		props.active ? props.color : props.theme.backgroundRaised};
+	background-color: ${(props) => (props.active ? props.color : props.theme.backgroundRaised)};
 	color: ${(props) => (props.active ? "white" : "default")};
 	opacity: ${(props) => (props.disabled ? "0.7" : "1")};
 	cursor: ${(props) => (props.disabled ? "default" : "pointer")};
@@ -200,9 +191,7 @@ const StatusOption = styled.div`
 	line-height: 1em;
 
 	&:hover {
-		filter: brightness(
-			${(props) => (props.theme.name === "light" ? "0.95" : "1.1")}
-		);
+		filter: brightness(${(props) => (props.theme.name === "light" ? "0.95" : "1.1")});
 	}
 `;
 

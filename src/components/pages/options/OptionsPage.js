@@ -3,10 +3,7 @@ import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import Chip from "../../common/Chip/Chip";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
-import {
-	SectionLine,
-	SectionWrapper,
-} from "../../common/SectionDivider/SectionDivider.style";
+import { SectionLine, SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { SkillPageWrapper } from "../skills/SkillsPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
@@ -109,10 +106,8 @@ const genTabContent = (
 			? allItems
 					.filter((i) => filterFunction(i))
 					.map((i) => i[subSectionTitle])
-					.filter(
-						(value, index, array) => array.indexOf(value) === index
-					)
-					.sort((a, b) => (a < b ? 1 : -1))
+					.filter((value, index, array) => array.indexOf(value) === index)
+					.sort((a, b) => (a > b ? 1 : -1))
 			: null;
 
 	if (sections) {
@@ -127,15 +122,12 @@ const genTabContent = (
 							<AccordionSection title={s} key={s}>
 								{allItems
 									.filter((item) => filterFunction(item))
-									.filter(
-										(item) => item[subSectionTitle] === s
-									)
+									.filter((item) => item[subSectionTitle] === s)
 									.map((item) => {
 										let selected = selectedItems
 											?.map((i) => i.name)
 											.includes(item.name);
-										let invalidRealm =
-											item.realm && item.realm !== realm;
+										let invalidRealm = item.realm && item.realm !== realm;
 
 										return (
 											<Chip
@@ -146,20 +138,15 @@ const genTabContent = (
 												}
 												selected={selected}
 												inactive={
-													(!selected &&
-														remainingPicks <= 0) ||
+													(!selected && remainingPicks <= 0) ||
 													invalidRealm ||
-													(label ===
-														"Artisan Crafts" &&
-														item.name ===
-															"Artisans Oil") ||
-													item.name ===
-														"Channel Waystone"
+													(label === "Artisan Crafts" &&
+														item.name === "Artisans Oil") ||
+													item.name === "Channel Waystone"
 												}
 												key={item.name}
 											>
-												{label === "Artisan Crafts" &&
-													chipIcon(item.type)}
+												{label === "Artisan Crafts" && chipIcon(item.type)}
 												{item.name}
 											</Chip>
 										);
@@ -181,14 +168,10 @@ const genTabContent = (
 					{allItems
 						.filter((item) => filterFunction(item))
 						.map((item) => {
-							let selected = selectedItems
-								?.map((i) => i.name)
-								.includes(item.name);
+							let selected = selectedItems?.map((i) => i.name).includes(item.name);
 							return (
 								<Chip
-									onClick={() =>
-										toggleFunction({ name: item.name })
-									}
+									onClick={() => toggleFunction({ name: item.name })}
 									selected={selected}
 									inactive={!selected && remainingPicks <= 0}
 									key={item.name}
@@ -215,8 +198,7 @@ const genSelectedContent = (items, toggleFunction, noDisable) => {
 				shadow
 				key={i.name}
 				disabled={
-					!noDisable &&
-					(i.name === "Channel Waystone" || i.name === "Artisans Oil")
+					!noDisable && (i.name === "Channel Waystone" || i.name === "Artisans Oil")
 				}
 			>
 				{i.name}
@@ -258,8 +240,7 @@ function OptionsPage() {
 	const showSpells = skillNames.includes("Magus");
 	const showCrafts = skillNames.includes("Artisan");
 	const showPotions = skillNames.includes("Apothecary");
-	const showCeremonies =
-		skillNames.filter((s) => s.startsWith("Divine Lore")).length > 0;
+	const showCeremonies = skillNames.filter((s) => s.startsWith("Divine Lore")).length > 0;
 
 	const numInvestment = 1 - (investment ? investment.length : 0);
 	const numInvRegion = 1 - (invRegion ? invRegion.length : 0);
@@ -269,8 +250,7 @@ function OptionsPage() {
 	const maxSpells = useMemo(() => {
 		return (
 			skillNames.includes("Magus") * 2 +
-			skillNames.filter((s) => s.startsWith("Additional Spell")).length *
-				1
+			skillNames.filter((s) => s.startsWith("Additional Spell")).length * 1
 		);
 	}, [skillNames]);
 	const numSpells = maxSpells - (spells ? spells.length : 0);
@@ -304,10 +284,7 @@ function OptionsPage() {
 	var renderedInvestment = genSelectedContent(investment, toggleInvestment);
 	var renderedInvOption = genSelectedContent(invOption, toggleInvOption);
 	var renderedInvRegion = genSelectedContent(invRegion, toggleInvRegion);
-	var renderedInvTerritory = genSelectedContent(
-		invTerritory,
-		toggleInvTerritory
-	);
+	var renderedInvTerritory = genSelectedContent(invTerritory, toggleInvTerritory);
 
 	var renderedSpells = useMemo(() => {
 		return showSpells ? genSelectedContent(spells, toggleSpell) : null;
@@ -318,9 +295,7 @@ function OptionsPage() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [crafts]);
 	var renderedStartingItem = useMemo(() => {
-		return showCrafts
-			? genSelectedContent(startingItem, toggleStartingItem, true)
-			: null;
+		return showCrafts ? genSelectedContent(startingItem, toggleStartingItem, true) : null;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [startingItem]);
 	var renderedPotions = useMemo(() => {
@@ -328,9 +303,7 @@ function OptionsPage() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [potions]);
 	var renderedCeremonies = useMemo(() => {
-		return showCeremonies
-			? genSelectedContent(ceremonies, toggleCeremony)
-			: null;
+		return showCeremonies ? genSelectedContent(ceremonies, toggleCeremony) : null;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ceremonies]);
 
@@ -365,8 +338,6 @@ function OptionsPage() {
 	function investmentRegionWarning() {
 		const invRealm = getRegionRealm(invRegion[0]?.name);
 		if (invRealm && realm !== invRealm) {
-			console.log(realm, invRealm);
-
 			return "Your investment is in a region not held by your Realm, so it will function at half capacity.";
 		}
 		return "";
@@ -376,14 +347,10 @@ function OptionsPage() {
 		<BackgroundInputWrapper>
 			<AccordionSection title="Investment Type" link="Investments">
 				{investmentData.map((item) => {
-					let selected = investment
-						?.map((i) => i.name)
-						.includes(item.name);
+					let selected = investment?.map((i) => i.name).includes(item.name);
 					return (
 						<Chip
-							onClick={() =>
-								toggleInvestment({ name: item.name })
-							}
+							onClick={() => toggleInvestment({ name: item.name })}
 							selected={selected}
 							inactive={!selected && numInvestment <= 0}
 							key={item.name}
@@ -411,14 +378,10 @@ function OptionsPage() {
 			{investmentOptions && (
 				<AccordionSection title="Investment Option">
 					{investmentOptions.map((item) => {
-						let selected = invOption
-							?.map((i) => i.name)
-							.includes(item.name);
+						let selected = invOption?.map((i) => i.name).includes(item.name);
 						return (
 							<Chip
-								onClick={() =>
-									toggleInvOption({ name: item.name })
-								}
+								onClick={() => toggleInvOption({ name: item.name })}
 								selected={selected}
 								inactive={!selected && numInvOption <= 0}
 								key={item.name}
@@ -435,14 +398,10 @@ function OptionsPage() {
 				warning={investmentRegionWarning()}
 			>
 				{regionData.map((region) => {
-					let selected = invRegion
-						?.map((i) => i.name)
-						.includes(region.name);
+					let selected = invRegion?.map((i) => i.name).includes(region.name);
 					return (
 						<Chip
-							onClick={() =>
-								toggleInvRegion({ name: region.name })
-							}
+							onClick={() => toggleInvRegion({ name: region.name })}
 							selected={selected}
 							inactive={!selected && numInvRegion <= 0}
 							key={region.name}
@@ -456,9 +415,7 @@ function OptionsPage() {
 				title="Investment Territory"
 				link={
 					invRegion[0]
-						? regionData.find(
-								(region) => region.name === invRegion[0].name
-						  ).link
+						? regionData.find((region) => region.name === invRegion[0].name).link
 						: null
 				}
 			>
@@ -466,9 +423,7 @@ function OptionsPage() {
 					regionData
 						.find((region) => region.name === invRegion[0].name)
 						.territories.map((territory) => {
-							let selected = invTerritory
-								?.map((i) => i.name)
-								.includes(territory);
+							let selected = invTerritory?.map((i) => i.name).includes(territory);
 							return (
 								<Chip
 									onClick={() =>
@@ -485,9 +440,7 @@ function OptionsPage() {
 							);
 						})
 				) : (
-					<p style={{ opacity: 0.5, fontStyle: "italic" }}>
-						Select a Region first
-					</p>
+					<p style={{ opacity: 0.5, fontStyle: "italic" }}>Select a Region first</p>
 				)}
 			</AccordionSection>
 		</BackgroundInputWrapper>
@@ -583,29 +536,19 @@ function OptionsPage() {
 					right={numInvestment > 0 && `(${numInvestment} remaining)`}
 				/>
 				<SectionWrapper>
-					{renderedInvestment ||
-					renderedInvOption ||
-					renderedInvRegion ? (
+					{renderedInvestment || renderedInvOption || renderedInvRegion ? (
 						<>
 							{renderedInvestment && (
-								<SectionLine>
-									Type: {renderedInvestment}
-								</SectionLine>
+								<SectionLine>Type: {renderedInvestment}</SectionLine>
 							)}
 							{renderedInvOption && (
-								<SectionLine>
-									Variant: {renderedInvOption}
-								</SectionLine>
+								<SectionLine>Variant: {renderedInvOption}</SectionLine>
 							)}
 							{renderedInvTerritory && (
-								<SectionLine>
-									Territory: {renderedInvTerritory}
-								</SectionLine>
+								<SectionLine>Territory: {renderedInvTerritory}</SectionLine>
 							)}
 							{renderedInvRegion && (
-								<SectionLine>
-									Region: {renderedInvRegion}
-								</SectionLine>
+								<SectionLine>Region: {renderedInvRegion}</SectionLine>
 							)}
 						</>
 					) : (
@@ -616,9 +559,7 @@ function OptionsPage() {
 								padding: "0 20px",
 							}}
 						>
-							{
-								"Select your Investment, as well as any other options you may need."
-							}
+							{"Select your Investment, as well as any other options you may need."}
 						</div>
 					)}
 				</SectionWrapper>
@@ -640,10 +581,7 @@ function OptionsPage() {
 						<SectionWrapper>{renderedCrafts}</SectionWrapper>
 						<SectionDivider
 							left="Starting Item"
-							right={
-								numStartingItems > 0 &&
-								`(${numStartingItems} remaining)`
-							}
+							right={numStartingItems > 0 && `(${numStartingItems} remaining)`}
 						/>
 						<SectionWrapper>{renderedStartingItem}</SectionWrapper>
 					</>
@@ -652,9 +590,7 @@ function OptionsPage() {
 					<>
 						<SectionDivider
 							left="Potions"
-							right={
-								numPotions > 0 && `(${numPotions} remaining)`
-							}
+							right={numPotions > 0 && `(${numPotions} remaining)`}
 						/>
 						<SectionWrapper>{renderedPotions}</SectionWrapper>
 					</>
@@ -663,10 +599,7 @@ function OptionsPage() {
 					<>
 						<SectionDivider
 							left={"Mastered Ceremonies"}
-							right={
-								numCeremonies > 0 &&
-								`(${numCeremonies} remaining)`
-							}
+							right={numCeremonies > 0 && `(${numCeremonies} remaining)`}
 						/>
 						<SectionWrapper>{renderedCeremonies}</SectionWrapper>
 					</>

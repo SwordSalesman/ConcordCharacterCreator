@@ -19,6 +19,7 @@ import {
 	getDoc,
 	doc,
 	setDoc,
+	updateDoc,
 } from "firebase/firestore";
 import { getCurrentDate } from "../helpers/date-helper";
 
@@ -141,6 +142,9 @@ const saveApproval = async (name, comment, status, subjectUid) => {
 		status: status,
 	};
 	await setDoc(doc(db, "approvals", subjectUid), approval);
+	await updateDoc(doc(db, "characters", subjectUid), {
+		changes: null,
+	});
 	return approval;
 };
 

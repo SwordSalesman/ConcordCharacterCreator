@@ -12,7 +12,6 @@ import {
 	StyledBorder,
 } from "./ReviewPage.style";
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
-import React from "react";
 const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {
@@ -47,6 +46,7 @@ function ReviewPage({ user }) {
 		warband,
 		sect,
 		validateForm,
+		changes,
 	} = useFormContext();
 	const realmFull = useRealmDetails(realm);
 	const { valid, validRealm, validName, validInvestment } = validateForm();
@@ -77,6 +77,7 @@ function ReviewPage({ user }) {
 		grace: grace,
 		warband: warband,
 		sect: sect,
+		changes: changes,
 	});
 
 	const invalidWarning = (
@@ -102,9 +103,7 @@ function ReviewPage({ user }) {
 							</h2>
 							<ReviewSubtitles>
 								{realmFull ? realmFull.citizen : "Realmless"}
-								{archetype?.length
-									? " " + archetype[0].name
-									: ""}
+								{archetype?.length ? " " + archetype[0].name : ""}
 							</ReviewSubtitles>
 							{grace && (
 								<ReviewSubtitles>
@@ -112,38 +111,26 @@ function ReviewPage({ user }) {
 										const fullGrace = graceData.find(
 											(gd) => gd.name === g.name
 										);
-										return (
-											g.name +
-											", Graced By " +
-											fullGrace.sphere
-										);
+										return g.name + ", Graced By " + fullGrace.sphere;
 									})}
 								</ReviewSubtitles>
 							)}
 						</div>
 						<StyledBorder />
-						<ReviewItem label="Summits attended">
-							{gamesPlayed}
-						</ReviewItem>
+						<ReviewItem label="Summits attended">{gamesPlayed}</ReviewItem>
 						{investment && (
 							<ReviewItem label="Investment">
 								{`Tier ${invTier} `}
-								{invOption && invOption[0]
-									? `${invOption[0].name} `
-									: ""}
+								{invOption && invOption[0] ? `${invOption[0].name} ` : ""}
 								{investment[0] ? investment[0].name : ""}
 								{invTerritory && invTerritory[0]
 									? ` in ${invTerritory[0].name}`
 									: ""}
-								{invRegion && invRegion[0]
-									? `, ${invRegion[0].name}`
-									: ""}
+								{invRegion && invRegion[0] ? `, ${invRegion[0].name}` : ""}
 							</ReviewItem>
 						)}
 						{(warband || sect) && <StyledBorder />}
-						{warband && (
-							<ReviewItem label="Band">{warband}</ReviewItem>
-						)}
+						{warband && <ReviewItem label="Band">{warband}</ReviewItem>}
 						{sect && <ReviewItem label="Sect">{sect}</ReviewItem>}
 						<StyledBorder />
 						<ReviewItem label="Skills">{renderedSkills}</ReviewItem>
@@ -159,9 +146,7 @@ function ReviewPage({ user }) {
 						)}
 						{startingItem.length > 0 && (
 							<ReviewItem label="Starting Item">
-								{startingItem
-									.map((s) => s.name)
-									.join(delimiter)}
+								{startingItem.map((s) => s.name).join(delimiter)}
 							</ReviewItem>
 						)}
 						{potions.length > 0 && (
