@@ -157,7 +157,7 @@ function ReviewPage({ user }) {
 								{crafts.map((s) => s.name).join(delimiter)}
 							</ReviewItem>
 						)}
-						{startingItem.length && (
+						{startingItem.length > 0 && (
 							<ReviewItem label="Starting Item">
 								{startingItem
 									.map((s) => s.name)
