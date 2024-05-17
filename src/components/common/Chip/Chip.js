@@ -1,10 +1,22 @@
 import { StyledChip } from "./Chip.styled";
 import React from "react";
+import toast from "react-hot-toast";
 
-function Chip({ children, onClick, selected, skillstyle, shadow, inactive, ...rest }) {
+function Chip({
+	children,
+	onClick,
+	selected,
+	skillstyle,
+	shadow,
+	inactive,
+	inactiveReason,
+	...rest
+}) {
 	const handleClick = () => {
 		if (!inactive) {
 			onClick();
+		} else if (inactiveReason) {
+			toast(inactiveReason);
 		}
 	};
 
@@ -12,7 +24,7 @@ function Chip({ children, onClick, selected, skillstyle, shadow, inactive, ...re
 		<StyledChip
 			selected={selected}
 			shadow={shadow}
-			disabled={inactive}
+			inactive={inactive}
 			onClick={handleClick}
 			skillstyle={skillstyle}
 			{...rest}

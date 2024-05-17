@@ -44,16 +44,24 @@ function CharacterCard({ character }) {
 				<li key="realm">Realm: {character.realm}</li>
 			</ChangeWrapper>
 			<ChangeWrapper changed={changed("archetype")} key={"archetype"}>
-				{character.archetype ? <li>Archetype: {character.archetype}</li> : null}
+				{character.archetype || changed("archetype") ? (
+					<li>Archetype: {character.archetype !== "" ? character.archetype : "None"}</li>
+				) : null}
 			</ChangeWrapper>
 			<ChangeWrapper changed={changed("warband")} key={"warband"}>
-				{character.warband ? <li>Band: {character.warband}</li> : null}
+				{character.warband || changed("warband") ? (
+					<li>Band: {character.warband !== "" ? character.warband : "None"}</li>
+				) : null}
 			</ChangeWrapper>
 			<ChangeWrapper changed={changed("sect")} key={"sect"}>
-				{character.sect ? <li>Sect: {character.sect}</li> : null}
+				{character.sect || changed("sect") ? (
+					<li>Sect: {character.sect !== "" ? character.sect : "None"}</li>
+				) : null}
 			</ChangeWrapper>
 			<ChangeWrapper changed={changed("grace")} key={"grace"}>
-				{character.grace ? <p>Grace: {character.grace}</p> : null}
+				{character.grace || changed("grace") ? (
+					<li>Grace: {character.grace !== "" ? character.grace : "None"}</li>
+				) : null}
 			</ChangeWrapper>
 			{/*  */}
 			<ChangeWrapper changed={changed("skills")} key={"skills"}>
@@ -100,29 +108,30 @@ function CharacterCard({ character }) {
 				</CharSectionTitle>
 			</ChangeWrapper>
 			<p>{character.backstory ?? <i>No backstory given</i>}</p>
-
+			{/*  */}
+			<CharSectionTitle>
+				<BiSolidCastle />
+				Investment
+			</CharSectionTitle>
 			<ChangeWrapper
 				changed={
 					changed("invTier") ||
 					changed("invOption") ||
 					changed("investment") ||
 					changed("invTerritory") ||
-					changed("invRegion") ||
-					changed("invDetails")
+					changed("invRegion")
 				}
 				key={"investment"}
 			>
-				<CharSectionTitle>
-					<BiSolidCastle />
-					Investment
-				</CharSectionTitle>
+				<i>
+					{character.invTier ? "Tier " + character.invTier + " " : null}
+					{character.invOption ? character.invOption + " " : null}
+					{character.investment} in {character.invTerritory}, {character.invRegion}
+				</i>
 			</ChangeWrapper>
-			<i>
-				{character.invTier ? "Tier " + character.invTier + " " : null}
-				{character.invOption ? character.invOption + " " : null}
-				{character.investment} in {character.invTerritory}, {character.invRegion}
-			</i>
-			<p>{character.invDetails ?? <i>No description given</i>}</p>
+			<ChangeWrapper changed={changed("invDetails")} key={"invDetails"}>
+				<p>{character.invDetails ?? <i>No description given</i>}</p>
+			</ChangeWrapper>
 
 			<ChangeWrapper changed={changed("icGoals")} key={"icGoals"}>
 				<CharSectionTitle>

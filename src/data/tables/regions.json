@@ -3,13 +3,15 @@
 		"name": "The Tribelands",
 		"realm": "Andash",
 		"link": "The_Tribelands",
-		"territories": ["True Wilds", "Obregon", "Tanebar Sea East", "The Crescent"]
+		"territories": ["True Wilds", "Obregon", "Tanebar Sea East", "The Crescent"],
+		"coastal": false
 	},
 	{
 		"name": "Mukarrem",
 		"realm": "Andash",
 		"link": "Mukarrem",
-		"territories": ["The Priado Expanse", "The Northern Grasses", "Nazafeza"]
+		"territories": ["The Priado Expanse", "The Northern Grasses", "Nazafeza"],
+		"coastal": true
 	},
 	{
 		"name": "Lerona Mere",
@@ -21,7 +23,8 @@
 			"The Madre Campo",
 			"La Lungo Elsa",
 			"Riverside and Lake Isabella"
-		]
+		],
+		"coastal": true
 	},
 	{
 		"name": "Resinderholz",
@@ -34,19 +37,22 @@
 			"Eisen",
 			"Wolstad",
 			"Krezenberg"
-		]
+		],
+		"coastal": false
 	},
 	{
 		"name": "Weiland",
 		"realm": "Kingdom of Bordevar",
 		"link": "Weiland",
-		"territories": ["Starscar", "Heartsgrave", "Everguarde"]
+		"territories": ["Starscar", "Heartsgrave", "Everguarde"],
+		"coastal": false
 	},
 	{
 		"name": "Bolsterlee",
 		"realm": "Iron Valley",
 		"link": "Bolsterlee",
-		"territories": ["Highward", "Bayward", "Jaalstead", "Strivington", "The Bailite Woods"]
+		"territories": ["Highward", "Bayward", "Jaalstead", "Strivington", "The Bailite Woods"],
+		"coastal": true
 	},
 	{
 		"name": "Windholme",
@@ -60,6 +66,7 @@
 			"Rumwold",
 			"Cildfrau Eaves",
 			"Steinvault Eaves"
-		]
+		],
+		"coastal": false
 	}
 ]

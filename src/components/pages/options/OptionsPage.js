@@ -32,6 +32,11 @@ import {
 	GiTatteredBanner,
 } from "react-icons/gi";
 import { getRegionRealm } from "../../../helpers/data-helper";
+import {
+	coastalRegions,
+	regionIsCoastal,
+	regionIsNotCoastal,
+} from "../../../helpers/selection-helper";
 
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");
@@ -87,18 +92,54 @@ function chipIcon(type) {
 	}
 }
 
-const genTabContent = (
-	label,
-	link,
-	allItems,
-	selectedItems,
-	toggleFunction,
-	remainingPicks,
-	subSectionTitle,
-	realm,
-	comment,
-	filterFunction = (a) => true
-) => {
+function getInactive(params) {
+	const { item, selected, remainingPicks, realm, invRegion, investment } = params;
+
+	let inactive = false;
+	let inactiveReason = null;
+
+	if (item.name === "Artisans Oil" || item.name === "Channel Waystone") {
+		inactive = true;
+		inactiveReason = `Cannot unlearn ${item.name}`;
+	}
+	if (item.realm && item.realm !== realm) {
+		inactive = true;
+		inactiveReason = `Your realm cannot select ${item.name}`;
+	}
+	if (
+		(regionIsNotCoastal(item.name) && investment?.length && investment[0].name === "Naval") ||
+		(item.name === "Naval" && invRegion?.length && !regionIsCoastal(invRegion[0].name))
+	) {
+		inactive = true;
+		inactiveReason = `Naval investments must be in coastal regions (${coastalRegions.join(
+			", "
+		)})`;
+	}
+	if (!selected && remainingPicks <= 0) {
+		inactive = true;
+		inactiveReason = null;
+	}
+
+	return { inactive, inactiveReason };
+}
+
+const genTabContent = (params) => {
+	let {
+		label,
+		link,
+		allItems,
+		selectedItems,
+		toggleFunction,
+		remainingPicks,
+		subSectionTitle,
+		realm,
+		invRegion,
+		comment,
+		filterFunction,
+	} = params;
+
+	if (!filterFunction) filterFunction = (a) => true;
+
 	const sections =
 		label === "Artisan Crafts"
 			? ["Journeyman", "Expert", "Masterwork"]
@@ -127,7 +168,13 @@ const genTabContent = (
 										let selected = selectedItems
 											?.map((i) => i.name)
 											.includes(item.name);
-										let invalidRealm = item.realm && item.realm !== realm;
+										const { inactive, inactiveReason } = getInactive({
+											item: item,
+											selected: selected,
+											remainingPicks: remainingPicks,
+											realm: realm,
+											invRegion: invRegion,
+										});
 
 										return (
 											<Chip
@@ -137,13 +184,8 @@ const genTabContent = (
 													})
 												}
 												selected={selected}
-												inactive={
-													(!selected && remainingPicks <= 0) ||
-													invalidRealm ||
-													(label === "Artisan Crafts" &&
-														item.name === "Artisans Oil") ||
-													item.name === "Channel Waystone"
-												}
+												inactive={inactive}
+												inactiveReason={inactiveReason}
 												key={item.name}
 											>
 												{label === "Artisan Crafts" && chipIcon(item.type)}
@@ -307,17 +349,6 @@ function OptionsPage() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ceremonies]);
 
-	// Conditionally generate each of the tabs on the right of the screen
-	// const renderedTabs = [
-	//     genTabContent(
-	//         "Investment",
-	//         "Investments",
-	//         investmentData,
-	//         investment,
-	//         toggleInvestment,
-	//         numInvestment
-	//     ),
-	// ];
 	const investmentOptions =
 		investment && investment.length
 			? investmentData.find((i) => i.name === investment[0].name)?.options
@@ -337,7 +368,7 @@ function OptionsPage() {
 
 	function investmentRegionWarning() {
 		const invRealm = getRegionRealm(invRegion[0]?.name);
-		if (invRealm && realm !== invRealm) {
+		if (realm && invRealm && realm !== invRealm) {
 			return "Your investment is in a region not held by your Realm, so it will function at half capacity.";
 		}
 		return "";
@@ -348,11 +379,21 @@ function OptionsPage() {
 			<AccordionSection title="Investment Type" link="Investments">
 				{investmentData.map((item) => {
 					let selected = investment?.map((i) => i.name).includes(item.name);
+
+					const { inactive, inactiveReason } = getInactive({
+						item: item,
+						selected: selected,
+						remainingPicks: numInvestment,
+						realm: realm,
+						invRegion: invRegion,
+					});
+
 					return (
 						<Chip
 							onClick={() => toggleInvestment({ name: item.name })}
 							selected={selected}
-							inactive={!selected && numInvestment <= 0}
+							inactive={inactive}
+							inactiveReason={inactiveReason}
 							key={item.name}
 						>
 							{item.name}
@@ -399,11 +440,20 @@ function OptionsPage() {
 			>
 				{regionData.map((region) => {
 					let selected = invRegion?.map((i) => i.name).includes(region.name);
+					const { inactive, inactiveReason } = getInactive({
+						item: { name: region.name },
+						selected: selected,
+						remainingPicks: numInvRegion,
+						realm: realm,
+						investment: investment,
+					});
+
 					return (
 						<Chip
 							onClick={() => toggleInvRegion({ name: region.name })}
 							selected={selected}
-							inactive={!selected && numInvRegion <= 0}
+							inactive={inactive}
+							inactiveReason={inactiveReason}
 							key={region.name}
 						>
 							{region.name}
@@ -459,72 +509,68 @@ function OptionsPage() {
 	});
 	showSpells &&
 		renderedTabs.push(
-			genTabContent(
-				"Spells",
-				"List_of_Known_Magical_Spells",
-				spellsData,
-				spells,
-				toggleSpell,
-				numSpells,
-				"type",
-				realm
-			)
+			genTabContent({
+				label: "Spells",
+				link: "List_of_Known_Magical_Spells",
+				allItems: spellsData,
+				selectedItems: spells,
+				toggleFunction: toggleSpell,
+				remainingPicks: numSpells,
+				subSectionTitle: "type",
+			})
 		);
 	showCrafts &&
 		renderedTabs.push(
-			genTabContent(
-				"Artisan Crafts",
-				"Artisan_Crafts",
-				craftsData,
-				crafts,
-				toggleCraft,
-				numCrafts,
-				"rarity",
-				realm
-			)
+			genTabContent({
+				label: "Artisan Crafts",
+				link: "Artisan_Crafts",
+				allItems: craftsData,
+				selectedItems: crafts,
+				toggleFunction: toggleCraft,
+				remainingPicks: numCrafts,
+				subSectionTitle: "rarity",
+			})
 		);
 	showCrafts &&
 		renderedTabs.push(
-			genTabContent(
-				"Starting Item",
-				undefined,
-				startingItemOptions,
-				startingItem,
-				toggleStartingItem,
-				numStartingItems,
-				undefined,
-				realm,
-				"If you're a new Artisan, select your starting Journeyman item."
-			)
+			genTabContent({
+				label: "Starting Item",
+				link: undefined,
+				allItems: startingItemOptions,
+				selectedItems: startingItem,
+				toggleFunction: toggleStartingItem,
+				remainingPicks: numStartingItems,
+				subSectionTitle: undefined,
+				comment: "If you're a new Artisan, select your starting Journeyman item.",
+			})
 		);
 	showPotions &&
 		renderedTabs.push(
-			genTabContent(
-				"Potion Recipes",
-				"List_of_Apothecary_Potions",
-				potionsData,
-				potions,
-				togglePotion,
-				numPotions,
-				"type",
-				realm
-			)
+			genTabContent({
+				label: "Potion Recipes",
+				link: "List_of_Apothecary_Potions",
+				allItems: potionsData,
+				selectedItems: potions,
+				toggleFunction: togglePotion,
+				remainingPicks: numPotions,
+				subSectionTitle: "type",
+				realm: realm,
+			})
 		);
 	if (showCeremonies) {
 		let skillTitles = skills.map((s) => s.name).toString();
 		renderedTabs.push(
-			genTabContent(
-				"Mastered Ceremonies",
-				"Ceremonies_Overview",
-				ceremoniesData,
-				ceremonies,
-				toggleCeremony,
-				numCeremonies,
-				"sphere",
-				realm,
-				undefined,
-				(c) => skillTitles.includes(c.sphere)
-			)
+			genTabContent({
+				label: "Mastered Ceremonies",
+				link: "Ceremonies_Overview",
+				allItems: ceremoniesData,
+				selectedItems: ceremonies,
+				toggleFunction: toggleCeremony,
+				remainingPicks: numCeremonies,
+				subSectionTitle: "sphere",
+				realm: realm,
+				filterFunction: (c) => skillTitles.includes(c.sphere),
+			})
 		);
 	}
 

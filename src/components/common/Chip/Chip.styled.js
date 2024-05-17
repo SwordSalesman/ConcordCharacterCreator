@@ -33,12 +33,12 @@ export const StyledChip = styled.button`
 
 	background-color: ${(props) => {
 		if (props.selected) {
-			if (props.disabled) {
+			if (props.inactive) {
 				return props.theme.specialBg;
 			}
 			return props.theme.specialBg;
 		} else {
-			if (props.disabled) {
+			if (props.inactive) {
 				return props.theme.backgroundRaised;
 			}
 			return props.theme.background;
@@ -46,12 +46,12 @@ export const StyledChip = styled.button`
 	}};
 	color: ${(props) => {
 		if (props.selected) {
-			if (props.disabled) {
+			if (props.inactive) {
 				return props.theme.light + "90";
 			}
 			return props.theme.light;
 		} else {
-			if (props.disabled) {
+			if (props.inactive) {
 				return props.theme.border;
 			}
 			return props.text;
@@ -60,7 +60,7 @@ export const StyledChip = styled.button`
 	border-color: ${(props) =>
 		props.selected
 			? props.theme.specialOutline
-			: props.disabled
+			: props.inactive
 			? props.theme.border
 			: props.theme.border};
 
