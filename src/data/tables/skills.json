@@ -5,7 +5,7 @@
 		"cost": 1,
 		"costExtra": 1,
 		"prereq": "Magus",
-		"exclusion": "Juggernaut"
+		"exclusion": "Juggernaut (1)"
 	},
 	{
 		"name": "Additional Spell (1)",

@@ -2,9 +2,6 @@
 
 ### To Do
 
--   Restrict Naval investments to only regions with coasts
--   Add change log, which records which entry has changed since last review
-
 ## 🚀 Live Site
 
 https://swordsalesman.github.io/ConcordCharacterCreator/

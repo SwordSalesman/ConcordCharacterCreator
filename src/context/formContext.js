@@ -311,25 +311,27 @@ function FormContextProvider({ children }) {
 	};
 
 	// skill should be a skillObj formatted as if from the SkillItem method call
-	const validSkillChoice = (skill) => {
-		let prereqMet = !skill.prereq || skills?.map((s) => s.name).includes(skill.prereq);
-		let notExcluded = !skill.exclusion || !skills?.map((s) => s.name).includes(skill.exclusion);
-		return prereqMet && notExcluded;
-	};
+	const validSkillChoice = (skill, options = {}) => {
+		const { ignoreCost } = options;
 
-	// skill should be a skillObj formatted as if from the SkillItem method call
-	const invalidSkillChoice = (skill) => {
-		// check for missing prerequisites
-		if (skill.prereq && !skills?.map((s) => s.name).includes(skill.prereq)) {
-			return `Missing prerequisite '${skill.prereq}'`;
+		if (!ignoreCost) {
+			const notEnoughXP = skill.cost > remainingXp;
+			if (notEnoughXP) {
+				return { valid: false, reason: "Not enough XP" };
+			}
 		}
-		// check for exclusion
-		if (skill.exclusion && skills?.map((s) => s.name).includes(skill.exclusion)) {
-			return `Conflict with skill '${skill.exclusion}'`;
+
+		let prereqNotMet = skill.prereq && !skills?.map((s) => s.name).includes(skill.prereq);
+		if (prereqNotMet) {
+			return { valid: false, reason: `Prerequisite missing: '${skill.prereq}'` };
 		}
-		// check for remaining xp
-		// if ( skill. )
-		return false;
+
+		let excluded = skill.exclusion && skills?.map((s) => s.name).includes(skill.exclusion);
+		if (excluded) {
+			return { valid: false, reason: `Conflicts with '${skill.exclusion}'` };
+		}
+
+		return { valid: true, reason: undefined };
 	};
 
 	const updateChangedFields = () => {
@@ -465,7 +467,8 @@ function FormContextProvider({ children }) {
 		// window.localStorage.setItem("skills", JSON.stringify(skills));
 
 		skills?.forEach((s) => {
-			if (!validSkillChoice(s) || remainingXp < 0) {
+			const { valid } = validSkillChoice(s, { ignoreCost: true });
+			if (!valid || remainingXp < 0) {
 				toggleSkill(s);
 			}
 		});
@@ -568,7 +571,6 @@ function FormContextProvider({ children }) {
 		remainingXp,
 		toggleSkill,
 		validSkillChoice,
-		invalidSkillChoice,
 		investment,
 		toggleInvestment,
 		invRegion,

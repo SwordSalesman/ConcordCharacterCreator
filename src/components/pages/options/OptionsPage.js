@@ -32,11 +32,7 @@ import {
 	GiTatteredBanner,
 } from "react-icons/gi";
 import { getRegionRealm } from "../../../helpers/data-helper";
-import {
-	coastalRegions,
-	regionIsCoastal,
-	regionIsNotCoastal,
-} from "../../../helpers/selection-helper";
+import { regionIsCoastal, regionIsNotCoastal } from "../../../helpers/selection-helper";
 
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");
@@ -95,32 +91,32 @@ function chipIcon(type) {
 function getInactive(params) {
 	const { item, selected, remainingPicks, realm, invRegion, investment } = params;
 
-	let inactive = false;
-	let inactiveReason = null;
-
+	if (!selected && remainingPicks <= 0) {
+		return { inactive: true, inactiveReason: null };
+	}
 	if (item.name === "Artisans Oil" || item.name === "Channel Waystone") {
-		inactive = true;
-		inactiveReason = `Cannot unlearn ${item.name}`;
+		return {
+			inactive: true,
+			inactiveReason: `Cannot unlearn ${item.name}`,
+		};
 	}
 	if (item.realm && item.realm !== realm) {
-		inactive = true;
-		inactiveReason = `Your realm cannot select ${item.name}`;
+		return {
+			inactive: true,
+			inactiveReason: `Your realm cannot select ${item.name}`,
+		};
 	}
 	if (
 		(regionIsNotCoastal(item.name) && investment?.length && investment[0].name === "Naval") ||
 		(item.name === "Naval" && invRegion?.length && !regionIsCoastal(invRegion[0].name))
 	) {
-		inactive = true;
-		inactiveReason = `Naval investments must be in coastal regions (${coastalRegions.join(
-			", "
-		)})`;
-	}
-	if (!selected && remainingPicks <= 0) {
-		inactive = true;
-		inactiveReason = null;
+		return {
+			inactive: true,
+			inactiveReason: `Naval investments must be in coastal regions`,
+		};
 	}
 
-	return { inactive, inactiveReason };
+	return { inactive: false, inactiveReason: null };
 }
 
 const genTabContent = (params) => {
@@ -590,11 +586,11 @@ function OptionsPage() {
 							{renderedInvOption && (
 								<SectionLine>Variant: {renderedInvOption}</SectionLine>
 							)}
-							{renderedInvTerritory && (
-								<SectionLine>Territory: {renderedInvTerritory}</SectionLine>
-							)}
 							{renderedInvRegion && (
 								<SectionLine>Region: {renderedInvRegion}</SectionLine>
+							)}
+							{renderedInvTerritory && (
+								<SectionLine>Territory: {renderedInvTerritory}</SectionLine>
 							)}
 						</>
 					) : (

@@ -1,7 +1,7 @@
 import Chip from "../../../components/common/Chip/Chip";
 import { SkillCost } from "../../../components/common/Chip/Chip.styled";
 
-function SkillItem({ skill, selectSkill, selected, shadow, inactive }) {
+function SkillItem({ skill, selectSkill, selected, shadow, inactive, inactiveReason }) {
 	const handleClick = () => {
 		selectSkill(skill);
 	};
@@ -12,6 +12,7 @@ function SkillItem({ skill, selectSkill, selected, shadow, inactive }) {
 			selected={selected}
 			shadow={shadow}
 			inactive={inactive}
+			inactiveReason={inactiveReason}
 			skillstyle="true"
 		>
 			<SkillCost>{skill.cost}</SkillCost>

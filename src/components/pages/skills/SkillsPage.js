@@ -32,14 +32,16 @@ function SkillsPage() {
 			.map((skill) => {
 				let selected = skills?.map((s) => s.name).includes(skill.name);
 				// let inactiveReason = invalidSkillChoice(skill);
+
+				const { valid, reason } = validSkillChoice(skill);
+
 				return (
 					<SkillItem
 						skill={skill}
 						selectSkill={handleClickSkill}
 						selected={selected}
-						inactive={
-							!selected && (!validSkillChoice(skill) || skill.cost > remainingXp)
-						}
+						inactive={!selected && !valid}
+						inactiveReason={reason}
 						key={skill.name}
 					></SkillItem>
 				);
