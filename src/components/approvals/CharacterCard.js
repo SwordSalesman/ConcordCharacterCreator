@@ -1,6 +1,6 @@
 import { BiSolidCastle } from "react-icons/bi";
 import { FaIdBadge } from "react-icons/fa";
-import { RiSwordFill, RiTodoFill } from "react-icons/ri";
+import { RiMessage2Fill, RiSwordFill, RiTodoFill } from "react-icons/ri";
 
 import { ImQuill } from "react-icons/im";
 import styled from "styled-components";
@@ -32,6 +32,14 @@ function CharacterCard({ character }) {
 					<u>({character.email})</u>
 				</EmailLink>
 			</NameAndEmail>
+			{/*  */}
+			<ChangeWrapper changed={changed("comments")} key={"comments"}>
+				<CharSectionTitle>
+					<RiMessage2Fill />
+					Message to Approver
+				</CharSectionTitle>
+			</ChangeWrapper>
+			<p>{character.comments ?? <Empty>No message</Empty>}</p>
 			{/*  */}
 			<CharSectionTitle>
 				<FaIdBadge />
@@ -75,7 +83,7 @@ function CharacterCard({ character }) {
 					return <li key={s}>{s}</li>;
 				})
 			) : (
-				<i>No skills</i>
+				<Empty>No skills</Empty>
 			)}
 			{/*  */}
 			<CharSectionTitle>
@@ -98,7 +106,7 @@ function CharacterCard({ character }) {
 					</ChangeWrapper>
 				</>
 			) : (
-				<i>No options selected</i>
+				<Empty>No options selected</Empty>
 			)}
 			{/*  */}
 			<ChangeWrapper changed={changed("backstory")} key={"backstory"}>
@@ -107,7 +115,7 @@ function CharacterCard({ character }) {
 					Backstory
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<p>{character.backstory ?? <i>No backstory given</i>}</p>
+			<p>{character.backstory ?? <Empty>No backstory given</Empty>}</p>
 			{/*  */}
 			<CharSectionTitle>
 				<BiSolidCastle />
@@ -130,7 +138,7 @@ function CharacterCard({ character }) {
 				</i>
 			</ChangeWrapper>
 			<ChangeWrapper changed={changed("invDetails")} key={"invDetails"}>
-				<p>{character.invDetails ?? <i>No description given</i>}</p>
+				<p>{character.invDetails ?? <Empty>No description given</Empty>}</p>
 			</ChangeWrapper>
 
 			<ChangeWrapper changed={changed("icGoals")} key={"icGoals"}>
@@ -139,7 +147,7 @@ function CharacterCard({ character }) {
 					In Character Goals
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<p>{character.icGoals ?? <i>No in character goals given</i>}</p>
+			<p>{character.icGoals ?? <Empty>No in character goals given</Empty>}</p>
 
 			<ChangeWrapper changed={changed("oocGoals")} key={"oocGoals"}>
 				<CharSectionTitle>
@@ -147,7 +155,7 @@ function CharacterCard({ character }) {
 					Out of Character Goals
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<p>{character.oocGoals ?? <i>No out of character goals given</i>}</p>
+			<p>{character.oocGoals ?? <Empty>No out of character goals given</Empty>}</p>
 		</CharacterCardWrapper>
 	) : (
 		<BlankWrapper>Select a submission on the side to get started</BlankWrapper>
@@ -168,11 +176,16 @@ const CharacterCardWrapper = styled.div`
 	padding: 10px;
 	overflow-y: scroll;
 	padding-bottom: 34px;
+	letter-spacing: -0.1px;
 	&::-webkit-scrollbar {
 		display: none;
 	}
 	-ms-overflow-style: none;
 	scrollbar-width: none;
+`;
+
+const Empty = styled.i`
+	opacity: 0.75;
 `;
 
 const ChangeWrapper = styled.div`

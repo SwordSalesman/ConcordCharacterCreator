@@ -12,6 +12,8 @@ import {
 	StyledBorder,
 } from "./ReviewPage.style";
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
+import { BackgroundInputWrapper } from "../background/BackgroundPage";
+import TextInput from "../../common/TextInput/TextInput";
 const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {
@@ -45,6 +47,8 @@ function ReviewPage({ user }) {
 		grace,
 		warband,
 		sect,
+		comments,
+		setComments,
 		validateForm,
 		changes,
 	} = useFormContext();
@@ -77,6 +81,7 @@ function ReviewPage({ user }) {
 		grace: grace,
 		warband: warband,
 		sect: sect,
+		comments: comments,
 		changes: changes,
 	});
 
@@ -96,7 +101,7 @@ function ReviewPage({ user }) {
 			<ReviewPaneWrapper>
 				<ContentPane mobileshow="true">
 					{!valid ? invalidWarning : null}
-					<div className="flex flex-col items-center mt-2 gap-2">
+					<div className="flex flex-col items-center mt-2 gap-2 mb-6">
 						<div>
 							<h2 className="text-xl leading-6">
 								{heroName ? heroName : "Nameless Hero"}
@@ -160,6 +165,16 @@ function ReviewPage({ user }) {
 							</ReviewItem>
 						)}
 					</div>
+					<BackgroundInputWrapper>
+						<StyledBorder />
+						<TextInput
+							value={comments}
+							onChange={setComments}
+							title="Final submission comments"
+							placeholder="Notes for the team (if any)"
+							style={{ minHeight: "1.9em" }}
+						/>
+					</BackgroundInputWrapper>
 				</ContentPane>
 			</ReviewPaneWrapper>
 			{/* <ReviewReminder>Don't forget to submit!</ReviewReminder> */}

@@ -36,6 +36,7 @@ function FormContextProvider({ children }) {
 	const [oocGoals, setOocGoals] = useState(null);
 	const [backstory, setBackstory] = useState(null);
 	const [invDetails, setInvDetails] = useState(null);
+	const [comments, setComments] = useState(null);
 
 	// Derived Variables
 	const totalXp = 8 + parseInt(gamesPlayed ? gamesPlayed : 0);
@@ -69,6 +70,7 @@ function FormContextProvider({ children }) {
 			oocGoals: oocGoals,
 			backstory: backstory,
 			invDetails: invDetails,
+			comments: comments,
 			changes: newChanges,
 		};
 	};
@@ -98,6 +100,7 @@ function FormContextProvider({ children }) {
 			oocGoals: oocGoals,
 			backstory: backstory,
 			invDetails: invDetails,
+			comments: comments,
 			changes: summariseSimpleArray(changes),
 		};
 	};
@@ -134,6 +137,7 @@ function FormContextProvider({ children }) {
 		setOocGoals(data.oocGoals);
 		setBackstory(data.backstory);
 		setInvDetails(data.invDetails);
+		setComments(data.comments);
 		setChanges(data.changes);
 	};
 
@@ -165,6 +169,7 @@ function FormContextProvider({ children }) {
 				oocGoals: data.oocGoals,
 				backstory: data.backstory,
 				invDetails: data.invDetails,
+				comments: data.comments,
 				changes: data.changes,
 			});
 		}
@@ -192,6 +197,7 @@ function FormContextProvider({ children }) {
 		setOocGoals(data.oocGoals);
 		setBackstory(data.backstory);
 		setInvDetails(data.invDetails);
+		setComments(data.comments);
 		setChanges(getSimpleArrayFromSummary(data.changes));
 	};
 
@@ -220,6 +226,7 @@ function FormContextProvider({ children }) {
 		setOocGoals(null);
 		setBackstory(null);
 		setInvDetails(null);
+		setComments(null);
 	};
 
 	// Load Data
@@ -361,6 +368,7 @@ function FormContextProvider({ children }) {
 		if (simpleForm.oocGoals !== initialForm.oocGoals) currChanges.push("oocGoals");
 		if (simpleForm.backstory !== initialForm.backstory) currChanges.push("backstory");
 		if (simpleForm.invDetails !== initialForm.invDetails) currChanges.push("invDetails");
+		if (simpleForm.comments !== initialForm.comments) currChanges.push("comments");
 
 		const netChanges = changes ?? [];
 		currChanges.forEach((c) => {
@@ -609,6 +617,8 @@ function FormContextProvider({ children }) {
 		setBackstory,
 		invDetails,
 		setInvDetails,
+		comments,
+		setComments,
 		getForm,
 		getSimpleForm,
 		setFormFromFullData,
