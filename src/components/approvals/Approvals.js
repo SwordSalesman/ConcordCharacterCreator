@@ -74,6 +74,7 @@ function Approvals() {
 			return { ...c, approval: approval, changes: "" };
 		});
 		setCharacters(newChars);
+		setSelectedChar({ ...selectedChar, changes: "" });
 		calcCounts(newChars);
 	}
 

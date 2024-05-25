@@ -39,7 +39,7 @@ function CharacterCard({ character }) {
 					Message to Approver
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<p>{character.comments ?? <Empty>No message</Empty>}</p>
+			<i>{character.comments ?? <Empty>No message</Empty>}</i>
 			{/*  */}
 			<CharSectionTitle>
 				<FaIdBadge />
@@ -194,7 +194,7 @@ const ChangeWrapper = styled.div`
 			? `linear-gradient(90deg, ${props.theme.special}35 0%, rgba(0,0,0,0) 90%)`
 			: "none"};
 	border-radius: 5px;
-	padding-left: ${(props) => (props.changed ? "4px" : 0)};
+	/* padding-left: ${(props) => (props.changed ? "4px" : 0)}; */
 `;
 
 const CharTitle = styled.h1`

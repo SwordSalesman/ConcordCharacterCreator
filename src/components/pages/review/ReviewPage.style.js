@@ -68,3 +68,12 @@ export const InvalidWarning = styled.div`
 	margin-bottom: 10px;
 	text-align: center;
 `;
+
+export const LightBorder = styled.div`
+	border-radius: 12px;
+	padding: 0 8px;
+
+	div textarea {
+		border: solid 1px ${(props) => props.theme.border};
+	}
+`;

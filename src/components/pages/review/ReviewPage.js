@@ -3,6 +3,7 @@ import useRealmDetails from "../../../hooks/use-realm-details";
 import ContentPane from "../../../components/common/ContentPane/ContentPane";
 import {
 	InvalidWarning,
+	LightBorder,
 	ReviewContent,
 	ReviewHeader,
 	ReviewPageWrapper,
@@ -165,16 +166,16 @@ function ReviewPage({ user }) {
 							</ReviewItem>
 						)}
 					</div>
-					<BackgroundInputWrapper>
-						<StyledBorder />
-						<TextInput
-							value={comments}
-							onChange={setComments}
-							title="Final submission comments"
-							placeholder="Notes for the team (if any)"
-							style={{ minHeight: "1.9em" }}
-						/>
-					</BackgroundInputWrapper>
+					<LightBorder>
+						<BackgroundInputWrapper>
+							<TextInput
+								value={comments}
+								onChange={setComments}
+								title={"Final submission comments"}
+								placeholder="Notes for the team (if any)"
+							/>
+						</BackgroundInputWrapper>
+					</LightBorder>
 				</ContentPane>
 			</ReviewPaneWrapper>
 			{/* <ReviewReminder>Don't forget to submit!</ReviewReminder> */}

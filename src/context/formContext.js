@@ -303,7 +303,7 @@ function FormContextProvider({ children }) {
 
 	const selectRealm = (selectedRealm) => {
 		setRealm(selectedRealm);
-		setArchetype(null);
+		setArchetype([]);
 	};
 
 	// Checks if the bare minimum required fields have content in them
