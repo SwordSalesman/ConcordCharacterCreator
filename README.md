@@ -2,6 +2,9 @@
 
 ### To Do
 
+-   Fix the divine lore per sphere giving known ceremonies thing, you know the one.
+-   Add 'export' button to approvals window which does what it says
+
 ## 🚀 Live Site
 
 https://swordsalesman.github.io/ConcordCharacterCreator/

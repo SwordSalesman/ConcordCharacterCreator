@@ -136,7 +136,7 @@ const ApprovalPanelWrapper = styled.div`
 	border: 1px solid ${(props) => props.theme.border};
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
-	height: fit-content;
+	min-height: 270px;
 	max-height: 50%;
 	position: relative;
 	font-size: 0.9em;

@@ -98,6 +98,11 @@ function CharacterCard({ character }) {
 					<ChangeWrapper changed={changed("crafts")} key={"crafts"}>
 						{character.crafts ? <li>Crafts: {character.crafts}</li> : null}
 					</ChangeWrapper>
+					<ChangeWrapper changed={changed("startingItem")} key={"startingItem"}>
+						{character.startingItem ? (
+							<li>Starting Item: {character.startingItem}</li>
+						) : null}
+					</ChangeWrapper>
 					<ChangeWrapper changed={changed("potions")} key={"potions"}>
 						{character.potions ? <li>Potions: {character.potions}</li> : null}
 					</ChangeWrapper>
