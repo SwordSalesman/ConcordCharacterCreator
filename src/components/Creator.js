@@ -74,7 +74,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 		toast.promise(saveUserForm(getSimpleForm(), setDate, name), {
 			loading: "Submitting",
 			success: "Character submitted!",
-			error: "Submission failed, check network connection",
+			error: (err) => `Submission failed, check network connection. Error code: ${err}`,
 		});
 	};
 

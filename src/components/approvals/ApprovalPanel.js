@@ -6,6 +6,7 @@ import useUserContext from "../../hooks/use-user-context";
 import { saveApproval } from "../../hooks/use-firebase";
 import toast from "react-hot-toast";
 import { APPROVED, DENIED } from "../../helpers/constants";
+import { prettifyDate } from "../../helpers/date-helper";
 
 function ApprovalPanel({ character, handleApproval }) {
 	const theme = useTheme();
@@ -105,7 +106,7 @@ function ApprovalPanel({ character, handleApproval }) {
 
 				{author && date ? (
 					<i>
-						{author} on {date}
+						{author} on {prettifyDate(date)}
 					</i>
 				) : (
 					<i>Pending review</i>

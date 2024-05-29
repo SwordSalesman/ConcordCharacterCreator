@@ -39,7 +39,7 @@ function CharacterCard({ character }) {
 					Message to Approver
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<i>{character.comments ?? <Empty>No message</Empty>}</i>
+			<i>{character.comments ? character.comments : <Empty>No message</Empty>}</i>
 			{/*  */}
 			<CharSectionTitle>
 				<FaIdBadge />
@@ -120,7 +120,7 @@ function CharacterCard({ character }) {
 					Backstory
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<p>{character.backstory ?? <Empty>No backstory given</Empty>}</p>
+			<p>{character.backstory ? character.backstory : <Empty>No backstory given</Empty>}</p>
 			{/*  */}
 			<CharSectionTitle>
 				<BiSolidCastle />
@@ -143,7 +143,13 @@ function CharacterCard({ character }) {
 				</i>
 			</ChangeWrapper>
 			<ChangeWrapper changed={changed("invDetails")} key={"invDetails"}>
-				<p>{character.invDetails ?? <Empty>No description given</Empty>}</p>
+				<p>
+					{character.invDetails ? (
+						character.invDetails
+					) : (
+						<Empty>No description given</Empty>
+					)}
+				</p>
 			</ChangeWrapper>
 
 			<ChangeWrapper changed={changed("icGoals")} key={"icGoals"}>
@@ -152,7 +158,9 @@ function CharacterCard({ character }) {
 					In Character Goals
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<p>{character.icGoals ?? <Empty>No in character goals given</Empty>}</p>
+			<p>
+				{character.icGoals ? character.icGoals : <Empty>No in character goals given</Empty>}
+			</p>
 
 			<ChangeWrapper changed={changed("oocGoals")} key={"oocGoals"}>
 				<CharSectionTitle>
@@ -160,7 +168,13 @@ function CharacterCard({ character }) {
 					Out of Character Goals
 				</CharSectionTitle>
 			</ChangeWrapper>
-			<p>{character.oocGoals ?? <Empty>No out of character goals given</Empty>}</p>
+			<p>
+				{character.oocGoals ? (
+					character.oocGoals
+				) : (
+					<Empty>No out of character goals given</Empty>
+				)}
+			</p>
 		</CharacterCardWrapper>
 	) : (
 		<BlankWrapper>Select a submission on the side to get started</BlankWrapper>

@@ -15,7 +15,9 @@ export const ReviewPaneWrapper = styled.div`
 	line-height: 1.1rem;
 	width: 100%;
 	min-width: 300px;
-	/* height: 100%; */
+	@media screen and (min-width: 600px) {
+		min-width: 400px;
+	}
 `;
 
 export const ReviewReminder = styled.p`

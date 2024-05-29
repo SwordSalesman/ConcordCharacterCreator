@@ -1,4 +1,5 @@
 import { PENDING } from "../../../helpers/constants";
+import { prettifyDate } from "../../../helpers/date-helper";
 import {
 	ApprovalStatus,
 	CharacterListWrapper,
@@ -23,7 +24,7 @@ function CharacterList({ characters, handleSelect, activeCharacter }) {
 							</ListItemTitle>
 							<ListItemRow>
 								<p>{c.player}</p>
-								<p>{c.date}</p>
+								<p>{prettifyDate(c.date, { hideTime: true, shortDate: true })}</p>
 							</ListItemRow>
 							<ApprovalStatus>{c.approval?.status ?? PENDING}</ApprovalStatus>
 						</ListItem>

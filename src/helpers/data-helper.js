@@ -6,7 +6,7 @@ export function getRegionRealm(regionName) {
 }
 
 export const summariseSimpleArray = (a) => {
-	if (!a) return null;
+	if (!a) return "";
 	return a
 		.map((i) => {
 			if (typeof i === "string") return i;

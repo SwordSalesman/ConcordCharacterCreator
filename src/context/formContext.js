@@ -77,12 +77,12 @@ function FormContextProvider({ children }) {
 
 	const getSimpleFormInternal = () => {
 		return {
-			date: date,
-			realm: realm,
-			gamesPlayed: gamesPlayed,
+			date: date || "",
+			realm: realm || "",
+			gamesPlayed: gamesPlayed || 0,
 			skills: getSummarisedSkillNames(skills),
 			investment: summariseSimpleArray(investment),
-			invTier: invTier,
+			invTier: invTier || 1,
 			invOption: summariseSimpleArray(invOption),
 			invRegion: summariseSimpleArray(invRegion),
 			invTerritory: summariseSimpleArray(invTerritory),
@@ -91,16 +91,16 @@ function FormContextProvider({ children }) {
 			potions: summariseSimpleArray(potions),
 			ceremonies: summariseSimpleArray(ceremonies),
 			startingItem: summariseSimpleArray(startingItem),
-			heroName: heroName,
+			heroName: heroName || "",
 			archetype: summariseSimpleArray(archetype),
 			grace: summariseSimpleArray(grace),
-			warband: warband,
-			sect: sect,
-			icGoals: icGoals,
-			oocGoals: oocGoals,
-			backstory: backstory,
-			invDetails: invDetails,
-			comments: comments,
+			warband: warband || "",
+			sect: sect || "",
+			icGoals: icGoals || "",
+			oocGoals: oocGoals || "",
+			backstory: backstory || "",
+			invDetails: invDetails || "",
+			comments: comments || "",
 			changes: summariseSimpleArray(changes),
 		};
 	};
@@ -108,7 +108,7 @@ function FormContextProvider({ children }) {
 	const getSimpleForm = () => {
 		const newChanges = summariseSimpleArray(updateChangedFields());
 		const simpleForm = getSimpleFormInternal();
-		return { ...simpleForm, changes: newChanges };
+		return { ...simpleForm, changes: newChanges ?? "" };
 	};
 
 	const unsaved = false;
@@ -309,8 +309,8 @@ function FormContextProvider({ children }) {
 	// Checks if the bare minimum required fields have content in them
 	// Realm, Name, Investment, Backstory
 	const validateForm = () => {
-		const validRealm = realm !== null;
-		const validName = heroName !== null && heroName.trim() !== "";
+		const validRealm = !!realm;
+		const validName = !!heroName && heroName.trim() !== "";
 		const validInvestment =
 			investment.length === 1 && invRegion.length === 1 && invTerritory.length === 1;
 		const valid = validRealm && validName && validInvestment;

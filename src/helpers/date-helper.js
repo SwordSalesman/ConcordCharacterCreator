@@ -1,16 +1,29 @@
 import gameData from "../data/tables/games.json";
 
 export function getCurrentDate() {
-	const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+	const date = new Date().toISOString(); // YYYY-MM-DDTHH:mm:SS.xxxx
 	return date;
 }
 
-export function prettifyDate(date) {
+export function prettifyDate(date, options = {}) {
+	const { hideTime, shortDate } = options;
+
 	if (!date) return "";
-	const y = date.slice(0, 4);
-	const m = date.slice(5, 7);
-	const d = date.slice(8, 10);
-	return `${d}/${m}/${y}`;
+
+	const dateOptions = {
+		dateStyle: shortDate ? "short" : "medium",
+	};
+
+	if (date.length <= 10) {
+		// Old date, in the format YYYY-MM-DD
+		return new Date(date).toLocaleString("en-AU", dateOptions);
+	}
+
+	// New date, in the ISO string format
+	if (!hideTime) {
+		dateOptions.timeStyle = "short";
+	}
+	return new Date(date).toLocaleString("en-AU", dateOptions);
 }
 
 export function getPrevAndNextGame() {
