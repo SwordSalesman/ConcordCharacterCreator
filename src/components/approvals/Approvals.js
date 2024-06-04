@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { getCharacterList, getApprovalList } from "../../hooks/use-firebase";
-import { ApprovalListWrapper, ApprovalSelectWrapper, ApprovalsWrapper } from "./Approvals.style";
+import {
+	ApprovalListWrapper,
+	ApprovalSelectWrapper,
+	ApprovalsWrapper,
+	ExportContents,
+	LeftColumn,
+} from "./Approvals.style";
 import useUserContext from "../../hooks/use-user-context";
 import { Navigate } from "react-router-dom";
 import { APPROVED, DENIED, PATH_HOME, PENDING } from "../../helpers/constants";
@@ -8,6 +14,10 @@ import CharacterList from "./characterList/CharacterList";
 import ListFilter from "./ListFilter";
 import CharacterCard from "./CharacterCard";
 import ApprovalPanel from "./ApprovalPanel";
+import Button from "../common/Button/Button";
+import { BiExport } from "react-icons/bi";
+import { CSVLink } from "react-csv";
+import { getCurrentDate } from "../../helpers/date-helper";
 
 function Approvals() {
 	const [characters, setCharacters] = useState([]);
@@ -82,6 +92,8 @@ function Approvals() {
 		setDateOrder(!dateOrder);
 	}
 
+	const now = getCurrentDate().slice(0, 19);
+
 	const sortedFilteredCharacters = characters
 		.filter((c) => {
 			if (!filter) return true;
@@ -95,22 +107,70 @@ function Approvals() {
 		})
 		.sort((a, b) => a.date.localeCompare(b.date) * (dateOrder ? 1 : -1));
 
+	const csvHeaders = [
+		{ label: "ID", key: "id" },
+		{ label: "Player Name", key: "player" },
+		{ label: "Email", key: "email" },
+		{ label: "Submission Date", key: "date" },
+		{ label: "Comments", key: "comments" },
+		{ label: "Approval Status", key: "approval.status" },
+		{ label: "Approval Date", key: "approval.date" },
+		{ label: "Approval Author", key: "approval.author" },
+		{ label: "Approval Comment", key: "approval.comment" },
+		{ label: "Hero Name", key: "heroName" },
+		{ label: "Realm", key: "realm" },
+		{ label: "Archetype", key: "archetype" },
+		{ label: "Grace", key: "grace" },
+		{ label: "Games Played", key: "gamesPlayed" },
+		{ label: "Skills", key: "skills" },
+		{ label: "Spells", key: "spells" },
+		{ label: "Crafts", key: "crafts" },
+		{ label: "Starting Item", key: "startingItem" },
+		{ label: "Potions", key: "potions" },
+		{ label: "Ceremonies", key: "ceremonies" },
+		{ label: "Investment", key: "investment" },
+		{ label: "Inv. Option", key: "invOption" },
+		{ label: "Inv. Region", key: "invRegion" },
+		{ label: "Inv. Territory", key: "invTerritory" },
+		{ label: "Inv. Tier", key: "invTier" },
+		{ label: "Warband", key: "warband" },
+		{ label: "Sect", key: "sect" },
+		{ label: "Backstory", key: "backstory" },
+		{ label: "Inv. Story", key: "invDetails" },
+		{ label: "IC Goals", key: "icGoals" },
+		{ label: "OOC Goals", key: "oocGoals" },
+	];
+
 	return isAdmin ? (
 		<ApprovalsWrapper>
-			<ApprovalListWrapper>
-				<ListFilter
-					filter={filter}
-					selectFilter={handleSelectFilter}
-					dateOrder={dateOrder}
-					toggleDateOrder={toggleDateOrder}
-					counts={counts}
-				/>
-				<CharacterList
-					characters={sortedFilteredCharacters}
-					handleSelect={setSelectedChar}
-					activeCharacter={selectedChar}
-				/>
-			</ApprovalListWrapper>
+			<LeftColumn>
+				<CSVLink
+					data={characters}
+					filename={`character-export-${now}.csv`}
+					headers={csvHeaders}
+				>
+					<Button outline small>
+						<ExportContents>
+							<p>Export All</p>
+							<BiExport />
+						</ExportContents>
+					</Button>
+				</CSVLink>
+				<ApprovalListWrapper>
+					<ListFilter
+						filter={filter}
+						selectFilter={handleSelectFilter}
+						dateOrder={dateOrder}
+						toggleDateOrder={toggleDateOrder}
+						counts={counts}
+					/>
+					<CharacterList
+						characters={sortedFilteredCharacters}
+						handleSelect={setSelectedChar}
+						activeCharacter={selectedChar}
+					/>
+				</ApprovalListWrapper>
+			</LeftColumn>
 			<ApprovalSelectWrapper>
 				<CharacterCard character={selectedChar} />
 				<ApprovalPanel character={selectedChar} handleApproval={handleApproval} />

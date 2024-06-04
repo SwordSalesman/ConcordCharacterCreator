@@ -31,9 +31,6 @@ function CharacterList({ characters, handleSelect, activeCharacter }) {
 					);
 			  })
 			: null;
-	// <p style={{ textAlign: "center", paddingTop: "20px" }}>
-	//     Loading submissions...
-	// </p>
 
 	return <CharacterListWrapper>{renderedList}</CharacterListWrapper>;
 }
