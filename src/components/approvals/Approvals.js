@@ -19,6 +19,11 @@ import { BiExport } from "react-icons/bi";
 import { CSVLink } from "react-csv";
 import { getCurrentDate } from "../../helpers/date-helper";
 
+function removeAllNewlines(input) {
+	if (!input) return "";
+	return input.replace(/(?:\r\n|\r|\n)/g, ". ");
+}
+
 function Approvals() {
 	const [characters, setCharacters] = useState([]);
 	const [selectedChar, setSelectedChar] = useState(null);
@@ -40,7 +45,17 @@ function Approvals() {
 			if (chars && apprs) {
 				let newChars = chars.map((c) => {
 					const approval = apprs.find((a) => a.id === c.id);
-					return { ...c, approval: approval };
+					return {
+						...c,
+						backstory: removeAllNewlines(c.backstory),
+						oocGoals: removeAllNewlines(c.oocGoals),
+						icGoals: removeAllNewlines(c.icGoals),
+						invDetails: removeAllNewlines(c.invDetails),
+						comments: removeAllNewlines(c.comments),
+						heroName: removeAllNewlines(c.heroName),
+						player: removeAllNewlines(c.player),
+						approval: approval,
+					};
 				});
 				setCharacters(newChars);
 				calcCounts(newChars);
@@ -108,7 +123,7 @@ function Approvals() {
 		.sort((a, b) => a.date.localeCompare(b.date) * (dateOrder ? 1 : -1));
 
 	const csvHeaders = [
-		{ label: "ID", key: "id" },
+		{ label: "Database ID", key: "id" },
 		{ label: "Player Name", key: "player" },
 		{ label: "Email", key: "email" },
 		{ label: "Submission Date", key: "date" },
@@ -129,10 +144,10 @@ function Approvals() {
 		{ label: "Potions", key: "potions" },
 		{ label: "Ceremonies", key: "ceremonies" },
 		{ label: "Investment", key: "investment" },
+		{ label: "Inv. Tier", key: "invTier" },
 		{ label: "Inv. Option", key: "invOption" },
 		{ label: "Inv. Region", key: "invRegion" },
 		{ label: "Inv. Territory", key: "invTerritory" },
-		{ label: "Inv. Tier", key: "invTier" },
 		{ label: "Warband", key: "warband" },
 		{ label: "Sect", key: "sect" },
 		{ label: "Backstory", key: "backstory" },
