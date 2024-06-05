@@ -6,6 +6,7 @@ import { ImQuill } from "react-icons/im";
 import styled from "styled-components";
 import { GiScrollUnfurled, GiSpellBook } from "react-icons/gi";
 import toast from "react-hot-toast";
+import { prettifyDate } from "../../helpers/date-helper";
 
 function CharacterCard({ character }) {
 	const skills = character?.skills?.split(", ");
@@ -32,6 +33,7 @@ function CharacterCard({ character }) {
 					<u>({character.email})</u>
 				</EmailLink>
 			</NameAndEmail>
+			<Empty>Submitted on {prettifyDate(character.date)}</Empty>
 			{/*  */}
 			<ChangeWrapper changed={changed("comments")} key={"comments"}>
 				<CharSectionTitle>

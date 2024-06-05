@@ -23,8 +23,10 @@ function CharacterList({ characters, handleSelect, activeCharacter }) {
 								<b>{c.heroName}</b>
 							</ListItemTitle>
 							<ListItemRow>
-								<p>{c.player}</p>
-								<p>{prettifyDate(c.date, { hideTime: true, shortDate: true })}</p>
+								<p>{`${prettifyDate(c.date, {
+									hideTime: true,
+									shortDate: false,
+								})} ~ ${c.player}`}</p>
 							</ListItemRow>
 							<ApprovalStatus>{c.approval?.status ?? PENDING}</ApprovalStatus>
 						</ListItem>

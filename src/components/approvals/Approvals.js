@@ -99,7 +99,7 @@ function Approvals() {
 			return { ...c, approval: approval, changes: "" };
 		});
 		setCharacters(newChars);
-		setSelectedChar({ ...selectedChar, changes: "" });
+		setSelectedChar({ ...selectedChar, approval: approval, changes: "" });
 		calcCounts(newChars);
 	}
 
