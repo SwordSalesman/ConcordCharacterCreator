@@ -2,9 +2,9 @@
 	{ "name": "Janissary", "realm": "Andash" },
 	{ "name": "Learned Arcanist", "realm": "Andash" },
 	{ "name": "Delver", "realm": "Andash" },
-	{ "name": "Clan Master", "realm": "Andash" },
-	{ "name": "Trade Princep", "realm": "Andash" },
+	{ "name": "Andashi Patron", "realm": "Andash" },
 	{ "name": "Corsair", "realm": "Andash" },
+	{ "name": "Wreathkeeper", "realm": "Andash" },
 
 	{ "name": "Free Captain", "realm": "Lerona Mere" },
 	{ "name": "Bravo", "realm": "Lerona Mere" },
@@ -29,5 +29,6 @@
 	{ "name": "Avowed Knight", "realm": "Kingdom of Bordevar" },
 	{ "name": "Kings Ranger", "realm": "Kingdom of Bordevar" },
 	{ "name": "Steward", "realm": "Kingdom of Bordevar" },
-	{ "name": "Billmonger", "realm": "Kingdom of Bordevar" }
+	{ "name": "Billmonger", "realm": "Kingdom of Bordevar" },
+	{ "name": "Prior", "realm": "Kingdom of Bordevar" }
 ]

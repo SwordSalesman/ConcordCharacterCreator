@@ -10,6 +10,7 @@ import { BackgroundPageWrapper } from "./BackgroundPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import useRealmDetails from "../../../hooks/use-realm-details";
 import { useEffect, useState } from "react";
+import { archetypeWarning } from "../../../helpers/validity-helper";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");
@@ -125,7 +126,11 @@ function BackgroundPage() {
 						// invalid={heroName.length < 1}
 						// invalidText="Don't forget your name"
 					/>
-					<AccordionSection title="Archetype" link={archetypeLink}>
+					<AccordionSection
+						title="Archetype"
+						link={archetypeLink}
+						warning={archetypeWarning(archetype, allArchetypes)}
+					>
 						{renderedArchetype}
 					</AccordionSection>
 					<AccordionSection title="Grace" link="Graces">

@@ -31,8 +31,8 @@ import {
 	GiRobe,
 	GiTatteredBanner,
 } from "react-icons/gi";
-import { getRegionRealm } from "../../../helpers/data-helper";
 import { regionIsCoastal, regionIsNotCoastal } from "../../../helpers/selection-helper";
+import { investmentRegionWarning } from "../../../helpers/validity-helper";
 
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");
@@ -362,14 +362,6 @@ function OptionsPage() {
 		}
 	};
 
-	function investmentRegionWarning() {
-		const invRealm = getRegionRealm(invRegion[0]?.name);
-		if (realm && invRealm && realm !== invRealm) {
-			return "Your investment is in a region not held by your Realm, so it will function at half capacity.";
-		}
-		return "";
-	}
-
 	const investmentTabContent = (
 		<BackgroundInputWrapper>
 			<AccordionSection title="Investment Type" link="Investments">
@@ -432,7 +424,7 @@ function OptionsPage() {
 			<AccordionSection
 				title="Investment Region"
 				link="Map_of_Esterra"
-				warning={investmentRegionWarning()}
+				warning={investmentRegionWarning(realm, invRegion)}
 			>
 				{regionData.map((region) => {
 					let selected = invRegion?.map((i) => i.name).includes(region.name);
