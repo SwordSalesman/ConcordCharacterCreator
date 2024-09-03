@@ -168,16 +168,16 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 		</>
 	);
 
-	const submissionsOpen = Date.now() < new Date("2024-03-18T23:59:59.000+08:00");
+	const submissionsOpen = Date.now() < new Date("2024-09-07T23:59:59.000+08:00");
 
 	return (
 		<>
 			<Banner
-				show={false}
+				show={true}
 				full={
 					submissionsOpen ? (
 						<p>
-							Submissions will close <b>March 18th.</b> Make sure you submit your
+							Submissions will close <b>September 7th.</b> Make sure you submit your
 							character and changes before then!
 						</p>
 					) : (
