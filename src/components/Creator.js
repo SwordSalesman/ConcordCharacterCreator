@@ -173,7 +173,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	return (
 		<>
 			<Banner
-				show={true}
+				show={false}
 				full={
 					submissionsOpen ? (
 						<p>

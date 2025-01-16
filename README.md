@@ -2,8 +2,14 @@
 
 ### To Do
 
+Known Bugs
+
 -   Fix the divine lore per sphere giving known ceremonies thing, you know the one.
--   Add 'export' button to approvals window which does what it says
+
+Wanted Features
+
+-   Ability to remove hero submissions. "Delete" button.
+-   Make the banner adjustable without a deploy, make it read from firebase probably.
 
 ## 🚀 Live Site
 
