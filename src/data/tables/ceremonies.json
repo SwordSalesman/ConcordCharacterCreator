@@ -331,6 +331,12 @@
 	},
 	{
 		"sphere": "Cervitas",
+		"name": "Halig's Brand",
+		"type": "Curse",
+		"Magnitude": 10
+	},
+	{
+		"sphere": "Cervitas",
 		"name": "Blessing of the Legion",
 		"type": "Enchantment",
 		"Magnitude": 12

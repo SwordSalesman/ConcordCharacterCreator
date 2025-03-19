@@ -2,6 +2,10 @@
 
 ### To Do
 
+Needed
+
+-   Add ability to people to 'overspend' xp, with a warning at submission
+
 Known Bugs
 
 -   Fix the divine lore per sphere giving known ceremonies thing, you know the one.

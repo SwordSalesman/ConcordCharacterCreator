@@ -302,6 +302,11 @@
 	},
 	{
 		"rarity": "Expert",
+		"name": "Unbroken Chain",
+		"type": "Armour: Medium"
+	},
+	{
+		"rarity": "Expert",
 		"name": "Wayfarers Pyx",
 		"type": "Reliquary"
 	},
