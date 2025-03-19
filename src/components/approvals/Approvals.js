@@ -187,7 +187,7 @@ function Approvals() {
 						</ExportContents>
 					</Button>
 				</CSVLink>
-				{isDev ? (
+				{isDev && false ? (
 					<Button onClick={handleMigrateInvestmentsButton}>
 						<p>🥾 Migrate Investments</p>
 					</Button>
