@@ -148,6 +148,12 @@ const saveApproval = async (name, comment, status, subjectUid) => {
 	return approval;
 };
 
+// Used in admin commands to update users without updating their submission date
+const migrateUser = async (userId, form) => {
+	await setDoc(doc(db, "characters", userId), form);
+	return form;
+};
+
 // FIRESTORE GETTING **************************************************************
 
 const getUserForm = async () => {
@@ -251,6 +257,7 @@ export {
 	sendPasswordReset,
 	saveUserForm,
 	getUserForm,
+	migrateUser,
 	getUserFormAndApproval,
 	getUserDetails,
 	getCharacterList,

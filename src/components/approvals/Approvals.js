@@ -18,10 +18,12 @@ import Button from "../common/Button/Button";
 import { BiExport } from "react-icons/bi";
 import { CSVLink } from "react-csv";
 import { getCurrentDate } from "../../helpers/date-helper";
+import { handleMigrateInvestments } from "../../helpers/migration-helper";
 
 function removeAllNewlines(input) {
 	if (!input) return "";
-	return input.replace(/(?:\r\n|\r|\n)/g, ". ");
+	// also replace all forms of double quotes with single quotes
+	return input.replace(/(?:\r\n|\r|\n)/g, ". ").replace(/"/g, "'");
 }
 
 function Approvals() {
@@ -36,6 +38,7 @@ function Approvals() {
 		denied: 0,
 		total: 0,
 	});
+	const isDev = process.env.REACT_APP_DEBUG_TEXT === "DevMode";
 
 	useEffect(() => {
 		async function fetchCharacters() {
@@ -54,7 +57,12 @@ function Approvals() {
 						comments: removeAllNewlines(c.comments),
 						heroName: removeAllNewlines(c.heroName),
 						player: removeAllNewlines(c.player),
-						approval: approval,
+						approval: approval
+							? {
+									...approval,
+									comment: removeAllNewlines(approval?.comment),
+							  }
+							: undefined,
 					};
 				});
 				setCharacters(newChars);
@@ -156,6 +164,14 @@ function Approvals() {
 		{ label: "OOC Goals", key: "oocGoals" },
 	];
 
+	async function handleMigrateInvestmentsButton() {
+		const confirmMigration = window.confirm("Are you sure you want to migrate investments?");
+		if (confirmMigration) {
+			const chars = await getCharacterList();
+			handleMigrateInvestments(chars);
+		}
+	}
+
 	return isAdmin ? (
 		<ApprovalsWrapper>
 			<LeftColumn>
@@ -171,6 +187,11 @@ function Approvals() {
 						</ExportContents>
 					</Button>
 				</CSVLink>
+				{isDev ? (
+					<Button onClick={handleMigrateInvestmentsButton}>
+						<p>🥾 Migrate Investments</p>
+					</Button>
+				) : null}
 				<ApprovalListWrapper>
 					<ListFilter
 						filter={filter}
