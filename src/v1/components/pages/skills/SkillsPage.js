@@ -1,9 +1,9 @@
-import Accordion from "../../../components/common/Accordion/Accordion";
-import ContentPane from "../../../components/common/ContentPane/ContentPane";
+import Accordion from "../../common/Accordion/Accordion";
+import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import SkillItem from "./SkillItem";
-import SectionDivider from "../../../components/common/SectionDivider/SectionDivider";
-import { SectionWrapper } from "../../../components/common/SectionDivider/SectionDivider.style";
+import SectionDivider from "../../common/SectionDivider/SectionDivider";
+import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { getNextSkill } from "../../../hooks/use-skill-helper";
 import { SkillPageWrapper } from "./SkillsPage.style";
 var tabs = require("../../../data/tables/skillTabs.json");

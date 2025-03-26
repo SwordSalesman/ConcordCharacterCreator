@@ -1,6 +1,6 @@
 import useFormContext from "../../../hooks/use-form-context";
 import useRealmDetails from "../../../hooks/use-realm-details";
-import ContentPane from "../../../components/common/ContentPane/ContentPane";
+import ContentPane from "../../common/ContentPane/ContentPane";
 import {
 	InvalidWarning,
 	LightBorder,

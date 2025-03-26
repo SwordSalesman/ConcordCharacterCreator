@@ -1,9 +1,9 @@
-import Accordion from "../../../components/common/Accordion/Accordion";
-import ContentPane from "../../../components/common/ContentPane/ContentPane";
+import Accordion from "../../common/Accordion/Accordion";
+import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
-import TextInput from "../../../components/common/TextInput/TextInput";
-import SectionDivider from "../../../components/common/SectionDivider/SectionDivider";
-import Chip from "../../../components/common/Chip/Chip";
+import TextInput from "../../common/TextInput/TextInput";
+import SectionDivider from "../../common/SectionDivider/SectionDivider";
+import Chip from "../../common/Chip/Chip";
 import { styled } from "styled-components";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { BackgroundPageWrapper } from "./BackgroundPage.style";

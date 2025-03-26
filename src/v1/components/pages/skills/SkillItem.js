@@ -1,5 +1,5 @@
-import Chip from "../../../components/common/Chip/Chip";
-import { SkillCost } from "../../../components/common/Chip/Chip.styled";
+import Chip from "../../common/Chip/Chip";
+import { SkillCost } from "../../common/Chip/Chip.styled";
 
 function SkillItem({ skill, selectSkill, selected, shadow, inactive, inactiveReason }) {
 	const handleClick = () => {
