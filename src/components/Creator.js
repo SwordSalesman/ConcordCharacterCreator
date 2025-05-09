@@ -169,12 +169,12 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	);
 
 	// const submissionsOpen = Date.now() < new Date("2024-09-07T23:59:59.000+08:00");
-	const submissionsOpen = false;
+	const submissionsOpen = true;
 
 	return (
 		<>
 			<Banner
-				show={true}
+				show={false}
 				full={
 					submissionsOpen ? (
 						<p>
