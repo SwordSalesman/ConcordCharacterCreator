@@ -2,18 +2,24 @@
 
 ### To Do
 
-Needed
+New Features
 
+-   Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
+-   EMAILS (requires a whole rebuild fml)
+    -   automatic confirmation emails when a player submits their character
+    -   optional automatic email when a character is approved/denied/generally reviewed
+-   Ability to remove hero submissions in approvals window. Delete/Archive button.
+-   Make the alert banner adjustable without a deploy, make it read from firebase probably.
 -   Add ability to people to 'overspend' xp, with a warning at submission
+-   Display userId on the admin window (for dev benefit)
+-   Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
+-   Warning message for archetype invalid skill
+    -   Warning message summary at the "submission notes" section to summarise all warnings
 
 Known Bugs
 
 -   Fix the divine lore per sphere giving known ceremonies thing, you know the one.
-
-Wanted Features
-
--   Ability to remove hero submissions. "Delete" button.
--   Make the banner adjustable without a deploy, make it read from firebase probably.
+-   Fix the full stop paragraph thing in approvals
 
 ## 🚀 Live Site
 

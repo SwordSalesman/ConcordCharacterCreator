@@ -182,6 +182,11 @@
 	},
 	{
 		"rarity": "Expert",
+		"name": "Eldermere Charm",
+		"type": "Talisman: Tool"
+	},
+	{
+		"rarity": "Expert",
 		"name": "Elementalists Garb",
 		"type": "Armour: Medium"
 	},
