@@ -26,6 +26,12 @@
 		"coastal": true
 	},
 	{
+		"name": "Mancante Terra",
+		"realm": "Lerona Mere",
+		"territories": ["Boisombre", "Marepato", "Plateau of the Gods"],
+		"coastal": true
+	},
+	{
 		"name": "Resinderholz",
 		"realm": "Greenweald Baronies",
 		"link": "Resinderholz",

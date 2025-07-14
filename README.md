@@ -11,7 +11,6 @@ New Features
 -   Ability to remove hero submissions in approvals window. Delete/Archive button.
 -   Make the alert banner adjustable without a deploy, make it read from firebase probably.
 -   Add ability to people to 'overspend' xp, with a warning at submission
--   Display userId on the admin window (for dev benefit)
 -   Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
 -   Warning message for archetype invalid skill
     -   Warning message summary at the "submission notes" section to summarise all warnings

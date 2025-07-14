@@ -33,7 +33,11 @@ function CharacterCard({ character }) {
 					<u>({character.email})</u>
 				</EmailLink>
 			</NameAndEmail>
-			<Empty>Submitted on {prettifyDate(character.date)}</Empty>
+			<Empty>
+				Submitted on {prettifyDate(character.date)}
+				<br />
+				Database ID {character.id}
+			</Empty>
 			{/*  */}
 			<ChangeWrapper changed={changed("comments")} key={"comments"}>
 				<CharSectionTitle>

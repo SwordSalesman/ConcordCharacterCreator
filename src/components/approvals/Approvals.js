@@ -187,11 +187,6 @@ function Approvals() {
 						</ExportContents>
 					</Button>
 				</CSVLink>
-				{isDev && false ? (
-					<Button onClick={handleMigrateInvestmentsButton}>
-						<p>🥾 Migrate Investments</p>
-					</Button>
-				) : null}
 				<ApprovalListWrapper>
 					<ListFilter
 						filter={filter}
