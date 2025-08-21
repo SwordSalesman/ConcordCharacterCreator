@@ -24,6 +24,9 @@ import SkillsPage from "./pages/skills/SkillsPage";
 import OptionsPage from "./pages/options/OptionsPage";
 import BackgroundPage from "./pages/background/BackgroundPage";
 import ReviewPage from "./pages/review/ReviewPage";
+import { useNavigate } from "react-router-dom";
+import { RiExternalLinkLine } from "react-icons/ri";
+import { PATH_GROUPS } from "../helpers/constants";
 
 const useTabs = false;
 const tabs = [
@@ -41,6 +44,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	const realmImage = useRealmImage(realm);
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const [direction, setDirection] = useState("right");
+	const navigate = useNavigate();
 
 	const [showConfirmReset, setShowConfirmReset] = useState(false);
 	const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
@@ -174,18 +178,35 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	return (
 		<>
 			<Banner
-				show={false}
+				show={true}
 				full={
 					submissionsOpen ? (
 						<p>
-							Submissions will close <b>September 7th.</b> Make sure you submit your
-							character and changes before then!
+							Submissions will close <b>September 13th</b> for both Characters and{" "}
+							<a
+								href={PATH_GROUPS}
+								style={{
+									cursor: "pointer",
+									// textDecoration: "underline",
+									borderRadius: "4px",
+									padding: "2px 4px",
+									display: "inline-flex",
+									alignItems: "center",
+									gap: "4px",
+									border: "1px solid",
+									// background: "#ffffff2d",
+								}}
+							>
+								Bands
+								<RiExternalLinkLine />
+							</a>
+							. Make sure all your details are submitted before then!
 						</p>
 					) : (
 						<p>
 							<b>Submissions are closed.</b> You may still use this form and submit
 							your character, but the team is not guaranteed to approve your character
-							or provide a character bag.
+							or provide a character pack.
 						</p>
 					)
 				}

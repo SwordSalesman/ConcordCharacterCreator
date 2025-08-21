@@ -49,6 +49,10 @@ export const HeaderSigilWrapper = styled.a`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	@media (max-width: ${mediaSize.small}px) {
+		display: none;
+	}
 `;
 
 export const HeaderConcordSigil = styled.img`

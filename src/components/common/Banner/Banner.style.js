@@ -8,7 +8,7 @@ export const BannerSpacer = styled.div`
 `;
 
 export const BannerWrapper = styled.div`
-	cursor: pointer;
+	/* cursor: pointer; */
 	margin: 15px 0 0 0;
 	padding: ${(props) => (props.expanded ? "10px 24px" : "12px")};
 	color: white;
@@ -86,9 +86,13 @@ export const BannerWrapper = styled.div`
 `;
 
 export const BannerArrow = styled.div`
+	cursor: pointer;
+	z-index: 10;
 	position: absolute;
-	right: 5px;
-	top: ${(props) => (props.expanded ? "44px" : "-3px")};
+	right: 0px;
+	top: ${(props) => (props.expanded ? "40px" : "-8px")};
+
+	padding: 5px;
 
 	transition-duration: 0.4s;
 
@@ -105,7 +109,6 @@ export const BannerContent = styled.div`
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	text-wrap: balance;
 
 	@media (max-width: ${mediaSize.small}px) {
 		font-size: 1rem;

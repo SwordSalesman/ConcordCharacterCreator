@@ -7,9 +7,10 @@ import { Toaster } from "react-hot-toast";
 import isPropValid from "@emotion/is-prop-valid";
 import Login from "./components/common/Login/Login";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { PATH_APPROVALS, PATH_HOME } from "./helpers/constants";
+import { PATH_APPROVALS, PATH_GROUPS, PATH_HOME } from "./helpers/constants";
 import Creator from "./components/Creator";
 import Approvals from "./components/approvals/Approvals";
+import { Groups } from "./components/groups/Groups";
 
 function App() {
 	const [theme, setTheme] = useState(
@@ -57,9 +58,8 @@ function App() {
 										/>
 									}
 								/>
-								<Route path={`${PATH_APPROVALS}`} element={<Approvals />}>
-									<Route path=":uid" element={<Approvals />} />
-								</Route>
+								<Route path={`${PATH_APPROVALS}`} element={<Approvals />}></Route>
+								<Route path={`${PATH_GROUPS}`} element={<Groups />}></Route>
 								<Route path=":any" element={<Navigate to={PATH_HOME} />} />
 							</Routes>
 							<Login show={showLogin} handleClose={handleCloseLogin} />

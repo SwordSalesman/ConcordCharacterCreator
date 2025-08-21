@@ -13,7 +13,13 @@ import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 import useUserContext from "../../../hooks/use-user-context";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { APPROVED, DENIED, PATH_APPROVALS, PATH_HOME } from "../../../helpers/constants";
+import {
+	APPROVED,
+	DENIED,
+	PATH_APPROVALS,
+	PATH_GROUPS,
+	PATH_HOME,
+} from "../../../helpers/constants";
 import useFormContext from "../../../hooks/use-form-context";
 import ApprovalModal from "../Modal/ApprovalModal";
 
@@ -58,6 +64,49 @@ function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 		setShowApprovalModal(false);
 	}
 
+	const headerButtons = (
+		<>
+			{isAdmin && (
+				<Button
+					primary={pathname === PATH_APPROVALS}
+					onClick={() => navigate(PATH_APPROVALS)}
+				>
+					<HeaderButtonContent to={PATH_APPROVALS}>
+						<p>Approvals</p>
+					</HeaderButtonContent>
+				</Button>
+			)}
+			<Button onClick={() => navigate(PATH_HOME)} primary={pathname === PATH_HOME}>
+				<HeaderButtonContent to={PATH_HOME}>
+					<p
+						style={
+							{
+								// textDecoration: pathname === PATH_HOME ? "underline" : "none",
+								// color: pathname === PATH_HOME ? theme.text : theme.textSoft,
+							}
+						}
+					>
+						Character
+					</p>
+				</HeaderButtonContent>
+			</Button>
+			<Button onClick={() => navigate(PATH_GROUPS)} primary={pathname === PATH_GROUPS}>
+				<HeaderButtonContent to={PATH_GROUPS}>
+					<p
+						style={
+							{
+								// textDecoration: pathname === PATH_GROUPS ? "underline" : "none",
+								// color: pathname === PATH_GROUPS ? theme.text : theme.textSoft,
+							}
+						}
+					>
+						Band
+					</p>
+				</HeaderButtonContent>
+			</Button>
+		</>
+	);
+
 	return (
 		<>
 			<HeaderWrapper>
@@ -65,42 +114,10 @@ function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 					style={{
 						display: "flex",
 						flex: 1,
-						gap: "4px",
 						alignItems: "center",
 					}}
 				>
-					<Button
-						onClick={() => {
-							toggleTheme();
-						}}
-						small
-					>
-						<HeaderButtonContent>
-							<BiAdjust />
-						</HeaderButtonContent>
-					</Button>
-					{isAdmin ? (
-						<>
-							<Button
-								primary={pathname === PATH_APPROVALS}
-								onClick={() => navigate(PATH_APPROVALS)}
-								small
-							>
-								<HeaderButtonContent to={PATH_APPROVALS}>
-									<p>Approvals</p>
-								</HeaderButtonContent>
-							</Button>
-							<Button
-								primary={pathname === PATH_HOME}
-								onClick={() => navigate(PATH_HOME)}
-								small
-							>
-								<HeaderButtonContent to={PATH_HOME}>
-									<p>Creator</p>
-								</HeaderButtonContent>
-							</Button>
-						</>
-					) : null}
+					{headerButtons}
 					{isDev ? (
 						<div
 							style={{
@@ -138,7 +155,6 @@ function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 					style={{
 						display: "flex",
 						flex: 1,
-						gap: "4px",
 						justifyContent: "right",
 						alignItems: "center",
 					}}
@@ -161,6 +177,16 @@ function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 									<FaUserPlus />
 								</>
 							)}
+						</HeaderButtonContent>
+					</Button>
+					<Button
+						onClick={() => {
+							toggleTheme();
+						}}
+						small
+					>
+						<HeaderButtonContent>
+							<BiAdjust />
 						</HeaderButtonContent>
 					</Button>
 				</div>
