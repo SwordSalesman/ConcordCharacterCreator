@@ -126,6 +126,27 @@
 		"Magnitude": 100
 	},
 	{
+		"sphere": "Anarch",
+		"name": "Reforged in the Crucible",
+		"type": "",
+		"Magnitude": 10,
+		"alignment": true
+	},
+	{
+		"sphere": "Anarch",
+		"name": "Peak Fitness",
+		"type": "",
+		"Magnitude": 16,
+		"alignment": true
+	},
+	{
+		"sphere": "Anarch",
+		"name": "Phoenix's Rebirth",
+		"type": "Enchantment",
+		"Magnitude": 40,
+		"alignment": true
+	},
+	{
 		"sphere": "Arcadian",
 		"name": "Missive of Courage",
 		"type": "-",
@@ -256,6 +277,28 @@
 		"name": "God of War",
 		"type": "Enchantment",
 		"Magnitude": 100
+	},
+	{
+		"sphere": "Arcadian",
+		"name": "Thunderous Retreat",
+		"type": "Enchantment",
+		"Magnitude": 12,
+		"alignment": true
+	},
+
+	{
+		"sphere": "Arcadian",
+		"name": "Heart of War",
+		"type": "Enchantment",
+		"Magnitude": 18,
+		"alignment": true
+	},
+	{
+		"sphere": "Arcadian",
+		"name": "Ardent Wavesight",
+		"type": "Enchantment",
+		"Magnitude": 65,
+		"alignment": true
 	},
 	{
 		"sphere": "Cervitas",
@@ -390,6 +433,27 @@
 		"Magnitude": 120
 	},
 	{
+		"sphere": "Cervitas",
+		"name": "Mass of the Faithful",
+		"type": "Enchantment",
+		"Magnitude": 6,
+		"alignment": true
+	},
+	{
+		"sphere": "Cervitas",
+		"name": "Shattering the Tombstones",
+		"type": "Enchantment",
+		"Magnitude": 22,
+		"alignment": true
+	},
+	{
+		"sphere": "Cervitas",
+		"name": "Levy of the Crown",
+		"type": "",
+		"Magnitude": 96,
+		"alignment": true
+	},
+	{
 		"sphere": "Lumos",
 		"name": "The Candle Extinguished",
 		"type": "-",
@@ -511,9 +575,36 @@
 	},
 	{
 		"sphere": "Lumos",
-		"name": "Rivers of Blood and Life",
+		"name": "Rivers of Blood",
 		"type": "Enchantment",
 		"Magnitude": 50
+	},
+	{
+		"sphere": "Lumos",
+		"name": "Rivers of Life",
+		"type": "Enchantment",
+		"Magnitude": 50
+	},
+	{
+		"sphere": "Lumos",
+		"name": "Lullaby of Twilight",
+		"type": "-",
+		"Magnitude": 8,
+		"alignment": true
+	},
+	{
+		"sphere": "Lumos",
+		"name": "Moon's Perigee",
+		"type": "Enchantment",
+		"Magnitude": 25,
+		"alignment": true
+	},
+	{
+		"sphere": "Lumos",
+		"name": "Final Sunset",
+		"type": "Enchantment",
+		"Magnitude": 75,
+		"alignment": true
 	},
 	{
 		"sphere": "Stallia",
@@ -640,6 +731,27 @@
 		"name": "A Moment to Speak",
 		"type": "Enchantment",
 		"Magnitude": 50
+	},
+	{
+		"sphere": "Stallia",
+		"name": "Serpent's Sequestered Secrets",
+		"type": "",
+		"Magnitude": 12,
+		"alignment": true
+	},
+	{
+		"sphere": "Stallia",
+		"name": "Clockwork Messengers of Machine",
+		"type": "Enchantment",
+		"Magnitude": 24,
+		"alignment": true
+	},
+	{
+		"sphere": "Stallia",
+		"name": "Trapped in the Labyrinth",
+		"type": "Curse",
+		"Magnitude": 75,
+		"alignment": true
 	},
 	{
 		"sphere": "Panoply",
@@ -772,5 +884,26 @@
 		"name": "Wondrous Forests of the Night",
 		"type": "Enchantment",
 		"Magnitude": 100
+	},
+	{
+		"sphere": "Panoply",
+		"name": "Coinmaster's Superior Transmutation",
+		"type": "",
+		"Magnitude": 14,
+		"alignment": true
+	},
+	{
+		"sphere": "Panoply",
+		"name": "Prominent Demands for Taxation",
+		"type": "Enchantment",
+		"Magnitude": 29,
+		"alignment": true
+	},
+	{
+		"sphere": "Panoply",
+		"name": "Esteemed Voices Raised Loud",
+		"type": "Enchantment",
+		"Magnitude": 36,
+		"alignment": true
 	}
 ]

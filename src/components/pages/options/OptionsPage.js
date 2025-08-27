@@ -25,6 +25,7 @@ import {
 	GiGemNecklace,
 	GiHammerNails,
 	GiIncense,
+	GiMoon,
 	GiNinjaArmor,
 	GiPocketBow,
 	GiPotionBall,
@@ -185,6 +186,8 @@ const genTabContent = (params) => {
 												key={item.name}
 											>
 												{label === "Artisan Crafts" && chipIcon(item.type)}
+												{label === "Mastered Ceremonies" &&
+													item.alignment === true && <GiMoon />}
 												{item.name}
 											</Chip>
 										);
