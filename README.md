@@ -2,6 +2,11 @@
 
 ### To Do
 
+RIGHT NOW
+
+-   Alignment ceremonies
+-   Rivers of whatever
+
 New Features
 
 -   Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
@@ -19,6 +24,7 @@ Known Bugs
 
 -   Fix the divine lore per sphere giving known ceremonies thing, you know the one.
 -   Fix the full stop paragraph thing in approvals
+-   When a player submits a character after they've been approved, their approval still reads 'approved'. This is treated as 'pending' by the approval window, need to make sure this is reflected in the exported sheet.
 
 ## 🚀 Live Site
 

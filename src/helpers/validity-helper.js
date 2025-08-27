@@ -15,3 +15,12 @@ export function investmentRegionWarning(realm, invRegion) {
 	}
 	return "";
 }
+
+export function xpWarning(remainingXp) {
+	if (remainingXp < 0) {
+		return `You have spent ${Math.abs(
+			remainingXp
+		)} too much XP! If this is intentional, please provide an explanation in the final submission comments.`;
+	}
+	return "";
+}

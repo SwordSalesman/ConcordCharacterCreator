@@ -7,11 +7,16 @@ import styled from "styled-components";
 import { GiScrollUnfurled, GiSpellBook } from "react-icons/gi";
 import toast from "react-hot-toast";
 import { prettifyDate } from "../../helpers/date-helper";
+import { getFullSkillsFromSummary } from "../../hooks/use-skill-helper";
 
 function CharacterCard({ character }) {
 	const skills = character?.skills?.split(", ");
 	const changes = character?.changes?.split(", ");
 	const hasReview = !!character?.approval?.date;
+
+	const skillsFull = getFullSkillsFromSummary(character?.skills);
+	const totalXp = 8 + parseInt(character?.gamesPlayed ?? 0);
+	const spentXp = skillsFull ? skillsFull.map((s) => s.cost).reduce((a, b) => a + b, 0) : 0;
 
 	function copyText(text) {
 		navigator.clipboard.writeText(text);
@@ -82,6 +87,9 @@ function CharacterCard({ character }) {
 				<CharSectionTitle>
 					<RiSwordFill />
 					Skills
+					<SpentXpLabel warning={spentXp > totalXp}>
+						(Spent {spentXp} of {totalXp} XP)
+					</SpentXpLabel>
 				</CharSectionTitle>
 			</ChangeWrapper>
 			{skills?.length > 0 ? (
@@ -249,4 +257,10 @@ export const NameAndEmail = styled.div`
 export const EmailLink = styled.div`
 	cursor: pointer;
 	font-style: italic;
+`;
+
+const SpentXpLabel = styled.i`
+	font-size: 0.8em;
+	font-weight: 200;
+	color: ${(props) => (props.warning ? props.theme.error : "normal")};
 `;

@@ -476,7 +476,10 @@ function FormContextProvider({ children }) {
 
 		skills?.forEach((s) => {
 			const { valid } = validSkillChoice(s, { ignoreCost: true });
-			if (!valid || remainingXp < 0) {
+			if (
+				!valid
+				// || remainingXp < 0
+			) {
 				toggleSkill(s);
 			}
 		});

@@ -15,6 +15,8 @@ import {
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
 import TextInput from "../../common/TextInput/TextInput";
+import { xpWarning } from "../../../helpers/validity-helper";
+import { Warning } from "../../common/Accordion/AccordionSection";
 const graceData = require("../../../data/tables/graces.json");
 
 function ReviewItem({ label, children }) {
@@ -52,6 +54,7 @@ function ReviewPage({ user }) {
 		setComments,
 		validateForm,
 		changes,
+		remainingXp,
 	} = useFormContext();
 	const realmFull = useRealmDetails(realm);
 	const { valid, validRealm, validName, validInvestment } = validateForm();
@@ -96,12 +99,14 @@ function ReviewPage({ user }) {
 			</ul>
 		</InvalidWarning>
 	);
+	const xpWarningText = xpWarning(remainingXp);
 
 	return (
 		<ReviewPageWrapper>
 			<ReviewPaneWrapper>
 				<ContentPane mobileshow="true">
 					{!valid ? invalidWarning : null}
+					{xpWarningText && <Warning>{xpWarningText}</Warning>}
 					<div className="flex flex-col items-center mt-2 gap-2 mb-6">
 						<div>
 							<h2 className="text-xl leading-6">

@@ -6,6 +6,8 @@ import SectionDivider from "../../../components/common/SectionDivider/SectionDiv
 import { SectionWrapper } from "../../../components/common/SectionDivider/SectionDivider.style";
 import { getNextSkill } from "../../../hooks/use-skill-helper";
 import { SkillPageWrapper } from "./SkillsPage.style";
+import { xpWarning } from "../../../helpers/validity-helper";
+import { Warning } from "../../common/Accordion/AccordionSection";
 var tabs = require("../../../data/tables/skillTabs.json");
 var baseSkills = require("../../../data/tables/skills.json");
 
@@ -32,8 +34,7 @@ function SkillsPage() {
 			.map((skill) => {
 				let selected = skills?.map((s) => s.name).includes(skill.name);
 				// let inactiveReason = invalidSkillChoice(skill);
-
-				const { valid, reason } = validSkillChoice(skill);
+				const { valid, reason } = validSkillChoice(skill, { ignoreCost: true });
 
 				return (
 					<SkillItem
@@ -59,11 +60,14 @@ function SkillsPage() {
 		);
 	});
 
+	const warning = xpWarning(remainingXp);
+
 	return (
 		<SkillPageWrapper>
 			<ContentPane style={{ flex: 4 }}>
 				<SectionDivider left="Remaining XP" right={remainingXp} />
 				{/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
+				{warning && <Warning>{warning}</Warning>}
 				{renderedSkills?.length > 0 ? (
 					<SectionWrapper>{renderedSkills}</SectionWrapper>
 				) : (

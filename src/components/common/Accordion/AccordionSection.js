@@ -10,16 +10,20 @@ export function AccordionSection({ title, link, warning, children }) {
 				<p>{title}</p>
 				{link && <WikiLink path={link} />}
 			</TitleWrapper>
-			{warning && (
-				<SectionWarning>
-					<WarningIcon>
-						<RiErrorWarningFill size={24} />
-					</WarningIcon>
-					{warning}
-				</SectionWarning>
-			)}
+			{warning && <Warning>{warning}</Warning>}
 			<ContentWrapper>{children}</ContentWrapper>
 		</SectionWrapper>
+	);
+}
+
+export function Warning({ children }) {
+	return (
+		<SectionWarning>
+			<WarningIcon>
+				<RiErrorWarningFill size={24} />
+			</WarningIcon>
+			{children}
+		</SectionWarning>
 	);
 }
 
