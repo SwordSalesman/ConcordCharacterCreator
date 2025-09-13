@@ -59,3 +59,5 @@ export const dark = {
 	bannerWarning: "linear-gradient(125deg, rgba(190, 109, 84, 1) 0%, rgba(207, 166, 76, 1) 100%);",
 	bannerError: "linear-gradient(125deg, rgba(170, 94, 113, 1) 0%, rgba(206, 124, 94, 1) 100%);",
 };
+
+export type CustomTheme = typeof light;

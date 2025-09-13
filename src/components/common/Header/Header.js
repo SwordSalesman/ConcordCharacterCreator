@@ -23,9 +23,11 @@ import {
 import useFormContext from "../../../hooks/use-form-context";
 import ApprovalModal from "../Modal/ApprovalModal";
 
-function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
+export function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 	const theme = useTheme();
-	const { user, isAdmin } = useUserContext();
+	const userContext = useUserContext();
+	const user = userContext?.user;
+	const admin = userContext?.isAdmin;
 	const { approval, date } = useFormContext();
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
@@ -141,10 +143,7 @@ function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 					target="_blank"
 					rel="noreferrer"
 				>
-					<Button
-						style={{ height: "100%", width: "100%" }}
-						// onClick={handleLogoClick}
-					>
+					<Button style={{ height: "100%", width: "100%" }} onClick={handleLogoClick}>
 						<HeaderConcordSigil
 							src={theme.name === "light" ? ConcordSigil : ConcordSigilInv}
 						/>
@@ -201,5 +200,3 @@ function Header({ toggleTheme, handleShowLogin, handleLogoClick }) {
 		</>
 	);
 }
-
-export default Header;

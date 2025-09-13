@@ -1,28 +1,28 @@
-import { GlobalStyle, ScreenWrapper, StyledApp } from "./styles/Global";
+import "../styles/globals.css";
 import { useEffect, useState } from "react";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
-import { light, dark } from "./styles/Theme.styled";
-import Header from "./components/common/Header/Header";
 import { Toaster } from "react-hot-toast";
-import Login from "./components/common/Login/Login";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { PATH_APPROVALS, PATH_GROUPS, PATH_HOME } from "./helpers/constants";
-import Creator from "./components/Creator";
-import Approvals from "./components/approvals/Approvals";
-import { Groups } from "./components/groups/Groups";
+import { AppProps } from "next/app";
+import { dark, light } from "@/styles/Theme.styled";
+import { PageMeta } from "./PageMeta";
+import { GlobalStyle, ScreenWrapper, StyledApp } from "@/styles/Global";
+import { Header } from "@/components/common/Header/Header";
 
-function App() {
-	const [theme, setTheme] = useState(
-		window.localStorage.getItem("theme") === "dark" ? dark : light
-	);
+function App({ Component, pageProps }: AppProps) {
+	let defaultTheme = "light";
+	if (typeof window !== "undefined") {
+		defaultTheme = window.localStorage.getItem("theme") || "light";
+	}
+
+	const [theme, setTheme] = useState(defaultTheme === "dark" ? dark : light);
 	const [showLogin, setShowLogin] = useState(false);
 
 	const toggleTheme = () => {
 		if (theme === light) {
-			window.localStorage.setItem("theme", "dark");
+			typeof window !== "undefined" && window.localStorage.setItem("theme", "dark");
 			setTheme(dark);
 		} else {
-			window.localStorage.setItem("theme", "light");
+			typeof window !== "undefined" && window.localStorage.setItem("theme", "light");
 			setTheme(light);
 		}
 	};
@@ -36,18 +36,20 @@ function App() {
 	const handleCloseLogin = () => setShowLogin(false);
 
 	return (
-		<StyleSheetManager shouldForwardProp={true}>
+		<StyleSheetManager>
 			<ThemeProvider theme={theme}>
+				<PageMeta />
 				<GlobalStyle />
 				<StyledApp>
-					<BrowserRouter>
-						<Header
-							toggleTheme={toggleTheme}
-							handleShowLogin={handleShowLogin}
-							// handleLogoClick={() => setActiveTab(tabs[0])}
-						/>
-						<ScreenWrapper>
-							<Routes>
+					{/* <BrowserRouter> */}
+					<Header
+						toggleTheme={toggleTheme}
+						handleShowLogin={handleShowLogin}
+						handleLogoClick={() => {} /* setActiveTab(tabs[0]) */}
+					/>
+					<ScreenWrapper>
+						<Component {...pageProps} />
+						{/* <Routes>
 								<Route
 									path={PATH_HOME}
 									element={
@@ -60,10 +62,10 @@ function App() {
 								<Route path={`${PATH_APPROVALS}`} element={<Approvals />}></Route>
 								<Route path={`${PATH_GROUPS}`} element={<Groups />}></Route>
 								<Route path=":any" element={<Navigate to={PATH_HOME} />} />
-							</Routes>
-							<Login show={showLogin} handleClose={handleCloseLogin} />
-						</ScreenWrapper>
-					</BrowserRouter>
+							</Routes> */}
+						{/* <Login show={showLogin} handleClose={handleCloseLogin} /> */}
+					</ScreenWrapper>
+					{/* </BrowserRouter> */}
 					<Toaster
 						toastOptions={{
 							style: {

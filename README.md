@@ -9,6 +9,8 @@ RIGHT NOW
 
 New Features
 
+-   Get off styled components: https://yak.js.org/docs/migration-from-styled-components
+
 -   Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
 -   EMAILS (requires a whole rebuild fml)
     -   automatic confirmation emails when a player submits their character
