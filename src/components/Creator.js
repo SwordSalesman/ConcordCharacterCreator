@@ -17,16 +17,12 @@ import useUserContext from "../hooks/use-user-context";
 import { Banner } from "./common/Banner/Banner";
 import { saveUserForm } from "../hooks/use-firebase";
 import toast from "react-hot-toast";
-import React from "react";
 import IntroPage from "./pages/intro/IntroPage";
 import RealmPage from "./pages/realm/RealmPage";
 import SkillsPage from "./pages/skills/SkillsPage";
 import OptionsPage from "./pages/options/OptionsPage";
 import BackgroundPage from "./pages/background/BackgroundPage";
 import ReviewPage from "./pages/review/ReviewPage";
-import { useNavigate } from "react-router-dom";
-import { RiExternalLinkLine } from "react-icons/ri";
-import { PATH_GROUPS } from "../helpers/constants";
 
 const useTabs = false;
 const tabs = [
@@ -44,7 +40,6 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	const realmImage = useRealmImage(realm);
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const [direction, setDirection] = useState("right");
-	const navigate = useNavigate();
 
 	const [showConfirmReset, setShowConfirmReset] = useState(false);
 	const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
@@ -172,57 +167,9 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 		</>
 	);
 
-	// const submissionsOpen = Date.now() < new Date("2024-09-07T23:59:59.000+08:00");
-	const submissionsOpen = false;
-
 	return (
 		<>
-			<Banner
-				show={true}
-				full={
-					submissionsOpen ? (
-						<p>
-							Submissions will close <b>September 13th</b> for both Characters and{" "}
-							<a
-								href={PATH_GROUPS}
-								style={{
-									cursor: "pointer",
-									// textDecoration: "underline",
-									borderRadius: "4px",
-									padding: "2px 4px",
-									display: "inline-flex",
-									alignItems: "center",
-									gap: "4px",
-									border: "1px solid",
-									// background: "#ffffff2d",
-								}}
-							>
-								Bands
-								<RiExternalLinkLine />
-							</a>
-							. Make sure all your details are submitted before then!
-						</p>
-					) : (
-						<p>
-							<b>Character and Band submissions are closed.</b> Please do not submit
-							changes unless requested. If you have a reason for exception, please
-							email{" "}
-							<span
-								onClick={() => {
-									navigator.clipboard.writeText("concordcharacters@gmail.com");
-									toast.success(`Copied email to clipboard`);
-								}}
-								style={{ textDecoration: "underline", cursor: "pointer" }}
-							>
-								<i>concordcharacters@gmail.com</i>
-							</span>{" "}
-							first.
-						</p>
-					)
-				}
-				summary={submissionsOpen ? <p>Last Submit Date</p> : <p>Submissions Closed</p>}
-				type={submissionsOpen ? "warning" : "error"}
-			/>
+			<Banner />
 
 			<CreatorWrapper outline={!useTabs}>
 				<TabsWrapper>{renderedTabs}</TabsWrapper>

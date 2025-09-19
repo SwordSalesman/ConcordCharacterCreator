@@ -41,7 +41,7 @@ export const BannerWrapper = styled.div`
     transition: all;
 	transition-duration: 0.4s;
 
-	animation-duration: 1.5s;
+	animation-duration: 1.1s;
 	animation-timing-function: ease-in-out;
 
 	@media (min-width: ${mediaSize.small}px) {

@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { Banner } from "../common/Banner/Banner";
 
 export function Groups() {
 	return (
 		<GroupsWrapper>
+			<Banner />
 			<p>
 				If you're in a band and it hasn't been submitted via the Google Form below, please
 				do so before <b>September 13th</b>. Only one member of your band needs to submit.
