@@ -9,7 +9,7 @@ import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
 import React, { useMemo } from "react";
 import { FlexCenter } from "../../../styles/Global";
-import Button from "../../common/Button/Button";
+import Button from "../../../components/common/Button/Button";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { GameTally } from "../intro/Intro.style";
 import {
@@ -32,8 +32,8 @@ import {
 	GiRobe,
 	GiTatteredBanner,
 } from "react-icons/gi";
-import { regionIsCoastal, regionIsNotCoastal } from "../../../helpers/selection-helper";
-import { investmentRegionWarning } from "../../../helpers/validity-helper";
+import { regionIsCoastal, regionIsNotCoastal } from "../../../utils/selection-helper";
+import { investmentRegionWarning } from "../../../utils/validity-helper";
 
 var investmentData = require("../../../data/tables/investments.json");
 var regionData = require("../../../data/tables/regions.json");

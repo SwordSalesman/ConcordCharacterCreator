@@ -1,6 +1,6 @@
 import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
-import Button from "../../common/Button/Button";
+import Button from "../../../components/common/Button/Button";
 import { GameTally, TitleWrapper } from "./Intro.style";
 import { FlexCenter } from "../../../styles/Global";
 import { BiMinus, BiPlus } from "react-icons/bi";

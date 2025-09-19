@@ -10,7 +10,7 @@ import { BackgroundPageWrapper } from "./BackgroundPage.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import useRealmDetails from "../../../hooks/use-realm-details";
 import { useEffect, useState } from "react";
-import { archetypeWarning } from "../../../helpers/validity-helper";
+import { archetypeWarning } from "../../../utils/validity-helper";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");

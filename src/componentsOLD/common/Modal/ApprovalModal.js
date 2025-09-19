@@ -2,10 +2,10 @@
 import { Modal } from "@mui/material";
 import React from "react";
 import { ModalBox, ModalRow, ModalText } from "./Modal.style";
-import Button from "../Button/Button";
-import { APPROVED, DENIED } from "../../../helpers/constants";
-import { StyledBorder } from "../../pages/review/ReviewPage.style";
-import { prettifyDate } from "../../../helpers/date-helper";
+import Button from "../../../components/common/Button/Button";
+import { APPROVED, DENIED } from "../../../utils/constants";
+import { StyledBorder } from "../../../componentsOLD/pages/review/ReviewPage.style";
+import { prettifyDate } from "../../../utils/date-helper";
 
 function ApprovalModal({ show, handleClose, submissionDate, approval, highlightColor, options }) {
 	let prettyDate = prettifyDate(submissionDate);

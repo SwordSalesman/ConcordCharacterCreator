@@ -1,12 +1,12 @@
 import styled, { useTheme } from "styled-components";
 import { useEffect, useState } from "react";
-import TextInput from "../common/TextInput/TextInput";
-import Button from "../common/Button/Button";
+import TextInput from "../../components/common/TextInput/TextInput";
+import Button from "../../components/common/Button/Button";
 import useUserContext from "../../hooks/use-user-context";
 import { saveApproval } from "../../hooks/use-firebase";
 import toast from "react-hot-toast";
-import { APPROVED, DENIED } from "../../helpers/constants";
-import { prettifyDate } from "../../helpers/date-helper";
+import { APPROVED, DENIED } from "../../utils/constants";
+import { prettifyDate } from "../../utils/date-helper";
 
 function ApprovalPanel({ character, handleApproval }) {
 	const theme = useTheme();

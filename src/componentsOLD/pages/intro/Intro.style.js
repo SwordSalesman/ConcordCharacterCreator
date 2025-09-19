@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Button from "../../common/Button/Button";
+import Button from "../../../components/common/Button/Button";
 
 export const TitleWrapper = styled.h1`
 	font-size: 1.2rem;

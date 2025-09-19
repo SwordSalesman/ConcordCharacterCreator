@@ -21,7 +21,7 @@ import {
 	setDoc,
 	updateDoc,
 } from "firebase/firestore";
-import { getCurrentDate } from "../helpers/date-helper";
+import { getCurrentDate } from "../utils/date-helper";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional

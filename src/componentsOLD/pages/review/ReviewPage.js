@@ -15,7 +15,7 @@ import {
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
 import TextInput from "../../common/TextInput/TextInput";
-import { xpWarning } from "../../../helpers/validity-helper";
+import { xpWarning } from "../../../utils/validity-helper";
 import { Warning } from "../../common/Accordion/AccordionSection";
 const graceData = require("../../../data/tables/graces.json");
 

@@ -6,7 +6,7 @@ import SectionDivider from "../../../components/common/SectionDivider/SectionDiv
 import { SectionWrapper } from "../../../components/common/SectionDivider/SectionDivider.style";
 import { getNextSkill } from "../../../hooks/use-skill-helper";
 import { SkillPageWrapper } from "./SkillsPage.style";
-import { xpWarning } from "../../../helpers/validity-helper";
+import { xpWarning } from "../../../utils/validity-helper";
 import { Warning } from "../../common/Accordion/AccordionSection";
 var tabs = require("../../../data/tables/skillTabs.json");
 var baseSkills = require("../../../data/tables/skills.json");

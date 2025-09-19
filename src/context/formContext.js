@@ -3,7 +3,7 @@ import { getFullSkillsFromSummary, getSummarisedSkillNames } from "../hooks/use-
 import React from "react";
 import { getUserFormAndApproval } from "../hooks/use-firebase";
 import useUserContext from "../hooks/use-user-context";
-import { getSimpleArrayFromSummary, summariseSimpleArray } from "../helpers/data-helper";
+import { getSimpleArrayFromSummary, summariseSimpleArray } from "../utils/data-helper";
 
 const FormContext = createContext();
 

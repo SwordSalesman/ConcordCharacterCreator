@@ -1,4 +1,4 @@
-import TabItem from "./common/Tabs/TabItem";
+import TabItem from "../components/common/Tabs/TabItem";
 import {
 	ContentWrapper,
 	CreatorWrapper,
@@ -10,11 +10,11 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import useFormContext from "../hooks/use-form-context";
 import { ColumnPage } from "./pages/ColumnPageWrapper";
 import useRealmImage from "../hooks/use-realm-image";
-import Button from "./common/Button/Button";
+import Button from "../components/common/Button/Button";
 import { useEffect, useState } from "react";
-import ConfirmModal from "./common/Modal/ConfirmModal";
+import ConfirmModal from "../components/common/Modal/ConfirmModal";
 import useUserContext from "../hooks/use-user-context";
-import { Banner } from "./common/Banner/Banner";
+import { Banner } from "../components/common/Banner/Banner";
 import { saveUserForm } from "../hooks/use-firebase";
 import toast from "react-hot-toast";
 import React from "react";
@@ -26,7 +26,7 @@ import BackgroundPage from "./pages/background/BackgroundPage";
 import ReviewPage from "./pages/review/ReviewPage";
 import { useNavigate } from "react-router-dom";
 import { RiExternalLinkLine } from "react-icons/ri";
-import { PATH_GROUPS } from "../helpers/constants";
+import { PATH_GROUPS } from "../utils/constants";
 
 const useTabs = false;
 const tabs = [
