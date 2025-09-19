@@ -173,7 +173,7 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 	);
 
 	// const submissionsOpen = Date.now() < new Date("2024-09-07T23:59:59.000+08:00");
-	const submissionsOpen = true;
+	const submissionsOpen = false;
 
 	return (
 		<>
@@ -204,9 +204,19 @@ function Creator({ handleShowLogin, handleCloseLogin }) {
 						</p>
 					) : (
 						<p>
-							<b>Submissions are closed.</b> You may still use this form and submit
-							your character, but the team is not guaranteed to approve your character
-							or provide a character pack.
+							<b>Character and Band submissions are closed.</b> Please do not submit
+							changes unless requested. If you have a reason for exception, please
+							email{" "}
+							<span
+								onClick={() => {
+									navigator.clipboard.writeText("concordcharacters@gmail.com");
+									toast.success(`Copied email to clipboard`);
+								}}
+								style={{ textDecoration: "underline", cursor: "pointer" }}
+							>
+								<i>concordcharacters@gmail.com</i>
+							</span>{" "}
+							first.
 						</p>
 					)
 				}
