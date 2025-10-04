@@ -29,7 +29,7 @@ function App() {
 
 	useEffect(() => {
 		console.debug(`Environment: '${process.env.NODE_ENV}'`);
-		console.debug(`Debug text: '${process.env.REACT_APP_DEBUG_TEXT}'`);
+		console.debug(`Debug text: '${process.env.NEXT_PUBLIC_DEBUG_TEXT}'`);
 	}, []);
 
 	const handleShowLogin = () => setShowLogin(true);

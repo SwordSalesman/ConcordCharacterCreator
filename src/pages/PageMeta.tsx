@@ -1,8 +1,21 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export function PageMeta() {
-	const title = "Concord Character Creator";
-	const description = "Register your Concordian Hero with this interactive form.";
+	const { pathname } = useRouter();
+
+	const pathName: Record<string, string> = {
+		"/": "Home",
+		"/hero": "Hero",
+		"/groups": "Groups",
+		"/maintenance": "Maintenance",
+		"/approvals": "Approvals",
+	};
+
+	const name = pathName[pathname];
+
+	const title = `${name ? `${name} | ` : ""}Waystone`;
+	const description = "The Portal for Concordian Heroes";
 	const image = "https://i.imgur.com/4DM5P9x.png";
 	const url = "https://charactercreator.concordlarp.com/";
 

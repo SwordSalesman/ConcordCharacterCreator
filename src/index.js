@@ -10,7 +10,7 @@ const el = document.getElementById("root");
 const root = ReactDOM.createRoot(el);
 
 let site;
-if (process.env.REACT_APP_MAINTENANCE_MODE === "TRUE") {
+if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "TRUE") {
 	site = <MaintenanceScreen />;
 } else {
 	site = (

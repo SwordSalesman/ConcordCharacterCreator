@@ -1,3 +1,5 @@
+import ContentWrapper from "@/components/layout/ContentWrapper";
+
 export default function Approvals() {
-	return <div>approvals</div>;
+	return <ContentWrapper>approvals</ContentWrapper>;
 }

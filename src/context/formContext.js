@@ -9,6 +9,7 @@ const FormContext = createContext();
 
 function FormContextProvider({ children }) {
 	const { user } = useUserContext();
+	const [loading, setLoading] = useState(true);
 	// State maintained
 	const [initialForm, setInitialForm] = useState({});
 	const [changes, setChanges] = useState([]);
@@ -232,7 +233,9 @@ function FormContextProvider({ children }) {
 	// Load Data
 	useEffect(() => {
 		async function downloadForm() {
+			setLoading(true);
 			const newForm = await getUserFormAndApproval();
+			setLoading(false);
 			if (newForm) {
 				setFormFromSimplifiedData(newForm, true);
 				setApproval(newForm.approval);
@@ -571,6 +574,7 @@ function FormContextProvider({ children }) {
 	// Outputs
 
 	const formContext = {
+		loading,
 		unsaved,
 		date,
 		setDate,
