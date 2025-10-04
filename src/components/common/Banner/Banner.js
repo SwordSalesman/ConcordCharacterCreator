@@ -14,7 +14,7 @@ import { PATH_GROUPS } from "../../../helpers/constants";
 
 export function Banner({ show, full, summary, type }) {
 	// const submissionsOpen = Date.now() < new Date("2024-09-07T23:59:59.000+08:00");
-	const submissionsOpen = false;
+	const submissionsOpen = true;
 
 	return (
 		<BannerInternal
@@ -22,9 +22,9 @@ export function Banner({ show, full, summary, type }) {
 			full={
 				submissionsOpen ? (
 					<p>
-						Submissions will close <b>September 13th</b> for both Characters and{" "}
+						Downtime submissions for G10 are now open! Submit{" "}
 						<a
-							href={PATH_GROUPS}
+							href={"https://forms.gle/q4BwTYmx2GEvdsLE8"}
 							style={{
 								cursor: "pointer",
 								// textDecoration: "underline",
@@ -36,11 +36,13 @@ export function Banner({ show, full, summary, type }) {
 								border: "1px solid",
 								// background: "#ffffff2d",
 							}}
+							target="_blank"
+							rel="noreferrer"
 						>
-							Bands
+							here
 							<RiExternalLinkLine />
-						</a>
-						. Make sure all your details are submitted before then!
+						</a>{" "}
+						before close on October 18th.
 					</p>
 				) : (
 					<p>
@@ -59,7 +61,7 @@ export function Banner({ show, full, summary, type }) {
 					</p>
 				)
 			}
-			summary={submissionsOpen ? <p>Last Submit Date</p> : <p>Submissions Closed</p>}
+			summary={submissionsOpen ? <p>Downtime Open</p> : <p>Submissions Closed</p>}
 			type={submissionsOpen ? "warning" : "error"}
 		/>
 	);
