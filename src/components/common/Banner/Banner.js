@@ -18,7 +18,7 @@ export function Banner({ show, full, summary, type }) {
 
 	return (
 		<BannerInternal
-			show={true}
+			show={false}
 			full={
 				submissionsOpen ? (
 					<p>
