@@ -4,7 +4,7 @@ import { FormContextProvider } from "@/context/formContext";
 
 export default function Hero() {
 	return (
-		<ContentWrapper>
+		<ContentWrapper layout="narrow">
 			<Creator />
 		</ContentWrapper>
 	);

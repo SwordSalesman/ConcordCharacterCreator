@@ -5,7 +5,7 @@ export function PageMeta() {
 	const { pathname } = useRouter();
 
 	const pathName: Record<string, string> = {
-		"/": "Home",
+		// "/": "Home",
 		"/hero": "Hero",
 		"/groups": "Groups",
 		"/maintenance": "Maintenance",

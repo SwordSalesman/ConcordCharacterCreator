@@ -78,7 +78,7 @@ export default function SkillsPage() {
 	const warning = xpWarning(remainingXp);
 
 	return (
-		<div className="flex gap-2 sm:flex-col">
+		<div className="flex gap-2 flex-col sm:flex-row">
 			<ContentPane style={{ flex: 4 }}>
 				<SectionDivider left="Remaining XP" right={remainingXp} />
 				{/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
@@ -92,7 +92,7 @@ export default function SkillsPage() {
 				)}
 			</ContentPane>
 			<ContentPane style={{ flex: 5 }}>
-				<Accordion items={renderedTabs}></Accordion>
+				<Accordion items={renderedTabs} />
 			</ContentPane>
 		</div>
 	);

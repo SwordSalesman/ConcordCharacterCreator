@@ -7,7 +7,7 @@ import { User } from "firebase/auth";
 // This file should be named userContext.tsx for JSX support
 const DEFAULT_ROLE = 0;
 
-interface IUserContext {
+interface UserContextInterface {
 	user?: User | null;
 	loading: boolean;
 	name: string;
@@ -16,7 +16,7 @@ interface IUserContext {
 	error?: Error | undefined;
 }
 
-export const UserContext = createContext<IUserContext>({
+export const UserContext = createContext<UserContextInterface>({
 	user: null,
 	loading: true,
 	name: "",
@@ -50,7 +50,7 @@ export default function UserContextProvider({ children }: { children: React.Reac
 		}
 	}, [user]);
 
-	const userContext: IUserContext = {
+	const userContext: UserContextInterface = {
 		user,
 		loading,
 		name,

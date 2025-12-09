@@ -29,13 +29,11 @@ export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () =>
 			body={
 				<div className="flex flex-col gap-1">
 					{comment && (
-						<blockquote
-							className={`pl-3 border-l-4 border-primary italic text-muted-foreground text-md`}
-						>
+						<blockquote className={`pl-3 border-l-4 border-primary italic`}>
 							{comment}
 						</blockquote>
 					)}
-					<p className="text-muted-foreground text-sm">{note}</p>
+					<p className="text-muted-foreground">{note}</p>
 				</div>
 			}
 			open={open}

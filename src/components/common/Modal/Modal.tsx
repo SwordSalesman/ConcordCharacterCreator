@@ -39,9 +39,7 @@ export function Modal({
 		>
 			<DialogContent
 				showCloseButton={false}
-				className={`${
-					size === "small" ? "w-[300px]" : "w-[500px]"
-				} text-center sm:text-left`}
+				className={`${size === "small" ? "w-[300px]" : "w-[500px]"} text-left`}
 			>
 				<div className="flex flex-col gap-4">
 					<DialogHeader>

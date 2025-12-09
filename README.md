@@ -4,12 +4,9 @@
 
 RIGHT NOW
 
--   Alignment ceremonies
--   Rivers of whatever
+-
 
 New Features
-
--   Get off styled components: https://yak.js.org/docs/migration-from-styled-components
 
 -   Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
 -   EMAILS (requires a whole rebuild fml)
@@ -17,10 +14,10 @@ New Features
     -   optional automatic email when a character is approved/denied/generally reviewed
 -   Ability to remove hero submissions in approvals window. Delete/Archive button.
 -   Make the alert banner adjustable without a deploy, make it read from firebase probably.
--   Add ability to people to 'overspend' xp, with a warning at submission
 -   Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
 -   Warning message for archetype invalid skill
     -   Warning message summary at the "submission notes" section to summarise all warnings
+-   'Epithets' and 'True Name' fields. Name (Your hero's public name without following titles, may be published in Winds of the Worlds). Epithets - optional (Titles or monikers. E.g. the quoted text is all ephithets: Sir Dennis Braggard "Last of His Name, Feller of Beasts"). True Name - optional (If your public name is a fake, put your real one here. This won't be published in Winds of the World unless there's a good reason.)
 
 Known Bugs
 

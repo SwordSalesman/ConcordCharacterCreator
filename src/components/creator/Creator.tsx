@@ -99,7 +99,7 @@ export function Creator() {
 					handleClickTab(tab, index);
 				}}
 				className={cn(
-					"border-b-[3px] border-transparent mt-[2px] h-[30px] transition flex-1 opacity-50 text-base",
+					"border-b-[3px] border-transparent mt-[2px] h-[30px] transition flex-1 opacity-50 text-base sm:cursor-pointer",
 					`${fadeStripStyle} sm:bg-none`,
 					active ? "border-primary text-strong opacity-100" : "text-text",
 					active
@@ -115,9 +115,17 @@ export function Creator() {
 	const renderedContent = tabs.map((tab, index) => {
 		return (
 			activeTab === tab && (
-				<ColumnPage direction={direction} key={index}>
-					{tab.content}
-				</ColumnPage>
+				<div className="p-[10px]" key={index}>
+					<div
+						className={`h-full w-full relative flex justify-around flex-row max-sm:flex-col ${
+							direction === "left"
+								? "animate-page-slide-in-left"
+								: "animate-page-slide-in-right"
+						}`}
+					>
+						{tab.content}
+					</div>
+				</div>
 			)
 		);
 	});
@@ -133,18 +141,20 @@ export function Creator() {
 					"max-sm:rounded-t-none max-sm:h-full max-sm:w-full max-sm:border-0 max-sm:mt-[10px]"
 				)}
 			>
+				{/* Tabs */}
 				<div
 					className={cn(
-						"flex justify-center mb-3 w-full items-center",
-						"h-10 sm:h-8",
+						"flex justify-center mb-3 w-full items-center h-10 sm:h-8",
 						`max-sm:${fadeStripStyle} sm:bg-secondary`
 					)}
 				>
 					{renderedTabs}
 				</div>
+				{/* Content */}
 				<div className="relative flex justify-center text-center items-start min-h-[300px] px-3 mb-[40px] sm:min-h-[500px]">
 					{renderedContent}
 				</div>
+				{/* Navigation Buttons */}
 				<div
 					className={cn(
 						"w-full flex justify-between h-16 px-2 pt-2 z-10 max-sm:fixed max-sm:bottom-0",

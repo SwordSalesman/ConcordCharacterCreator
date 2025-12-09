@@ -77,6 +77,29 @@ body {
 			transform: scale(1);
 		}
 	}
+
+	--animate-page-slide-in-left: pageSlideInLeft 0.4s ease-out;
+	--animate-page-slide-in-right: pageSlideInRight 0.4s ease-out;
+	@keyframes pageSlideInLeft {
+		from {
+			opacity: 0;
+			left: -20px;
+		}
+		to {
+			opacity: 1;
+			left: 0px;
+		}
+	}
+	@keyframes pageSlideInRight {
+		from {
+			opacity: 0;
+			left: 20px;
+		}
+		to {
+			opacity: 1;
+			left: 0px;
+		}
+	}
 }
 
 :root {

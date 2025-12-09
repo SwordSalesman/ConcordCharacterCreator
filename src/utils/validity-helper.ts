@@ -1,13 +1,18 @@
 import { getRegionRealm } from "./data-helper";
 
-export function archetypeWarning(archetype, allArchetypes) {
+export interface Archetype {
+	name: string;
+	realm?: string;
+}
+
+export function archetypeWarning(archetype: Archetype[], allArchetypes: Archetype[]) {
 	if (archetype?.length === 1 && !allArchetypes.map((a) => a.name).includes(archetype[0].name)) {
 		return `Your archetype '${archetype[0].name}' is no longer available, please select 'No Archetype' then a new one if you wish.`;
 	}
 	return "";
 }
 
-export function investmentRegionWarning(realm, invRegion) {
+export function investmentRegionWarning(realm: string, invRegion: { name: string }[]) {
 	if (!invRegion?.length) return "";
 	const invRealm = getRegionRealm(invRegion[0]?.name);
 	if (realm && invRealm && realm !== invRealm) {
@@ -16,7 +21,7 @@ export function investmentRegionWarning(realm, invRegion) {
 	return "";
 }
 
-export function xpWarning(remainingXp) {
+export function xpWarning(remainingXp: number) {
 	if (remainingXp < 0) {
 		return `You have spent ${Math.abs(
 			remainingXp
