@@ -4,8 +4,15 @@ import GreenwealdLogo from "../images/realm-logos/greenweald.PNG";
 import IronValleyLogo from "../images/realm-logos/ironvalley.PNG";
 import LeronaMereLogo from "../images/realm-logos/leronamere.PNG";
 
+export type Realm =
+	| "Andash"
+	| "Kingdom of Bordevar"
+	| "Greenweald Baronies"
+	| "Iron Valley"
+	| "Lerona Mere";
+
 export const realms: {
-	name: string;
+	name: Realm;
 	citizen: string;
 	subtitle: string;
 	link: string;

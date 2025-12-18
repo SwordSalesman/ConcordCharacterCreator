@@ -6,19 +6,20 @@ import { Button } from "@/components/common/Button/Button";
 import { fadeStripStyle } from "@/styles/Global";
 
 export function IntroPage() {
-	const { gamesPlayed, setGamesPlayed } = useFormContext();
+	const { form, setField } = useFormContext();
+	const { gamesPlayed } = form;
 
 	const maxGames = (new Date().getFullYear() - 2019) * 2;
 
 	const handleMinus = () => {
 		if (gamesPlayed > 0) {
-			setGamesPlayed(gamesPlayed - 1);
+			setField("gamesPlayed", gamesPlayed - 1);
 		}
 	};
 
 	const handlePlus = () => {
 		if (gamesPlayed < maxGames) {
-			setGamesPlayed(gamesPlayed + 1);
+			setField("gamesPlayed", gamesPlayed + 1);
 		}
 	};
 

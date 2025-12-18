@@ -3,7 +3,7 @@ import WikiLink from "../WikiLink/WikiLink";
 import React from "react";
 import { RiErrorWarningFill } from "react-icons/ri";
 
-export function AccordionSection({ title, link, warning, children }) {
+export function AccordionSection({ title, link, warning, children }: any) {
 	return (
 		<SectionWrapper>
 			<TitleWrapper>
@@ -16,7 +16,7 @@ export function AccordionSection({ title, link, warning, children }) {
 	);
 }
 
-export function Warning({ children }) {
+export function Warning({ children }: any) {
 	return (
 		<SectionWarning>
 			<WarningIcon>
@@ -45,6 +45,7 @@ const ContentWrapper = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	justify-content: center;
+	gap: 4px;
 `;
 
 const WarningIcon = styled.div`

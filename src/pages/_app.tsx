@@ -8,7 +8,7 @@ import { PageMeta } from "./PageMeta";
 import { Header } from "@/components/layout/Header";
 import { dark, light } from "@/styles/Theme.styled";
 import UserContextProvider from "@/context/userContext";
-import { FormContextProvider } from "@/context/formContext";
+import FormContextProvider from "@/context/formContext";
 
 export default function App({ Component, pageProps }: AppProps) {
 	// ********************************************** Theme handling, move later

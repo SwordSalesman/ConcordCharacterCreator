@@ -11,6 +11,10 @@ interface ChipProps {
 	[key: string]: any;
 }
 
+export function ChipSkillWrapper({ children }: { children: React.ReactNode }) {
+	return <div className="rounded-full border-solid border w-5 h-5 leading-4.5">{children}</div>;
+}
+
 export function Chip({
 	children,
 	onClick,
@@ -31,17 +35,19 @@ export function Chip({
 
 	// Tailwind classes
 	let baseClasses =
-		"flex justify-center items-center gap-1 font-sans border border-solid cursor-pointer py-1 px-2 text-[0.92em] ";
-	let radius = skillstyle ? "rounded-sm rounded-l-full" : "rounded-lg";
+		"flex justify-center items-center gap-1 font-sans border border-solid cursor-pointer py-1 px-2 text-[0.92em] transition-colors duration-200";
+	let radius = skillstyle ? "rounded-l-[20px] rounded-r-[8px]" : "rounded-lg";
 	let shadowClass = shadow ? "shadow-md" : "";
-	let bg = selected ? "bg-primary" : "bg-background";
+	let bg = selected ? "bg-primary" : "bg-card";
 	let colorClass = selected ? "text-primary-foreground" : "text-foreground";
 	let interactive = `${
-		inactive ? "opacity-80" : "sm:hover:brightness-95 dark:hover:brightness-[120%]"
+		inactive
+			? "bg-muted text-muted-foreground"
+			: "sm:hover:brightness-95 dark:hover:brightness-[120%]"
 	}`;
 
 	// Responsive classes
-	let responsive = "sm:px-2 sm:py-0.5";
+	let responsive = "sm:px-1 sm:py-0.5";
 
 	return (
 		<button

@@ -1,0 +1,595 @@
+export interface Craft {
+	rarity: "Journeyman" | "Expert" | "Masterwork";
+	name: string;
+	type: string;
+}
+
+export const crafts: Craft[] = [
+	{
+		rarity: "Journeyman",
+		name: "Acolyte's Assistant",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Artisans Oil",
+		type: "Special",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Battleplate",
+		type: "Armour: Heavy",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Bonebreaker",
+		type: "Weapon: Great Weapon",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Boulders Staff",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Clerics Mace",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Crystalhunger Robes",
+		type: "Armour: Clothes",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Druids Crook",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Guards Watcher",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Greatweapon of the Old Ways",
+		type: "Weapon: Great Weapon",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Linebreakers Staff",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Marauders Warcoat",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Medics Gambeson",
+		type: "Armour: Light",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Mountebanks Surprise",
+		type: "Weapon Pair: Short Weapon and One Handed Weapon",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Reforging Gavel",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Saga of the Lost",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Serpent's Tail",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Setting Blade",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Standard of the Brave",
+		type: "Banner",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Strikers Hand",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Tacticians Demand",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Torment’s Blade",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Thieves Good Hand",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Journeyman",
+		name: "Warmages Blessing",
+		type: "Talisman: Battlemages Circlet",
+	},
+
+	{
+		rarity: "Expert",
+		name: "Apprentices Reliquary",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Expert",
+		name: "Apprentices Penknife",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Expert",
+		name: "Barbarians Brutalizer",
+		type: "Weapon: Great Weapon",
+	},
+	{
+		rarity: "Expert",
+		name: "Battlemages Vestment of Control",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Expert",
+		name: "Battlemages Vestment of Force",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Expert",
+		name: "Bending Reed Blades",
+		type: "Weapon Pair: One Handed",
+	},
+	{
+		rarity: "Expert",
+		name: "Blazesap Striker",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Expert",
+		name: "Bloodslick Banner",
+		type: "Banner",
+	},
+	{
+		rarity: "Expert",
+		name: "Comrades Knife",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Expert",
+		name: "Conqueror's Halberd",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Expert",
+		name: "Dawns Pestle",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Expert",
+		name: "Desperate Times",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Expert",
+		name: "Eldermere Charm",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Expert",
+		name: "Elementalists Garb",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Expert",
+		name: "Enduring Shield",
+		type: "Talisman: Shield",
+	},
+	{
+		rarity: "Expert",
+		name: "Escape Route",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Expert",
+		name: "Eves Mortar",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Expert",
+		name: "Flameborn Dagger",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Expert",
+		name: "Gray Wizards Robe",
+		type: "Armour: Clothes",
+	},
+	{
+		rarity: "Expert",
+		name: "Guardian Mage Staff",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Expert",
+		name: "Magehunters Call",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Expert",
+		name: "Mage Legion Standard",
+		type: "Banner",
+	},
+	{
+		rarity: "Expert",
+		name: "Manticore Hide Armour",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Expert",
+		name: "Nightmare Hide Armour",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Expert",
+		name: "Opportunists Call",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Expert",
+		name: "Phial of the Sun",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Expert",
+		name: "Prime Hunters Bow",
+		type: "Weapon: Bow",
+	},
+	{
+		rarity: "Expert",
+		name: "Purifying Scalpel",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Expert",
+		name: "Rootwarder",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Expert",
+		name: "Scorpions Barb",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Expert",
+		name: "Scouts Bow",
+		type: "Weapon: Bow",
+	},
+	{
+		rarity: "Expert",
+		name: "Skirmishers Aketon",
+		type: "Armour: Light",
+	},
+	{
+		rarity: "Expert",
+		name: "Slayers Banner",
+		type: "Banner",
+	},
+	{
+		rarity: "Expert",
+		name: "Survivors Platemail",
+		type: "Armour: Heavy",
+	},
+	{
+		rarity: "Expert",
+		name: "Tail of the Beast",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Expert",
+		name: "Thunderous Awe",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Expert",
+		name: "Treacheries Kiss",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Expert",
+		name: "Unbroken Chain",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Expert",
+		name: "Wayfarers Pyx",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Expert",
+		name: "Windborn",
+		type: "Weapon: One Handed",
+	},
+
+	{
+		rarity: "Masterwork",
+		name: "Arcane Shears",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Arch Priests Blade",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Archmage's Staff",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Armsman's Amulet",
+		type: "Talisman: Jewellery",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Artebazzani Artifact",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Avalanche",
+		type: "Weapon: Great Weapon",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Barons Blessed Cairn",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Battlehealers Coat",
+		type: "Armour: Light",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Beggars Key",
+		type: "Talisman: Jewellery",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Bloodcloak",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Bracelet of the Young Ward",
+		type: "Talisman: Jewellery",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Brandts Blade",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Celebrants Chain",
+		type: "Talisman: Jewellery",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Dragonhide Plate",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Duelists Obstinate Ally",
+		type: "Talisman: Shield",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Forgemasters Shield",
+		type: "Talisman: Shield",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Forgesteel Armour",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Guardians Banner",
+		type: "Banner",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Harness of Heartiness",
+		type: "Armour: Heavy",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Hunters Ark",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Illuminating Forge",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Immortals Shield",
+		type: "Talisman: Shield",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Legionnaires Commandment",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Lich Paragon’s Robe",
+		type: "Armour: Clothes",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Matched Thunderbolts",
+		type: "Weapon Pair: One Handed",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Mercenary Banner",
+		type: "Banner",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Mundane Forcebarrier",
+		type: "Talisman: Shield",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Opened Eye",
+		type: "Weapon: Stave",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Pathfinders Gambit",
+		type: "Talisman: Jewellery",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Philosophers Charm",
+		type: "Talisman: Jewellery",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Pugilists Charm",
+		type: "Talisman: Jewellery",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Pyromancers Staff",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Rag of Warfare",
+		type: "Banner",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Robe of the Saviour",
+		type: "Armour: Clothes",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Robes of the Seer",
+		type: "Armour: Clothes",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Runeplate",
+		type: "Armour: Heavy",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Sargents Fist",
+		type: "Weapon: Great Weapon",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Seers Knife",
+		type: "Weapon: Short Weapon",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Shattering Stone",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Slayers Blade",
+		type: "Weapon: Great Weapon",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Smiths Polearm",
+		type: "Weapon: Polearm",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Soldiers Hauberk",
+		type: "Armour: Medium",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Squires Mail",
+		type: "Armour: Light",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Blade of Peace",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Blade of War",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Standard of the Tower",
+		type: "Banner",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Starlit Pool",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Steel Pillar",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Warfletcher",
+		type: "Weapon: Bow",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Warlocks Longknives",
+		type: "Weapon Pair: One Handed",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Warriors Right Hand",
+		type: "Weapon: One Handed",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Weighted Scales",
+		type: "Reliquary",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Wolverines Bite",
+		type: "Weapon Pair: One Handed",
+	},
+];

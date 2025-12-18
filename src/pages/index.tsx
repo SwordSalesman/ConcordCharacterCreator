@@ -1,6 +1,6 @@
 import { Button } from "@/components/common/Button/Button";
 import ContentWrapper from "@/components/layout/ContentWrapper";
-import { FormContextProvider } from "@/context/formContext";
+import FormContextProvider from "@/context/formContext";
 import useUserContext from "@/hooks/use-user-context";
 import { fadeStripStyle } from "@/styles/Global";
 import {

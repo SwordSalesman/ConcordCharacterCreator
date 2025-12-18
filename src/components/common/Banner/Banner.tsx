@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { BiChevronUp } from "react-icons/bi";
 import { PATH_GROUPS } from "@/utils/constants";
 import { RiExternalLinkLine } from "react-icons/ri";
+import styled, { css } from "styled-components";
+import { mediaSize } from "@/styles/Global";
 
 export function Banner() {
 	const submissionsOpen = true;
@@ -47,7 +49,17 @@ export function Banner() {
 	);
 }
 
-function BannerInternal({ show, full, summary, type }) {
+function BannerInternal({
+	show,
+	full,
+	summary,
+	type,
+}: {
+	show: boolean;
+	full: React.ReactNode;
+	summary: React.ReactNode;
+	type: "success" | "warning" | "error";
+}) {
 	const [expanded, setExpanded] = useState(true);
 
 	function handleClick() {
@@ -72,7 +84,7 @@ function BannerInternal({ show, full, summary, type }) {
 				<BannerArrow expanded={expanded} onClick={handleClick}>
 					<BiChevronUp size={30} />
 				</BannerArrow>
-				<BannerContent>
+				<BannerContent expanded={expanded}>
 					<FullText expanded={expanded}>
 						{full}
 						{/* <p>{approval ? approval.status : null}</p> */}
@@ -90,7 +102,10 @@ export const BannerSpacer = styled.div`
 	justify-content: center;
 `;
 
-export const BannerWrapper = styled.div`
+export const BannerWrapper = styled.div<{
+	expanded: boolean;
+	type: "success" | "warning" | "error";
+}>`
 	/* cursor: pointer; */
 	margin: 15px 0 0 0;
 	padding: ${(props) => (props.expanded ? "10px 24px" : "12px")};
@@ -168,7 +183,9 @@ export const BannerWrapper = styled.div`
 	}
 `;
 
-export const BannerArrow = styled.div`
+export const BannerArrow = styled.div<{
+	expanded: boolean;
+}>`
 	cursor: pointer;
 	z-index: 10;
 	position: absolute;
@@ -182,7 +199,9 @@ export const BannerArrow = styled.div`
 	transform: ${(props) => (props.expanded ? "rotate(0deg)" : "rotate(-180deg)")};
 `;
 
-export const BannerContent = styled.div`
+export const BannerContent = styled.div<{
+	expanded: boolean;
+}>`
 	width: 100%;
 	height: 100%;
 	position: relative;
@@ -212,14 +231,18 @@ export const BannerContent = styled.div`
     } */
 `;
 
-export const FullText = styled.div`
+export const FullText = styled.div<{
+	expanded: boolean;
+}>`
 	position: absolute;
 	transition: all;
 	transition-duration: 0.4s;
 	opacity: ${(props) => (props.expanded ? "1" : "0")};
 `;
 
-export const SummaryText = styled.div`
+export const SummaryText = styled.div<{
+	expanded: boolean;
+}>`
 	position: absolute;
 	transition: all;
 	transition-duration: 0.4s;

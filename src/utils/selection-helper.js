@@ -1,4 +1,4 @@
-var regionData = require("../data/tables/regions.json");
+import { regions as regionData } from "@/data/tables/regions";
 
 export const coastalRegions = regionData.filter((r) => r.coastal).map((r) => r.name);
 export const nonCoastalRegions = regionData.filter((r) => !r.coastal).map((r) => r.name);

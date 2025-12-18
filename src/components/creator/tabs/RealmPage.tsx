@@ -5,14 +5,15 @@ import React from "react";
 import Image from "next/image";
 
 function RealmPage() {
-	const { realm, selectRealm } = useFormContext();
+	const { form, setField } = useFormContext();
+	const { realm } = form;
 	const realmFull = realms.find((r) => r.name === realm);
 
 	const handleRealmSelect = (r: any) => {
 		if (r === realmFull) {
-			selectRealm(null);
+			setField("realm", undefined);
 		} else {
-			selectRealm(r.name);
+			setField("realm", r.name);
 		}
 	};
 

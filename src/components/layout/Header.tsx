@@ -13,7 +13,6 @@ import {
 } from "../../utils/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { FormContextProvider } from "@/context/formContext";
 import useUserContext from "@/hooks/use-user-context";
 import useFormContext from "@/hooks/use-form-context";
 import { Button } from "../common/Button/Button";
@@ -41,7 +40,8 @@ export function Header({
 	handleLogoClick?: () => void;
 }) {
 	const { user, name, isAdmin, loading } = useUserContext();
-	const { approval, date, loading: formLoading } = useFormContext();
+	const { approval, form, loading: formLoading } = useFormContext();
+	const { date } = form;
 	const { pathname, push } = useRouter();
 	const [showApprovalModal, setShowApprovalModal] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);

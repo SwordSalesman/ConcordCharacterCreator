@@ -7,14 +7,14 @@ import styled from "styled-components";
 import { GiScrollUnfurled, GiSpellBook } from "react-icons/gi";
 import toast from "react-hot-toast";
 import { prettifyDate } from "../../helpers/date-helper";
-import { getFullSkillsFromSummary } from "../../hooks/use-skill-helper";
+import { getArrayFromSummary, getSkillData } from "../../utils/data-helper";
 
 function CharacterCard({ character }) {
 	const skills = character?.skills?.split(", ");
 	const changes = character?.changes?.split(", ");
 	const hasReview = !!character?.approval?.date;
 
-	const skillsFull = getFullSkillsFromSummary(character?.skills);
+	const skillsFull = getArrayFromSummary(character?.skills).map((s) => getSkillData(s));
 	const totalXp = 8 + parseInt(character?.gamesPlayed ?? 0);
 	const spentXp = skillsFull ? skillsFull.map((s) => s.cost).reduce((a, b) => a + b, 0) : 0;
 

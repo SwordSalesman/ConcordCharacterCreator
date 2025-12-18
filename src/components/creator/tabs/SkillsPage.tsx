@@ -3,87 +3,142 @@ import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
-import { getNextSkill } from "../../../hooks/use-skill-helper";
 import { xpWarning } from "../../../utils/validity-helper";
 import { Warning } from "../../common/Accordion/AccordionSection";
-import { Chip } from "@/components/common/Chip/Chip";
-var tabs = require("../../../data/tables/skillTabs.json");
-var baseSkills = require("../../../data/tables/skills.json");
+import { Chip, ChipSkillWrapper } from "@/components/common/Chip/Chip";
+import { getNextSkill, getSkillsData } from "@/utils/data-helper";
+import { skills as baseSkills, Skill } from "@/data/tables/skills";
+import { useMemo } from "react";
 
-function SkillItem({ skill, selectSkill, selected, valid, reason, shadow }: any) {
+function SkillItem({
+	skill,
+	selected,
+	valid,
+	reason,
+	shadow,
+	onClick,
+}: {
+	skill: Skill;
+	selected?: boolean;
+	valid?: boolean;
+	reason?: string;
+	shadow?: boolean;
+	onClick?: () => void;
+}) {
 	return (
 		<Chip
-			onClick={() => selectSkill(skill)}
 			selected={selected}
 			shadow={shadow}
 			inactive={!selected && !valid}
 			inactiveReason={reason}
 			skillstyle={true}
+			onClick={onClick}
 		>
-			<div>{skill.cost}</div>
+			<ChipSkillWrapper>{skill.cost}</ChipSkillWrapper>
 			<div>{skill.name}</div>
 		</Chip>
 	);
 }
 
+const tabs = [
+	{
+		label: "Combat",
+		link: "Combat_Skills",
+	},
+	{
+		label: "Magic",
+		link: "Magic_Skills",
+	},
+	{
+		label: "Crafting",
+		link: "Crafting_Skills",
+	},
+	{
+		label: "Religious",
+		link: "Religious_Skills",
+	},
+	{
+		label: "Surgical",
+		link: "Surgical_Skills",
+	},
+];
+
 export default function SkillsPage() {
-	const { skills, toggleSkill, validSkillChoice, remainingXp } = useFormContext();
+	const { form, toggleItem, validSkillChoice, remaining } = useFormContext();
+	const { skills } = form;
+
+	const skillsData = useMemo(() => {
+		return getSkillsData(skills);
+	}, [skills]);
+
+	const allSkills = useMemo(() => {
+		const extraSkills = skillsData
+			?.filter((s) => s.costExtra !== undefined)
+			.map((s) => {
+				return getNextSkill(s);
+			});
+		return extraSkills ? baseSkills.concat(extraSkills) : baseSkills;
+	}, [skills]);
 
 	// toggles the selection of the skill, then checks validity for all skills
-	const handleClickSkill = (skill: any) => {
-		toggleSkill(skill);
+	const handleClickSkill = (skill: Skill) => {
+		toggleItem("skills", skill.name);
 	};
 
-	const extraSkills = skills
-		?.filter((s: any) => s.costExtra !== undefined)
-		.map((s: any) => {
-			return getNextSkill(s);
-		});
-	const allSkills = extraSkills ? baseSkills.concat(extraSkills) : baseSkills;
+	// tabs of the Accordian (on the right)
+	const renderedTabs = tabs.map((tab, index: number) => {
+		const renderedSkills = (
+			<div className="flex flex-wrap gap-1 p-1">
+				{allSkills
+					.filter((skill) => skill.tree === tab.label)
+					.sort((a, b) => (a.name > b.name ? 1 : -1))
+					.map((skill) => {
+						let selected = skillsData?.map((s) => s.name).includes(skill.name);
+						const { valid, reason } = validSkillChoice(skill.name);
 
-	// tabs of the Accordian
-	const renderedTabs = tabs.map((tab: any, index: number) => {
-		const renderedSkills = allSkills
-			.filter((skill: any) => skill.tree === tab.label)
-			.sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
-			.map((skill: any) => {
-				let selected = skills?.map((s: any) => s.name).includes(skill.name);
-				// let inactiveReason = invalidSkillChoice(skill);
-				const { valid, reason } = validSkillChoice(skill, { ignoreCost: true });
-
-				return (
-					<SkillItem
-						onClick={() => handleClickSkill(skill)}
-						skill={skill}
-						selected={selected}
-						inactive={!selected && !valid}
-						inactiveReason={reason}
-						skillstyle={true}
-					/>
-				);
-			});
+						return (
+							<SkillItem
+								skill={skill}
+								selected={selected}
+								valid={valid}
+								reason={reason}
+								onClick={() => handleClickSkill(skill)}
+							/>
+						);
+					})}
+			</div>
+		);
 
 		return { label: tab.label, content: renderedSkills, link: tab.link };
 	});
 
 	// Chips to render in the left section
-	const renderedSkills = skills?.map((skill: any) => {
-		return (
-			<div key={skill.name + skill.cost}>
-				<SkillItem skill={skill} selectSkill={handleClickSkill} shadow />
-			</div>
-		);
-	});
+	const renderedSkills = (
+		<div className="flex flex-wrap gap-1 p-1 justify-center">
+			{skillsData?.map((skill) => {
+				return (
+					<div key={skill.name + skill.cost}>
+						<SkillItem
+							skill={skill}
+							valid={true}
+							onClick={() => handleClickSkill(skill)}
+							shadow
+						/>
+					</div>
+				);
+			})}
+		</div>
+	);
 
-	const warning = xpWarning(remainingXp);
+	const warning = xpWarning(remaining.xp);
 
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row">
 			<ContentPane style={{ flex: 4 }}>
-				<SectionDivider left="Remaining XP" right={remainingXp} />
+				<SectionDivider left="Remaining XP" right={remaining.xp} />
 				{/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
 				{warning && <Warning>{warning}</Warning>}
-				{renderedSkills?.length > 0 ? (
+				{skillsData?.length > 0 ? (
 					<SectionWrapper>{renderedSkills}</SectionWrapper>
 				) : (
 					<div className="opacity-60 italic px-10">

@@ -1,18 +1,11 @@
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import useFormContext from "../../hooks/use-form-context.js";
-import { ColumnPage } from "./ColumnPageWrapper.js";
-import { JSX, useEffect, useState } from "react";
-// import ConfirmModal from "../../componentsOLD/common/Modal/ConfirmModal";
+import { JSX, useState } from "react";
 import { Banner } from "../common/Banner/Banner.js";
 import { saveUserForm } from "../../hooks/use-firebase";
 import toast from "react-hot-toast";
 import React from "react";
-// import IntroPage from "./tabs/IntroPage.js";
-import { RiExternalLinkLine } from "react-icons/ri";
-import { PATH_GROUPS } from "../../utils/constants.ts";
 import { Button } from "../common/Button/Button";
 import useUserContext from "@/hooks/use-user-context";
-import { realms } from "../../data/tables/realms";
 import LoginModal from "../common/Modal/LoginModal.tsx";
 import { Modal } from "../common/Modal/Modal.tsx";
 import { cn } from "@/lib/utils.ts";
@@ -21,6 +14,11 @@ import { fadeStripStyle } from "@/styles/Global.ts";
 import RealmPage from "./tabs/RealmPage.tsx";
 import Image from "next/image";
 import SkillsPage from "./tabs/SkillsPage.tsx";
+import { getRealmData } from "@/utils/data-helper.ts";
+import useFormContext from "@/hooks/use-form-context.ts";
+import { OptionsPage } from "./tabs/OptionsPage.tsx";
+import { BackgroundPage } from "./tabs/BackgroundPage.tsx";
+import { ReviewPage } from "./tabs/ReviewPage.tsx";
 
 export interface Tab {
 	name: string;
@@ -30,18 +28,16 @@ const tabs: Tab[] = [
 	{ name: "Intro", content: <IntroPage /> },
 	{ name: "Realm", content: <RealmPage /> },
 	{ name: "Skills", content: <SkillsPage /> },
-	{ name: "tab1", content: <div>Content 1</div> },
-	{ name: "tab2", content: <div>Content 2</div> },
-	{ name: "tab3", content: <div>Content 3</div> },
-	// { name: "Options", content: <OptionsPage /> },
-	// { name: "Background", content: <BackgroundPage /> },
-	// { name: "Review", content: <ReviewPage /> },
+	{ name: "Options", content: <OptionsPage /> },
+	{ name: "Background", content: <BackgroundPage /> },
+	{ name: "Review", content: <ReviewPage /> },
 ];
 
 export function Creator() {
 	const { user, name } = useUserContext();
-	const { getSimpleForm, resetForm, realm, validateForm, date, setDate } = useFormContext();
-	const realmImage = realms.find((r) => r.name === realm)?.image;
+	const { getFormSummary, resetForm, validateForm, setField, form } = useFormContext();
+	const { realm } = form;
+	const realmImage = realm ? getRealmData(realm)?.image : undefined;
 	const [activeTab, setActiveTab] = useState(tabs[0]);
 	const [direction, setDirection] = useState("right");
 
@@ -57,11 +53,14 @@ export function Creator() {
 		activeIndex >= 0 && activeIndex < tabs.length - 1 ? tabs[activeIndex + 1] : null;
 
 	const handleSave = async () => {
-		toast.promise(saveUserForm(getSimpleForm(), setDate, name), {
-			loading: "Submitting",
-			success: "Character submitted!",
-			error: (err) => `Submission failed, check network connection. Error code: ${err}`,
-		});
+		toast.promise(
+			saveUserForm(getFormSummary(), (date: string) => setField("date", date), name),
+			{
+				loading: "Submitting",
+				success: "Character submitted!",
+				error: (err) => `Submission failed, check network connection. Error code: ${err}`,
+			}
+		);
 	};
 
 	const handleSubmit = async () => {
@@ -132,11 +131,11 @@ export function Creator() {
 
 	return (
 		<>
-			{/* <Banner /> */}
+			<Banner />
 
 			<div
 				className={cn(
-					"relative overflow-hidden min-w-[300px] w-full flex flex-col items-center mb-[65px] m-auto",
+					"relative overflow-hidden min-w-[300px] w-full flex flex-col items-center m-auto mb-[65px] mt-1",
 					"border-2 border-solid border-secondary rounded-t-xl",
 					"max-sm:rounded-t-none max-sm:h-full max-sm:w-full max-sm:border-0 max-sm:mt-[10px]"
 				)}
@@ -144,7 +143,7 @@ export function Creator() {
 				{/* Tabs */}
 				<div
 					className={cn(
-						"flex justify-center mb-3 w-full items-center h-10 sm:h-8",
+						"flex justify-center mb-2 w-full items-center h-10 sm:h-8",
 						`max-sm:${fadeStripStyle} sm:bg-secondary`
 					)}
 				>

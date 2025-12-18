@@ -1,0 +1,29 @@
+export const investments: { name: string; options?: { name: string }[] }[] = [
+	{ name: "Military" },
+	{ name: "Naval" },
+	{ name: "Leyline" },
+	{ name: "Congregation" },
+	{ name: "Business" },
+	{ name: "Farm" },
+	{
+		name: "Wilderness",
+		options: [
+			{ name: "Hartwood" },
+			{ name: "Beastbone" },
+			{ name: "Black Sap" },
+			{ name: "Shimmering Scales" },
+		],
+	},
+	{
+		name: "Herb Garden",
+	},
+	{
+		name: "Mine",
+		options: [
+			{ name: "Forgesteel" },
+			{ name: "Sun's Iron" },
+			{ name: "Bloodglass" },
+			{ name: "Essencite" },
+		],
+	},
+];

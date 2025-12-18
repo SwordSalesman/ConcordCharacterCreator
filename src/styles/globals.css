@@ -114,7 +114,7 @@ body {
 	--primary-foreground: #f7fbff;
 	--secondary: #e5e8f1;
 	--secondary-foreground: oklch(0.21 0.034 264.665);
-	--muted: oklch(0.967 0.003 264.542);
+	--muted: oklch(92.408% 0.0076 260.882);
 	--muted-foreground: #364d7d;
 	--accent: oklch(93.875% 0.00927 258.49);
 	--accent-foreground: oklch(0.21 0.034 264.665);
@@ -140,7 +140,8 @@ body {
 }
 
 .dark {
-	--background: #0d0e13;
+	/* --background: #0d0e13; */
+	--background: #14191e;
 	--foreground: #e8eefc;
 	--card: oklch(0.21 0.034 264.665);
 	--card-foreground: oklch(0.985 0.002 247.839);
