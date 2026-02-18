@@ -8,7 +8,7 @@ export function Groups() {
 			<Banner />
 			<p>
 				If you're in a band and it hasn't been submitted via the Google Form below, please
-				do so before <b>September 13th</b>. Only one member of your band needs to submit.
+				do so before <b>April 11th</b>. Only one member of your band needs to submit.
 			</p>
 			<div style={{ width: "fit-content", margin: "auto" }}>
 				<a
