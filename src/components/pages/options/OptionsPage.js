@@ -21,15 +21,16 @@ import {
 	GiChestArmor,
 	GiCrenelCrown,
 	GiCrossedSwords,
+	GiCrystalBall,
 	GiCrystalWand,
 	GiGemNecklace,
-	GiHammerNails,
 	GiIncense,
 	GiMoon,
 	GiNinjaArmor,
 	GiPocketBow,
 	GiPotionBall,
 	GiRobe,
+	GiScales,
 	GiTatteredBanner,
 } from "react-icons/gi";
 import { regionIsCoastal, regionIsNotCoastal } from "../../../helpers/selection-helper";
@@ -71,15 +72,17 @@ function chipIcon(type) {
 		case "Armour: Clothes":
 			return <GiRobe />;
 		case "Talisman: Tool":
-			return <GiHammerNails />;
+			return <GiScales />;
 		case "Talisman: Shield":
 			return <GiCheckedShield />;
 		case "Talisman: Jewellery":
 			return <GiGemNecklace />;
 		case "Talisman: Battlemages Circlet":
 			return <GiCrenelCrown />;
-		case "Banner":
+		case "Concordia: Banner":
 			return <GiTatteredBanner />;
+		case "Concordia: Icon":
+			return <GiCrystalBall />;
 		case "Reliquary":
 			return <GiIncense />;
 		case "Special":
@@ -141,12 +144,12 @@ const genTabContent = (params) => {
 		label === "Artisan Crafts"
 			? ["Journeyman", "Expert", "Masterwork"]
 			: subSectionTitle
-			? allItems
-					.filter((i) => filterFunction(i))
-					.map((i) => i[subSectionTitle])
-					.filter((value, index, array) => array.indexOf(value) === index)
-					.sort((a, b) => (a > b ? 1 : -1))
-			: null;
+				? allItems
+						.filter((i) => filterFunction(i))
+						.map((i) => i[subSectionTitle])
+						.filter((value, index, array) => array.indexOf(value) === index)
+						.sort((a, b) => (a > b ? 1 : -1))
+				: null;
 
 	if (sections) {
 		return {
@@ -489,7 +492,7 @@ function OptionsPage() {
 
 	const knownCraftNames = crafts.map((c) => c.name);
 	const startingItemOptions = craftsData.filter(
-		(c) => knownCraftNames.includes(c.name) && c.rarity === "Journeyman"
+		(c) => knownCraftNames.includes(c.name) && c.rarity === "Journeyman",
 	);
 
 	const renderedTabs = [];
@@ -508,7 +511,7 @@ function OptionsPage() {
 				toggleFunction: toggleSpell,
 				remainingPicks: numSpells,
 				subSectionTitle: "type",
-			})
+			}),
 		);
 	showCrafts &&
 		renderedTabs.push(
@@ -520,7 +523,7 @@ function OptionsPage() {
 				toggleFunction: toggleCraft,
 				remainingPicks: numCrafts,
 				subSectionTitle: "rarity",
-			})
+			}),
 		);
 	showCrafts &&
 		renderedTabs.push(
@@ -533,7 +536,7 @@ function OptionsPage() {
 				remainingPicks: numStartingItems,
 				subSectionTitle: undefined,
 				comment: "If you're a new Artisan, select your starting Journeyman item.",
-			})
+			}),
 		);
 	showPotions &&
 		renderedTabs.push(
@@ -546,7 +549,7 @@ function OptionsPage() {
 				remainingPicks: numPotions,
 				subSectionTitle: "type",
 				realm: realm,
-			})
+			}),
 		);
 	if (showCeremonies) {
 		let skillTitles = skills.map((s) => s.name).toString();
@@ -561,7 +564,7 @@ function OptionsPage() {
 				subSectionTitle: "sphere",
 				realm: realm,
 				filterFunction: (c) => skillTitles.includes(c.sphere),
-			})
+			}),
 		);
 	}
 
