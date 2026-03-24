@@ -10,7 +10,7 @@ export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () =>
 	const submitDateString = date ? new Date(date).toLocaleDateString() : null;
 	const approvalDateString = approvalDate ? new Date(approvalDate).toLocaleDateString() : null;
 
-	const { submissionStatus, tickColor } = getApprovalStatus({
+	const { submissionStatus } = getApprovalStatus({
 		status: status,
 		submissionDate: date,
 		approvalDate: approval?.date,

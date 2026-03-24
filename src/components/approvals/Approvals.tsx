@@ -1,38 +1,39 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { getCharacterList, getApprovalList } from "../../hooks/use-firebase";
-import {
-	ApprovalListWrapper,
-	ApprovalSelectWrapper,
-	ApprovalsWrapper,
-	ExportContents,
-	LeftColumn,
-} from "./Approvals.style";
 import useUserContext from "../../hooks/use-user-context";
-import { Navigate } from "react-router-dom";
-import { APPROVED, DENIED, PATH_HOME, PENDING } from "../../helpers/constants";
+import { APPROVED, DENIED, PATH_HOME, PENDING } from "../../utils/constants";
 import CharacterList from "./characterList/CharacterList";
 import ListFilter from "./ListFilter";
 import CharacterCard from "./CharacterCard";
 import ApprovalPanel from "./ApprovalPanel";
-import Button from "../common/Button/Button";
+import { Button } from "../common/Button/Button";
 import { BiExport } from "react-icons/bi";
 import { CSVLink } from "react-csv";
-import { getCurrentDate } from "../../helpers/date-helper";
-import { handleMigrateInvestments } from "../../helpers/migration-helper";
+import { getCurrentDate } from "../../utils/date-helper";
+import { handleMigrateInvestments } from "../../utils/migration-helper";
+import { ApprovalRecord, Character } from "./types";
 
-function removeAllNewlines(input) {
+interface Counts {
+	pending: number;
+	approved: number;
+	denied: number;
+	total: number;
+}
+
+function removeAllNewlines(input?: string): string {
 	if (!input) return "";
-	// also replace all forms of double quotes with single quotes
 	return input.replace(/(?:\r\n|\r|\n)/g, ". ").replace(/"/g, "'");
 }
 
-function Approvals() {
-	const [characters, setCharacters] = useState([]);
-	const [selectedChar, setSelectedChar] = useState(null);
-	const [filter, setFilter] = useState(PENDING);
+export function ApprovalsPage() {
+	const router = useRouter();
+	const [characters, setCharacters] = useState<Character[]>([]);
+	const [selectedChar, setSelectedChar] = useState<Character | null>(null);
+	const [filter, setFilter] = useState<string | null>(PENDING);
 	const [dateOrder, setDateOrder] = useState(true);
 	const { isAdmin } = useUserContext();
-	const [counts, setCounts] = useState({
+	const [counts, setCounts] = useState<Counts>({
 		pending: 0,
 		approved: 0,
 		denied: 0,
@@ -41,13 +42,17 @@ function Approvals() {
 	const isDev = process.env.NEXT_PUBLIC_DEBUG_TEXT === "DevMode";
 
 	useEffect(() => {
+		if (!isAdmin) router.replace(PATH_HOME);
+	}, [isAdmin, router]);
+
+	useEffect(() => {
 		async function fetchCharacters() {
 			const chars = await getCharacterList();
 			const apprs = await getApprovalList();
 
 			if (chars && apprs) {
-				let newChars = chars.map((c) => {
-					const approval = apprs.find((a) => a.id === c.id);
+				const newChars: Character[] = chars.map((c: any) => {
+					const approval = apprs.find((a: any) => a.id === c.id);
 					return {
 						...c,
 						backstory: removeAllNewlines(c.backstory),
@@ -61,7 +66,7 @@ function Approvals() {
 							? {
 									...approval,
 									comment: removeAllNewlines(approval?.comment),
-							  }
+								}
 							: undefined,
 					};
 				});
@@ -75,24 +80,16 @@ function Approvals() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAdmin]);
 
-	function handleSelectFilter(f) {
-		if (f === filter) {
-			setFilter(null);
-		} else {
-			setFilter(f);
-		}
+	function handleSelectFilter(f: string) {
+		setFilter(filter === f ? null : f);
 	}
 
-	function calcCounts(chars) {
+	function calcCounts(chars: Character[]) {
 		const pendingCount = chars.filter((c) => {
 			return !c.approval?.status || c.date.localeCompare(c.approval?.date) > 0;
 		}).length;
-		const approvedCount = chars.filter((c) => {
-			return c.approval?.status === APPROVED;
-		}).length;
-		const deniedCount = chars.filter((c) => {
-			return c.approval?.status === DENIED;
-		}).length;
+		const approvedCount = chars.filter((c) => c.approval?.status === APPROVED).length;
+		const deniedCount = chars.filter((c) => c.approval?.status === DENIED).length;
 		setCounts({
 			pending: pendingCount,
 			approved: approvedCount,
@@ -101,13 +98,13 @@ function Approvals() {
 		});
 	}
 
-	function handleApproval(approval) {
+	function handleApproval(approval: ApprovalRecord) {
 		const newChars = characters.map((c) => {
 			if (c.id !== approval.id) return c;
-			return { ...c, approval: approval, changes: "" };
+			return { ...c, approval, changes: "" };
 		});
 		setCharacters(newChars);
-		setSelectedChar({ ...selectedChar, approval: approval, changes: "" });
+		if (selectedChar) setSelectedChar({ ...selectedChar, approval, changes: "" });
 		calcCounts(newChars);
 	}
 
@@ -172,22 +169,24 @@ function Approvals() {
 		}
 	}
 
-	return isAdmin ? (
-		<ApprovalsWrapper>
-			<LeftColumn>
+	if (!isAdmin) return null;
+
+	return (
+		<div className="mx-auto mt-2.5 flex flex-row h-[90vh] min-h-[600px] max-w-[1100px] w-[95%] font-[Arial,Helvetica,sans-serif]">
+			<div className="flex-1 flex flex-col items-center justify-center gap-1.5 h-full">
 				<CSVLink
 					data={characters}
 					filename={`character-export-${now}.csv`}
 					headers={csvHeaders}
 				>
-					<Button outline small>
-						<ExportContents>
+					<Button variant="outline" size="sm">
+						<div className="flex gap-1 mx-1">
 							<p>Export All</p>
 							<BiExport />
-						</ExportContents>
+						</div>
 					</Button>
 				</CSVLink>
-				<ApprovalListWrapper>
+				<div className="border border-border mr-2.5 rounded-tl-[10px] rounded-tr-[10px] flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 					<ListFilter
 						filter={filter}
 						selectFilter={handleSelectFilter}
@@ -200,16 +199,14 @@ function Approvals() {
 						handleSelect={setSelectedChar}
 						activeCharacter={selectedChar}
 					/>
-				</ApprovalListWrapper>
-			</LeftColumn>
-			<ApprovalSelectWrapper>
+				</div>
+			</div>
+			<div className="flex-[2] flex flex-col justify-between">
 				<CharacterCard character={selectedChar} />
 				<ApprovalPanel character={selectedChar} handleApproval={handleApproval} />
-			</ApprovalSelectWrapper>
-		</ApprovalsWrapper>
-	) : (
-		<Navigate to={PATH_HOME} />
+			</div>
+		</div>
 	);
 }
 
-export default Approvals;
+export default ApprovalsPage;

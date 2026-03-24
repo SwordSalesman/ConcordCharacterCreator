@@ -1,6 +1,5 @@
 import { BiAdjust, BiSolidBadgeCheck } from "react-icons/bi";
 import ConcordSigil from "../../data/images/concord-logo.png";
-import { useTheme } from "styled-components";
 import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 import React, { useState } from "react";
 import {
@@ -46,7 +45,7 @@ export function Header({
 	const [showApprovalModal, setShowApprovalModal] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
 
-	const { submissionStatus, tickColor } = getApprovalStatus({
+	const { submissionStatus, tickColorClass } = getApprovalStatus({
 		status: approval?.status,
 		submissionDate: date,
 		approvalDate: approval?.date,
@@ -163,7 +162,7 @@ export function Header({
 								spinner={formLoading}
 								className="animate-in fade-in"
 							>
-								<div className="flex gap-2 items-center" color={tickColor}>
+								<div className={`flex gap-2 items-center ${tickColorClass}`}>
 									<p>{submissionStatus}</p>
 									<BiSolidBadgeCheck />
 								</div>

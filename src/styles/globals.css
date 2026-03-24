@@ -64,6 +64,37 @@ body {
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
 
+	--color-background-raised: var(--background-raised);
+	--color-background-300: var(--background-300);
+	--color-special: var(--special);
+
+	--animate-warning-fade-in: warningFadeIn 0.5s;
+	@keyframes warningFadeIn {
+		0% {
+			opacity: 0;
+			scale: 0.75;
+		}
+		100% {
+			opacity: 1;
+			scale: 1;
+		}
+	}
+
+	--animate-banner-in: bannerIn 1.5s ease-in-out;
+	@keyframes bannerIn {
+		from {
+			transform: scale(0);
+			opacity: 0;
+			height: 0;
+			margin: 0;
+			padding: 0;
+		}
+		to {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
 	--animate-realm-logo-in: realmLogoIn 1.5s ease-out;
 	@keyframes realmLogoIn {
 		0%,
@@ -104,6 +135,12 @@ body {
 
 :root {
 	--radius: 0.625rem;
+	--background-raised: #eff0f3;
+	--background-300: #e5e6ec;
+	--special: #684ecf;
+	--banner-success: linear-gradient(125deg, rgba(147, 201, 134, 1) 0%, rgba(132, 196, 219, 1) 100%);
+	--banner-warning: linear-gradient(125deg, rgba(189, 123, 99, 1) 0%, rgba(222, 184, 118, 1) 100%);
+	--banner-error: linear-gradient(125deg, rgba(182, 117, 138, 1) 0%, rgba(232, 161, 131, 1) 100%);
 	--background: #f1f4f8;
 	--foreground: #242e42;
 	--card: oklch(1 0 0);
@@ -140,6 +177,12 @@ body {
 }
 
 .dark {
+	--background-raised: #1d2330;
+	--background-300: #2d3444;
+	--special: #eebe76;
+	--banner-success: linear-gradient(125deg, rgba(95, 155, 81, 1) 0%, rgba(68, 165, 201, 1) 100%);
+	--banner-warning: linear-gradient(125deg, rgba(190, 109, 84, 1) 0%, rgba(207, 166, 76, 1) 100%);
+	--banner-error: linear-gradient(125deg, rgba(170, 94, 113, 1) 0%, rgba(206, 124, 94, 1) 100%);
 	/* --background: #0d0e13; */
 	--background: #14191e;
 	--foreground: #e8eefc;

@@ -1,6 +1,6 @@
 import useFormContext from "../../../hooks/use-form-context";
-import SectionDivider from "../../common/SectionDivider/SectionDivider";
-import { SectionLine, SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
+import SectionDivider from "../SectionDivider/SectionDivider";
+import { SectionLine, SectionWrapper } from "../SectionDivider/SectionDivider.style";
 import React, { useMemo } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import {
@@ -33,7 +33,7 @@ import { investments as investmentsData } from "@/data/tables/investments";
 import { regions as regionsData } from "@/data/tables/regions";
 import { crafts as craftsData } from "@/data/tables/crafts";
 import { Realm } from "@/data/tables/realms";
-import { ContentPane } from "@/components/common/ContentPane/ContentPane";
+import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 
 var spellsData = require("../../../data/tables/spells.json");
 var potionsData = require("../../../data/tables/potions.json");
@@ -362,7 +362,7 @@ export function OptionsPage() {
 							<Chip
 								onClick={() => toggleItem("invOption", item.name)}
 								selected={selected}
-								inactive={!selected && !!investment}
+								inactive={!selected && !!invOption}
 								key={item.name}
 							>
 								{item.name}

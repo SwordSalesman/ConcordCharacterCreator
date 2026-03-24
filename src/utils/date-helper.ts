@@ -1,16 +1,21 @@
 import gameData from "../data/tables/games.json";
 
-export function getCurrentDate() {
+export function getCurrentDate(): string {
 	const date = new Date().toISOString(); // YYYY-MM-DDTHH:mm:SS.xxxx
 	return date;
 }
 
-export function prettifyDate(date, options = {}) {
+interface PrettifyDateOptions {
+	hideTime?: boolean;
+	shortDate?: boolean;
+}
+
+export function prettifyDate(date: string | undefined, options: PrettifyDateOptions = {}): string {
 	const { hideTime, shortDate } = options;
 
 	if (!date) return "";
 
-	const dateOptions = {
+	const dateOptions: Intl.DateTimeFormatOptions = {
 		dateStyle: shortDate ? "short" : "medium",
 	};
 
@@ -26,9 +31,14 @@ export function prettifyDate(date, options = {}) {
 	return new Date(date).toLocaleString("en-AU", dateOptions);
 }
 
+interface Game {
+	name: string;
+	date: string;
+}
+
 export function getPrevAndNextGame() {
 	const today = getCurrentDate();
-	let games = null;
+	let games: { prev: Game | undefined; next: Game } | null = null;
 	gameData.forEach((game, index) => {
 		if (game.date > today && !games) {
 			games = {

@@ -92,7 +92,11 @@ type SetFieldAction<K extends keyof FormState> = {
 	value: FormState[K];
 };
 
-type FormAction = { type: "RESET_FORM" } | SetFieldAction<keyof FormState>;
+type FormAction =
+	| { type: "RESET_FORM" }
+	| SetFieldAction<keyof FormState>
+	| { type: "SET_FORM"; payload: Partial<FormState> }
+	| { type: "TOGGLE_ITEM"; field: keyof FormState; item: any };
 
 const initialState: FormState = {
 	gamesPlayed: 0,
@@ -103,6 +107,116 @@ const initialState: FormState = {
 	potions: [],
 	ceremonies: [],
 };
+
+// Pure helper: checks prereqs and exclusions for a single skill against a given skill list.
+// Cost is intentionally ignored to allow overspending — see validSkillChoice for where to re-enable that.
+function isSkillValid(skill: string, skills: string[]): boolean {
+	const fullSkill = getSkillData(skill);
+	if (!fullSkill) return false;
+	if (fullSkill.prereq && !skills.includes(fullSkill.prereq)) return false;
+	if (fullSkill.exclusion && skills.includes(fullSkill.exclusion)) return false;
+	return true;
+}
+
+// Pure helper: enforces all game rules that flow on from a change to the skills list.
+// Runs after any TOGGLE_ITEM on "skills" or SET_FIELD on "gamesPlayed".
+function applySkillSideEffects(state: FormState): FormState {
+	// Iteratively remove skills that have unmet prereqs or exclusion conflicts,
+	// since removing one skill can invalidate another (e.g. a chain of prereqs).
+	let skills = [...state.skills];
+	let changed = true;
+	while (changed) {
+		changed = false;
+		const valid = skills.filter((s) => isSkillValid(s, skills));
+		if (valid.length !== skills.length) {
+			skills = valid;
+			changed = true;
+		}
+	}
+
+	// Hard XP cap: remove skills from the end (most recently added) until within -10 XP.
+	const computeRemainingXp = (s: string[]) => {
+		const fullSkills = getSkillsData(s);
+		const used = fullSkills?.map((sk) => sk.cost).reduce((a, b) => a + b, 0) ?? 0;
+		return 8 + state.gamesPlayed - used;
+	};
+	while (computeRemainingXp(skills) < -10 && skills.length > 0) {
+		skills = skills.slice(0, -1);
+	}
+
+	// Downstream effects: certain skills gate entire sub-systems.
+	const hasMagus = skills.includes("Magus");
+	const hasArtisan = skills.includes("Artisan");
+	const hasApothecary = skills.includes("Apothecary");
+	const hasDivineLore = skills.some((s) => s.startsWith("Divine Lore"));
+
+	let spells = state.spells;
+	if (!hasMagus) {
+		spells = [];
+	} else if (!spells.includes("Channel Waystone")) {
+		spells = ["Channel Waystone", ...spells];
+	}
+
+	let crafts = state.crafts;
+	let startingItem = state.startingItem;
+	if (!hasArtisan) {
+		crafts = [];
+		startingItem = undefined;
+	} else if (!crafts.includes("Artisans Oil")) {
+		crafts = ["Artisans Oil", ...crafts];
+	}
+
+	const potions = hasApothecary ? state.potions : [];
+	const ceremonies = hasDivineLore ? state.ceremonies : [];
+
+	return { ...state, skills, spells, crafts, startingItem, potions, ceremonies };
+}
+
+// Pure helper: applies cascading side effects for any field that has them.
+// Called by both SET_FIELD and TOGGLE_ITEM so behaviour is consistent regardless of how a field is set.
+function applyFieldSideEffects(state: FormState, field: keyof FormState): FormState {
+	if (field === "realm") return { ...state, archetype: undefined };
+	if (field === "investment") return { ...state, invOption: undefined };
+	if (field === "invRegion") return { ...state, invTerritory: undefined };
+	if (field === "skills" || field === "gamesPlayed") return applySkillSideEffects(state);
+	return state;
+}
+
+function formReducer(state: FormState, action: FormAction): FormState {
+	switch (action.type) {
+		case "SET_FIELD": {
+			const newState = { ...state, [action.field]: action.value };
+			return applyFieldSideEffects(newState, action.field);
+		}
+		case "SET_FORM":
+			return { ...initialState, ...action.payload };
+		case "RESET_FORM":
+			return initialState;
+		case "TOGGLE_ITEM": {
+			const { field, item } = action;
+
+			// Channel Waystone and Artisans Oil are mandatory when their parent skill is active.
+			// They're added/removed automatically by applySkillSideEffects — not manually.
+			if (field === "spells" && item === "Channel Waystone") return state;
+			if (field === "crafts" && item === "Artisans Oil") return state;
+
+			const currentField = state[field];
+			let newFieldValue: any;
+
+			if (Array.isArray(currentField)) {
+				newFieldValue = currentField.includes(item)
+					? currentField.filter((i) => i !== item)
+					: [...currentField, item];
+			} else {
+				newFieldValue = currentField === item ? initialState[field] : item;
+			}
+
+			return applyFieldSideEffects({ ...state, [field]: newFieldValue }, field);
+		}
+		default:
+			return state;
+	}
+}
 
 interface FormContextInterface {
 	loading: boolean;
@@ -137,7 +251,7 @@ export const FormContext = createContext<FormContextInterface>({
 	validSkillChoice: () => ({ valid: false }),
 	resetForm: () => {},
 	remaining: { xp: 0, spells: 0, ceremonies: 0, crafts: 0, potions: 0 },
-	getFormSummary: () => ({} as FormStateSummary),
+	getFormSummary: () => ({}) as FormStateSummary,
 });
 
 export default function FormContextProvider({ children }: { children: React.ReactNode }) {
@@ -146,65 +260,14 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	const [approval, setApproval] = useState<Approval | undefined>(undefined);
 	const [formState, dispatch] = useReducer(formReducer, initialState);
 
-	function formReducer(state: FormState, action: FormAction): FormState {
-		switch (action.type) {
-			case "SET_FIELD":
-				return { ...state, [action.field]: action.value };
-			case "RESET_FORM":
-				return initialState;
-			default:
-				return state;
-		}
-	}
-
-	// Simple function to set a field to a given value
 	function setField<K extends keyof FormState>(field: K, value: FormState[K]) {
 		dispatch({ type: "SET_FIELD", field, value });
 	}
 
-	// Function to handle 'toggling' an item on or off. Usually because it's displayed as a checkbox.
-	// Can toggle both single-value fields (like realm) and multi-value fields (like skills)
-	// Single value fields will overwrite/clear, multi-value fields will add/remove from the array.
-	function toggleItem<K extends keyof FormState>(field: K, item: any) {
-		// Handle side-effects of toggling certain items
-		if (field === "realm") setField("archetype", undefined);
-		if (field === "investment") setField("invOption", undefined);
-		if (field === "invRegion") setField("invTerritory", undefined);
-		if (
-			field === "spells" &&
-			item === "Channel Waystone" &&
-			spells.includes("Channel Waystone")
-		)
-			return;
-		if (field === "crafts" && item === "Artisans Oil" && crafts.includes("Artisans Oil"))
-			return;
-
-		// Handle the actual toggling
-		const currentField = formState[field];
-		// Field is an array, add or remove it to the array
-		if (Array.isArray(currentField)) {
-			if (currentField.includes(item)) {
-				dispatch({
-					type: "SET_FIELD",
-					field,
-					value: currentField.filter((i) => i !== item) as FormState[K],
-				});
-			} else {
-				dispatch({
-					type: "SET_FIELD",
-					field,
-					value: [...currentField, item] as FormState[K],
-				});
-			}
-		}
-		// Field is a single value, set or clear it
-		else {
-			if (currentField === item) {
-				dispatch({ type: "SET_FIELD", field, value: initialState[field] });
-			} else {
-				dispatch({ type: "SET_FIELD", field, value: item });
-			}
-		}
+	// Toggles an item on or off. Works for both single-value fields (realm, archetype) and
+	// array fields (skills, spells). Side effects are handled atomically inside the reducer.
+	function toggleItem(field: keyof FormState, item: any) {
+		dispatch({ type: "TOGGLE_ITEM", field, item });
 	}
 
 	function resetForm() {
@@ -212,20 +275,16 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	}
 
 	const {
-		date,
 		realm,
 		gamesPlayed,
 		skills,
 		investment,
-		invTier,
-		invOption,
 		invRegion,
 		invTerritory,
 		spells,
 		crafts,
 		potions,
 		ceremonies,
-		startingItem,
 		heroName,
 	} = formState;
 
@@ -295,20 +354,21 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	}, [user]);
 
 	function setFormFromSummaryData(summaryForm: FormStateSummary) {
+		const payload: Partial<FormState> = {};
 		Object.keys(summaryForm).forEach((k) => {
-			let key = k as keyof FormStateSummary;
+			const key = k as keyof FormStateSummary;
 			const value = summaryForm[key];
-
 			if (value) {
 				if (initialState[key] instanceof Array && typeof value === "string") {
-					setField(key, getArrayFromSummary(value));
+					(payload as any)[key] = getArrayFromSummary(value);
 				} else {
-					setField(key, value);
+					(payload as any)[key] = value;
 				}
 			} else {
-				setField(key, initialState[key]);
+				(payload as any)[key] = initialState[key];
 			}
 		});
+		dispatch({ type: "SET_FORM", payload });
 	}
 
 	function getFormSummary(): FormStateSummary {
@@ -325,9 +385,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		return summaryForm;
 	}
 
-	// Handling functions
-
-	// Checks if the bare minimum required fields have content in them: Realm, Name, Investment, Backstory
+	// Checks if the bare minimum required fields have content in them: Realm, Name, Investment
 	const validateForm = () => {
 		const validRealm = !!realm;
 		const validName = !!heroName && heroName.trim() !== "";
@@ -336,63 +394,33 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		return { valid, validRealm, validName, validInvestment };
 	};
 
+	// Exposed for UI feedback (e.g. greying out invalid skills on the skills page).
+	// Costs are intentionally ignored to allow overspending — change ignoreCost to re-enable.
 	function validSkillChoice(skill: string): { valid: boolean; reason?: string } {
 		const ignoreCost = true;
 
 		const fullSkill = getSkillData(skill);
-
 		if (!fullSkill) return { valid: false, reason: undefined };
 
 		if (!ignoreCost) {
 			const notEnoughXP = fullSkill.cost > remainingXp;
-			if (notEnoughXP) {
-				return { valid: false, reason: "Not enough XP" };
-			}
+			if (notEnoughXP) return { valid: false, reason: "Not enough XP" };
 		}
 
-		let prereqNotMet = fullSkill.prereq && !skills?.includes(fullSkill.prereq);
-		if (prereqNotMet) {
+		if (fullSkill.prereq && !skills?.includes(fullSkill.prereq)) {
 			return { valid: false, reason: `Prerequisite missing: '${fullSkill.prereq}'` };
 		}
 
-		let excluded = fullSkill.exclusion && skills?.includes(fullSkill.exclusion);
-		if (excluded) {
+		if (fullSkill.exclusion && skills?.includes(fullSkill.exclusion)) {
 			return { valid: false, reason: `Conflicts with '${fullSkill.exclusion}'` };
 		}
 
 		return { valid: true, reason: undefined };
 	}
 
-	// Enforces some game rules about flow-on effects of skill selection
-	useEffect(() => {
-		skills?.forEach((s) => {
-			const { valid } = validSkillChoice(s);
-			// Hard limit at -10 xp to prevent meme submitting all the skills
-			if (!valid || remainingXp < -10) {
-				toggleItem("skills", s);
-			}
-		});
-
-		if (!skills?.includes("Magus")) {
-			setField("spells", []);
-		} else if (!spells.includes("Channel Waystone")) {
-			toggleItem("spells", "Channel Waystone");
-		}
-		if (!skills?.includes("Artisan")) {
-			setField("crafts", []);
-			setField("startingItem", undefined);
-		} else if (!crafts.includes("Artisans Oil")) {
-			toggleItem("crafts", "Artisans Oil");
-		}
-		if (!skills?.includes("Apothecary")) setField("potions", []);
-		if (!skills?.find((s) => s.startsWith("Divine Lore"))) setField("ceremonies", []);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [skills, remainingXp]);
-
 	const formContext: FormContextInterface = {
 		loading,
-		approval: approval || undefined,
+		approval,
 		form: formState,
 		setField,
 		toggleItem,

@@ -1,15 +1,17 @@
 import useFormContext from "../../../hooks/use-form-context";
-
 import { xpWarning } from "../../../utils/validity-helper";
-
 import { graces } from "@/data/tables/graces";
+import { Warning } from "@/components/common/Accordion/AccordionSection";
+import { Input } from "@/components/common/Input/Input";
+import { getRealmData, getSummaryFromArray } from "@/utils/data-helper";
+import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 
 function ReviewItem({ label, children }: { label: string; children: React.ReactNode }) {
 	return (
-		<ReviewSection>
-			<ReviewHeader>{label}</ReviewHeader>
-			<ReviewContent>{children}</ReviewContent>
-		</ReviewSection>
+		<div className="w-full flex flex-col justify-between text-center">
+			<div className="text-muted-foreground text-[0.8rem] leading-[0.8rem]">{label}</div>
+			<div className="text-foreground leading-[1.2rem] text-wrap-balance">{children}</div>
+		</div>
 	);
 }
 
@@ -50,22 +52,22 @@ export function ReviewPage() {
 	console.debug(form);
 
 	const invalidWarning = (
-		<InvalidWarning>
+		<div className="text-destructive italic mb-2.5 text-center">
 			<p>Required fields:</p>
 			<ul>
 				{!validName ? <li>Hero Name</li> : null}
 				{!validRealm ? <li>Realm</li> : null}
 				{!validInvestment ? <li>Investment</li> : null}
 			</ul>
-		</InvalidWarning>
+		</div>
 	);
 	const xpWarningText = xpWarning(remaining.xp);
 
 	const fullGrace = grace ? graces.find((g) => g.name === grace) : undefined;
 
 	return (
-		<ReviewPageWrapper>
-			<ReviewPaneWrapper>
+		<div className="flex flex-col items-center gap-[60px] w-full px-[10%]">
+			<div className="flex justify-center leading-[1.1rem] w-full min-w-[300px] min-[600px]:min-w-[400px]">
 				<ContentPane mobileshow>
 					{!valid ? invalidWarning : null}
 					{xpWarningText && <Warning>{xpWarningText}</Warning>}
@@ -74,14 +76,14 @@ export function ReviewPage() {
 							<h2 className="text-xl leading-6">
 								{heroName ? heroName : "Nameless Hero"}
 							</h2>
-							<ReviewSubtitles>
+							<div className="italic text-muted-foreground">
 								{realmFull ? realmFull.citizen : "Realmless"}
 								{archetype ? " " + archetype : ""}
-							</ReviewSubtitles>
+							</div>
 							{fullGrace && (
-								<ReviewSubtitles>
+								<div className="italic text-muted-foreground">
 									{`${fullGrace.name}, Graced by ${fullGrace.sphere}`}
-								</ReviewSubtitles>
+								</div>
 							)}
 						</div>
 						<StyledBorder />
@@ -116,7 +118,7 @@ export function ReviewPage() {
 							<ReviewItem label="Ceremonies">{ceremonies.join(delimiter)}</ReviewItem>
 						)}
 					</div>
-					<LightBorder>
+					<div className="rounded-[12px] px-2 [&_div_textarea]:border [&_div_textarea]:border-border [&_div_textarea]:border-solid">
 						<div className="flex flex-col gap-2 w-full my-4">
 							<Input
 								type="text"
@@ -126,96 +128,15 @@ export function ReviewPage() {
 								placeholder="Notes for the team (if any)"
 							/>
 						</div>
-					</LightBorder>
+					</div>
 				</ContentPane>
-			</ReviewPaneWrapper>
-			{/* <ReviewReminder>Don't forget to submit!</ReviewReminder> */}
-		</ReviewPageWrapper>
+			</div>
+		</div>
 	);
 }
 
-import { styled } from "styled-components";
-import { Warning } from "@/components/common/Accordion/AccordionSection";
-import { Input } from "@/components/common/Input/Input";
-import { getRealmData, getSummaryFromArray } from "@/utils/data-helper";
-import { ContentPane } from "@/components/common/ContentPane/ContentPane";
-
-export const ReviewPageWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 60px;
-	width: 100%;
-	padding: 0 10%;
-`;
-
-export const ReviewPaneWrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	line-height: 1.1rem;
-	width: 100%;
-	min-width: 300px;
-	@media screen and (min-width: 600px) {
-		min-width: 400px;
-	}
-`;
-
-export const ReviewReminder = styled.p`
-	font-style: italic;
-	font-size: 0.8rem;
-	opacity: 0.7;
-`;
-
-// "w-full h-[2px] m-1 bg-gradient-to-r from-transparent via-gray-500 to-transparent"
-export const StyledBorder = styled.div`
-	width: 100%;
-	height: 1px;
-	background: ${(props) => props.theme.border};
-	background: linear-gradient(
-		90deg,
-		rgba(0, 0, 0, 0) 0%,
-		${(props) => props.theme.border} 50%,
-		rgba(0, 0, 0, 0) 100%
+function StyledBorder() {
+	return (
+		<div className="w-full h-px bg-[linear-gradient(90deg,transparent_0%,var(--border)_50%,transparent_100%)]" />
 	);
-`;
-
-export const ReviewSubtitles = styled.div`
-	font-style: italic;
-	color: ${(props) => props.theme.textSoft};
-`;
-
-export const ReviewHeader = styled.div`
-	color: ${(props) => props.theme.textSoft};
-	font-size: 0.8rem;
-	line-height: 0.8rem;
-`;
-
-export const ReviewSection = styled.div`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	text-align: center;
-`;
-
-export const ReviewContent = styled.div`
-	color: ${(props) => props.theme.textStrong};
-	line-height: 1.2rem;
-	text-wrap: balance;
-`;
-
-export const InvalidWarning = styled.div`
-	color: ${(props) => props.theme.error};
-	font-style: italic;
-	margin-bottom: 10px;
-	text-align: center;
-`;
-
-export const LightBorder = styled.div`
-	border-radius: 12px;
-	padding: 0 8px;
-
-	div textarea {
-		border: solid 1px ${(props) => props.theme.border};
-	}
-`;
+}

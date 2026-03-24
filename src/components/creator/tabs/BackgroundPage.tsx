@@ -1,7 +1,7 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
-import SectionDivider from "../../common/SectionDivider/SectionDivider";
-import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
+import SectionDivider from "../SectionDivider/SectionDivider";
+import { SectionWrapper } from "../SectionDivider/SectionDivider.style";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { useEffect, useMemo } from "react";
 import { getRealmData } from "@/utils/data-helper";
@@ -10,7 +10,7 @@ import { Chip } from "@/components/common/Chip/Chip";
 import { archetypes } from "@/data/tables/archetypes";
 import { graces } from "@/data/tables/graces";
 import { Input } from "@/components/common/Input/Input";
-import { ContentPane } from "@/components/common/ContentPane/ContentPane";
+import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 
 export function BackgroundPage() {
 	const { form, toggleItem, setField } = useFormContext();

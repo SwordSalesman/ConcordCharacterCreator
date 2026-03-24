@@ -1,4 +1,3 @@
-import { useTheme } from "styled-components";
 import { APPROVED, DENIED } from "./constants";
 
 export function getApprovalStatus({
@@ -10,30 +9,28 @@ export function getApprovalStatus({
 	submissionDate?: string;
 	approvalDate?: string;
 }) {
-	const theme = useTheme();
-
-	let tickColor = theme.textSoft;
+	let tickColorClass = "text-muted-foreground";
 	let submissionStatus = "Not Submitted";
 	if (submissionDate && (!approvalDate || approvalDate < submissionDate)) {
-		tickColor = theme.warning;
+		tickColorClass = "text-contrast";
 		submissionStatus = "Awaiting Review";
 	} else if (status === DENIED) {
-		tickColor = theme.error;
+		tickColorClass = "text-destructive";
 		submissionStatus = "Changes Requested";
 	} else if (status === APPROVED) {
-		tickColor = theme.warning;
+		tickColorClass = "text-contrast";
 		submissionStatus = "Approved";
 	}
 
 	if (!submissionDate) {
-		tickColor = theme.textSoft;
+		tickColorClass = "text-muted-foreground";
 	} else {
 		if (status === APPROVED) {
-			tickColor = theme.success;
+			tickColorClass = "text-green-600 dark:text-green-400";
 		} else if (status === DENIED) {
-			tickColor = theme.error;
+			tickColorClass = "text-destructive";
 		}
 	}
 
-	return { submissionStatus, tickColor };
+	return { submissionStatus, tickColorClass };
 }

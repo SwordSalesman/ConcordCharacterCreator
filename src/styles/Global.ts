@@ -1,5 +1,3 @@
-import { createGlobalStyle, styled } from "styled-components";
-
 export const mediaSize = {
 	small: 600,
 };

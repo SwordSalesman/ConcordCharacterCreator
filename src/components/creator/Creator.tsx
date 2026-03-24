@@ -94,6 +94,7 @@ export function Creator() {
 		return (
 			<button
 				type="button"
+				key={tab.name}
 				onClick={() => {
 					handleClickTab(tab, index);
 				}}
@@ -131,7 +132,7 @@ export function Creator() {
 
 	return (
 		<>
-			{/* <Banner /> */}
+			<Banner />
 
 			<div
 				className={cn(

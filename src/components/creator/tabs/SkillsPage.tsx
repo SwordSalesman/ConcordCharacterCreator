@@ -1,14 +1,14 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
-import SectionDivider from "../../common/SectionDivider/SectionDivider";
+import SectionDivider from "../SectionDivider/SectionDivider";
 import { xpWarning } from "../../../utils/validity-helper";
 import { Warning } from "../../common/Accordion/AccordionSection";
 import { Chip, ChipSkillWrapper } from "@/components/common/Chip/Chip";
 import { getNextSkill, getSkillsData } from "@/utils/data-helper";
 import { skills as baseSkills, Skill } from "@/data/tables/skills";
 import { useMemo } from "react";
-import { ContentPane } from "@/components/common/ContentPane/ContentPane";
-import { SectionWrapper } from "@/components/common/SectionDivider/SectionDivider.style";
+import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
+import { SectionWrapper } from "../SectionDivider/SectionDivider.style";
 
 function SkillItem({
 	skill,

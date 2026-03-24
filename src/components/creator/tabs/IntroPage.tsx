@@ -1,9 +1,10 @@
 import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
 import { BiMinus, BiPlus } from "react-icons/bi";
-import React from "react";
+import { Accordion } from "radix-ui";
 import { Button } from "@/components/common/Button/Button";
 import { fadeStripStyle } from "@/styles/Global";
+import { AccordionContent, AccordionTrigger } from "@radix-ui/react-accordion";
 
 export function IntroPage() {
 	const { form, setField } = useFormContext();

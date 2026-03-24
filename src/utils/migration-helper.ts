@@ -1,8 +1,13 @@
 import { migrateUser } from "../hooks/use-firebase";
+import regionMigrationData from "../data/tables/regionMigration.json";
 
-var regionMigrationData = require("../data/tables/regionMigration.json");
+interface MigratableCharacter {
+	id: string;
+	invTerritory?: string;
+	[key: string]: any;
+}
 
-export async function handleMigrateInvestments(characters) {
+export async function handleMigrateInvestments(characters: MigratableCharacter[]) {
 	console.log("migrating...");
 	console.log(characters);
 	if (!characters.length) {
@@ -26,6 +31,6 @@ export async function handleMigrateInvestments(characters) {
 	});
 }
 
-export function getMigratedRegion(oldRegion) {
-	return regionMigrationData[oldRegion] || oldRegion;
+export function getMigratedRegion(oldRegion: string): string {
+	return (regionMigrationData as Record<string, string>)[oldRegion] || oldRegion;
 }
