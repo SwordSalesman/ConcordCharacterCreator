@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { Toaster } from "react-hot-toast";
 import { AppProps } from "next/app";
-import { PageMeta } from "./PageMeta";
+import { PageMeta } from "@/components/PageMeta";
 
 import { Header } from "@/components/layout/Header";
 import { dark, light } from "@/styles/Theme.styled";

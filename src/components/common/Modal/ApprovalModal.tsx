@@ -4,7 +4,7 @@ import { APPROVED, DENIED } from "@/utils/constants";
 import { getApprovalStatus } from "@/utils/approval-helper";
 
 export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-	const { approval, date } = useFormContext();
+	const { approval, form: { date } } = useFormContext();
 	const { author, status, comment, date: approvalDate } = approval || {};
 
 	const submitDateString = date ? new Date(date).toLocaleDateString() : null;

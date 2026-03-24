@@ -1,8 +1,9 @@
-import AndashLogo from "../images/realm-logos/andash.PNG";
-import BordevarLogo from "../images/realm-logos/bordevar.PNG";
-import GreenwealdLogo from "../images/realm-logos/greenweald.PNG";
-import IronValleyLogo from "../images/realm-logos/ironvalley.PNG";
-import LeronaMereLogo from "../images/realm-logos/leronamere.PNG";
+import type { StaticImageData } from "next/image";
+import AndashLogo from "../images/realm-logos/andash.png";
+import BordevarLogo from "../images/realm-logos/bordevar.png";
+import GreenwealdLogo from "../images/realm-logos/greenweald.png";
+import IronValleyLogo from "../images/realm-logos/ironvalley.png";
+import LeronaMereLogo from "../images/realm-logos/leronamere.png";
 
 export type Realm =
 	| "Andash"
@@ -16,7 +17,7 @@ export const realms: {
 	citizen: string;
 	subtitle: string;
 	link: string;
-	image: string;
+	image: StaticImageData;
 	desc: string;
 	archetypeLink: string;
 }[] = [
