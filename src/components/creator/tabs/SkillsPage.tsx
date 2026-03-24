@@ -1,14 +1,14 @@
 import Accordion from "../../common/Accordion/Accordion";
-import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
-import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { xpWarning } from "../../../utils/validity-helper";
 import { Warning } from "../../common/Accordion/AccordionSection";
 import { Chip, ChipSkillWrapper } from "@/components/common/Chip/Chip";
 import { getNextSkill, getSkillsData } from "@/utils/data-helper";
 import { skills as baseSkills, Skill } from "@/data/tables/skills";
 import { useMemo } from "react";
+import { ContentPane } from "@/components/common/ContentPane/ContentPane";
+import { SectionWrapper } from "@/components/common/SectionDivider/SectionDivider.style";
 
 function SkillItem({
 	skill,
@@ -135,7 +135,7 @@ export default function SkillsPage() {
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row">
 			<ContentPane style={{ flex: 4 }}>
-				<SectionDivider left="Remaining XP" right={remaining.xp} />
+				<SectionDivider left="Remaining XP" right={String(remaining.xp)} />
 				{/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
 				{warning && <Warning>{warning}</Warning>}
 				{skillsData?.length > 0 ? (

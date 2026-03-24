@@ -1,5 +1,4 @@
 import useFormContext from "../../../hooks/use-form-context";
-import ContentPane from "../../common/ContentPane/ContentPane";
 
 import { xpWarning } from "../../../utils/validity-helper";
 
@@ -67,7 +66,7 @@ export function ReviewPage() {
 	return (
 		<ReviewPageWrapper>
 			<ReviewPaneWrapper>
-				<ContentPane mobileshow="true">
+				<ContentPane mobileshow>
 					{!valid ? invalidWarning : null}
 					{xpWarningText && <Warning>{xpWarningText}</Warning>}
 					<div className="flex flex-col items-center mt-2 gap-2 mb-6">
@@ -139,6 +138,7 @@ import { styled } from "styled-components";
 import { Warning } from "@/components/common/Accordion/AccordionSection";
 import { Input } from "@/components/common/Input/Input";
 import { getRealmData, getSummaryFromArray } from "@/utils/data-helper";
+import { ContentPane } from "@/components/common/ContentPane/ContentPane";
 
 export const ReviewPageWrapper = styled.div`
 	display: flex;

@@ -19,15 +19,15 @@ export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () =>
 	const note = !submitDateString
 		? "When you submit your character you'll be able to see your approval status here."
 		: submitDateString
-		? `${author} on ${approvalDateString?.replaceAll("/", "-")}`
-		: "Your character is set to be approved by the team";
+			? `${author} on ${approvalDateString?.replaceAll("/", "-")}`
+			: "Your character is set to be approved by the team";
 
 	return (
 		<Modal
 			title={<p>{submissionStatus}</p>}
 			subtitle={submitDateString ? `Last submitted on ${submitDateString}` : undefined}
 			body={
-				<div className="flex flex-col gap-1">
+				<div className="flex flex-col gap-3">
 					{comment && (
 						<blockquote className={`pl-3 border-l-4 border-primary italic`}>
 							{comment}

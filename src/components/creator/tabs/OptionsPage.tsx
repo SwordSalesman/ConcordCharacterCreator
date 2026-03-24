@@ -26,7 +26,6 @@ import {
 import { regionIsCoastal, regionIsNotCoastal } from "../../../utils/selection-helper";
 import { investmentRegionWarning } from "../../../utils/validity-helper";
 import { AccordionSection } from "@/components/common/Accordion/AccordionSection";
-import ContentPane from "@/components/common/ContentPane/ContentPane";
 import Accordion from "@/components/common/Accordion/Accordion";
 import { Chip } from "@/components/common/Chip/Chip";
 import { Button } from "@/components/common/Button/Button";
@@ -34,6 +33,7 @@ import { investments as investmentsData } from "@/data/tables/investments";
 import { regions as regionsData } from "@/data/tables/regions";
 import { crafts as craftsData } from "@/data/tables/crafts";
 import { Realm } from "@/data/tables/realms";
+import { ContentPane } from "@/components/common/ContentPane/ContentPane";
 
 var spellsData = require("../../../data/tables/spells.json");
 var potionsData = require("../../../data/tables/potions.json");
@@ -150,12 +150,12 @@ const genTabContent = (params: {
 		label === "Artisan Crafts"
 			? ["Journeyman", "Expert", "Masterwork"]
 			: subSectionTitle
-			? allItems
-					.filter((i) => filterFunction(i))
-					.map((i) => i[subSectionTitle])
-					.filter((value, index, array) => array.indexOf(value) === index)
-					.sort((a, b) => (a > b ? 1 : -1))
-			: null;
+				? allItems
+						.filter((i) => filterFunction(i))
+						.map((i) => i[subSectionTitle])
+						.filter((value, index, array) => array.indexOf(value) === index)
+						.sort((a, b) => (a > b ? 1 : -1))
+				: null;
 
 	if (sections) {
 		return {
@@ -172,7 +172,7 @@ const genTabContent = (params: {
 								children={allItems
 									.filter((item) => filterFunction(item))
 									.filter((item) =>
-										subSectionTitle ? item[subSectionTitle] === s : true
+										subSectionTitle ? item[subSectionTitle] === s : true,
 									)
 									.map((item) => {
 										let selected =
@@ -241,7 +241,7 @@ const genTabContent = (params: {
 const genSelectedContent = (
 	items: string[],
 	toggleFunction: (item: string) => void,
-	noDisable?: boolean
+	noDisable?: boolean,
 ) => {
 	if (!items.length || items[0] === undefined) {
 		return null;
@@ -287,7 +287,7 @@ export function OptionsPage() {
 	var renderedInvOption = genSelectedContent([invOption!], (i) => toggleItem("invOption", i));
 	var renderedInvRegion = genSelectedContent([invRegion!], (i) => toggleItem("invRegion", i));
 	var renderedInvTerritory = genSelectedContent([invTerritory!], (i) =>
-		toggleItem("invTerritory", i)
+		toggleItem("invTerritory", i),
 	);
 
 	var renderedSpells = genSelectedContent(spells, (i) => toggleItem("spells", i));
@@ -295,7 +295,7 @@ export function OptionsPage() {
 	var renderedStartingItem = genSelectedContent(
 		[startingItem!],
 		(i) => toggleItem("startingItem", i),
-		true
+		true,
 	);
 	var renderedPotions = genSelectedContent(potions, (i) => toggleItem("potions", i));
 	var renderedCeremonies = genSelectedContent(ceremonies, (i) => toggleItem("ceremonies", i));
@@ -427,7 +427,7 @@ export function OptionsPage() {
 	);
 
 	const startingItemOptions = craftsData.filter(
-		(c) => crafts.includes(c.name) && c.rarity === "Journeyman"
+		(c) => crafts.includes(c.name) && c.rarity === "Journeyman",
 	);
 
 	const renderedTabs = [];
@@ -446,7 +446,7 @@ export function OptionsPage() {
 				toggleFunction: (i: string) => toggleItem("spells", i),
 				remainingPicks: remaining.spells,
 				subSectionTitle: "type",
-			})
+			}),
 		);
 	showCrafts &&
 		renderedTabs.push(
@@ -458,7 +458,7 @@ export function OptionsPage() {
 				toggleFunction: (i: string) => toggleItem("crafts", i),
 				remainingPicks: remaining.crafts,
 				subSectionTitle: "rarity",
-			})
+			}),
 		);
 	showCrafts &&
 		renderedTabs.push(
@@ -471,7 +471,7 @@ export function OptionsPage() {
 				remainingPicks: startingItem ? 0 : 1,
 				subSectionTitle: undefined,
 				comment: "If you're a new Artisan, select your starting Journeyman item.",
-			})
+			}),
 		);
 	showPotions &&
 		renderedTabs.push(
@@ -484,7 +484,7 @@ export function OptionsPage() {
 				remainingPicks: remaining.potions,
 				subSectionTitle: "type",
 				realm: realm,
-			})
+			}),
 		);
 	if (showCeremonies) {
 		const loreSkills = skills
@@ -501,14 +501,17 @@ export function OptionsPage() {
 				subSectionTitle: "sphere",
 				realm: realm,
 				filterFunction: (c: any) => loreSkills.includes(c.sphere),
-			})
+			}),
 		);
 	}
 
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row">
 			<ContentPane style={{ flex: 4 }}>
-				<SectionDivider left="Investment" right={!investment && `(1 remaining)`} />
+				<SectionDivider
+					left="Investment"
+					right={!investment ? `(1 remaining)` : undefined}
+				/>
 				<SectionWrapper>
 					{renderedInvestment || renderedInvOption || renderedInvRegion ? (
 						<>
@@ -541,7 +544,9 @@ export function OptionsPage() {
 					<>
 						<SectionDivider
 							left="Spells"
-							right={remaining.spells > 0 && `(${remaining.spells} remaining)`}
+							right={
+								remaining.spells > 0 ? `(${remaining.spells} remaining)` : undefined
+							}
 						/>
 						<SectionWrapper>{renderedSpells}</SectionWrapper>
 					</>
@@ -550,12 +555,14 @@ export function OptionsPage() {
 					<>
 						<SectionDivider
 							left="Crafts"
-							right={remaining.crafts > 0 && `(${remaining.crafts} remaining)`}
+							right={
+								remaining.crafts > 0 ? `(${remaining.crafts} remaining)` : undefined
+							}
 						/>
 						<SectionWrapper>{renderedCrafts}</SectionWrapper>
 						<SectionDivider
 							left="Starting Item"
-							right={!startingItem && `(1 remaining)`}
+							right={!startingItem ? `(1 remaining)` : undefined}
 						/>
 						<SectionWrapper>{renderedStartingItem}</SectionWrapper>
 					</>
@@ -564,7 +571,11 @@ export function OptionsPage() {
 					<>
 						<SectionDivider
 							left="Potions"
-							right={remaining.potions > 0 && `(${remaining.potions} remaining)`}
+							right={
+								remaining.potions > 0
+									? `(${remaining.potions} remaining)`
+									: undefined
+							}
 						/>
 						<SectionWrapper>{renderedPotions}</SectionWrapper>
 					</>
@@ -574,7 +585,9 @@ export function OptionsPage() {
 						<SectionDivider
 							left={"Mastered Ceremonies"}
 							right={
-								remaining.ceremonies > 0 && `(${remaining.ceremonies} remaining)`
+								remaining.ceremonies > 0
+									? `(${remaining.ceremonies} remaining)`
+									: undefined
 							}
 						/>
 						<SectionWrapper>{renderedCeremonies}</SectionWrapper>

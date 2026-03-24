@@ -1,6 +1,6 @@
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { JSX, useState } from "react";
-import { Banner } from "../common/Banner/Banner.js";
+import { Banner } from "../common/Banner/Banner.tsx";
 import { saveUserForm } from "../../hooks/use-firebase";
 import toast from "react-hot-toast";
 import React from "react";
@@ -59,7 +59,7 @@ export function Creator() {
 				loading: "Submitting",
 				success: "Character submitted!",
 				error: (err) => `Submission failed, check network connection. Error code: ${err}`,
-			}
+			},
 		);
 	};
 
@@ -103,7 +103,7 @@ export function Creator() {
 					active ? "border-primary text-strong opacity-100" : "text-text",
 					active
 						? "max-sm:block max-sm:border-0 max-sm:m-0 max-sm:text-[1.1rem] max-sm:h-[45px]"
-						: "max-sm:hidden"
+						: "max-sm:hidden",
 				)}
 			>
 				{tab.name}
@@ -131,20 +131,20 @@ export function Creator() {
 
 	return (
 		<>
-			<Banner />
+			{/* <Banner /> */}
 
 			<div
 				className={cn(
 					"relative overflow-hidden min-w-[300px] w-full flex flex-col items-center m-auto mb-[65px] mt-1",
 					"border-2 border-solid border-secondary rounded-t-xl",
-					"max-sm:rounded-t-none max-sm:h-full max-sm:w-full max-sm:border-0 max-sm:mt-[10px]"
+					"max-sm:rounded-t-none max-sm:h-full max-sm:w-full max-sm:border-0 max-sm:mt-[10px]",
 				)}
 			>
 				{/* Tabs */}
 				<div
 					className={cn(
 						"flex justify-center mb-2 w-full items-center h-10 sm:h-8",
-						`max-sm:${fadeStripStyle} sm:bg-secondary`
+						`max-sm:${fadeStripStyle} sm:bg-secondary`,
 					)}
 				>
 					{renderedTabs}
@@ -158,7 +158,7 @@ export function Creator() {
 					className={cn(
 						"w-full flex justify-between h-16 px-2 pt-2 z-10 max-sm:fixed max-sm:bottom-0",
 						"sm:h-13",
-						"max-sm:border-t max-sm:bg-card"
+						"max-sm:border-t max-sm:bg-card",
 					)}
 				>
 					<Button
@@ -167,7 +167,7 @@ export function Creator() {
 								? () => {
 										handleClickTab(prevTab);
 										setDirection("left");
-								  }
+									}
 								: () => setShowResetModal(true)
 						}
 						className="w-30"
@@ -182,7 +182,7 @@ export function Creator() {
 								? () => {
 										handleClickTab(nextTab);
 										setDirection("right");
-								  }
+									}
 								: handleSubmit
 						}
 						disabled={!nextTab && !valid}

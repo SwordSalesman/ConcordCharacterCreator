@@ -1,5 +1,4 @@
 import Accordion from "../../common/Accordion/Accordion";
-import ContentPane from "../../common/ContentPane/ContentPane";
 import useFormContext from "../../../hooks/use-form-context";
 import SectionDivider from "../../common/SectionDivider/SectionDivider";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
@@ -11,6 +10,7 @@ import { Chip } from "@/components/common/Chip/Chip";
 import { archetypes } from "@/data/tables/archetypes";
 import { graces } from "@/data/tables/graces";
 import { Input } from "@/components/common/Input/Input";
+import { ContentPane } from "@/components/common/ContentPane/ContentPane";
 
 export function BackgroundPage() {
 	const { form, toggleItem, setField } = useFormContext();
@@ -56,7 +56,7 @@ export function BackgroundPage() {
 					key={"No Archetype"}
 				>
 					{"No Archetype"}
-				</Chip>
+				</Chip>,
 			);
 			return <>{newRender}</>;
 		} else {
@@ -89,7 +89,7 @@ export function BackgroundPage() {
 				key={"No Grace"}
 			>
 				{"No Grace"}
-			</Chip>
+			</Chip>,
 		);
 		return <>{newRender}</>;
 		// eslint-disable-next-line react-hooks/exhaustive-deps

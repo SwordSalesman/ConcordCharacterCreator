@@ -18,7 +18,7 @@ import useFormContext from "@/hooks/use-form-context";
 import { Button } from "../common/Button/Button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { contentNarrow } from "./ContentWrapper";
+import { contentNarrow, contentWide } from "./ContentWrapper";
 import { getApprovalStatus } from "@/utils/approval-helper";
 import LoginModal from "../common/Modal/LoginModal";
 import { ApprovalModal } from "../common/Modal/ApprovalModal";
@@ -85,9 +85,9 @@ export function Header({
 
 	return (
 		<>
-			<div className={"h-12 w-full border-b z-100"}>
+			<div className={"h-12 w-full z-100"}>
 				<div
-					className={cn("flex items-center justify-between h-full m-auto", contentNarrow)}
+					className={"flex items-center justify-between h-full m-auto px-3" + contentWide}
 				>
 					{process.env.NEXT_PUBLIC_DEBUG_TEXT === "DevMode" && (
 						<div className="absolute top-2 left-0.5 pointer-events-none select-none opacity-40 text-sm">
