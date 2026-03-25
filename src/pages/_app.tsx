@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { AppProps } from "next/app";
-import { PageMeta } from "@/components/PageMeta";
+import { PageMeta } from "@/components/layout/PageMeta";
 
 import { Header } from "@/components/layout/Header";
 import UserContextProvider from "@/context/userContext";

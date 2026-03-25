@@ -8,7 +8,7 @@ import { getNextSkill, getSkillsData } from "@/utils/data-helper";
 import { skills as baseSkills, Skill } from "@/data/tables/skills";
 import { useMemo } from "react";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
-import { SectionWrapper } from "../SectionDivider/SectionDivider.style";
+import { SectionWrapper } from "../SectionDivider/SectionDivider";
 
 function SkillItem({
 	skill,
@@ -101,6 +101,7 @@ export default function SkillsPage() {
 								skill={skill}
 								selected={selected}
 								valid={valid}
+								key={skill.name}
 								reason={reason}
 								onClick={() => handleClickSkill(skill)}
 							/>

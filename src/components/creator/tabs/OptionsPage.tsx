@@ -1,6 +1,6 @@
 import useFormContext from "../../../hooks/use-form-context";
 import SectionDivider from "../SectionDivider/SectionDivider";
-import { SectionLine, SectionWrapper } from "../SectionDivider/SectionDivider.style";
+import { SectionLine, SectionWrapper } from "../SectionDivider/SectionDivider";
 import React, { useMemo } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import {
@@ -34,10 +34,9 @@ import { regions as regionsData } from "@/data/tables/regions";
 import { crafts as craftsData } from "@/data/tables/crafts";
 import { Realm } from "@/data/tables/realms";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
-
-var spellsData = require("../../../data/tables/spells.json");
-var potionsData = require("../../../data/tables/potions.json");
-var ceremoniesData = require("../../../data/tables/ceremonies.json");
+import { ceremonies as ceremoniesData } from "@/data/tables/ceremonies";
+import { potions as potionsData } from "@/data/tables/potions";
+import { spells as spellsData } from "@/data/tables/spells";
 
 const chipIcons = true;
 

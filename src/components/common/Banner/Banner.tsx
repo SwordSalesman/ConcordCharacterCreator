@@ -73,10 +73,10 @@ function BannerInternal({
 	if (!show) return <></>;
 
 	return (
-		<div className="w-full flex justify-center">
+		<div className="w-full flex justify-center bg-red-transparent">
 			<div
 				className={cn(
-					"mt-[15px] text-white rounded-[12px] relative text-[0.9em] max-w-[720px] overflow-hidden transition-all duration-[400ms] animate-banner-in max-[600px]:mt-[10px]",
+					"mt-[15px] mb-1 text-white rounded-[12px] relative text-[0.9em] max-w-[720px] overflow-hidden transition-all duration-[400ms] animate-banner-in",
 					expanded ? "h-[120px] w-[95%] px-6 py-2.5" : "h-[26px] w-[190px] p-3",
 				)}
 				style={{ background: `var(--banner-${type})` }}

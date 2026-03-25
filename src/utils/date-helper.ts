@@ -1,4 +1,4 @@
-import gameData from "../data/tables/games.json";
+import { games as gamesData } from "@/data/tables/games";
 
 export function getCurrentDate(): string {
 	const date = new Date().toISOString(); // YYYY-MM-DDTHH:mm:SS.xxxx
@@ -39,10 +39,10 @@ interface Game {
 export function getPrevAndNextGame() {
 	const today = getCurrentDate();
 	let games: { prev: Game | undefined; next: Game } | null = null;
-	gameData.forEach((game, index) => {
+	gamesData.forEach((game, index) => {
 		if (game.date > today && !games) {
 			games = {
-				prev: gameData.at(index - 1),
+				prev: gamesData.at(index - 1),
 				next: game,
 			};
 		}

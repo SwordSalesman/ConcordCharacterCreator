@@ -1,7 +1,7 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
 import SectionDivider from "../SectionDivider/SectionDivider";
-import { SectionWrapper } from "../SectionDivider/SectionDivider.style";
+import { SectionWrapper } from "../SectionDivider/SectionDivider";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { useEffect, useMemo } from "react";
 import { getRealmData } from "@/utils/data-helper";

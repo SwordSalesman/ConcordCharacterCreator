@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { getCharacterList, getApprovalList } from "../../hooks/use-firebase";
 import useUserContext from "../../hooks/use-user-context";
 import { APPROVED, DENIED, PATH_HOME, PENDING } from "../../utils/constants";
-import CharacterList from "./characterList/CharacterList";
+import CharacterList from "./CharacterList";
 import ListFilter from "./ListFilter";
 import CharacterCard from "./CharacterCard";
 import ApprovalPanel from "./ApprovalPanel";
@@ -172,7 +172,7 @@ export function ApprovalsPage() {
 	if (!isAdmin) return null;
 
 	return (
-		<div className="mx-auto mt-2.5 flex flex-row h-[90vh] min-h-[600px] max-w-[1100px] w-[95%] font-[Arial,Helvetica,sans-serif]">
+		<div className="mx-auto mt-2.5 flex flex-row h-[90vh] min-h-[600px] max-w-[1500px] w-[95%] font-[Arial,Helvetica,sans-serif]">
 			<div className="flex-1 flex flex-col items-center justify-center gap-1.5 h-full">
 				<CSVLink
 					data={characters}

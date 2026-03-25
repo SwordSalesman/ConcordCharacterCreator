@@ -27,6 +27,7 @@ Two React contexts wrap the entire app (in `src/pages/_app.tsx`):
 ### Character Creator Flow
 
 `src/components/creator/Creator.tsx` is the main shell — a 6-tab wizard:
+
 1. **Intro** → **Realm** → **Skills** → **Options** → **Background** → **Review**
 
 Tab content lives in `src/components/creator/tabs/`. Navigation (prev/next) and submission happen in `Creator.tsx`. The Review page calls `saveUserForm()` from `src/hooks/use-firebase.ts` to persist to Firestore.
@@ -34,6 +35,7 @@ Tab content lives in `src/components/creator/tabs/`. Navigation (prev/next) and 
 ### Firebase Integration
 
 All Firebase calls go through `src/hooks/use-firebase.ts`. Key operations:
+
 - `getUserFormAndApproval()` — fetches the user's saved character + approval record
 - `saveUserForm()` — writes the character form to Firestore
 - Auth: Google sign-in and email/password, wrapped in `userContext.tsx`
@@ -61,12 +63,12 @@ UI primitives come from **Radix UI** (dialog, navigation menu) and a local **Sha
 
 ### User Roles
 
-| Value | Role |
-|-------|------|
-| 0 | Guest (unauthenticated) |
-| 1 | Player |
-| 2 | Viewer |
-| 3 | Editor |
-| 4 | Admin |
+| Value | Role                    |
+| ----- | ----------------------- |
+| 0     | Guest (unauthenticated) |
+| 1     | Player                  |
+| 2     | Viewer                  |
+| 3     | Editor                  |
+| 4     | Admin                   |
 
 Role is stored in Firestore on the user record and read into `UserContext`.

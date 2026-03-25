@@ -1,6 +1,6 @@
-import { PENDING } from "../../../utils/constants";
-import { prettifyDate } from "../../../utils/date-helper";
-import { Character } from "../types";
+import { PENDING } from "../../utils/constants";
+import { prettifyDate } from "../../utils/date-helper";
+import { Character } from "./types";
 import { cn } from "@/lib/utils";
 
 interface Props {
