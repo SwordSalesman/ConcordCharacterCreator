@@ -150,7 +150,7 @@ export function Creator() {
 					{renderedTabs}
 				</div>
 				{/* Content */}
-				<div className="relative flex justify-center text-center items-start min-h-[300px] mb-[40px] px-3 sm:min-h-[500px]">
+				<div className="relative flex justify-center text-center items-start min-h-[300px] mb-[40px] px-3 sm:min-h-[500px] w-full">
 					{renderedContent}
 				</div>
 				{/* Navigation Buttons */}

@@ -134,7 +134,7 @@ export default function SkillsPage() {
 	const warning = xpWarning(remaining.xp);
 
 	return (
-		<div className="flex gap-2 flex-col sm:flex-row">
+		<div className="flex gap-2 flex-col sm:flex-row w-full">
 			<ContentPane style={{ flex: 4 }}>
 				<SectionDivider left="Remaining XP" right={String(remaining.xp)} />
 				{/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
@@ -148,6 +148,7 @@ export default function SkillsPage() {
 				)}
 			</ContentPane>
 			<ContentPane style={{ flex: 5 }}>
+				{/* to do- investigate why the accordions keep shrinking horizontally */}
 				<Accordion items={renderedTabs} />
 			</ContentPane>
 		</div>

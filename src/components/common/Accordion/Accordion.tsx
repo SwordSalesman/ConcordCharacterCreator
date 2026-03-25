@@ -18,7 +18,7 @@ function Accordion({ items }: { items: AccordionItem[] }) {
 			type="multiple"
 			value={openItems}
 			onValueChange={setOpenItems}
-			className="flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none]"
+			className="flex flex-col w-full [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none]"
 		>
 			{items.map((item, index) => {
 				const value = String(index);

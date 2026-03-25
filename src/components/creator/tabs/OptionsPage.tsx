@@ -378,6 +378,7 @@ export function OptionsPage() {
 				title="Investment Region"
 				link="Map_of_Esterra"
 				warning={investmentRegionWarning(realm, invRegion)}
+				align="left"
 			>
 				{regionsData.map((region) => {
 					let selected = invRegion === region.name;
@@ -510,7 +511,7 @@ export function OptionsPage() {
 	}
 
 	return (
-		<div className="flex gap-2 flex-col sm:flex-row">
+		<div className="flex gap-2 flex-col sm:flex-row w-full">
 			<ContentPane className="flex-4">
 				<div className="flex flex-col flex-4 gap-3">
 					<div>
