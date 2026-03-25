@@ -1,6 +1,7 @@
 import { Skill, skills } from "@/data/tables/skills";
 import { realms } from "@/data/tables/realms";
 import { regions } from "@/data/tables/regions";
+import React, { ReactNode } from "react";
 
 // ########## FORM DATA ##########
 
@@ -32,6 +33,17 @@ export function getArrayFromSummary(s: string): string[] {
 		}
 	});
 	return allItems;
+}
+
+export function stringToNode(s: string): ReactNode {
+	const lines = s.split("\n");
+	const node = lines.map((line, index) => (
+		<React.Fragment key={index}>
+			{line}
+			<br />
+		</React.Fragment>
+	));
+	return node;
 }
 
 // ########## SKILLS ##########

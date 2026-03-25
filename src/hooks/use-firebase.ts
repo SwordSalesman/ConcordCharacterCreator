@@ -123,7 +123,7 @@ const logout = async () => {
 const saveUserForm = async (
 	form: Record<string, any>,
 	setSubmissionDate: (date: string) => void,
-	name: string
+	name: string,
 ) => {
 	const date = getCurrentDate();
 	if (!auth.currentUser) throw new Error("No authenticated user");
@@ -138,7 +138,17 @@ const saveUserForm = async (
 	return fullForm;
 };
 
-const saveApproval = async (name: string, comment: string, status: string, subjectUid: string) => {
+const saveApproval = async ({
+	name,
+	comment,
+	status,
+	subjectUid,
+}: {
+	name: string;
+	comment: string;
+	status: string;
+	subjectUid: string;
+}) => {
 	const date = getCurrentDate();
 	let approval = {
 		author: name,

@@ -1,6 +1,6 @@
 import useFormContext from "../../../hooks/use-form-context";
 import SectionDivider from "../SectionDivider/SectionDivider";
-import { SectionLine, SectionWrapper } from "../SectionDivider/SectionDivider";
+import { SectionWrapper } from "../SectionDivider/SectionDivider";
 import React, { useMemo } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import {
@@ -25,7 +25,10 @@ import {
 } from "react-icons/gi";
 import { regionIsCoastal, regionIsNotCoastal } from "../../../utils/selection-helper";
 import { investmentRegionWarning } from "../../../utils/validity-helper";
-import { AccordionSection } from "@/components/common/Accordion/AccordionSection";
+import {
+	AccordionSection,
+	AccordionSectionSkeleton,
+} from "@/components/common/Accordion/AccordionSection";
 import Accordion from "@/components/common/Accordion/Accordion";
 import { Chip } from "@/components/common/Chip/Chip";
 import { Button } from "@/components/common/Button/Button";
@@ -100,7 +103,7 @@ function getInactive(params: any): { inactive: boolean; inactiveReason: string |
 	if (item.realm && item.realm !== realm) {
 		return {
 			inactive: true,
-			inactiveReason: `Your realm cannot select ${item.name}`,
+			inactiveReason: `Heroes from your realm cannot select ${item.name}`,
 		};
 	}
 	if (
@@ -168,6 +171,7 @@ const genTabContent = (params: {
 							<AccordionSection
 								title={s}
 								key={s}
+								align="left"
 								children={allItems
 									.filter((item) => filterFunction(item))
 									.filter((item) =>
@@ -213,7 +217,7 @@ const genTabContent = (params: {
 		content: (
 			<div className="flex w-full flex-col gap-3 py-2">
 				{comment ? <i>{comment}</i> : null}
-				<AccordionSection>
+				<AccordionSectionSkeleton>
 					{allItems
 						.filter((item) => filterFunction(item))
 						.map((item) => {
@@ -230,7 +234,7 @@ const genTabContent = (params: {
 								</Chip>
 							);
 						})}
-				</AccordionSection>
+				</AccordionSectionSkeleton>
 			</div>
 		),
 		link: link,
@@ -303,7 +307,7 @@ export function OptionsPage() {
 
 	const investmentTabContent = (
 		<div className="flex w-full flex-col gap-3 py-2">
-			<AccordionSection title="Investment Type" link="Investments">
+			<AccordionSection title="Investment Type" link="Investments" align="left">
 				{investmentsData.map((item) => {
 					let selected = investment === item.name;
 
@@ -328,8 +332,8 @@ export function OptionsPage() {
 					);
 				})}
 			</AccordionSection>
-			<AccordionSection title="Investment Tier">
-				<div className="flex justify-center">
+			<AccordionSection title="Investment Tier" align="left">
+				<div className="flex justify-center items-center gap-2">
 					<Button
 						// secondary
 						onClick={() => {
@@ -340,7 +344,7 @@ export function OptionsPage() {
 					>
 						<BiMinus />
 					</Button>
-					<div>{invTier}</div>
+					<div className="text-xl">{invTier}</div>
 					<Button
 						// secondary
 						onClick={() => {
@@ -354,7 +358,7 @@ export function OptionsPage() {
 				</div>
 			</AccordionSection>
 			{investmentOptions.length > 0 && (
-				<AccordionSection title="Investment Option">
+				<AccordionSection title="Investment Option" align="left">
 					{investmentOptions.map((item) => {
 						let selected = invOption === item.name;
 						return (
@@ -401,6 +405,7 @@ export function OptionsPage() {
 			<AccordionSection
 				title="Investment Territory"
 				link={regionsData.find((region) => region.name === invRegion)?.link}
+				align="left"
 			>
 				{invRegion ? (
 					regionsData
@@ -506,94 +511,104 @@ export function OptionsPage() {
 
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row">
-			<ContentPane style={{ flex: 4 }}>
-				<SectionDivider
-					left="Investment"
-					right={!investment ? `(1 remaining)` : undefined}
-				/>
-				<SectionWrapper>
-					{renderedInvestment || renderedInvOption || renderedInvRegion ? (
-						<>
-							{renderedInvestment && (
-								<SectionLine>Type: {renderedInvestment}</SectionLine>
-							)}
-							{renderedInvOption && (
-								<SectionLine>Variant: {renderedInvOption}</SectionLine>
-							)}
-							{renderedInvRegion && (
-								<SectionLine>Region: {renderedInvRegion}</SectionLine>
-							)}
-							{renderedInvTerritory && (
-								<SectionLine>Territory: {renderedInvTerritory}</SectionLine>
-							)}
-						</>
-					) : (
-						<div
-							style={{
-								opacity: 0.7,
-								fontStyle: "italic",
-								padding: "0 20px",
-							}}
-						>
-							{"Select your Investment, as well as any other options you may need."}
+			<ContentPane className="flex-4">
+				<div className="flex flex-col flex-4 gap-3">
+					<div>
+						<SectionDivider
+							left="Investment"
+							right={!investment ? `(1 remaining)` : undefined}
+						/>
+						{renderedInvestment || renderedInvOption || renderedInvRegion ? (
+							<>
+								{renderedInvestment && (
+									<SectionWrapper>Type: {renderedInvestment}</SectionWrapper>
+								)}
+								{renderedInvOption && (
+									<SectionWrapper>Variant: {renderedInvOption}</SectionWrapper>
+								)}
+								{renderedInvRegion && (
+									<SectionWrapper>Region: {renderedInvRegion}</SectionWrapper>
+								)}
+								{renderedInvTerritory && (
+									<SectionWrapper>
+										Territory: {renderedInvTerritory}
+									</SectionWrapper>
+								)}
+							</>
+						) : (
+							<div
+								style={{
+									opacity: 0.7,
+									fontStyle: "italic",
+									padding: "0 20px",
+								}}
+							>
+								{
+									"Select your Investment, as well as any other options you may need."
+								}
+							</div>
+						)}
+					</div>
+					{showSpells && (
+						<div>
+							<SectionDivider
+								left="Spells"
+								right={
+									remaining.spells > 0
+										? `(${remaining.spells} remaining)`
+										: undefined
+								}
+							/>
+							<SectionWrapper>{renderedSpells}</SectionWrapper>
 						</div>
 					)}
-				</SectionWrapper>
-				{showSpells && (
-					<>
-						<SectionDivider
-							left="Spells"
-							right={
-								remaining.spells > 0 ? `(${remaining.spells} remaining)` : undefined
-							}
-						/>
-						<SectionWrapper>{renderedSpells}</SectionWrapper>
-					</>
-				)}
-				{showCrafts && (
-					<>
-						<SectionDivider
-							left="Crafts"
-							right={
-								remaining.crafts > 0 ? `(${remaining.crafts} remaining)` : undefined
-							}
-						/>
-						<SectionWrapper>{renderedCrafts}</SectionWrapper>
-						<SectionDivider
-							left="Starting Item"
-							right={!startingItem ? `(1 remaining)` : undefined}
-						/>
-						<SectionWrapper>{renderedStartingItem}</SectionWrapper>
-					</>
-				)}
-				{showPotions && (
-					<>
-						<SectionDivider
-							left="Potions"
-							right={
-								remaining.potions > 0
-									? `(${remaining.potions} remaining)`
-									: undefined
-							}
-						/>
-						<SectionWrapper>{renderedPotions}</SectionWrapper>
-					</>
-				)}
-				{showCeremonies && (
-					<>
-						<SectionDivider
-							left={"Mastered Ceremonies"}
-							right={
-								remaining.ceremonies > 0
-									? `(${remaining.ceremonies} remaining)`
-									: undefined
-							}
-						/>
-						<SectionWrapper>{renderedCeremonies}</SectionWrapper>
-					</>
-				)}
+					{showCrafts && (
+						<div>
+							<SectionDivider
+								left="Crafts"
+								right={
+									remaining.crafts > 0
+										? `(${remaining.crafts} remaining)`
+										: undefined
+								}
+							/>
+							<SectionWrapper>{renderedCrafts}</SectionWrapper>
+							<SectionDivider
+								left="Starting Item"
+								right={!startingItem ? `(1 remaining)` : undefined}
+							/>
+							<SectionWrapper>{renderedStartingItem}</SectionWrapper>
+						</div>
+					)}
+					{showPotions && (
+						<div>
+							<SectionDivider
+								left="Potions"
+								right={
+									remaining.potions > 0
+										? `(${remaining.potions} remaining)`
+										: undefined
+								}
+							/>
+							<SectionWrapper>{renderedPotions}</SectionWrapper>
+						</div>
+					)}
+					{showCeremonies && (
+						<div>
+							<SectionDivider
+								left={"Mastered Ceremonies"}
+								right={
+									remaining.ceremonies > 0
+										? `(${remaining.ceremonies} remaining)`
+										: undefined
+								}
+							/>
+							<SectionWrapper>{renderedCeremonies}</SectionWrapper>
+						</div>
+					)}
+				</div>
 			</ContentPane>
-			<ContentPane style={{ flex: 5 }}>
+			<ContentPane className="flex-5">
 				<Accordion items={renderedTabs}></Accordion>
 			</ContentPane>
 		</div>

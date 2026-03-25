@@ -42,7 +42,7 @@ All Firebase calls go through `src/hooks/use-firebase.ts`. Key operations:
 
 ### Game Data
 
-Static game data (skills, realms, archetypes, crafts, etc.) lives in `src/data/tables/` as TypeScript files. Lookup helpers are in `src/utils/data-helper.ts`. This data is never fetched — it's bundled at build time.
+Static game data (skills, realms, archetypes, crafts, etc.) lives in `src/data/tables/` as TypeScript files. Lookup helpers are in `src/utils/data-helper.tsx`. This data is never fetched — it's bundled at build time.
 
 ### Styling Approach
 

@@ -14,7 +14,7 @@ import { fadeStripStyle } from "@/styles/Global.ts";
 import RealmPage from "./tabs/RealmPage.tsx";
 import Image from "next/image";
 import SkillsPage from "./tabs/SkillsPage.tsx";
-import { getRealmData } from "@/utils/data-helper.ts";
+import { getRealmData } from "@/utils/data-helper.tsx";
 import useFormContext from "@/hooks/use-form-context.ts";
 import { OptionsPage } from "./tabs/OptionsPage.tsx";
 import { BackgroundPage } from "./tabs/BackgroundPage.tsx";
@@ -115,16 +115,15 @@ export function Creator() {
 	const renderedContent = tabs.map((tab, index) => {
 		return (
 			activeTab === tab && (
-				<div className="p-[10px]" key={index}>
-					<div
-						className={`h-full w-full relative flex justify-around flex-row max-sm:flex-col ${
-							direction === "left"
-								? "animate-page-slide-in-left"
-								: "animate-page-slide-in-right"
-						}`}
-					>
-						{tab.content}
-					</div>
+				<div
+					key={index}
+					className={`h-full w-full relative flex justify-around flex-row max-sm:flex-col ${
+						direction === "left"
+							? "animate-page-slide-in-left"
+							: "animate-page-slide-in-right"
+					}`}
+				>
+					{tab.content}
 				</div>
 			)
 		);
@@ -132,7 +131,7 @@ export function Creator() {
 
 	return (
 		<>
-			<Banner />
+			{/* <Banner /> */}
 
 			<div
 				className={cn(
@@ -151,16 +150,14 @@ export function Creator() {
 					{renderedTabs}
 				</div>
 				{/* Content */}
-				<div className="relative flex justify-center text-center items-start min-h-[300px] px-3 mb-[40px] sm:min-h-[500px]">
+				<div className="relative flex justify-center text-center items-start min-h-[300px] mb-[40px] px-3 sm:min-h-[500px]">
 					{renderedContent}
 				</div>
 				{/* Navigation Buttons */}
 				<div
-					className={cn(
-						"w-full flex justify-between h-16 px-2 pt-2 z-10 max-sm:fixed max-sm:bottom-0",
-						"sm:h-13",
-						"max-sm:border-t max-sm:bg-card",
-					)}
+					className={
+						"w-full flex justify-between h-16 px-2 pt-2 z-10 max-sm:fixed max-sm:bottom-0 sm:h-13 max-sm:border-t max-sm:bg-card"
+					}
 				>
 					<Button
 						onClick={
@@ -201,7 +198,7 @@ export function Creator() {
 					<Image
 						src={realmImage}
 						className={`sm:absolute fixed w-[500px] z-[-1] pointer-events-none bottom-[-80px] left-[-80px]
-							select-none blur-[2px] opacity-20 dark:opacity-40 animate-realm-logo-in`}
+							select-none blur-[2px] opacity-15 dark:opacity-40 animate-realm-logo-in`}
 						alt="Realm Background"
 					/>
 				) : null}

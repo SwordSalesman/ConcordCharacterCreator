@@ -2,7 +2,7 @@ import useFormContext from "../../../hooks/use-form-context";
 import { xpWarning } from "../../../utils/validity-helper";
 import { graces } from "@/data/tables/graces";
 import { Warning } from "@/components/common/Accordion/AccordionSection";
-import { Input } from "@/components/common/Input/Input";
+import { Input, TextArea } from "@/components/common/Input/Input";
 import { getRealmData, getSummaryFromArray } from "@/utils/data-helper";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 
@@ -66,9 +66,9 @@ export function ReviewPage() {
 	const fullGrace = grace ? graces.find((g) => g.name === grace) : undefined;
 
 	return (
-		<div className="flex flex-col items-center gap-[60px] w-full px-[10%]">
+		<div className="flex flex-col items-center gap-[60px] w-[450px] max-w-[95vw]">
 			<div className="flex justify-center leading-[1.1rem] w-full min-w-[300px] min-[600px]:min-w-[400px]">
-				<ContentPane mobileshow>
+				<ContentPane>
 					{!valid ? invalidWarning : null}
 					{xpWarningText && <Warning>{xpWarningText}</Warning>}
 					<div className="flex flex-col items-center mt-2 gap-2 mb-6">
@@ -120,8 +120,7 @@ export function ReviewPage() {
 					</div>
 					<div className="rounded-[12px] px-2 [&_div_textarea]:border [&_div_textarea]:border-border [&_div_textarea]:border-solid">
 						<div className="flex flex-col gap-2 w-full my-4">
-							<Input
-								type="text"
+							<TextArea
 								value={comments}
 								onChange={(e) => setField("comments", e.target.value)}
 								title={"Final submission comments"}

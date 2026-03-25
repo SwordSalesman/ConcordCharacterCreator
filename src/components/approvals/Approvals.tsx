@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { getCharacterList, getApprovalList } from "../../hooks/use-firebase";
 import useUserContext from "../../hooks/use-user-context";
-import { APPROVED, DENIED, PATH_HOME, PENDING } from "../../utils/constants";
+import { APPROVED, ARCHIVED, DENIED, PATH_HOME, PENDING } from "../../utils/constants";
 import CharacterList from "./CharacterList";
 import ListFilter from "./ListFilter";
 import CharacterCard from "./CharacterCard";
@@ -14,11 +14,12 @@ import { getCurrentDate } from "../../utils/date-helper";
 import { handleMigrateInvestments } from "../../utils/migration-helper";
 import { ApprovalRecord, Character } from "./types";
 
-interface Counts {
+export interface Counts {
 	pending: number;
 	approved: number;
 	denied: number;
 	total: number;
+	archived: number;
 }
 
 function removeAllNewlines(input?: string): string {
@@ -38,8 +39,10 @@ export function ApprovalsPage() {
 		approved: 0,
 		denied: 0,
 		total: 0,
+		archived: 0,
 	});
 	const isDev = process.env.NEXT_PUBLIC_DEBUG_TEXT === "DevMode";
+	const [csvData, setCsvData] = useState<any[]>([]);
 
 	useEffect(() => {
 		if (!isAdmin) router.replace(PATH_HOME);
@@ -55,23 +58,27 @@ export function ApprovalsPage() {
 					const approval = apprs.find((a: any) => a.id === c.id);
 					return {
 						...c,
-						backstory: removeAllNewlines(c.backstory),
-						oocGoals: removeAllNewlines(c.oocGoals),
-						icGoals: removeAllNewlines(c.icGoals),
-						invDetails: removeAllNewlines(c.invDetails),
-						comments: removeAllNewlines(c.comments),
-						heroName: removeAllNewlines(c.heroName),
-						player: removeAllNewlines(c.player),
-						approval: approval
-							? {
-									...approval,
-									comment: removeAllNewlines(approval?.comment),
-								}
-							: undefined,
+						approval: approval,
 					};
 				});
 				setCharacters(newChars);
 				calcCounts(newChars);
+
+				const newCsvData = newChars.map((c) => ({
+					...c,
+					backstory: removeAllNewlines(c.backstory),
+					invDetails: removeAllNewlines(c.invDetails),
+					icGoals: removeAllNewlines(c.icGoals),
+					oocGoals: removeAllNewlines(c.oocGoals),
+					approval: {
+						...c.approval,
+						comment: removeAllNewlines(c.approval?.comment),
+					},
+				}));
+				setCsvData(newCsvData);
+
+				console.log("Fetched characters and approvals:", newChars);
+				console.log("CSV data preview:", newCsvData);
 			}
 		}
 		if (isAdmin) {
@@ -90,12 +97,16 @@ export function ApprovalsPage() {
 		}).length;
 		const approvedCount = chars.filter((c) => c.approval?.status === APPROVED).length;
 		const deniedCount = chars.filter((c) => c.approval?.status === DENIED).length;
-		setCounts({
+		const archivedCount = chars.filter((c) => c.approval?.status === ARCHIVED).length;
+		const newCounts: Counts = {
 			pending: pendingCount,
 			approved: approvedCount,
 			denied: deniedCount,
-			total: chars.length,
-		});
+			archived: archivedCount,
+			total: chars.length - archivedCount,
+		};
+		console.debug("Character counts:", newCounts);
+		setCounts(newCounts);
 	}
 
 	function handleApproval(approval: ApprovalRecord) {
@@ -116,7 +127,7 @@ export function ApprovalsPage() {
 
 	const sortedFilteredCharacters = characters
 		.filter((c) => {
-			if (!filter) return true;
+			if (!filter && c.approval?.status !== ARCHIVED) return true;
 			if (
 				filter === PENDING &&
 				(!c.approval?.status || c.date.localeCompare(c.approval?.date) > 0)
@@ -161,32 +172,24 @@ export function ApprovalsPage() {
 		{ label: "OOC Goals", key: "oocGoals" },
 	];
 
-	async function handleMigrateInvestmentsButton() {
-		const confirmMigration = window.confirm("Are you sure you want to migrate investments?");
-		if (confirmMigration) {
-			const chars = await getCharacterList();
-			handleMigrateInvestments(chars);
-		}
-	}
-
 	if (!isAdmin) return null;
 
 	return (
-		<div className="mx-auto mt-2.5 flex flex-row h-[90vh] min-h-[600px] max-w-[1500px] w-[95%] font-[Arial,Helvetica,sans-serif]">
+		<div className="mx-auto mt-2 flex flex-row gap-2 h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,Helvetica,sans-serif]">
 			<div className="flex-1 flex flex-col items-center justify-center gap-1.5 h-full">
 				<CSVLink
-					data={characters}
+					data={csvData}
 					filename={`character-export-${now}.csv`}
 					headers={csvHeaders}
 				>
 					<Button variant="outline" size="sm">
-						<div className="flex gap-1 mx-1">
+						<div className="flex items-center gap-2 mx-1">
 							<p>Export All</p>
 							<BiExport />
 						</div>
 					</Button>
 				</CSVLink>
-				<div className="border border-border mr-2.5 rounded-tl-[10px] rounded-tr-[10px] flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+				<div className="border border-border rounded-tl-[10px] rounded-tr-[10px] flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 					<ListFilter
 						filter={filter}
 						selectFilter={handleSelectFilter}
@@ -201,7 +204,7 @@ export function ApprovalsPage() {
 					/>
 				</div>
 			</div>
-			<div className="flex-[2] flex flex-col justify-between">
+			<div className="flex-2 flex flex-col justify-between max-h-[100%] overflow-hidden">
 				<CharacterCard character={selectedChar} />
 				<ApprovalPanel character={selectedChar} handleApproval={handleApproval} />
 			</div>

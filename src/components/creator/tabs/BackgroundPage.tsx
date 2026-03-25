@@ -9,7 +9,7 @@ import { Chip } from "@/components/common/Chip/Chip";
 
 import { archetypes } from "@/data/tables/archetypes";
 import { graces } from "@/data/tables/graces";
-import { Input } from "@/components/common/Input/Input";
+import { Input, TextArea } from "@/components/common/Input/Input";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 
 export function BackgroundPage() {
@@ -154,16 +154,14 @@ export function BackgroundPage() {
 			label: "Objectives",
 			content: (
 				<div className="flex flex-col gap-2 w-full my-4">
-					<Input
-						type="text"
+					<TextArea
 						value={icGoals}
 						onChange={(e) => setField("icGoals", e.target.value)}
 						label="In Character Goals"
 						placeholder="3000 character limit"
 						style={{ minHeight: "3em" }}
 					/>
-					<Input
-						type="text"
+					<TextArea
 						value={oocGoals}
 						onChange={(e) => setField("oocGoals", e.target.value)}
 						label="Out of Character Goals"
@@ -177,16 +175,14 @@ export function BackgroundPage() {
 			label: "Backstory",
 			content: (
 				<div className="flex flex-col gap-2 w-full my-4">
-					<Input
-						type="text"
+					<TextArea
 						value={backstory}
 						onChange={(e) => setField("backstory", e.target.value)}
 						label="Character Backstory"
 						placeholder="3000 character limit"
 						style={{ minHeight: "3em" }}
 					/>
-					<Input
-						type="text"
+					<TextArea
 						value={invDetails}
 						onChange={(e) => setField("invDetails", e.target.value)}
 						label="Investment Description"
@@ -199,10 +195,9 @@ export function BackgroundPage() {
 	];
 
 	return (
-		<div className="sm:max-w-[450px]">
-			<ContentPane style={{ width: "100%" }}>
-				<SectionDivider left="Tell us about yourself"></SectionDivider>
-				<SectionWrapper />
+		<div className="flex gap-2 flex-col sm:flex-row w-[450px] max-w-[95vw]">
+			<ContentPane style={{ flex: 1 }}>
+				<SectionDivider left="Tell us about your Hero"></SectionDivider>
 				<Accordion items={tabs}></Accordion>
 			</ContentPane>
 		</div>

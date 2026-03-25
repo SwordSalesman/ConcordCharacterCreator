@@ -8,3 +8,4 @@ export const PATH_WIKI = "https://wiki.concordlarp.com/index.php/";
 export const APPROVED = "Approved";
 export const DENIED = "Denied";
 export const PENDING = "Pending";
+export const ARCHIVED = "Archived";

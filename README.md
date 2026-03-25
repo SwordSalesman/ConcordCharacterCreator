@@ -2,28 +2,35 @@
 
 ### To Do
 
-RIGHT NOW
+Completed Work
 
--
+Approvals
 
-New Features
+- Ability to remove hero submissions in approvals window. Delete/Archive button.
+- Fix the full stop paragraph thing in approvals
+  Creator
+- Transition animations for accordions
+  Technical
+- Port from create-react-app to next.js
+- Migrate from styled components to tailwind
 
--   Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
--   EMAILS (requires a whole rebuild fml)
-    -   automatic confirmation emails when a player submits their character
-    -   optional automatic email when a character is approved/denied/generally reviewed
--   Ability to remove hero submissions in approvals window. Delete/Archive button.
--   Make the alert banner adjustable without a deploy, make it read from firebase probably.
--   Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
--   Warning message for archetype invalid skill
-    -   Warning message summary at the "submission notes" section to summarise all warnings
--   'Epithets' and 'True Name' fields. Name (Your hero's public name without following titles, may be published in Winds of the Worlds). Epithets - optional (Titles or monikers. E.g. the quoted text is all ephithets: Sir Dennis Braggard "Last of His Name, Feller of Beasts"). True Name - optional (If your public name is a fake, put your real one here. This won't be published in Winds of the World unless there's a good reason.)
+Still To Do
+
+- Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
+- EMAILS (requires a whole rebuild fml)
+    - automatic confirmation emails when a player submits their character
+    - optional automatic email when a character is approved/denied/generally reviewed
+- Make the alert banner adjustable without a deploy, make it read from firebase probably.
+- Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
+    - New submission widget for groups, just like the character creator
+    - Approvals window for groups also
+    - When a group is approved, it will appear in the list of groups that players can select from a dropdown
+- 'Epithets' and 'True Name' fields. Name (Your hero's public name without following titles, may be published in Winds of the Worlds). Epithets - optional (Titles or monikers. E.g. the quoted text is all ephithets: Sir Dennis Braggard "Last of His Name, Feller of Beasts"). True Name - optional (If your public name is a fake, put your real one here. This won't be published in Winds of the World unless there's a good reason.)
 
 Known Bugs
 
--   Fix the divine lore per sphere giving known ceremonies thing, you know the one.
--   Fix the full stop paragraph thing in approvals
--   When a player submits a character after they've been approved, their approval still reads 'approved'. This is treated as 'pending' by the approval window, need to make sure this is reflected in the exported sheet.
+- Fix the divine lore per sphere giving known ceremonies thing, you know the one.
+- When a player submits a character after they've been approved, their approval still reads 'approved'. This is treated as 'pending' by the approval window, need to make sure this is reflected in the exported sheet.
 
 ## 🚀 Live Site
 

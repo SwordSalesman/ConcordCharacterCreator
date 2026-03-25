@@ -1,5 +1,7 @@
 import React from "react";
 
+// to do - refactor this shit
+
 function SectionDivider({ left, right }: { left: string; right?: string }) {
 	return (
 		<div className="flex justify-center gap-2 mt-1.5 text-special">
@@ -11,16 +13,6 @@ function SectionDivider({ left, right }: { left: string; right?: string }) {
 
 export default SectionDivider;
 
-export function SectionLine({ children }: { children?: React.ReactNode }) {
-	return (
-		<div className="flex justify-center items-center gap-2.5 w-full">{children}</div>
-	);
-}
-
 export function SectionWrapper({ children }: { children?: React.ReactNode }) {
-	return (
-		<div className="flex flex-wrap justify-center items-center mb-[5px] min-[600px]:mb-[15px]">
-			{children}
-		</div>
-	);
+	return <div className="flex flex-wrap gap-1 justify-center items-center">{children}</div>;
 }

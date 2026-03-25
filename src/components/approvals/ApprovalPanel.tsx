@@ -4,10 +4,11 @@ import { Button } from "../common/Button/Button";
 import useUserContext from "../../hooks/use-user-context";
 import { saveApproval } from "../../hooks/use-firebase";
 import toast from "react-hot-toast";
-import { APPROVED, DENIED } from "../../utils/constants";
+import { APPROVED, ARCHIVED, DENIED } from "../../utils/constants";
 import { prettifyDate } from "../../utils/date-helper";
 import { ApprovalRecord, Character } from "./types";
 import { cn } from "@/lib/utils";
+import { stringToNode } from "@/utils/data-helper";
 
 interface Props {
 	character: Character | null;
@@ -19,47 +20,67 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 	const [author, setAuthor] = useState("");
 	const [date, setDate] = useState("");
 	const [comment, setComment] = useState("");
+	const [previousComment, setPreviousComment] = useState("");
+	const [previousStatus, setPreviousStatus] = useState("");
 	const [status, setStatus] = useState<string | null>(null);
 	const { name } = useUserContext();
 	const [validInputs, setValidInputs] = useState({
 		validStatus: true,
 		validComment: true,
 	});
+	const disabled = !character || loading;
+	const [archiveConfirm, setArchiveConfirm] = useState(false);
 
 	function handleSubmit(e: React.FormEvent) {
 		e.preventDefault();
 		const valid = validateInputs();
 		if (!valid) return;
+		if (!status) return;
 
 		setLoading(true);
-		toast.promise(saveApproval(name, comment, status!, character!.id), {
-			success: (approval) => {
-				setLoading(false);
-				handleApproval({ ...approval, id: character!.id });
-				setAuthor(name);
-				setDate(approval.date);
-				return status === APPROVED ? "Approval submitted" : "Changes requested";
+		toast.promise(
+			saveApproval({
+				name,
+				comment,
+				status: status || "",
+				subjectUid: character!.id,
+			}),
+			{
+				success: (approval) => {
+					setLoading(false);
+					handleApproval({ ...approval, id: character!.id });
+					setAuthor(name);
+					setDate(approval.date);
+
+					switch (approval.status) {
+						case APPROVED:
+							return "Approval submitted";
+						case DENIED:
+							return "Changes requested";
+						case ARCHIVED:
+							return "Character archived";
+						default:
+							return "Unexpected status. Verify approval.";
+					}
+				},
+				loading: "Submitting...",
+				error: (err) => {
+					setLoading(false);
+					return `Failed to submit approval, ${err}`;
+				},
 			},
-			loading: "Submitting...",
-			error: (err) => {
-				setLoading(false);
-				return `Failed to submit approval, ${err}`;
-			},
-		});
+		);
 	}
 
 	useEffect(() => {
-		setComment(character?.approval?.comment ?? "");
-		setStatus(character?.approval?.status ?? null);
+		setPreviousComment(character?.approval?.comment ?? "");
+		setPreviousStatus(character?.approval?.status ?? "");
+		setComment("");
+		setStatus(null);
 		setAuthor(character?.approval?.author ?? "");
 		setDate(character?.approval?.date ?? "");
 		setValidInputs({ validStatus: true, validComment: true });
 	}, [character]);
-
-	function handleSelect(name: string) {
-		if (!character || loading) return;
-		setStatus(status === name ? null : name);
-	}
 
 	const validateInputs = () => {
 		const validStatus = status !== null;
@@ -68,66 +89,105 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 		return validStatus && validComment;
 	};
 
-	const statusOptions = [
-		{ name: APPROVED, label: "Approve", icon: <p>👍</p>, activeClass: "bg-green-600 text-white" },
-		{ name: DENIED, label: "Request Changes", icon: <p>👎</p>, activeClass: "bg-destructive text-white" },
+	const approvalOptions = [
+		{
+			status: APPROVED,
+			label: "Approved",
+			icon: <p>👍</p>,
+			activeClass: "bg-green-600! text-white!",
+		},
+		{
+			status: DENIED,
+			label: "Changed Requested",
+			icon: <p>👎</p>,
+			activeClass: "bg-destructive! text-white!",
+		},
+		{
+			status: ARCHIVED,
+			label: "Archived",
+			icon: <p>🗑️</p>,
+			activeClass: "bg-primary! text-white!",
+		},
 	].map((s) => {
-		const active = status === s.name;
-		const disabled = !character || loading;
+		const active = status === s.status;
 		return (
-			<div
-				key={s.name}
-				onClick={() => handleSelect(s.name)}
-				className={cn(
-					"flex items-center gap-1 p-2 border border-border rounded-md leading-[1em] transition-colors",
-					active ? s.activeClass : "bg-background-raised",
-					disabled ? "opacity-70 cursor-default" : "cursor-pointer hover:brightness-95 dark:hover:brightness-110",
-				)}
+			<Button
+				key={s.status}
+				onClick={(e) => {
+					e.preventDefault();
+					setStatus(status === s.status ? null : s.status);
+				}}
+				size="sm"
+				disabled={disabled}
+				className={active ? s.activeClass : ""}
 			>
 				{s.icon}
 				<p>{s.label}</p>
-			</div>
+			</Button>
 		);
 	});
 
 	return (
-		<div className="border border-border rounded-tl-[10px] rounded-tr-[10px] min-h-[270px] max-h-[50%] relative text-[0.9em] overflow-scroll overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-			<div className="w-full h-10 absolute top-[-41px] z-[3] bg-[linear-gradient(180deg,transparent_0%,var(--background)_90%)]" />
-			<form className="p-[14px]" onSubmit={handleSubmit}>
-				<h2 style={{ fontSize: "1.2em" }}>Approval Form</h2>
-
+		<div className="relative">
+			{/* Gradient fade effect above the panel */}
+			<div className="w-full h-10 absolute -top-8 bg-gradient-to-t from-background-raised to-transparent" />
+			<div
+				className="border rounded-tl-lg rounded-tr-lg h-[100%] max-h-[450px] relative overflow-scroll
+			text-sm p-3 flex flex-col gap-5 z-1 bg-background
+			[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+			>
 				{author && date ? (
-					<i>
-						{author} on {prettifyDate(date)}
-					</i>
+					<div>
+						<h2 className="text-lg font-bold">Previous Approval</h2>
+						<p>
+							{previousStatus === APPROVED
+								? "Approved"
+								: previousStatus === DENIED
+									? "Changes Requested"
+									: "Archived"}{" "}
+							by {author} on {prettifyDate(date)}:
+						</p>
+						<blockquote className={`pl-2 border-l-4 border-primary italic`}>
+							{stringToNode(previousComment)}
+						</blockquote>
+					</div>
 				) : (
-					<i>Pending review</i>
+					<i>This submission has not yet been reviewed</i>
 				)}
+				<form className="gap-1 flex flex-col" onSubmit={handleSubmit}>
+					<h2 className="text-lg font-bold">Approval Form</h2>
 
-				<div
-					className={cn(
-						"flex flex-row items-center gap-1.5 my-3.5 mb-2.5 w-fit rounded-md",
-						!validInputs.validStatus ? "border-2 border-destructive" : "",
-					)}
-				>
-					{statusOptions}
-				</div>
-				<TextArea
-					value={comment}
-					onChange={(e) => setComment(e.target.value)}
-					placeholder="This will be shown to the player"
-					label="Comments"
-					disabled={!character || loading}
-					error={
-						!validInputs.validComment
-							? "Denied submissions should include a comment"
-							: undefined
-					}
-				/>
-				<Button style={{ marginTop: "15px" }} variant="outline" disabled={!character || loading}>
-					Submit
-				</Button>
-			</form>
+					<div
+						className={cn(
+							"flex flex-row items-center justify-between rounded-md",
+							!validInputs.validStatus ? "p-1 border-1 border-destructive" : "",
+						)}
+					>
+						<div className="flex flex-row gap-1">
+							{approvalOptions[0]}
+							{approvalOptions[1]}
+						</div>
+						{approvalOptions[2]}
+					</div>
+					<TextArea
+						value={comment}
+						onChange={(e) => setComment(e.target.value)}
+						placeholder="This will be shown to the player"
+						label="Comments"
+						disabled={disabled}
+						error={
+							!validInputs.validComment
+								? "Denied or archived submissions should include a comment"
+								: undefined
+						}
+					/>
+					<div className="mt-2">
+						<Button variant="outline" disabled={disabled}>
+							Submit
+						</Button>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }

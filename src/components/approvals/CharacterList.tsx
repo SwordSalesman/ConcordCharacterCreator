@@ -21,17 +21,15 @@ function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
 							key={i}
 							onClick={() => handleSelect(c)}
 							className={cn(
-								"p-2 border-b border-border cursor-pointer leading-[1em] text-[0.9em] overflow-hidden flex justify-between flex-col relative hover:brightness-95 dark:hover:brightness-110",
+								"p-1.5 border-b border-border cursor-pointer leading-[1em] text-[0.9em] overflow-hidden flex justify-between flex-col relative hover:brightness-95 dark:hover:brightness-110",
 								active ? "bg-background-300" : "bg-background",
 							)}
 						>
-							<div className="relative break-all overflow-hidden h-[1em]">
+							<div className="relative break-all h-[1rem] overflow-hidden w-[80%]">
 								<div
 									className={cn(
-										"h-full w-[90px] absolute right-0 z-[2]",
-										active
-											? "bg-[linear-gradient(90deg,transparent_0%,var(--background-300)_30%)]"
-											: "bg-[linear-gradient(90deg,transparent_0%,var(--background)_30%)]",
+										"h-full w-[50px] absolute right-0 z-[2]",
+										`bg-gradient-to-r from-transparent to-background${active ? "-300" : ""}`,
 									)}
 								/>
 								<b>{c.heroName}</b>
@@ -47,7 +45,7 @@ function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
 							</div>
 						</li>
 					);
-			  })
+				})
 			: null;
 
 	return (

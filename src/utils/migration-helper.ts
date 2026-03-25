@@ -1,5 +1,5 @@
 import { migrateUser } from "../hooks/use-firebase";
-import regionMigrationData from "../data/tables/regionMigration.json";
+import regionMigrationData from "../data/tables/old/regionMigration.json";
 
 interface MigratableCharacter {
 	id: string;

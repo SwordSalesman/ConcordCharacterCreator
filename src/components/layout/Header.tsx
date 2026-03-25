@@ -64,7 +64,7 @@ export function Header({
 		return (
 			<Link
 				href={url}
-				className={`flex gap-2 items-center p-0.5 ${active ? "underline" : ""} ${
+				className={`flex gap-2 items-center p-0.5 ${active ? "text-special" : ""} ${
 					newtab ? "cursor:link" : ""
 				}`}
 				target={newtab ? "_blank" : "_self"}
@@ -86,11 +86,17 @@ export function Header({
 		<>
 			<div className={"h-12 w-full z-100"}>
 				<div
-					className={"flex items-center justify-between h-full m-auto px-3" + contentWide}
+					className={
+						"flex items-center justify-between h-full py-2" +
+						contentWide +
+						" px-2 m-auto"
+					}
 				>
 					{process.env.NEXT_PUBLIC_DEBUG_TEXT === "DevMode" && (
-						<div className="absolute top-2 left-0.5 pointer-events-none select-none opacity-40 text-sm">
-							<p className="leading-0">DEV</p>
+						<div className="absolute top-2 left-[50%] pointer-events-none select-none opacity-40 text-xs -z-10">
+							<div className="translate-x-[-50%]">
+								<p className="leading-0">DEV</p>
+							</div>
 						</div>
 					)}
 					<div className="flex items-center flex-row flex-1 gap-1">
@@ -173,6 +179,8 @@ export function Header({
 								setShowLoginModal(true);
 							}}
 							spinner={loading}
+							// variant={"ghost"}
+							size="icon"
 						>
 							<div className="flex gap-2 items-center">
 								{user ? (
@@ -189,6 +197,7 @@ export function Header({
 							onClick={() => {
 								toggleTheme();
 							}}
+							size="icon"
 						>
 							<BiAdjust />
 						</Button>

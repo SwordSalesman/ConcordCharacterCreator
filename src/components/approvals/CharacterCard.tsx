@@ -5,7 +5,7 @@ import { ImQuill } from "react-icons/im";
 import { GiScrollUnfurled, GiSpellBook } from "react-icons/gi";
 import toast from "react-hot-toast";
 import { prettifyDate } from "../../utils/date-helper";
-import { getArrayFromSummary, getSkillData } from "../../utils/data-helper";
+import { getArrayFromSummary, getSkillData, stringToNode } from "../../utils/data-helper";
 import { Character } from "./types";
 import { cn } from "@/lib/utils";
 
@@ -36,8 +36,16 @@ function CharacterCard({ character }: { character: Character | null }) {
 		);
 	}
 
-	return character ? (
-		<div className="text-[0.9em] p-2.5 overflow-y-scroll pb-[34px] tracking-[-0.1px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+	if (!character) {
+		return (
+			<i className="italic opacity-70 mx-auto mt-[100px]">
+				Select a submission on the side to get started
+			</i>
+		);
+	}
+
+	return (
+		<div className="text-sm p-2 overflow-y-scroll pb-16 h-[100%] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 			<div className={changeWrapperClass(changed("heroName"))}>
 				<h1 className="text-[1.5em] leading-[1.2em] font-bold font-[Georgia,'Times_New_Roman',Times,serif]">
 					{character.heroName}
@@ -152,7 +160,7 @@ function CharacterCard({ character }: { character: Character | null }) {
 			</div>
 			<p>
 				{character.backstory ? (
-					character.backstory
+					stringToNode(character.backstory)
 				) : (
 					<i className="opacity-75">No backstory given</i>
 				)}
@@ -180,7 +188,7 @@ function CharacterCard({ character }: { character: Character | null }) {
 			<div className={changeWrapperClass(changed("invDetails"))}>
 				<p>
 					{character.invDetails ? (
-						character.invDetails
+						stringToNode(character.invDetails)
 					) : (
 						<i className="opacity-75">No description given</i>
 					)}
@@ -195,7 +203,7 @@ function CharacterCard({ character }: { character: Character | null }) {
 			</div>
 			<p>
 				{character.icGoals ? (
-					character.icGoals
+					stringToNode(character.icGoals)
 				) : (
 					<i className="opacity-75">No in character goals given</i>
 				)}
@@ -209,16 +217,12 @@ function CharacterCard({ character }: { character: Character | null }) {
 			</div>
 			<p>
 				{character.oocGoals ? (
-					character.oocGoals
+					stringToNode(character.oocGoals)
 				) : (
 					<i className="opacity-75">No out of character goals given</i>
 				)}
 			</p>
 		</div>
-	) : (
-		<i className="italic opacity-70 mx-auto mt-[100px]">
-			Select a submission on the side to get started
-		</i>
 	);
 }
 
