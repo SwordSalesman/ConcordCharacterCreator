@@ -7,7 +7,7 @@ import { getNextSkill, getSkillsData } from "@/utils/data-helper";
 import { skills as baseSkills, Skill } from "@/data/tables/skills";
 import { useMemo } from "react";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
-import { SectionDivider, SectionWrapper } from "../SectionDivider/SectionDivider";
+import { SectionDivider, SectionWrapper } from "../../creator/SectionDivider/SectionDivider";
 
 function SkillItem({
 	skill,

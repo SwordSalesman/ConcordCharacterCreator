@@ -28,7 +28,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/creator/Creator.js'"
+    "src/components/characterCreator/Creator.tsx"
   ],
   "exclude": [
     "node_modules"

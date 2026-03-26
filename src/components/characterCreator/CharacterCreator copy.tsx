@@ -1,36 +1,41 @@
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { JSX, useState } from "react";
+import { Banner } from "../common/Banner/Banner.tsx";
+import { saveUserForm } from "../../hooks/use-firebase.ts";
+import toast from "react-hot-toast";
+import React from "react";
 import { Button } from "../common/Button/Button.tsx";
 import useUserContext from "@/hooks/use-user-context";
 import LoginModal from "../common/Modal/LoginModal.tsx";
 import { Modal } from "../common/Modal/Modal.tsx";
 import { cn } from "@/lib/utils.ts";
+import { IntroPage } from "./tabs/IntroPage.tsx";
 import { fadeStripStyle } from "@/styles/Global.ts";
+import RealmPage from "./tabs/RealmPage.tsx";
 import Image from "next/image";
+import SkillsPage from "./tabs/SkillsPage.tsx";
 import { getRealmData } from "@/utils/data-helper.tsx";
 import useFormContext from "@/hooks/use-form-context.ts";
+import { OptionsPage } from "./tabs/OptionsPage.tsx";
+import { BackgroundPage } from "./tabs/BackgroundPage.tsx";
+import { ReviewPage } from "./tabs/ReviewPage.tsx";
 
 export interface Tab {
 	name: string;
 	content: JSX.Element;
 }
+const tabs: Tab[] = [
+	{ name: "Intro", content: <IntroPage /> },
+	{ name: "Realm", content: <RealmPage /> },
+	{ name: "Skills", content: <SkillsPage /> },
+	{ name: "Options", content: <OptionsPage /> },
+	{ name: "Background", content: <BackgroundPage /> },
+	{ name: "Review", content: <ReviewPage /> },
+];
 
-/*
- * Generic Creator component that can be used for both Character and Group creation.
- */
-export function Creator({
-	tabs,
-	valid,
-	onSubmit,
-	onReset,
-}: {
-	tabs: Tab[];
-	valid: boolean;
-	onSubmit: () => void;
-	onReset: () => void;
-}) {
-	const { user } = useUserContext();
-	const { form } = useFormContext();
+export function CharacterCreator() {
+	const { user, name } = useUserContext();
+	const { getFormSummary, resetForm, validateForm, setField, form } = useFormContext();
 	const { realm } = form;
 	const realmImage = realm ? getRealmData(realm)?.image : undefined;
 	const [activeTab, setActiveTab] = useState(tabs[0]);
@@ -40,10 +45,23 @@ export function Creator({
 	const [showResetModal, setShowResetModal] = useState(false);
 	const [showSubmitModal, setShowSubmitModal] = useState(false);
 
+	const { valid } = validateForm();
+
 	let activeIndex = tabs.indexOf(activeTab);
 	const prevTab = activeIndex > 0 && activeIndex < tabs.length ? tabs[activeIndex - 1] : null;
 	const nextTab =
 		activeIndex >= 0 && activeIndex < tabs.length - 1 ? tabs[activeIndex + 1] : null;
+
+	const handleSave = async () => {
+		toast.promise(
+			saveUserForm(getFormSummary(), (date: string) => setField("date", date), name),
+			{
+				loading: "Submitting",
+				success: "Character submitted!",
+				error: (err) => `Submission failed, check network connection. Error code: ${err}`,
+			},
+		);
+	};
 
 	const handleSubmit = async () => {
 		if (!user) {
@@ -51,6 +69,11 @@ export function Creator({
 		} else {
 			setShowSubmitModal(true);
 		}
+	};
+
+	const handleReset = () => {
+		resetForm();
+		setShowResetModal(false);
 	};
 
 	const handleClickTab = (tab: Tab, index?: number) => {
@@ -183,13 +206,13 @@ export function Creator({
 
 			<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
 			<Modal
-				title="Save & Submit?"
+				title="Save & Submit Character?"
 				subtitle="You can submit multiple times."
 				open={showSubmitModal}
 				onClose={() => setShowSubmitModal(false)}
 				actions={[
 					{ label: "Cancel", onClick: () => setShowSubmitModal(false) },
-					{ label: "Submit", onClick: onSubmit, variant: "primary" },
+					{ label: "Submit", onClick: handleSave, variant: "primary" },
 				]}
 				size="small"
 			/>
@@ -200,7 +223,7 @@ export function Creator({
 				onClose={() => setShowResetModal(false)}
 				actions={[
 					{ label: "Cancel", onClick: () => setShowResetModal(false) },
-					{ label: "Submit", onClick: onReset, variant: "primary" },
+					{ label: "Submit", onClick: handleReset, variant: "primary" },
 				]}
 				size="small"
 			/>

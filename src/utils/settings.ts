@@ -7,5 +7,8 @@ export function getSiteSettings() {
 			downtime: false,
 			ceremonies: false,
 		},
+		features: {
+			groupSubmissions: true,
+		},
 	};
 }

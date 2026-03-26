@@ -1,5 +1,5 @@
 import useFormContext from "../../../hooks/use-form-context";
-import { SectionDivider, SectionWrapper } from "../SectionDivider/SectionDivider";
+import { SectionDivider, SectionWrapper } from "../../creator/SectionDivider/SectionDivider";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import {
 	GiArmorVest,
@@ -361,8 +361,6 @@ export function OptionsPage() {
 	const totalDiversifyOptions = diversifyOptions.length
 		? diversifyOptions.concat(extraDiversityOptions)
 		: [];
-	// console.log(totalDiversifyOptions);
-	console.log("invDiversify", invDiversify);
 
 	const investmentTabContent = (
 		<div className="flex w-full flex-col gap-3 py-2">

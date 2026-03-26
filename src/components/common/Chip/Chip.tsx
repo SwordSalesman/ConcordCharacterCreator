@@ -8,6 +8,7 @@ interface ChipProps {
 	shadow?: boolean;
 	inactive?: boolean;
 	inactiveReason?: string;
+	className?: string;
 	[key: string]: any;
 }
 
@@ -23,6 +24,7 @@ export function Chip({
 	shadow,
 	inactive,
 	inactiveReason,
+	className,
 	...rest
 }: ChipProps) {
 	const handleClick = () => {
@@ -52,7 +54,7 @@ export function Chip({
 	return (
 		<button
 			type="button"
-			className={`${baseClasses} ${radius} ${shadowClass} ${bg} ${colorClass} ${responsive} ${interactive}`}
+			className={`${baseClasses} ${radius} ${shadowClass} ${bg} ${colorClass} ${responsive} ${interactive} ${className}`}
 			onClick={handleClick}
 			{...rest}
 		>

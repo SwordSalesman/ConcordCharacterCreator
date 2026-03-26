@@ -163,6 +163,17 @@ const saveApproval = async ({
 	return approval;
 };
 
+const saveGroup = async (group: { name: string; realm: string; type: string }) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const date = getCurrentDate();
+
+	await setDoc(doc(db, "groups", auth.currentUser.uid), {
+		...group,
+		date: date,
+	});
+	return;
+};
+
 // Used in admin commands to update users without updating their submission date
 const migrateUser = async (userId: string, form: Record<string, any>) => {
 	await setDoc(doc(db, "characters", userId), form);
@@ -237,6 +248,27 @@ const getApproval = async (uid: string) => {
 	}
 };
 
+const getGroup = async () => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const docRef = doc(db, "groups", auth.currentUser.uid);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
+const getGroupList = async () => {
+	const docRef = doc(db, "public", "groupList");
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
 const getCharacterList = async (): Promise<any[]> => {
 	const charactersRef = collection(db, "characters");
 	const q = query(charactersRef);
@@ -283,8 +315,11 @@ export {
 	getUserDetails,
 	getCharacterList,
 	saveApproval,
+	saveGroup,
 	getApproval,
+	getGroup,
 	getUserApproval,
 	getApprovalList,
+	getGroupList,
 	logout,
 };
