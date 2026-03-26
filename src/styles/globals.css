@@ -190,7 +190,7 @@ body {
 	--contrast: #dea65e;
 	--contrast-foreground: #fff;
 	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(88.185% 0.00599 264.648);
+	--border: oklch(80.877% 0.01584 273.796);
 	--input: oklch(0.928 0.006 264.531);
 	--ring: oklch(0.707 0.022 261.325);
 	--chart-1: oklch(0.646 0.222 41.116);

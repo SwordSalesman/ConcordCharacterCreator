@@ -64,9 +64,7 @@ export function Header({
 		return (
 			<Link
 				href={url}
-				className={`flex gap-2 items-center p-0.5 ${active ? "text-special" : ""} ${
-					newtab ? "cursor:link" : ""
-				}`}
+				className={`flex gap-2 items-center p-0.5 ${active ? "text-special" : ""}`}
 				target={newtab ? "_blank" : "_self"}
 				rel={newtab ? "noopener noreferrer" : undefined}
 			>

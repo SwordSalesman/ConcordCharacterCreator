@@ -1,21 +1,27 @@
-# ⚔️ Concord Character Creator ⚔️
+# ⚔️ Waystone ⚔️
 
-### To Do
+(formerly the Concord Character Creator)
 
-Completed Work
+## Completed Work
 
-Approvals
+##### Approvals
 
 - Ability to remove hero submissions in approvals window. Delete/Archive button.
 - Fix the full stop paragraph thing in approvals
-  Creator
+
+##### Creator
+
 - Transition animations for accordions
-  Technical
+
+##### Technical
+
 - Port from create-react-app to next.js
 - Migrate from styled components to tailwind
 
-Still To Do
+## To Do list
 
+- Fix the divine lore per sphere giving known ceremonies thing, you know the one.
+- When a player submits a character after they've been approved, their approval still reads 'approved'. This is treated as 'pending' by the approval window, need to make sure this is reflected in the exported sheet.
 - Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
 - EMAILS (requires a whole rebuild fml)
     - automatic confirmation emails when a player submits their character
@@ -27,28 +33,15 @@ Still To Do
     - When a group is approved, it will appear in the list of groups that players can select from a dropdown
 - 'Epithets' and 'True Name' fields. Name (Your hero's public name without following titles, may be published in Winds of the Worlds). Epithets - optional (Titles or monikers. E.g. the quoted text is all ephithets: Sir Dennis Braggard "Last of His Name, Feller of Beasts"). True Name - optional (If your public name is a fake, put your real one here. This won't be published in Winds of the World unless there's a good reason.)
 
-Known Bugs
-
-- Fix the divine lore per sphere giving known ceremonies thing, you know the one.
-- When a player submits a character after they've been approved, their approval still reads 'approved'. This is treated as 'pending' by the approval window, need to make sure this is reflected in the exported sheet.
-
 ## 🚀 Live Site
 
-https://swordsalesman.github.io/ConcordCharacterCreator/
-
-## 🔍 Rowy
-
-https://rowy.app/p/concordcharactercreator
-
-Rowy lets us view (and edit) the data in our database and export it to useful formats like csv.
-
-### 🔑 Access
-
-Access has been granted to a few concord team emails. If you don't already have access, then you probably shouldn't have access. If you're lost, talk to the web team.
+https://charactercreator.concordlarp.com/
 
 ## 🔥 Firebase
 
-https://console.firebase.google.com/u/0/project/concordcharactercreator/overview
+https://console.firebase.google.com/project/concordcharactercreator/overview
+
+There is also a dev project which is very helpful for testing: **concordcharactercreatordev**
 
 Firebase is a google product which does a bunch of cool cloud stuff - we're using it for it's authentication and it's database, Firestore. We are using the 'Blaze' payment plan, which is a usage based payment plan with a small free threshold per time period. Other than the web server and the domain, this is the only ongoing cost.
 
@@ -58,7 +51,7 @@ Firebase handles all the user authentication for the site - which is great becau
 
 ### 🗃️ Firestore
 
-Firestore is the cloud database which goes hand in hand with Firebase Auth. We use it to store all the character data. The problem with Firestore is the data is hard to make use of in a conventional excel format without code - which is why we use Rowy.
+Firestore is the cloud database which goes hand in hand with Firebase Auth. We use it to store all the character data. Character data can be exported to CSV using the export button in the approvals window.
 
 #### 🔐 Firestore Access
 

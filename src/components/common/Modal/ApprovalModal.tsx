@@ -2,9 +2,13 @@ import useFormContext from "@/hooks/use-form-context";
 import { Modal } from "./Modal";
 import { APPROVED, DENIED } from "@/utils/constants";
 import { getApprovalStatus } from "@/utils/approval-helper";
+import { stringToNode } from "@/utils/data-helper";
 
 export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-	const { approval, form: { date } } = useFormContext();
+	const {
+		approval,
+		form: { date },
+	} = useFormContext();
 	const { author, status, comment, date: approvalDate } = approval || {};
 
 	const submitDateString = date ? new Date(date).toLocaleDateString() : null;
@@ -27,13 +31,13 @@ export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () =>
 			title={<p>{submissionStatus}</p>}
 			subtitle={submitDateString ? `Last submitted on ${submitDateString}` : undefined}
 			body={
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col gap-1">
+					<p className="text-sm text-muted-foreground">{note}</p>
 					{comment && (
 						<blockquote className={`pl-3 border-l-4 border-primary italic`}>
-							{comment}
+							{stringToNode(comment)}
 						</blockquote>
 					)}
-					<p className="text-muted-foreground">{note}</p>
 				</div>
 			}
 			open={open}

@@ -29,7 +29,7 @@ function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
 								<div
 									className={cn(
 										"h-full w-[50px] absolute right-0 z-[2]",
-										`bg-gradient-to-r from-transparent to-background${active ? "-300" : ""}`,
+										`bg-gradient-to-r from-transparent ${active ? "to-background-300" : "to-background"}`,
 									)}
 								/>
 								<b>{c.heroName}</b>

@@ -23,16 +23,14 @@ function CharacterCard({ character }: { character: Character | null }) {
 		toast.success(`Copied '${text}' to clipboard`);
 	}
 
-	function changed(fieldName: string): boolean {
+	function changed(fieldName: keyof Character): boolean {
 		return !!(hasReview && changes && changes.includes(fieldName));
 	}
 
 	function changeWrapperClass(isChanged: boolean) {
 		return cn(
 			"rounded-[5px]",
-			isChanged
-				? "bg-[linear-gradient(90deg,color-mix(in_srgb,var(--special)_21%,transparent)_0%,transparent_90%)]"
-				: "",
+			isChanged ? "bg-gradient-to-r from-special/25 from-50% to-transparent" : "",
 		);
 	}
 
@@ -170,19 +168,32 @@ function CharacterCard({ character }: { character: Character | null }) {
 				<BiSolidCastle />
 				Investment
 			</CharSectionTitle>
-			<div
-				className={changeWrapperClass(
-					changed("invTier") ||
-						changed("invOption") ||
-						changed("investment") ||
-						changed("invTerritory") ||
-						changed("invRegion"),
-				)}
-			>
-				<i>
-					{character.invTier ? "Tier " + character.invTier + " " : null}
-					{character.invOption ? character.invOption + " " : null}
-					{character.investment} in {character.invTerritory}, {character.invRegion}
+			<div>
+				<i className={changeWrapperClass(changed("invTier"))}>
+					{character.invTier ? `Tier ${character.invTier} ` : " "}
+				</i>
+				<i className={changeWrapperClass(changed("invOption"))}>
+					{character.invOption ? `${character.invOption} ` : ""}
+				</i>
+				<i
+					className={changeWrapperClass(changed("investment"))}
+				>{`${character.investment} `}</i>
+				in{" "}
+				<i className={changeWrapperClass(changed("invTerritory"))}>
+					{`${character.invTerritory}, `}
+				</i>
+				<i
+					className={changeWrapperClass(changed("invRegion"))}
+				>{`${character.invRegion} `}</i>
+				<i className={changeWrapperClass(changed("invDiversify"))}>
+					{character.invDiversify ? (
+						<>
+							<br />
+							{`Diversified in ${character.invDiversify} `}
+						</>
+					) : (
+						" "
+					)}
 				</i>
 			</div>
 			<div className={changeWrapperClass(changed("invDetails"))}>

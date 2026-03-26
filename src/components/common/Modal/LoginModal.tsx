@@ -78,8 +78,8 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 				state === "login"
 					? "logging in"
 					: state === "register"
-					? "registering"
-					: "resetting password"
+						? "registering"
+						: "resetting password"
 			}`;
 			toast.error(errorMessage);
 		} finally {
@@ -153,8 +153,8 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 					{state === "login"
 						? "Login"
 						: state === "register"
-						? "Create Account"
-						: "Send Recovery Email"}
+							? "Create Account"
+							: "Send Recovery Email"}
 				</Button>
 			</div>
 		</form>
@@ -218,8 +218,8 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 				state === "login"
 					? "Login"
 					: state === "register"
-					? "Create Account"
-					: "Reset Password"
+						? "Create Account"
+						: "Reset Password"
 			}
 			onClose={handleClose}
 			body={

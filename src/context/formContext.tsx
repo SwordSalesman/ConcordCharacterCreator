@@ -9,6 +9,7 @@ import {
 	getSummaryFromArray,
 } from "../utils/data-helper";
 import { Realm } from "@/data/tables/realms";
+import { investments } from "@/data/tables/investments";
 
 /*
 	Form Context
@@ -47,6 +48,7 @@ interface FormState {
 	investment?: string;
 	invTier: number;
 	invOption?: string;
+	invDiversify: string[];
 	invRegion?: string;
 	invTerritory?: string;
 	skills: string[];
@@ -65,6 +67,7 @@ interface FormState {
 	backstory?: string;
 	invDetails?: string;
 	comments?: string;
+	changes: string[];
 }
 
 interface Approval {
@@ -80,6 +83,7 @@ interface Remaining {
 	ceremonies: number;
 	crafts: number;
 	potions: number;
+	diversify: number;
 }
 
 type FormStateSummary = {
@@ -101,12 +105,31 @@ type FormAction =
 const initialState: FormState = {
 	gamesPlayed: 0,
 	invTier: 1,
+	invDiversify: [],
 	skills: [],
 	spells: [],
 	crafts: [],
 	potions: [],
 	ceremonies: [],
+	changes: [],
 };
+
+function calculateRemainingDiversifyOptions({
+	investment,
+	invTier,
+	invDiversify,
+}: {
+	investment: string | undefined;
+	invTier: number;
+	invDiversify: string[];
+}): number {
+	const invHasDiversifyOptions = !!investments.find((i) => i.name === investment)
+		?.diversifyOptions?.length;
+	const remainingDiversifyOptions = invHasDiversifyOptions
+		? invTier - 1 - (invDiversify?.length ?? 0)
+		: 0;
+	return remainingDiversifyOptions;
+}
 
 // Pure helper: checks prereqs and exclusions for a single skill against a given skill list.
 // Cost is intentionally ignored to allow overspending — see validSkillChoice for where to re-enable that.
@@ -172,14 +195,64 @@ function applySkillSideEffects(state: FormState): FormState {
 	return { ...state, skills, spells, crafts, startingItem, potions, ceremonies };
 }
 
+function applyOptionSideEffects(state: FormState): FormState {
+	// For diversification options, need to enforce two rules:
+	// 1. Only allow the number of options as your tier allows
+	// 2. If a lower option is removed, remove all higher ones (if 2 is removed, remove 3, 4 etc)
+
+	// Enforcing rule 1
+	let invDiversify = state.invDiversify;
+	const remaining = calculateRemainingDiversifyOptions({
+		investment: state.investment,
+		invTier: state.invTier,
+		invDiversify: state.invDiversify,
+	});
+	if (remaining < 0) {
+		invDiversify = invDiversify.slice(0, remaining);
+	}
+
+	// Enforcing rule 2 - prune all hanging 'higher' options.
+	// For each base name (e.g. "Bloodglass"), the selected numbers must form a
+	// consecutive sequence starting at 1. If (1) is missing, (2) and above are orphans.
+	const byBase = new Map<string, number[]>();
+	for (const opt of invDiversify) {
+		const match = opt.match(/^(.+) \((\d+)\)$/);
+		if (match) {
+			const base = match[1];
+			const num = parseInt(match[2]);
+			if (!byBase.has(base)) byBase.set(base, []);
+			byBase.get(base)!.push(num);
+		}
+	}
+	invDiversify = invDiversify.filter((opt) => {
+		const match = opt.match(/^(.+) \((\d+)\)$/);
+		if (!match) return true;
+		const nums = byBase.get(match[1])!.sort((a, b) => a - b);
+		let maxValid = 0;
+		for (let i = 0; i < nums.length; i++) {
+			if (nums[i] === i + 1) maxValid = nums[i];
+			else break;
+		}
+		return parseInt(match[2]) <= maxValid;
+	});
+
+	return { ...state, invDiversify };
+}
+
 // Pure helper: applies cascading side effects for any field that has them.
 // Called by both SET_FIELD and TOGGLE_ITEM so behaviour is consistent regardless of how a field is set.
 function applyFieldSideEffects(state: FormState, field: keyof FormState): FormState {
-	if (field === "realm") return { ...state, archetype: undefined };
-	if (field === "investment") return { ...state, invOption: undefined };
-	if (field === "invRegion") return { ...state, invTerritory: undefined };
-	if (field === "skills" || field === "gamesPlayed") return applySkillSideEffects(state);
-	return state;
+	const newState = { ...state };
+	if (!state.changes.includes(field)) {
+		newState.changes = [...state.changes, field];
+	}
+
+	if (field === "realm") return { ...newState, archetype: undefined };
+	if (field === "investment") return { ...newState, invOption: undefined, invDiversify: [] };
+	if (field === "invRegion") return { ...newState, invTerritory: undefined };
+	if (field === "invDiversify" || field === "invTier") return applyOptionSideEffects(newState);
+	if (field === "skills" || field === "gamesPlayed") return applySkillSideEffects(newState);
+	return newState;
 }
 
 function formReducer(state: FormState, action: FormAction): FormState {
@@ -250,7 +323,7 @@ export const FormContext = createContext<FormContextInterface>({
 	}),
 	validSkillChoice: () => ({ valid: false }),
 	resetForm: () => {},
-	remaining: { xp: 0, spells: 0, ceremonies: 0, crafts: 0, potions: 0 },
+	remaining: { xp: 0, spells: 0, ceremonies: 0, crafts: 0, potions: 0, diversify: 0 },
 	getFormSummary: () => ({}) as FormStateSummary,
 });
 
@@ -281,6 +354,8 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		investment,
 		invRegion,
 		invTerritory,
+		invDiversify,
+		invTier,
 		spells,
 		crafts,
 		potions,
@@ -324,12 +399,19 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	}, [skills]);
 	const remainingPotions = maxPotions - potions.length;
 
-	const remaining = {
+	const remainingDiversifyOptions = calculateRemainingDiversifyOptions({
+		investment,
+		invTier,
+		invDiversify,
+	});
+
+	const remaining: Remaining = {
 		xp: remainingXp,
 		spells: remainingSpells,
 		ceremonies: remainingCeremonies,
 		crafts: remainingCrafts,
 		potions: remainingPotions,
+		diversify: remainingDiversifyOptions,
 	};
 
 	// Load Data

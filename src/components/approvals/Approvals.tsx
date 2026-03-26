@@ -175,7 +175,7 @@ export function ApprovalsPage() {
 	if (!isAdmin) return null;
 
 	return (
-		<div className="mx-auto mt-2 flex flex-row gap-2 h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,Helvetica,sans-serif]">
+		<div className="mx-auto mt-2 flex flex-row gap-1 h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,Helvetica,sans-serif]">
 			<div className="flex-1 flex flex-col items-center justify-center gap-1.5 h-full">
 				<CSVLink
 					data={csvData}

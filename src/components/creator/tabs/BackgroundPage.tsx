@@ -1,7 +1,6 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
-import SectionDivider from "../SectionDivider/SectionDivider";
-import { SectionWrapper } from "../SectionDivider/SectionDivider";
+import { SectionDivider, SectionWrapper } from "../SectionDivider/SectionDivider";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { useEffect, useMemo } from "react";
 import { getRealmData } from "@/utils/data-helper";
@@ -197,7 +196,7 @@ export function BackgroundPage() {
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row w-full max-w-[450px] mx-auto">
 			<ContentPane style={{ flex: 1 }}>
-				<SectionDivider left="Tell us about your Hero"></SectionDivider>
+				<SectionDivider>Tell us about your Hero</SectionDivider>
 				<Accordion items={tabs}></Accordion>
 			</ContentPane>
 		</div>

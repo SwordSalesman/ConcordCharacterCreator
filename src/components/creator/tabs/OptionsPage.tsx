@@ -1,7 +1,5 @@
 import useFormContext from "../../../hooks/use-form-context";
-import SectionDivider from "../SectionDivider/SectionDivider";
-import { SectionWrapper } from "../SectionDivider/SectionDivider";
-import React, { useMemo } from "react";
+import { SectionDivider, SectionWrapper } from "../SectionDivider/SectionDivider";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import {
 	GiArmorVest,
@@ -12,16 +10,28 @@ import {
 	GiChestArmor,
 	GiCrenelCrown,
 	GiCrossedSwords,
+	GiCrystalGrowth,
 	GiCrystalWand,
+	GiFallingLeaf,
+	GiFruitTree,
+	GiGalleon,
 	GiGemNecklace,
 	GiHammerNails,
 	GiIncense,
+	GiLockedChest,
 	GiMoon,
 	GiNinjaArmor,
+	GiOakLeaf,
+	GiOpenBook,
 	GiPocketBow,
 	GiPotionBall,
 	GiRobe,
+	GiShipWheel,
+	GiShoonerSailboat,
+	GiSwordsEmblem,
 	GiTatteredBanner,
+	GiWarPick,
+	GiWheat,
 } from "react-icons/gi";
 import { regionIsCoastal, regionIsNotCoastal } from "../../../utils/selection-helper";
 import { investmentRegionWarning } from "../../../utils/validity-helper";
@@ -40,8 +50,35 @@ import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 import { ceremonies as ceremoniesData } from "@/data/tables/ceremonies";
 import { potions as potionsData } from "@/data/tables/potions";
 import { spells as spellsData } from "@/data/tables/spells";
+import { getNextInvestmentOption } from "@/utils/data-helper";
+import { gridMirrorStyle } from "@/styles/Global";
 
 const chipIcons = true;
+
+function investmentIcon(type: string) {
+	switch (type) {
+		case "Military":
+			return <GiSwordsEmblem />;
+		case "Naval":
+			return <GiGalleon />;
+		case "Herb Garden":
+			return <GiFallingLeaf />;
+		case "Leyline":
+			return <GiCrystalGrowth />;
+		case "Congregation":
+			return <GiOpenBook />;
+		case "Business":
+			return <GiLockedChest />;
+		case "Farm":
+			return <GiWheat />;
+		case "Wilderness":
+			return <GiFruitTree />;
+		case "Mine":
+			return <GiWarPick />;
+		default:
+			return <></>;
+	}
+}
 
 function chipIcon(type: string) {
 	if (!chipIcons) return <></>;
@@ -273,6 +310,7 @@ export function OptionsPage() {
 		invRegion,
 		invTerritory,
 		invOption,
+		invDiversify,
 		crafts,
 		potions,
 		ceremonies,
@@ -288,6 +326,9 @@ export function OptionsPage() {
 	// Generate the 'selected' items on the left of the screen
 	var renderedInvestment = genSelectedContent([investment!], (i) => toggleItem("investment", i));
 	var renderedInvOption = genSelectedContent([invOption!], (i) => toggleItem("invOption", i));
+	var renderedInvDiversify = genSelectedContent(invDiversify, (i) =>
+		toggleItem("invDiversify", i),
+	);
 	var renderedInvRegion = genSelectedContent([invRegion!], (i) => toggleItem("invRegion", i));
 	var renderedInvTerritory = genSelectedContent([invTerritory!], (i) =>
 		toggleItem("invTerritory", i),
@@ -303,7 +344,25 @@ export function OptionsPage() {
 	var renderedPotions = genSelectedContent(potions, (i) => toggleItem("potions", i));
 	var renderedCeremonies = genSelectedContent(ceremonies, (i) => toggleItem("ceremonies", i));
 
-	const investmentOptions = investmentsData.find((i) => i.name === investment)?.options ?? [];
+	const investmentData = investmentsData.find((i) => i.name === investment);
+	const investmentOptions = investmentData?.options ?? [];
+	// Construct the base list of diversify options from the investment, these are all (1)
+	const diversifyOptions =
+		invTier > 1 && investmentData?.diversifyOptions
+			? investmentData.diversifyOptions.map((o) => ({ name: `${o.name} (1)` }))
+			: [];
+	// Add the extra options, which will be the (2), (3) etc versions
+	const extraDiversityOptions =
+		invDiversify?.map((option) => {
+			return {
+				name: getNextInvestmentOption(option),
+			};
+		}) || [];
+	const totalDiversifyOptions = diversifyOptions.length
+		? diversifyOptions.concat(extraDiversityOptions)
+		: [];
+	// console.log(totalDiversifyOptions);
+	console.log("invDiversify", invDiversify);
 
 	const investmentTabContent = (
 		<div className="flex w-full flex-col gap-3 py-2">
@@ -319,6 +378,8 @@ export function OptionsPage() {
 						invRegion: invRegion,
 					});
 
+					const icon = investmentIcon(item.name);
+
 					return (
 						<Chip
 							onClick={() => toggleItem("investment", item.name)}
@@ -327,13 +388,14 @@ export function OptionsPage() {
 							inactiveReason={inactiveReason}
 							key={item.name}
 						>
+							{icon}
 							{item.name}
 						</Chip>
 					);
 				})}
 			</AccordionSection>
 			<AccordionSection title="Investment Tier" align="left">
-				<div className="flex justify-center items-center gap-2">
+				<div className="flex justify-center items-center gap-2 ">
 					<Button
 						// secondary
 						onClick={() => {
@@ -360,12 +422,29 @@ export function OptionsPage() {
 			{investmentOptions.length > 0 && (
 				<AccordionSection title="Investment Option" align="left">
 					{investmentOptions.map((item) => {
-						let selected = invOption === item.name;
+						let selected = invOption?.includes(item.name);
 						return (
 							<Chip
 								onClick={() => toggleItem("invOption", item.name)}
 								selected={selected}
 								inactive={!selected && !!invOption}
+								key={item.name}
+							>
+								{item.name}
+							</Chip>
+						);
+					})}
+				</AccordionSection>
+			)}
+			{totalDiversifyOptions.length > 0 && (
+				<AccordionSection title="Investment Diversify Option" align="left">
+					{totalDiversifyOptions.map((item) => {
+						let selected = invDiversify?.includes(item.name);
+						return (
+							<Chip
+								onClick={() => toggleItem("invDiversify", item.name)}
+								selected={selected}
+								inactive={!selected && remaining.diversify <= 0}
 								key={item.name}
 							>
 								{item.name}
@@ -515,27 +594,45 @@ export function OptionsPage() {
 			<ContentPane className="flex-4">
 				<div className="flex flex-col flex-4 gap-3">
 					<div>
-						<SectionDivider
-							left="Investment"
-							right={!investment ? `(1 remaining)` : undefined}
-						/>
+						<SectionDivider>
+							Investment {!investment ? ` (1 remaining)` : ""}
+						</SectionDivider>
 						{renderedInvestment || renderedInvOption || renderedInvRegion ? (
-							<>
+							// Left align the right column and right align the left column
+							<div
+								className={`grid grid-cols-2 gap-1 gap-x-2 items-center ${gridMirrorStyle}`}
+							>
 								{renderedInvestment && (
-									<SectionWrapper>Type: {renderedInvestment}</SectionWrapper>
+									<>
+										<p>Type</p>
+										<SectionWrapper>{renderedInvestment}</SectionWrapper>
+									</>
 								)}
 								{renderedInvOption && (
-									<SectionWrapper>Variant: {renderedInvOption}</SectionWrapper>
+									<>
+										<p>Variant</p>
+										<SectionWrapper>{renderedInvOption}</SectionWrapper>
+									</>
+								)}
+								{renderedInvDiversify && (
+									<>
+										<p>Diversify</p>
+										<SectionWrapper>{renderedInvDiversify}</SectionWrapper>
+									</>
 								)}
 								{renderedInvRegion && (
-									<SectionWrapper>Region: {renderedInvRegion}</SectionWrapper>
+									<>
+										<p>Region</p>
+										<SectionWrapper>{renderedInvRegion}</SectionWrapper>
+									</>
 								)}
 								{renderedInvTerritory && (
-									<SectionWrapper>
-										Territory: {renderedInvTerritory}
-									</SectionWrapper>
+									<>
+										<p>Territory</p>
+										<SectionWrapper>{renderedInvTerritory}</SectionWrapper>
+									</>
 								)}
-							</>
+							</div>
 						) : (
 							<div
 								style={{
@@ -552,58 +649,44 @@ export function OptionsPage() {
 					</div>
 					{showSpells && (
 						<div>
-							<SectionDivider
-								left="Spells"
-								right={
-									remaining.spells > 0
-										? `(${remaining.spells} remaining)`
-										: undefined
-								}
-							/>
+							<SectionDivider>
+								Spells
+								{remaining.spells > 0 ? ` (${remaining.spells} remaining)` : ""}
+							</SectionDivider>
 							<SectionWrapper>{renderedSpells}</SectionWrapper>
 						</div>
 					)}
 					{showCrafts && (
 						<div>
-							<SectionDivider
-								left="Crafts"
-								right={
-									remaining.crafts > 0
-										? `(${remaining.crafts} remaining)`
-										: undefined
-								}
-							/>
+							<SectionDivider>
+								Crafts
+								{remaining.crafts > 0 ? ` (${remaining.crafts} remaining)` : ""}
+							</SectionDivider>
 							<SectionWrapper>{renderedCrafts}</SectionWrapper>
-							<SectionDivider
-								left="Starting Item"
-								right={!startingItem ? `(1 remaining)` : undefined}
-							/>
+							<SectionDivider>
+								Starting Item
+								{!startingItem ? ` (1 remaining)` : ""}
+							</SectionDivider>
 							<SectionWrapper>{renderedStartingItem}</SectionWrapper>
 						</div>
 					)}
 					{showPotions && (
 						<div>
-							<SectionDivider
-								left="Potions"
-								right={
-									remaining.potions > 0
-										? `(${remaining.potions} remaining)`
-										: undefined
-								}
-							/>
+							<SectionDivider>
+								Potions
+								{remaining.potions > 0 ? ` (${remaining.potions} remaining)` : ""}
+							</SectionDivider>
 							<SectionWrapper>{renderedPotions}</SectionWrapper>
 						</div>
 					)}
 					{showCeremonies && (
 						<div>
-							<SectionDivider
-								left={"Mastered Ceremonies"}
-								right={
-									remaining.ceremonies > 0
-										? `(${remaining.ceremonies} remaining)`
-										: undefined
-								}
-							/>
+							<SectionDivider>
+								Mastered Ceremonies
+								{remaining.ceremonies > 0
+									? ` (${remaining.ceremonies} remaining)`
+									: ""}
+							</SectionDivider>
 							<SectionWrapper>{renderedCeremonies}</SectionWrapper>
 						</div>
 					)}

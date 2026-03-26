@@ -32,6 +32,7 @@ export interface Character {
 	investment?: string;
 	invTier?: string | number;
 	invOption?: string;
+	invDiversify?: string;
 	invRegion?: string;
 	invTerritory?: string;
 	changes?: string;

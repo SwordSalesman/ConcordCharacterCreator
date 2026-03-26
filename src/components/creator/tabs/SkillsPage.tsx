@@ -1,6 +1,5 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
-import SectionDivider from "../SectionDivider/SectionDivider";
 import { xpWarning } from "../../../utils/validity-helper";
 import { Warning } from "../../common/Accordion/AccordionSection";
 import { Chip, ChipSkillWrapper } from "@/components/common/Chip/Chip";
@@ -8,7 +7,7 @@ import { getNextSkill, getSkillsData } from "@/utils/data-helper";
 import { skills as baseSkills, Skill } from "@/data/tables/skills";
 import { useMemo } from "react";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
-import { SectionWrapper } from "../SectionDivider/SectionDivider";
+import { SectionDivider, SectionWrapper } from "../SectionDivider/SectionDivider";
 
 function SkillItem({
 	skill,
@@ -136,8 +135,7 @@ export default function SkillsPage() {
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row w-full">
 			<ContentPane style={{ flex: 4 }}>
-				<SectionDivider left="Remaining XP" right={String(remaining.xp)} />
-				{/* <SectionDivider text="SELECTED SKILLS" className="my-2" /> */}
+				<SectionDivider>Remaining XP: {String(remaining.xp)}</SectionDivider>
 				{warning && <Warning>{warning}</Warning>}
 				{skillsData?.length > 0 ? (
 					<SectionWrapper>{renderedSkills}</SectionWrapper>
@@ -148,7 +146,6 @@ export default function SkillsPage() {
 				)}
 			</ContentPane>
 			<ContentPane style={{ flex: 5 }}>
-				{/* to do- investigate why the accordions keep shrinking horizontally */}
 				<Accordion items={renderedTabs} />
 			</ContentPane>
 		</div>

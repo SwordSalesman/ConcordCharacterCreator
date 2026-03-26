@@ -26,6 +26,7 @@ export function ReviewPage() {
 		investment,
 		invTier,
 		invOption,
+		invDiversify,
 		invRegion,
 		invTerritory,
 		spells,
@@ -95,6 +96,14 @@ export function ReviewPage() {
 								{investment ? investment : ""}
 								{invTerritory ? ` in ${invTerritory}` : ""}
 								{invRegion ? `, ${invRegion}` : ""}
+								{invDiversify?.length ? (
+									<>
+										<br />
+										{`Diversifying in ${getSummaryFromArray(invDiversify)}`}
+									</>
+								) : (
+									""
+								)}
 							</ReviewItem>
 						)}
 						{(warband || sect) && <StyledBorder />}

@@ -2,6 +2,7 @@ import { Skill, skills } from "@/data/tables/skills";
 import { realms } from "@/data/tables/realms";
 import { regions } from "@/data/tables/regions";
 import React, { ReactNode } from "react";
+import { Investment } from "@/data/tables/investments";
 
 // ########## FORM DATA ##########
 
@@ -131,6 +132,21 @@ export function getNextSkill(skill: Skill): Skill {
 		prereq: skill.name,
 		exclusion: skill.exclusion ? skill.exclusion : null,
 	};
+}
+
+// ########## SKILLS ##########
+
+// Takes a string and returns an incremented version.
+// "Beastbone" -> "Beastbone (2)"
+// "Beastbone (2)" -> "Beastbone (3)"
+export function getNextInvestmentOption(option: string): string {
+	if (!option.includes("(")) {
+		return `${option} (2)`;
+	}
+	const base = option.split(" (")[0];
+	const num = option.split(" (")[1].split(")")[0];
+	const newNum = Number.parseInt(num) + 1;
+	return `${base} (${newNum})`;
 }
 
 // ########## REALMS ##########

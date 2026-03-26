@@ -48,21 +48,14 @@ export function IntroPage() {
 			</p>
 			<br />
 			<div className={titleWrapperStyle}>
-				<div
-					style={{
-						fontWeight: "bold",
-						fontStyle: "italic",
-						// color: theme.special,
-						padding: 8,
-					}}
-				>
+				<div className={"font-bold italic"}>
 					How many summits has this character attended?
 				</div>
-				<div className="flex flex-row items-center justify-center">
+				<div className="flex flex-row items-center justify-center mt-1">
 					<Button onClick={handleMinus}>
 						<BiMinus />
 					</Button>
-					<div className="text-lg w-12 font-sans">{gamesPlayed || 0}</div>
+					<div className="text-xl font-bold font-sans w-12">{gamesPlayed || 0}</div>
 					<Button onClick={handlePlus}>
 						<BiPlus />
 					</Button>
