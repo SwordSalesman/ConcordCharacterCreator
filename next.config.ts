@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
 		optimizePackageImports: ["@chakra-ui/react"],
 	},
 	turbopack: {},
+	images: {
+		unoptimized: true,
+	},
 };
 
 export default nextConfig;
