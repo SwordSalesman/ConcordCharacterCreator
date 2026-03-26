@@ -27,7 +27,7 @@ function removeAllNewlines(input?: string): string {
 	return input.replace(/(?:\r\n|\r|\n)/g, ". ").replace(/"/g, "'");
 }
 
-export function ApprovalsPage() {
+export function Approvals() {
 	const router = useRouter();
 	const [characters, setCharacters] = useState<Character[]>([]);
 	const [selectedChar, setSelectedChar] = useState<Character | null>(null);
@@ -212,5 +212,3 @@ export function ApprovalsPage() {
 		</div>
 	);
 }
-
-export default ApprovalsPage;

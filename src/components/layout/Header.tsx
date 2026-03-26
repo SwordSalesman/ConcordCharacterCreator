@@ -139,7 +139,7 @@ export function Header({
 								setShowLoginModal(true);
 							}}
 							spinner={loading}
-							size="icon"
+							size={user ? "icon" : "default"}
 						>
 							<div className="flex gap-2 items-center">
 								{user ? (

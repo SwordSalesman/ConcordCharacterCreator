@@ -23,7 +23,7 @@ export default function MaintenanceScreen() {
 		}`;
 
 	return (
-		<div className="fixed inset-0 h-screen w-screen bg-white z-[1000]">
+		<div className="fixed inset-0 h-screen w-screen bg-white z-[1000] text-black">
 			<style>{hammerKeyframes + sigilKeyframes}</style>
 			<div className="absolute left-1/2 top-[30%] w-[90%] h-[90%] -translate-x-1/2 -translate-y-1/2 text-center flex flex-col items-center justify-center gap-2">
 				<div className="relative h-10 w-20">
@@ -36,7 +36,7 @@ export default function MaintenanceScreen() {
 					<div
 						className="absolute left-1/2 w-10 h-10"
 						style={{
-							animation: "sigil-quiver 3s ease-in-out infinite",
+							animation: "sigil-quiver 3s ease-out infinite",
 							animationDelay: "1.15s",
 						}}
 					>
@@ -46,8 +46,7 @@ export default function MaintenanceScreen() {
 				<h1 className="text-lg font-bold">Under Maintenance</h1>
 				<div className="w-sm flex flex-col gap-0 leading-6">
 					<p>
-						Artisans are hard at work improving the site. By Anarch's grace it won't
-						take long.
+						Artisans are hard at work improving the site. Hopefully it won't take long.
 					</p>
 				</div>
 			</div>

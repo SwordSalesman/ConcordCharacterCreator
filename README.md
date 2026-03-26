@@ -20,6 +20,8 @@
 
 ## To Do list
 
+- Get rid of the current account/theme button and replace with a cog 'settings' button. It spawns a modal which has all the options you need on it.
+    - Will
 - Fix the divine lore per sphere giving known ceremonies thing, you know the one.
 - When a player submits a character after they've been approved, their approval still reads 'approved'. This is treated as 'pending' by the approval window, need to make sure this is reflected in the exported sheet.
 - Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff

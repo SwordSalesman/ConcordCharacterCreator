@@ -1,10 +1,10 @@
-import { ApprovalsPage } from "@/components/approvals/Approvals";
+import { Approvals } from "@/components/approvals/Approvals";
 import ContentWrapper from "@/components/layout/ContentWrapper";
 
-export default function Approvals() {
+export default function ApprovalsPage() {
 	return (
 		<ContentWrapper layout="wide">
-			<ApprovalsPage />
+			<Approvals />
 		</ContentWrapper>
 	);
 }

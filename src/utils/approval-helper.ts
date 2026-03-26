@@ -12,16 +12,16 @@ export function getApprovalStatus({
 	let tickColorClass = "text-muted-foreground";
 	let submissionStatus = "Not Submitted";
 	if (submissionDate && (!approvalDate || approvalDate < submissionDate)) {
-		tickColorClass = "text-contrast";
+		tickColorClass = "muted-foreground";
 		submissionStatus = "Awaiting Review";
 	} else if (status === DENIED) {
-		tickColorClass = "text-destructive";
+		tickColorClass = "destructive";
 		submissionStatus = "Changes Requested";
 	} else if (status === APPROVED) {
-		tickColorClass = "text-contrast";
+		tickColorClass = "success";
 		submissionStatus = "Approved";
 	} else if (status === ARCHIVED) {
-		tickColorClass = "text-muted-foreground";
+		tickColorClass = "muted-foreground";
 		submissionStatus = "Archived";
 	}
 
@@ -29,9 +29,9 @@ export function getApprovalStatus({
 		tickColorClass = "text-muted-foreground";
 	} else {
 		if (status === APPROVED) {
-			tickColorClass = "text-green-600 dark:text-green-400";
+			tickColorClass = "success";
 		} else if (status === DENIED) {
-			tickColorClass = "text-destructive";
+			tickColorClass = "destructive";
 		}
 	}
 

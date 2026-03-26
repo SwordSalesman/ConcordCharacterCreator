@@ -1,12 +1,10 @@
-import { Chip } from "@/components/common/Chip/Chip";
+import { Groups } from "@/components/groups/Groups";
 import ContentWrapper from "@/components/layout/ContentWrapper";
-import { RiSwordFill } from "react-icons/ri";
 
-export default function Groups() {
+export default function GroupsPage() {
 	return (
 		<ContentWrapper>
-			<p>groups</p>
-			<div className="flex gap-2 p-2"></div>
+			<Groups />
 		</ContentWrapper>
 	);
 }

@@ -12,15 +12,21 @@ import {
 } from "@/utils/constants";
 import { getSiteSettings } from "@/utils/settings";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import { FaStamp, FaUser, FaUsers } from "react-icons/fa";
-import { GiCircleClaws, GiScrollQuill } from "react-icons/gi";
+import { GiCircleClaws, GiScrollQuill, GiScrollUnfurled } from "react-icons/gi";
 
 export default function Home() {
 	const router = useRouter();
 	const { isAdmin, loading } = useUserContext();
 	const siteSettings = getSiteSettings();
 
-	const linkStyle = "w-50";
+	const linkStyle = "w-42 relative overflow-hidden";
+
+	function copyText(text: string) {
+		navigator.clipboard.writeText(text);
+		toast.success(`Copied '${text}' to clipboard`);
+	}
 
 	return (
 		<FormContextProvider>
@@ -31,11 +37,13 @@ export default function Home() {
 						The Portal for Concordian Heroes
 					</i>
 				</div>
-				<p>
-					Use this site to submit your Hero and Player Group/s for Concord Larp. You'll
+				<p className="text-center">
+					Use this site to submit your Hero and Player Groups for Concord Larp. You'll
 					need to sign in to submit. If you run into an issue, get in touch at{" "}
-					<i>concordcharacters@gmail.com</i>. Dummy text to see how this looks when we
-					have some more things to say in this section.
+					<i onClick={() => copyText("concordcharacters@gmail.com")}>
+						concordcharacters@gmail.com (click to copy)
+					</i>
+					.
 				</p>
 				<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
 					<Button onClick={() => router.push(PATH_HERO)} className={linkStyle} size="lg">
@@ -82,16 +90,6 @@ export default function Home() {
 								<FaStamp />
 								<p>Approvals</p>
 							</Button>
-							{siteSettings.pages.ceremonies && (
-								<Button
-									onClick={() => router.push(PATH_CEREMONIES)}
-									className={linkStyle}
-									size="lg"
-								>
-									<GiCircleClaws />
-									<p>Ceremonies</p>
-								</Button>
-							)}
 						</div>
 					</div>
 				)}

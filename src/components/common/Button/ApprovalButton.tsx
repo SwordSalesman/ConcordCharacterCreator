@@ -26,7 +26,7 @@ export function ApprovalButton() {
 					spinner={formLoading}
 					className="animate-in fade-in"
 				>
-					<div className={`flex gap-2 items-center ${tickColorClass}`}>
+					<div className={`flex gap-2 items-center text-${tickColorClass}`}>
 						<p>{submissionStatus}</p>
 						<BiSolidBadgeCheck />
 					</div>
