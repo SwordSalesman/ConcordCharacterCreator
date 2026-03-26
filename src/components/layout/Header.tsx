@@ -1,35 +1,24 @@
-import { BiAdjust, BiSolidBadgeCheck } from "react-icons/bi";
+import { BiAdjust } from "react-icons/bi";
 import ConcordSigil from "../../data/images/concord-logo.png";
 import { FaUserCheck, FaUserPlus } from "react-icons/fa";
-import React, { useState } from "react";
-import {
-	APPROVED,
-	DENIED,
-	PATH_APPROVALS,
-	PATH_GROUPS,
-	PATH_HERO,
-	PATH_HOME,
-} from "../../utils/constants";
+import { useState } from "react";
+import { PATH_APPROVALS, PATH_GROUPS, PATH_HERO, PATH_HOME } from "../../utils/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import useUserContext from "@/hooks/use-user-context";
-import useFormContext from "@/hooks/use-form-context";
 import { Button } from "../common/Button/Button";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { contentNarrow, contentWide } from "./ContentWrapper";
-import { getApprovalStatus } from "@/utils/approval-helper";
+import { contentWide } from "./ContentWrapper";
 import LoginModal from "../common/Modal/LoginModal";
-import { ApprovalModal } from "../common/Modal/ApprovalModal";
 import {
 	NavigationMenu,
 	NavigationMenuContent,
-	NavigationMenuIndicator,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from "../ui/navigation-menu";
+import { ApprovalButton } from "../common/Button/ApprovalButton";
 
 export function Header({
 	toggleTheme,
@@ -38,26 +27,10 @@ export function Header({
 	toggleTheme: () => void;
 	handleLogoClick?: () => void;
 }) {
-	const { user, name, isAdmin, loading } = useUserContext();
-	const { approval, form, loading: formLoading } = useFormContext();
-	const { date } = form;
-	const { pathname, push } = useRouter();
-	const [showApprovalModal, setShowApprovalModal] = useState(false);
+	const { user, isAdmin, loading } = useUserContext();
+	const { pathname } = useRouter();
+
 	const [showLoginModal, setShowLoginModal] = useState(false);
-
-	const { submissionStatus, tickColorClass } = getApprovalStatus({
-		status: approval?.status,
-		submissionDate: date,
-		approvalDate: approval?.date,
-	});
-
-	function handleApprovalSelect() {
-		setShowApprovalModal(true);
-	}
-
-	function handleCloseApprovalModal() {
-		setShowApprovalModal(false);
-	}
 
 	function HeaderLink({ label, url, newtab }: { label: string; url: string; newtab?: boolean }) {
 		const active = pathname === url;
@@ -160,24 +133,12 @@ export function Header({
 					</div>
 
 					<div className="flex items-center flex-row flex-1 gap-1 justify-end">
-						{user && pathname === PATH_HERO ? (
-							<Button
-								onClick={handleApprovalSelect}
-								spinner={formLoading}
-								className="animate-in fade-in"
-							>
-								<div className={`flex gap-2 items-center ${tickColorClass}`}>
-									<p>{submissionStatus}</p>
-									<BiSolidBadgeCheck />
-								</div>
-							</Button>
-						) : null}
+						{pathname === PATH_HERO ? <ApprovalButton /> : null}
 						<Button
 							onClick={() => {
 								setShowLoginModal(true);
 							}}
 							spinner={loading}
-							// variant={"ghost"}
 							size="icon"
 						>
 							<div className="flex gap-2 items-center">
@@ -203,7 +164,6 @@ export function Header({
 				</div>
 			</div>
 			<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
-			<ApprovalModal open={showApprovalModal} onClose={() => setShowApprovalModal(false)} />
 		</>
 	);
 }

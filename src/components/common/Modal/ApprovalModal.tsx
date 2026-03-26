@@ -32,7 +32,9 @@ export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () =>
 			subtitle={submitDateString ? `Last submitted on ${submitDateString}` : undefined}
 			body={
 				<div className="flex flex-col gap-1">
-					<p className="text-sm text-muted-foreground">{note}</p>
+					<p className="text-sm text-muted-foreground">
+						{submissionStatus} by {note}
+					</p>
 					{comment && (
 						<blockquote className={`pl-3 border-l-4 border-primary italic`}>
 							{stringToNode(comment)}

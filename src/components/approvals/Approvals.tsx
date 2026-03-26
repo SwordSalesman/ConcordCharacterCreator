@@ -64,21 +64,22 @@ export function ApprovalsPage() {
 				setCharacters(newChars);
 				calcCounts(newChars);
 
-				const newCsvData = newChars.map((c) => ({
-					...c,
-					backstory: removeAllNewlines(c.backstory),
-					invDetails: removeAllNewlines(c.invDetails),
-					icGoals: removeAllNewlines(c.icGoals),
-					oocGoals: removeAllNewlines(c.oocGoals),
-					approval: {
-						...c.approval,
-						comment: removeAllNewlines(c.approval?.comment),
-					},
-				}));
+				const newCsvData = newChars
+					.filter((c) => c.approval?.status !== ARCHIVED)
+					.map((c) => ({
+						...c,
+						backstory: removeAllNewlines(c.backstory),
+						invDetails: removeAllNewlines(c.invDetails),
+						icGoals: removeAllNewlines(c.icGoals),
+						oocGoals: removeAllNewlines(c.oocGoals),
+						approval: {
+							...c.approval,
+							comment: removeAllNewlines(c.approval?.comment),
+						},
+					}));
 				setCsvData(newCsvData);
 
-				console.log("Fetched characters and approvals:", newChars);
-				console.log("CSV data preview:", newCsvData);
+				console.debug("Fetched characters and approvals:", newChars);
 			}
 		}
 		if (isAdmin) {

@@ -1,4 +1,4 @@
-import { APPROVED, DENIED } from "./constants";
+import { APPROVED, ARCHIVED, DENIED } from "./constants";
 
 export function getApprovalStatus({
 	status,
@@ -20,6 +20,9 @@ export function getApprovalStatus({
 	} else if (status === APPROVED) {
 		tickColorClass = "text-contrast";
 		submissionStatus = "Approved";
+	} else if (status === ARCHIVED) {
+		tickColorClass = "text-muted-foreground";
+		submissionStatus = "Archived";
 	}
 
 	if (!submissionDate) {
