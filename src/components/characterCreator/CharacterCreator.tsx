@@ -10,6 +10,7 @@ import { OptionsPage } from "./tabs/OptionsPage.tsx";
 import { BackgroundPage } from "./tabs/BackgroundPage.tsx";
 import { ReviewPage } from "./tabs/ReviewPage.tsx";
 import { Creator } from "../creator/Creator.tsx";
+import { LoadingSpinner } from "../common/LoadingSpinner.tsx";
 
 export interface Tab {
 	name: string;
@@ -25,8 +26,14 @@ const tabs: Tab[] = [
 ];
 
 export function CharacterCreator() {
-	const { name } = useUserContext();
-	const { getFormSummary, resetForm, validateForm, setField } = useFormContext();
+	const { user, name, loading: userLoading } = useUserContext();
+	const {
+		getFormSummary,
+		resetForm,
+		validateForm,
+		setField,
+		loading: formLoading,
+	} = useFormContext();
 	const { valid } = validateForm();
 
 	const handleSave = async () => {
@@ -39,6 +46,14 @@ export function CharacterCreator() {
 			},
 		);
 	};
+
+	if (userLoading || (user && formLoading)) {
+		return (
+			<div className="mt-8">
+				<LoadingSpinner />
+			</div>
+		);
+	}
 
 	return (
 		<Creator

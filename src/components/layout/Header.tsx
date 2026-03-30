@@ -104,10 +104,7 @@ export function Header({
 											<li>
 												{headerLinksData.map((link) => {
 													return (
-														<NavigationMenuLink
-															key={link.label}
-															asChild
-														>
+														<NavigationMenuLink key={link.label}>
 															<Link
 																href={link.url}
 																target={

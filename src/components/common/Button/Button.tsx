@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { CgSpinner } from "react-icons/cg";
 
@@ -48,24 +47,17 @@ function Button({
 	variant,
 	size,
 	spinner,
-	asChild = false,
+	children,
 	...props
-}: { spinner?: boolean } & React.ComponentProps<"button"> &
-	VariantProps<typeof buttonVariants> & {
-		asChild?: boolean;
-	}) {
-	const Comp = asChild ? Slot : "button";
-
-	if (spinner) {
-		props.children = <CgSpinner className="animate-spin" />;
-	}
-
+}: { spinner?: boolean } & React.ComponentProps<"button"> & VariantProps<typeof buttonVariants>) {
 	return (
-		<Comp
+		<button
 			data-slot="button"
 			className={cn(buttonVariants({ variant, size }), className)}
 			{...props}
-		/>
+		>
+			{spinner ? <CgSpinner className="animate-spin" /> : children}
+		</button>
 	);
 }
 

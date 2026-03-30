@@ -70,7 +70,7 @@ interface FormState {
 	changes: string[];
 }
 
-interface Approval {
+export interface Approval {
 	date: string;
 	author: string;
 	status: string;

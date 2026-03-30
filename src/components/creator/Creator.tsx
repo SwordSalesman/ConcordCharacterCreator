@@ -189,7 +189,14 @@ export function Creator({
 				onClose={() => setShowSubmitModal(false)}
 				actions={[
 					{ label: "Cancel", onClick: () => setShowSubmitModal(false) },
-					{ label: "Submit", onClick: onSubmit, variant: "primary" },
+					{
+						label: "Submit",
+						onClick: () => {
+							onSubmit();
+							setShowSubmitModal(false);
+						},
+						variant: "primary",
+					},
 				]}
 				size="small"
 			/>
@@ -200,7 +207,14 @@ export function Creator({
 				onClose={() => setShowResetModal(false)}
 				actions={[
 					{ label: "Cancel", onClick: () => setShowResetModal(false) },
-					{ label: "Submit", onClick: onReset, variant: "primary" },
+					{
+						label: "Reset",
+						onClick: () => {
+							onReset();
+							setShowResetModal(false);
+						},
+						variant: "primary",
+					},
 				]}
 				size="small"
 			/>

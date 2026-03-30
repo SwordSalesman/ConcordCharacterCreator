@@ -148,7 +148,11 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 							by {author} on {prettifyDate(date)}:
 						</p>
 						<blockquote className={`pl-2 border-l-4 border-primary italic`}>
-							{stringToNode(previousComment)}
+							{previousComment ? (
+								stringToNode(previousComment)
+							) : (
+								<i className="text-muted-foreground">No comment</i>
+							)}
 						</blockquote>
 					</div>
 				) : (
@@ -159,7 +163,7 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 
 					<div
 						className={cn(
-							"flex flex-row items-center justify-between rounded-md",
+							"flex flex-col items-left sm:flex-row sm:justify-between gap-1 rounded-md",
 							!validInputs.validStatus ? "p-1 border-1 border-destructive" : "",
 						)}
 					>
@@ -167,7 +171,7 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 							{approvalOptions[0]}
 							{approvalOptions[1]}
 						</div>
-						{approvalOptions[2]}
+						<div>{approvalOptions[2]}</div>
 					</div>
 					<TextArea
 						value={comment}

@@ -3,7 +3,7 @@ import ContentWrapper from "@/components/layout/ContentWrapper";
 
 export default function HeroPage() {
 	return (
-		<ContentWrapper layout="narrow">
+		<ContentWrapper>
 			<CharacterCreator />
 		</ContentWrapper>
 	);

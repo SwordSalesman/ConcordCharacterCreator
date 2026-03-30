@@ -21,8 +21,6 @@ export default function Home() {
 	const { isAdmin, loading } = useUserContext();
 	const siteSettings = getSiteSettings();
 
-	const linkStyle = "w-42 relative overflow-hidden";
-
 	function copyText(text: string) {
 		navigator.clipboard.writeText(text);
 		toast.success(`Copied '${text}' to clipboard`);
@@ -46,29 +44,21 @@ export default function Home() {
 					.
 				</p>
 				<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-					<Button onClick={() => router.push(PATH_HERO)} className={linkStyle} size="lg">
-						<FaUser />
-						<p>Submit your Hero</p>
+					<Button onClick={() => router.push(PATH_HERO)} size="lg">
+						<FaUser className="size-6" />
+						<p className="text-lg">Submit your Hero</p>
 					</Button>
 					{siteSettings.pages.groups && (
-						<Button
-							onClick={() => router.push(PATH_GROUPS)}
-							className={linkStyle}
-							size="lg"
-						>
-							<FaUsers />
+						<Button onClick={() => router.push(PATH_GROUPS)} size="lg">
+							<FaUsers className="size-6" />
 							{/* <FaBanner */}
-							<p>Submit your Group </p>
+							<p className="text-lg">Submit your Group </p>
 						</Button>
 					)}
 					{siteSettings.pages.downtime && (
-						<Button
-							onClick={() => router.push(PATH_DOWNTIME)}
-							className={linkStyle}
-							size="lg"
-						>
-							<GiScrollQuill />
-							<p>Submit your Downtime</p>
+						<Button onClick={() => router.push(PATH_DOWNTIME)} size="lg">
+							<GiScrollQuill className="size-6" />
+							<p className="text-lg">Submit your Downtime</p>
 						</Button>
 					)}
 				</div>
@@ -82,13 +72,9 @@ export default function Home() {
 							Team functions
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-							<Button
-								onClick={() => router.push(PATH_APPROVALS)}
-								className={linkStyle}
-								size="lg"
-							>
-								<FaStamp />
-								<p>Approvals</p>
+							<Button onClick={() => router.push(PATH_APPROVALS)} size="lg">
+								<FaStamp className="size-6" />
+								<p className="text-lg">Approvals</p>
 							</Button>
 						</div>
 					</div>

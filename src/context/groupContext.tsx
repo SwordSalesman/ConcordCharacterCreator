@@ -4,12 +4,63 @@ import { getGroup } from "../hooks/use-firebase";
 import useUserContext from "../hooks/use-user-context";
 import { Realm } from "@/data/tables/realms";
 
-interface GroupState {
+export type GroupType = "Band" | "Sect";
+
+export interface KnightlyOrderDetails {
+	tradition?: string;
+	traditionType?: string;
+	charge?: string;
+	structure?: string;
+	attitudes?: string;
+}
+
+export interface NobleHouseDetails {
+	duchy?: string;
+	traditions?: string;
+	motto?: string;
+}
+
+export interface ClanDetails {
+	type?: string;
+	fire?: string;
+	blood?: string;
+	law?: string;
+}
+
+export interface GuilderDetails {
+	guilderArchetype?: string;
+	guild?: string;
+}
+
+export interface HavenDetails {
+	traditions?: string;
+}
+
+export interface BoroughDetails {
+	toil?: string;
+	vigour?: string;
+	ironclad?: string;
+	citadel?: string;
+}
+
+export type ArchetypeDetails =
+	| GuilderDetails
+	| HavenDetails
+	| ClanDetails
+	| NobleHouseDetails
+	| KnightlyOrderDetails;
+
+export interface GroupState {
 	date?: string;
+	type?: GroupType;
 	realm?: Realm;
-	type?: "Band" | "Sect";
-	archetype?: string;
 	name?: string;
+	archetype?: string;
+	archetypeDetails?: ArchetypeDetails;
+	visuals?: string;
+	history?: string;
+	oath?: string;
+	goals?: string;
 }
 
 interface Approval {
@@ -39,7 +90,12 @@ const initialState: GroupState = {};
 
 // Currently doesn't do anything. Leaving here for future expansion ease.
 function applyFieldSideEffects(state: GroupState, field: keyof GroupState): GroupState {
-	const newState = { ...state };
+	let newState = { ...state };
+
+	if (field === "archetype") {
+		newState = { ...newState, archetypeDetails: undefined };
+	}
+
 	return newState;
 }
 
@@ -100,11 +156,22 @@ export const GroupContext = createContext<GroupContextInterface>({
 	getFormSummary: () => ({}) as GroupStateSummary,
 });
 
-export default function GroupContextProvider({ children }: { children: React.ReactNode }) {
+export default function GroupContextProvider({
+	type,
+	startingRealm,
+	children,
+}: {
+	type: GroupType;
+	startingRealm?: Realm;
+	children: React.ReactNode;
+}) {
 	const { user } = useUserContext();
 	const [loading, setLoading] = useState(true);
 	const [approval, setApproval] = useState<Approval | undefined>(undefined);
-	const [groupState, dispatch] = useReducer(formReducer, initialState);
+	const [groupState, dispatch] = useReducer(formReducer, {
+		...initialState,
+		realm: startingRealm,
+	});
 
 	function setField<K extends keyof GroupState>(field: K, value: GroupState[K]) {
 		dispatch({ type: "SET_FIELD", field, value });
@@ -126,10 +193,13 @@ export default function GroupContextProvider({ children }: { children: React.Rea
 	useEffect(() => {
 		async function downloadForm() {
 			setLoading(true);
-			const newForm = await getGroup();
+			const newForm = await getGroup({ type });
 			setLoading(false);
 			if (newForm) {
-				setFormFromSummaryData(newForm as unknown as GroupStateSummary);
+				setFormFromSummaryData({
+					...newForm,
+					realm: startingRealm,
+				} as unknown as GroupStateSummary);
 				setApproval(newForm.approval as Approval);
 			}
 		}

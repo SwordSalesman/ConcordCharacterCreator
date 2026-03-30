@@ -134,7 +134,7 @@ export default function SkillsPage() {
 
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row w-full">
-			<ContentPane style={{ flex: 4 }}>
+			<ContentPane className="flex-4">
 				<SectionDivider>Remaining XP: {String(remaining.xp)}</SectionDivider>
 				{warning && <Warning>{warning}</Warning>}
 				{skillsData?.length > 0 ? (
@@ -145,7 +145,7 @@ export default function SkillsPage() {
 					</div>
 				)}
 			</ContentPane>
-			<ContentPane style={{ flex: 5 }}>
+			<ContentPane className="flex-5">
 				<Accordion items={renderedTabs} />
 			</ContentPane>
 		</div>

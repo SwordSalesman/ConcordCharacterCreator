@@ -42,10 +42,12 @@ export function Modal({
 				className={`${size === "small" ? "w-[300px]" : "w-[500px]"} text-left`}
 			>
 				<div className="flex flex-col gap-4">
-					<DialogHeader>
-						{title && <DialogTitle>{title}</DialogTitle>}
-						{subtitle && <DialogDescription>{subtitle}</DialogDescription>}
-					</DialogHeader>
+					{(title || subtitle) && (
+						<DialogHeader>
+							{title && <DialogTitle>{title}</DialogTitle>}
+							{subtitle && <DialogDescription>{subtitle}</DialogDescription>}
+						</DialogHeader>
+					)}
 					{body}
 					{actions && (
 						<div className={`flex justify-center sm:justify-end gap-2`}>

@@ -15,7 +15,7 @@ export function Intro() {
 		<div className="mt-6 max-w-lg text-left">
 			<div className="text-lg">
 				<i>
-					<b>Concord Group Builder</b>
+					<b>Concord Sect Builder</b>
 				</i>
 			</div>
 			<br />
@@ -46,15 +46,11 @@ export function Intro() {
 			<span className="text-left flex flex-col gap-1">
 				<b>How this works:</b>
 				<ul className="list-disc flex flex-col gap-1 ml-5">
-					<li>
-						You are submitting a player group for the realm of <b>{realm}</b>, with your
-						hero <b>{heroName}</b>. Your hero will automatically added as a group
-						member.
-					</li>
 					<li>Submit your group here, and it will go in for review.</li>
 					<li>
 						When your group is approved, any player in <b>{realm}</b> can select it when
-						submitting their hero.
+						submitting their hero. You can then let your group members know to resubmit
+						their hero with your group selected.
 					</li>
 				</ul>
 			</span>

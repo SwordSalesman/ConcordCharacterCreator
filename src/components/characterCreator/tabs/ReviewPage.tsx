@@ -67,79 +67,71 @@ export function ReviewPage() {
 	const fullGrace = grace ? graces.find((g) => g.name === grace) : undefined;
 
 	return (
-		<div className="flex flex-col items-center gap-[60px] w-[450px] max-w-[95vw]">
-			<div className="flex justify-center leading-[1.1rem] w-full min-w-[300px] min-[600px]:min-w-[400px]">
-				<ContentPane>
-					{!valid ? invalidWarning : null}
-					{xpWarningText && <Warning>{xpWarningText}</Warning>}
-					<div className="flex flex-col items-center mt-2 gap-2 mb-6">
-						<div>
-							<h2 className="text-xl leading-6">
-								{heroName ? heroName : "Nameless Hero"}
-							</h2>
-							<div className="italic text-muted-foreground">
-								{realmFull ? realmFull.citizen : "Realmless"}
-								{archetype ? " " + archetype : ""}
-							</div>
-							{fullGrace && (
-								<div className="italic text-muted-foreground">
-									{`${fullGrace.name}, Graced by ${fullGrace.sphere}`}
-								</div>
-							)}
-						</div>
-						<StyledBorder />
-						<ReviewItem label="Summits attended">{gamesPlayed}</ReviewItem>
-						{investment && (
-							<ReviewItem label="Investment">
-								{`Tier ${invTier} `}
-								{invOption ? `${invOption} ` : ""}
-								{investment ? investment : ""}
-								{invTerritory ? ` in ${invTerritory}` : ""}
-								{invRegion ? `, ${invRegion}` : ""}
-								{invDiversify?.length ? (
-									<>
-										<br />
-										{`Diversifying in ${getSummaryFromArray(invDiversify)}`}
-									</>
-								) : (
-									""
-								)}
-							</ReviewItem>
-						)}
-						{(warband || sect) && <StyledBorder />}
-						{warband && <ReviewItem label="Band">{warband}</ReviewItem>}
-						{sect && <ReviewItem label="Sect">{sect}</ReviewItem>}
-						<StyledBorder />
-						<ReviewItem label="Skills">{getSummaryFromArray(skills)}</ReviewItem>
-						{spells.length > 0 && (
-							<ReviewItem label="Spells">{spells.join(delimiter)}</ReviewItem>
-						)}
-						{crafts.length > 0 && (
-							<ReviewItem label="Crafts">{crafts.join(delimiter)}</ReviewItem>
-						)}
-						{startingItem && (
-							<ReviewItem label="Starting Item">{startingItem}</ReviewItem>
-						)}
-						{potions.length > 0 && (
-							<ReviewItem label="Potions">{potions.join(delimiter)}</ReviewItem>
-						)}
-						{ceremonies.length > 0 && (
-							<ReviewItem label="Ceremonies">{ceremonies.join(delimiter)}</ReviewItem>
-						)}
+		<ContentPane layout="narrow">
+			{!valid ? invalidWarning : null}
+			{xpWarningText && <Warning>{xpWarningText}</Warning>}
+			<div className="flex flex-col items-center mt-2 gap-2 mb-6">
+				<div>
+					<h2 className="text-xl leading-6">{heroName ? heroName : "Nameless Hero"}</h2>
+					<div className="italic text-muted-foreground">
+						{realmFull ? realmFull.citizen : "Realmless"}
+						{archetype ? " " + archetype : ""}
 					</div>
-					<div className="rounded-[12px] px-2 [&_div_textarea]:border [&_div_textarea]:border-border [&_div_textarea]:border-solid">
-						<div className="flex flex-col gap-2 w-full my-4">
-							<TextArea
-								value={comments}
-								onChange={(e) => setField("comments", e.target.value)}
-								title={"Final submission comments"}
-								placeholder="Notes for the team (if any)"
-							/>
+					{fullGrace && (
+						<div className="italic text-muted-foreground">
+							{`${fullGrace.name}, Graced by ${fullGrace.sphere}`}
 						</div>
-					</div>
-				</ContentPane>
+					)}
+				</div>
+				<StyledBorder />
+				<ReviewItem label="Summits attended">{gamesPlayed}</ReviewItem>
+				{investment && (
+					<ReviewItem label="Investment">
+						{`Tier ${invTier} `}
+						{invOption ? `${invOption} ` : ""}
+						{investment ? investment : ""}
+						{invTerritory ? ` in ${invTerritory}` : ""}
+						{invRegion ? `, ${invRegion}` : ""}
+						{invDiversify?.length ? (
+							<>
+								<br />
+								{`Diversifying in ${getSummaryFromArray(invDiversify)}`}
+							</>
+						) : (
+							""
+						)}
+					</ReviewItem>
+				)}
+				{(warband || sect) && <StyledBorder />}
+				{warband && <ReviewItem label="Band">{warband}</ReviewItem>}
+				{sect && <ReviewItem label="Sect">{sect}</ReviewItem>}
+				<StyledBorder />
+				<ReviewItem label="Skills">{getSummaryFromArray(skills)}</ReviewItem>
+				{spells.length > 0 && (
+					<ReviewItem label="Spells">{spells.join(delimiter)}</ReviewItem>
+				)}
+				{crafts.length > 0 && (
+					<ReviewItem label="Crafts">{crafts.join(delimiter)}</ReviewItem>
+				)}
+				{startingItem && <ReviewItem label="Starting Item">{startingItem}</ReviewItem>}
+				{potions.length > 0 && (
+					<ReviewItem label="Potions">{potions.join(delimiter)}</ReviewItem>
+				)}
+				{ceremonies.length > 0 && (
+					<ReviewItem label="Ceremonies">{ceremonies.join(delimiter)}</ReviewItem>
+				)}
 			</div>
-		</div>
+			<div className="rounded-[12px] px-2 [&_div_textarea]:border [&_div_textarea]:border-border [&_div_textarea]:border-solid">
+				<div className="flex flex-col gap-2 w-full my-4">
+					<TextArea
+						value={comments}
+						onChange={(e) => setField("comments", e.target.value)}
+						title={"Final submission comments"}
+						placeholder="Notes for the team (if any)"
+					/>
+				</div>
+			</div>
+		</ContentPane>
 	);
 }
 

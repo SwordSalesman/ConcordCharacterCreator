@@ -2,7 +2,7 @@ import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { Button } from "@/components/common/Button/Button";
-import { fadeStripStyle } from "@/styles/Global";
+import { fadeStripStyle, titleWrapperStyle } from "@/styles/Global";
 
 export function IntroPage() {
 	const { form, setField } = useFormContext();
@@ -21,8 +21,6 @@ export function IntroPage() {
 			setField("gamesPlayed", gamesPlayed + 1);
 		}
 	};
-
-	const titleWrapperStyle = `${fadeStripStyle} text-lg p-2`;
 
 	return (
 		<div style={{ marginTop: "15px" }}>

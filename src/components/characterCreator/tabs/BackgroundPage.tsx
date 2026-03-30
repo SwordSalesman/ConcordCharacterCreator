@@ -194,11 +194,9 @@ export function BackgroundPage() {
 	];
 
 	return (
-		<div className="flex gap-2 flex-col sm:flex-row w-full max-w-[450px] mx-auto">
-			<ContentPane style={{ flex: 1 }}>
-				<SectionDivider>Tell us about your Hero</SectionDivider>
-				<Accordion items={tabs}></Accordion>
-			</ContentPane>
-		</div>
+		<ContentPane className="flex-1" layout="narrow">
+			<SectionDivider>Tell us about your Hero</SectionDivider>
+			<Accordion items={tabs}></Accordion>
+		</ContentPane>
 	);
 }

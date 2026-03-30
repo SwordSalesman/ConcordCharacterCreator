@@ -435,21 +435,23 @@ export function OptionsPage() {
 				</AccordionSection>
 			)}
 			{totalDiversifyOptions.length > 0 && (
-				<AccordionSection title="Investment Diversify Option" align="left">
-					{totalDiversifyOptions.map((item) => {
-						let selected = invDiversify?.includes(item.name);
-						return (
-							<Chip
-								onClick={() => toggleItem("invDiversify", item.name)}
-								selected={selected}
-								inactive={!selected && remaining.diversify <= 0}
-								key={item.name}
-							>
-								{item.name}
-							</Chip>
-						);
-					})}
-				</AccordionSection>
+				<div className="animate-warning-fade-in">
+					<AccordionSection title="Investment Diversify Option" align="left">
+						{totalDiversifyOptions.map((item) => {
+							let selected = invDiversify?.includes(item.name);
+							return (
+								<Chip
+									onClick={() => toggleItem("invDiversify", item.name)}
+									selected={selected}
+									inactive={!selected && remaining.diversify <= 0}
+									key={item.name}
+								>
+									{item.name}
+								</Chip>
+							);
+						})}
+					</AccordionSection>
+				</div>
 			)}
 			<AccordionSection
 				title="Investment Region"
