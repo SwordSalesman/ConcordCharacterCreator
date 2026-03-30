@@ -257,7 +257,7 @@ function FormContextProvider({ children }) {
 		setItems,
 		equateItems = (a, b) => {
 			return a.name === b.name;
-		}
+		},
 	) => {
 		if (!itemSet) {
 			setItems([item]);
@@ -274,7 +274,7 @@ function FormContextProvider({ children }) {
 		setItems,
 		equateItems = (a, b) => {
 			return a.name === b.name;
-		}
+		},
 	) => {
 		if (!itemSet) {
 			return;
@@ -290,7 +290,7 @@ function FormContextProvider({ children }) {
 		itemId = (i) => i.name,
 		equateItems = (a, b) => {
 			return a.name === b.name;
-		}
+		},
 	) => {
 		if (itemSet?.map((i) => itemId(i)).includes(itemId(item))) {
 			removeItem(item, itemSet, setItems, equateItems);
@@ -304,6 +304,7 @@ function FormContextProvider({ children }) {
 	const selectRealm = (selectedRealm) => {
 		setRealm(selectedRealm);
 		setArchetype([]);
+		setWarband(null);
 	};
 
 	// Checks if the bare minimum required fields have content in them

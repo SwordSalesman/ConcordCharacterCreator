@@ -7,13 +7,16 @@ import Chip from "../../../components/common/Chip/Chip";
 import { styled } from "styled-components";
 import { SectionWrapper } from "../../common/SectionDivider/SectionDivider.style";
 import { BackgroundPageWrapper } from "./BackgroundPage.style";
-import { AccordionSection } from "../../common/Accordion/AccordionSection";
+import { AccordionSection, Warning } from "../../common/Accordion/AccordionSection";
 import useRealmDetails from "../../../hooks/use-realm-details";
 import { useEffect, useState } from "react";
-import { archetypeWarning } from "../../../helpers/validity-helper";
+import { archetypeWarning, bandWarning } from "../../../helpers/validity-helper";
+import { MenuItem, Select } from "@mui/material";
+import { StyledSelect } from "../../common/TextInput/TextInput.style";
 
 var allArchetypes = require("../../../data/tables/archetypes.json");
 var allGraces = require("../../../data/tables/graces.json");
+var bands = require("../../../data/tables/bands.json");
 
 function BackgroundPage() {
 	const {
@@ -72,7 +75,7 @@ function BackgroundPage() {
 					key={"No Archetype"}
 				>
 					{"No Archetype"}
-				</Chip>
+				</Chip>,
 			);
 		} else {
 			newRender = <p style={{ opacity: 0.5, fontStyle: "italic" }}>Select a realm first</p>;
@@ -107,11 +110,14 @@ function BackgroundPage() {
 				}}
 			>
 				{"No Grace"}
-			</Chip>
+			</Chip>,
 		);
 		setRenderedGrace(newRender);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [realm, grace]);
+
+	const realmicBands = bands.filter((b) => b.realm === realm).map((b) => b.name);
+	const warbandWarningText = bandWarning(warband, realm);
 
 	const tabs = [
 		{
@@ -144,12 +150,27 @@ function BackgroundPage() {
 			link: "Player_Groups",
 			content: (
 				<BackgroundInputWrapper>
-					<TextInput
-						value={warband}
-						onChange={setWarband}
-						title="Band"
-						placeholder="Name of your Band (if any)"
-					/>
+					<div>
+						<p>Band</p>
+						{warbandWarningText && <Warning>{warbandWarningText}</Warning>}
+						<StyledSelect
+							value={warband}
+							onChange={(e) => setWarband(e.target.value)}
+							label="Band"
+							id="band-select"
+							size="small"
+							displayEmpty
+							inputProps={{ "aria-label": "Without label" }}
+							variant="standard"
+							invalid={!!warbandWarningText}
+						>
+							{realmicBands.map((b) => (
+								<MenuItem value={b} key={b}>
+									{b}
+								</MenuItem>
+							))}
+						</StyledSelect>
+					</div>
 					<TextInput
 						value={sect}
 						onChange={setSect}

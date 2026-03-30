@@ -15,7 +15,7 @@ import {
 import { getSummarisedSkillNames } from "../../../hooks/use-skill-helper";
 import { BackgroundInputWrapper } from "../background/BackgroundPage";
 import TextInput from "../../common/TextInput/TextInput";
-import { xpWarning } from "../../../helpers/validity-helper";
+import { bandWarning, xpWarning } from "../../../helpers/validity-helper";
 import { Warning } from "../../common/Accordion/AccordionSection";
 const graceData = require("../../../data/tables/graces.json");
 
@@ -100,6 +100,7 @@ function ReviewPage({ user }) {
 		</InvalidWarning>
 	);
 	const xpWarningText = xpWarning(remainingXp);
+	const bandWarningText = bandWarning(warband, realm);
 
 	return (
 		<ReviewPageWrapper>
@@ -107,6 +108,7 @@ function ReviewPage({ user }) {
 				<ContentPane mobileshow="true">
 					{!valid ? invalidWarning : null}
 					{xpWarningText && <Warning>{xpWarningText}</Warning>}
+					{bandWarningText && <Warning>{bandWarningText}</Warning>}
 					<div className="flex flex-col items-center mt-2 gap-2 mb-6">
 						<div>
 							<h2 className="text-xl leading-6">
@@ -120,7 +122,7 @@ function ReviewPage({ user }) {
 								<ReviewSubtitles>
 									{grace.map((g) => {
 										const fullGrace = graceData.find(
-											(gd) => gd.name === g.name
+											(gd) => gd.name === g.name,
 										);
 										return g.name + ", Graced By " + fullGrace.sphere;
 									})}

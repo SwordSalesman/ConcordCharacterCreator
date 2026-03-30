@@ -1,4 +1,4 @@
-import { TextareaAutosize } from "@mui/material";
+import { Select, TextareaAutosize } from "@mui/material";
 import { styled } from "styled-components";
 
 export const TextInputWrapper = styled.div`
@@ -45,4 +45,20 @@ export const FieldWarning = styled.p`
 	color: ${(props) => props.theme.error};
 	font-style: italic;
 	font-size: 0.8em;
+`;
+
+export const StyledSelect = styled(Select)`
+	background-color: ${(props) => props.theme.backgroundRaised};
+	/* resize: none; */
+	width: 98%;
+	color: ${(props) => props.theme.text} !important;
+
+	border-radius: 5px;
+
+	transition: 0.2s;
+
+	letter-spacing: -0.2px;
+	text-align: left;
+
+	border: ${(props) => (props.invalid ? `2px solid ${props.theme.error}` : "default")};
 `;
