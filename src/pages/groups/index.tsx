@@ -129,11 +129,11 @@ export default function GroupsPage() {
 				</Button>
 			</div>
 			{builderType === "Band" ? (
-				<GroupContextProvider type="Band" startingRealm={realm}>
+				<GroupContextProvider type="Band">
 					<BandCreator />
 				</GroupContextProvider>
 			) : (
-				<GroupContextProvider type="Sect" startingRealm={realm}>
+				<GroupContextProvider type="Sect">
 					<SectCreator />
 				</GroupContextProvider>
 			)}

@@ -8,7 +8,7 @@ export function getSiteSettings() {
 			ceremonies: false,
 		},
 		features: {
-			groupSubmissions: false,
+			groupSubmissions: true,
 		},
 	};
 }

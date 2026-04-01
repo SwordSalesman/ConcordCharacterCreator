@@ -7,6 +7,8 @@ import { Review } from "./bandTabs/Review";
 import { Enterprise } from "./bandTabs/Enterprise";
 import { saveGroup } from "@/hooks/use-firebase";
 import toast from "react-hot-toast";
+import useUserContext from "@/hooks/use-user-context";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 const tabs: Tab[] = [
 	{
@@ -32,7 +34,8 @@ const tabs: Tab[] = [
 ];
 
 export function BandCreator() {
-	const { group, validateForm, resetForm } = useGroupContext();
+	const { user, loading: userLoading } = useUserContext();
+	const { group, validateForm, resetForm, loading: formLoading } = useGroupContext();
 
 	function onSubmit() {
 		toast.promise(saveGroup({ group, type: "Band" }), {
@@ -47,6 +50,14 @@ export function BandCreator() {
 	}
 
 	const { valid } = validateForm();
+
+	if (userLoading || (user && formLoading)) {
+		return (
+			<div className="mt-8">
+				<LoadingSpinner />
+			</div>
+		);
+	}
 
 	return (
 		<Creator

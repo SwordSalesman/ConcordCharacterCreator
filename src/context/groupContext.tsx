@@ -50,6 +50,43 @@ export type ArchetypeDetails =
 	| NobleHouseDetails
 	| KnightlyOrderDetails;
 
+export const EnterpriseTypes = [
+	"Headquarters",
+	"Redoubt",
+	"Quartermaster",
+	"Bivouac",
+	"Cove",
+	"Shipyard",
+	"Marketplace",
+	"Assay",
+	"Merchant League",
+	"Syndicate",
+	"Community",
+	"Hunting Lodge",
+	"Shrine",
+	"Library",
+	"Laboratory",
+	"Graveyard",
+	"Haven",
+	"Wealdward",
+	"Quarter",
+	"Hospitality",
+	"Villa",
+	"Caravan",
+	"Dig",
+	"Estate",
+	"Keep",
+	"Underburrow",
+	"Pinnacle",
+] as const;
+export type EnterpriseType = (typeof EnterpriseTypes)[number];
+
+export interface Enterprise {
+	type?: EnterpriseType;
+	name?: string;
+	description?: string;
+}
+
 export interface GroupState {
 	date?: string;
 	type?: GroupType;
@@ -61,6 +98,7 @@ export interface GroupState {
 	history?: string;
 	oath?: string;
 	goals?: string;
+	enterprise?: Enterprise;
 }
 
 interface Approval {
@@ -158,11 +196,9 @@ export const GroupContext = createContext<GroupContextInterface>({
 
 export default function GroupContextProvider({
 	type,
-	startingRealm,
 	children,
 }: {
 	type: GroupType;
-	startingRealm?: Realm;
 	children: React.ReactNode;
 }) {
 	const { user } = useUserContext();
@@ -170,7 +206,6 @@ export default function GroupContextProvider({
 	const [approval, setApproval] = useState<Approval | undefined>(undefined);
 	const [groupState, dispatch] = useReducer(formReducer, {
 		...initialState,
-		realm: startingRealm,
 	});
 
 	function setField<K extends keyof GroupState>(field: K, value: GroupState[K]) {
@@ -198,7 +233,6 @@ export default function GroupContextProvider({
 			if (newForm) {
 				setFormFromSummaryData({
 					...newForm,
-					realm: startingRealm,
 				} as unknown as GroupStateSummary);
 				setApproval(newForm.approval as Approval);
 			}

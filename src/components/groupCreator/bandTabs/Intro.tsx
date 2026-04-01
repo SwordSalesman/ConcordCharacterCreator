@@ -2,10 +2,19 @@ import useFormContext from "../../../hooks/use-form-context";
 import { titleWrapperStyle } from "@/styles/Global";
 import { ApprovalReport } from "@/components/common/ApprovalReport/ApprovalReport";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
+import { useEffect } from "react";
+import useGroupContext from "@/hooks/use-group-context";
 
 export function Intro() {
 	const { form, approval } = useFormContext();
-	const { realm, heroName, date } = form;
+	const { setField } = useGroupContext();
+	const { realm, date } = form;
+
+	// Not a fan of this, but need to set realm initially as there isn't a selector for it like the character creator
+	useEffect(() => {
+		setField("type", "Band");
+		if (realm) setField("realm", realm);
+	}, [realm]);
 
 	return (
 		<ContentPane layout="narrow" className="gap-4 mt-4">

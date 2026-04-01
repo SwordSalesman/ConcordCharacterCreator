@@ -19,10 +19,11 @@ This is a **Next.js 15 / TypeScript** app (Pages Router) for a LARP character su
 
 ### State Management
 
-Two React contexts wrap the entire app (in `src/pages/_app.tsx`):
+Three React contexts are used across the app (wrapped in `src/pages/_app.tsx`):
 
 - **`UserContext`** (`src/context/userContext.tsx`) — Firebase auth state: current user, their name, and their role (0–4, where 4 = Admin). Access via `useUserContext()`.
 - **`FormContext`** (`src/context/formContext.tsx`) — All character creation form state via `useReducer`. Holds the full `FormState` object (realm, skills, background text, etc.), XP/slot remaining calculations, and validation. Access via `useFormContext()`. On mount, auto-loads the user's saved form from Firestore.
+- **`GroupContext`** (`src/context/groupContext.tsx`) — Form state for player group submissions (Bands and Sects) via `useReducer`. Holds `GroupState` (type, realm, name, archetype, archetypeDetails, visuals, history, oath, goals) plus an `approval` record. `GroupContextProvider` takes a `type` (`"Band" | "Sect"`) and optional `startingRealm` prop, and auto-loads the group from Firestore via `getGroup()` on mount. Access the context via `GroupContext` directly. Archetype-specific detail shapes (e.g. `GuilderDetails`, `ClanDetails`, `KnightlyOrderDetails`) are exported from this file.
 
 ### Character Creator Flow
 
@@ -46,10 +47,9 @@ Static game data (skills, realms, archetypes, crafts, etc.) lives in `src/data/t
 
 ### Styling Approach
 
-The codebase uses **two styling systems in parallel**:
+The codebase uses **Tailwind CSS v4** exclusively. Utility classes + `cn()` from `src/lib/utils.ts` (wraps `clsx` + `tailwind-merge`). styled-components has been fully removed.
 
-- **Tailwind CSS v4** — preferred for new components. Utility classes + `cn()` from `src/lib/utils.ts` (wraps `clsx` + `tailwind-merge`).
-- **styled-components** — legacy system still used in older components. Theme colors defined in `src/styles/Theme.styled.ts`; the `ThemeProvider` wraps the app. New work should prefer Tailwind.
+Shared Tailwind class strings (e.g. fade-strip, grid-mirror helpers) live in `src/styles/Global.ts` as exported constants.
 
 UI primitives come from **Radix UI** (dialog, navigation menu) and a local **Shadcn/UI** setup (`src/components/ui/`). New components should follow the Button pattern: CVA variants + Tailwind + Radix Slot where needed.
 

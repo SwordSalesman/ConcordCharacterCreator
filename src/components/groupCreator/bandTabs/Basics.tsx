@@ -33,7 +33,7 @@ export function Basics() {
 						No Archetype
 					</Chip>
 					{realmicBandArchetypes
-						// .filter((a) => a.realm === realm)
+						.filter((a) => a.realm === realm)
 						.map((a) => (
 							<Chip
 								key={a.name}

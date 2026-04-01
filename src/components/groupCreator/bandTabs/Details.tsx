@@ -1,8 +1,6 @@
-import useFormContext from "../../../hooks/use-form-context";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
-import { Input, TextArea } from "@/components/common/Input/Input";
+import { TextArea } from "@/components/common/Input/Input";
 import useGroupContext from "@/hooks/use-group-context";
-import { Chip } from "@/components/common/Chip/Chip";
 import { realmicPlayerGroupsLink } from "@/utils/odd-jobs";
 import WikiLink from "@/components/common/WikiLink/WikiLink";
 import { realmicBandArchetypes } from "@/data/tables/bandArchetypes";
@@ -20,7 +18,7 @@ import { PickOne } from "../PickOne";
 
 export function Details() {
 	const { group, setField } = useGroupContext();
-	const { name, type, archetype, goals, history, visuals, oath } = group;
+	const { archetype, goals, history, visuals, oath } = group;
 
 	const matchingArchetype = realmicBandArchetypes.find((a) => a.name === archetype);
 	const title = matchingArchetype?.name ?? "Band";
