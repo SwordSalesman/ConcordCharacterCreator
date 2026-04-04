@@ -164,6 +164,9 @@ function BackgroundPage() {
 							variant="standard"
 							invalid={!!warbandWarningText}
 						>
+							<MenuItem value="" key="none">
+								<em>[None]</em>
+							</MenuItem>
 							{realmicBands.map((b) => (
 								<MenuItem value={b} key={b}>
 									{b}
