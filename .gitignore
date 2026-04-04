@@ -25,4 +25,5 @@ yarn-error.log*
 .env
 .next
 .open-next
+# Used for next build output
 /out
