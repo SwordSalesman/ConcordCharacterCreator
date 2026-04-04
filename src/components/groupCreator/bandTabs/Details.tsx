@@ -42,17 +42,6 @@ export function Details() {
 			{archetype === "Knightly Order" && <KnightlyOrderDetailsSection />}
 			{archetype === "Borough" && <BoroughDetailsSection />}
 			<TextArea
-				placeholder="History"
-				label={
-					matchingArchetype?.prompts?.history?.label ||
-					`What is the history of your ${title}?`
-				}
-				sublabel={matchingArchetype?.prompts?.history?.sublabel}
-				id="history"
-				value={history}
-				onChange={(e) => setField("history", e.target.value)}
-			/>
-			<TextArea
 				placeholder="Visuals"
 				label={
 					matchingArchetype?.prompts?.visuals?.label ||
@@ -62,6 +51,17 @@ export function Details() {
 				id="visuals"
 				value={visuals}
 				onChange={(e) => setField("visuals", e.target.value)}
+			/>
+			<TextArea
+				placeholder="History"
+				label={
+					matchingArchetype?.prompts?.history?.label ||
+					`What is the history of your ${title}?`
+				}
+				sublabel={matchingArchetype?.prompts?.history?.sublabel}
+				id="history"
+				value={history}
+				onChange={(e) => setField("history", e.target.value)}
 			/>
 			<TextArea
 				placeholder="Goals"

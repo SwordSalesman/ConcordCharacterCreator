@@ -1,23 +1,18 @@
-import useFormContext from "../../../hooks/use-form-context";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
-import { Input, TextArea } from "@/components/common/Input/Input";
 import useGroupContext from "@/hooks/use-group-context";
-import { Chip } from "@/components/common/Chip/Chip";
-import { realmicPlayerGroupsLink } from "@/utils/odd-jobs";
-import WikiLink from "@/components/common/WikiLink/WikiLink";
-import { realmicBandArchetypes } from "@/data/tables/bandArchetypes";
 import { getRealmData } from "@/utils/data-helper";
+import { GuilderDetails } from "@/context/groupContext";
 
-function ReviewItem({ label, children }: { label: string; children: React.ReactNode }) {
+export function ReviewItem({ label, children }: { label: string; children: React.ReactNode }) {
 	return (
 		<div>
-			<div className="text-muted-foreground text-sm">{label}</div>
-			<div className="text-foreground">{children}</div>
+			<div className="text-muted-foreground text-sm leading-[0.8rem]">{label}</div>
+			<div className="text-foreground">{children ?? "None provided."}</div>
 		</div>
 	);
 }
 
-function StyledBorder() {
+export function StyledBorder() {
 	return (
 		<div
 			// className="w-full h-[1px] bg-[linear-gradient(90deg,transparent_0%,var(--border)_50%,transparent_100%)]"
@@ -28,7 +23,8 @@ function StyledBorder() {
 
 export function Review() {
 	const { group } = useGroupContext();
-	const { name, realm, archetype, enterprise, archetypeDetails } = group;
+	const { name, realm, archetype, enterprise, archetypeDetails, history, visuals, oath, goals } =
+		group;
 
 	/*
 		archetype?: string;	
@@ -43,21 +39,44 @@ export function Review() {
 	const realmicTitle = realm ? getRealmData(realm)?.citizen : "Realmless";
 
 	return (
-		<ContentPane layout="narrow" className="text-center mt-4 gap-4 text-wrap-balance">
+		<ContentPane layout="narrow" className="text-center mt-4 gap-2 text-wrap-balance">
 			<div>
 				<h2 className="text-xl">{name}</h2>
 				<div className="italic text-muted-foreground">
 					{`${realmicTitle} ${archetype ? archetype : "Band"}`}
 				</div>
 			</div>
-			<ReviewItem label="Band Name">{name}</ReviewItem>
-			<ReviewItem label="Realm">{realm}</ReviewItem>
-			<ReviewItem label="Archetype">{archetype}</ReviewItem>
-			<ReviewItem label="">{archetype}</ReviewItem>
+			{
+				<p className="italic text-muted-foreground">
+					{oath ? (oath?.startsWith('"') ? oath : `"${oath}"`) : "No oath provided."}
+				</p>
+			}
+			<StyledBorder />
+			{archetype === "Guilder" && <GuilderDetailsSection />}
+			{/* {archetype === "Haven" && <HavenDetailsSection />}
+			{archetype === "Clan" && <ClanDetailsSection />}
+			{archetype === "Noble House" && <NobleHouseDetailsSection />}
+			{archetype === "Knightly Order" && <KnightlyOrderDetailsSection />}
+			{archetype === "Borough" && <BoroughDetailsSection />} */}
+			<ReviewItem label="Visuals">{visuals}</ReviewItem>
+			<ReviewItem label="History">{history}</ReviewItem>
+			<ReviewItem label="Goals">{goals}</ReviewItem>
 			<StyledBorder />
 			<ReviewItem label="Enterprise">{enterprise?.name}</ReviewItem>
 			<ReviewItem label="Enterprise Type">{enterprise?.type}</ReviewItem>
 			<ReviewItem label="Enterprise Description">{enterprise?.description}</ReviewItem>
 		</ContentPane>
+	);
+}
+
+function GuilderDetailsSection() {
+	const { group } = useGroupContext();
+	const { guild, guilderArchetype } = (group.archetypeDetails as GuilderDetails) || {};
+
+	return (
+		<>
+			<ReviewItem label="Guilder Archetype">{guilderArchetype}</ReviewItem>
+			<ReviewItem label="Aligned Guild">{guild}</ReviewItem>
+		</>
 	);
 }

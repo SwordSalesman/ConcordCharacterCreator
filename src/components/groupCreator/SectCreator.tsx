@@ -1,11 +1,12 @@
 import { Creator, Tab } from "../creator/Creator";
 import useGroupContext from "@/hooks/use-group-context";
-import { Intro } from "./bandTabs/Intro";
-import { Basics } from "./bandTabs/Basics";
-import { Details } from "./bandTabs/Details";
-import { Review } from "./bandTabs/Review";
+import { Intro } from "./sectTabs/Intro";
+import { Details } from "./sectTabs/Details";
 import { saveGroup } from "@/hooks/use-firebase";
 import toast from "react-hot-toast";
+import useUserContext from "@/hooks/use-user-context";
+import { LoadingSpinner } from "../common/LoadingSpinner";
+import { Review } from "./sectTabs/Review";
 
 const tabs: Tab[] = [
 	{
@@ -13,16 +14,8 @@ const tabs: Tab[] = [
 		content: <Intro />,
 	},
 	{
-		name: "Basics",
-		content: <Basics />,
-	},
-	{
 		name: "Details",
 		content: <Details />,
-	},
-	{
-		name: "Enterprise",
-		content: <div>Nothing yet!</div>,
 	},
 	{
 		name: "Review",
@@ -31,7 +24,8 @@ const tabs: Tab[] = [
 ];
 
 export function SectCreator() {
-	const { group, validateForm } = useGroupContext();
+	const { user, loading: userLoading } = useUserContext();
+	const { group, validateForm, resetForm, loading: formLoading } = useGroupContext();
 
 	function onSubmit() {
 		toast.promise(saveGroup({ group, type: "Sect" }), {
@@ -42,10 +36,18 @@ export function SectCreator() {
 	}
 
 	function onReset() {
-		console.log("reset");
+		resetForm();
 	}
 
 	const { valid } = validateForm();
+
+	if (userLoading || (user && formLoading)) {
+		return (
+			<div className="mt-8">
+				<LoadingSpinner />
+			</div>
+		);
+	}
 
 	return (
 		<Creator

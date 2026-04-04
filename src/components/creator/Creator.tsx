@@ -175,7 +175,7 @@ export function Creator({
 					<Image
 						src={realmImage}
 						className={`sm:absolute fixed w-[500px] z-[-1] pointer-events-none bottom-[-80px] left-[-80px]
-							select-none blur-[2px] opacity-15 dark:opacity-40 animate-realm-logo-in`}
+							select-none blur-[2px] opacity-10 dark:opacity-35 animate-realm-logo-in`}
 						alt="Realm Background"
 					/>
 				) : null}

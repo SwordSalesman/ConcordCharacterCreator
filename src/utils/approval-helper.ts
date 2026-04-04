@@ -23,16 +23,8 @@ export function getApprovalStatus({
 	} else if (status === ARCHIVED) {
 		tickColorClass = "text-muted-foreground";
 		submissionStatus = "Archived";
-	}
-
-	if (!submissionDate) {
+	} else if (!submissionDate) {
 		tickColorClass = "text-muted-foreground";
-	} else {
-		if (status === APPROVED) {
-			tickColorClass = "text-success";
-		} else if (status === DENIED) {
-			tickColorClass = "text-destructive";
-		}
 	}
 
 	return { submissionStatus, tickColorClass };
