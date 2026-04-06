@@ -11,8 +11,8 @@ import { Button } from "../common/Button/Button";
 import { BiExport } from "react-icons/bi";
 import { CSVLink } from "react-csv";
 import { getCurrentDate } from "../../utils/date-helper";
-import { handleMigrateInvestments } from "../../utils/migration-helper";
 import { ApprovalRecord, Character } from "./types";
+import { getSiteSettings } from "@/utils/settings";
 
 export interface Counts {
 	pending: number;
@@ -190,7 +190,24 @@ export function Approvals() {
 						</div>
 					</Button>
 				</CSVLink>
+				{/* <UploadGroupList /> */}
 				<div className="border border-border rounded-tl-[10px] rounded-tr-[10px] flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+					{getSiteSettings().features.groupSubmissions && (
+						<div className="flex justify-around">
+							<Button
+								className="flex-1 border-none rounded-[0px] bg-background-raised"
+								variant="ghost"
+							>
+								Heroes
+							</Button>
+							<Button
+								className="flex-1 border-none rounded-[0px] bg-background-raised"
+								variant="ghost"
+							>
+								Bands
+							</Button>
+						</div>
+					)}
 					<ListFilter
 						filter={filter}
 						selectFilter={handleSelectFilter}

@@ -35,7 +35,7 @@ export function BackgroundPage() {
 		gamesPlayed,
 	} = form;
 	const fullRealm = realm ? getRealmData(realm) : undefined;
-	const [bands, setBands] = useState<string[]>([]);
+	const [bands, setBands] = useState<{ realm: string; name: string }[]>([]);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -178,11 +178,13 @@ export function BackgroundPage() {
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value="[None]">[None]</SelectItem>
-										{bands.map((band) => (
-											<SelectItem value={band} key={band}>
-												{band}
-											</SelectItem>
-										))}
+										{bands
+											.filter((band) => band.realm === realm)
+											.map((band) => (
+												<SelectItem value={band.name} key={band.name}>
+													{band.name}
+												</SelectItem>
+											))}
 									</SelectContent>
 								</Select>
 							</div>

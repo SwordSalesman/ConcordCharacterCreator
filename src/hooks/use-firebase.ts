@@ -194,6 +194,27 @@ const saveGroupApproval = async ({
 	return;
 };
 
+type GroupListEntryType = {
+	name: string;
+	realm: string;
+};
+
+type GroupListType = {
+	bands: GroupListEntryType[];
+	sects: GroupListEntryType[];
+};
+
+const saveGroupList = async ({ list }: { list: GroupListType }) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const date = getCurrentDate();
+
+	await setDoc(doc(db, "public", "groupList"), {
+		...list,
+		date: date,
+	});
+	return;
+};
+
 // Used in admin commands to update users without updating their submission date
 const migrateUser = async (userId: string, form: Record<string, any>) => {
 	await setDoc(doc(db, "characters", userId), form);
@@ -351,6 +372,7 @@ export {
 	getCharacterList,
 	saveApproval,
 	saveGroup,
+	saveGroupList,
 	getApproval,
 	getGroup,
 	getUserApproval,
