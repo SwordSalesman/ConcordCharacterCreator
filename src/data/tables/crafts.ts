@@ -42,6 +42,11 @@ export const crafts: Craft[] = [
 	},
 	{
 		rarity: "Journeyman",
+		name: "Death Icon",
+		type: "Concordia: Icon",
+	},
+	{
+		rarity: "Journeyman",
 		name: "Druids Crook",
 		type: "Weapon: Polearm",
 	},
@@ -98,7 +103,7 @@ export const crafts: Craft[] = [
 	{
 		rarity: "Journeyman",
 		name: "Standard of the Brave",
-		type: "Banner",
+		type: "Concordia: Banner",
 	},
 	{
 		rarity: "Journeyman",
@@ -164,7 +169,7 @@ export const crafts: Craft[] = [
 	{
 		rarity: "Expert",
 		name: "Bloodslick Banner",
-		type: "Banner",
+		type: "Concordia: Banner",
 	},
 	{
 		rarity: "Expert",
@@ -234,7 +239,7 @@ export const crafts: Craft[] = [
 	{
 		rarity: "Expert",
 		name: "Mage Legion Standard",
-		type: "Banner",
+		type: "Concordia: Banner",
 	},
 	{
 		rarity: "Expert",
@@ -289,7 +294,7 @@ export const crafts: Craft[] = [
 	{
 		rarity: "Expert",
 		name: "Slayers Banner",
-		type: "Banner",
+		type: "Concordia: Banner",
 	},
 	{
 		rarity: "Expert",
@@ -415,7 +420,7 @@ export const crafts: Craft[] = [
 	{
 		rarity: "Masterwork",
 		name: "Guardians Banner",
-		type: "Banner",
+		type: "Concordia: Banner",
 	},
 	{
 		rarity: "Masterwork",
@@ -439,6 +444,16 @@ export const crafts: Craft[] = [
 	},
 	{
 		rarity: "Masterwork",
+		name: "Lantern of Azime",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Masterwork",
+		name: "Lantern of Unseen Embers",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Masterwork",
 		name: "Legionnaires Commandment",
 		type: "Reliquary",
 	},
@@ -455,7 +470,7 @@ export const crafts: Craft[] = [
 	{
 		rarity: "Masterwork",
 		name: "Mercenary Banner",
-		type: "Banner",
+		type: "Concordia: Banner",
 	},
 	{
 		rarity: "Masterwork",
@@ -486,11 +501,6 @@ export const crafts: Craft[] = [
 		rarity: "Masterwork",
 		name: "Pyromancers Staff",
 		type: "Weapon: Polearm",
-	},
-	{
-		rarity: "Masterwork",
-		name: "Rag of Warfare",
-		type: "Banner",
 	},
 	{
 		rarity: "Masterwork",
@@ -551,11 +561,6 @@ export const crafts: Craft[] = [
 		rarity: "Masterwork",
 		name: "Blade of War",
 		type: "Weapon: One Handed",
-	},
-	{
-		rarity: "Masterwork",
-		name: "Standard of the Tower",
-		type: "Banner",
 	},
 	{
 		rarity: "Masterwork",

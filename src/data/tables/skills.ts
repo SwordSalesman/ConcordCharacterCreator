@@ -80,6 +80,17 @@ export const skills: Skill[] = [
 		prereq: "Deathless",
 	},
 	{
+		name: "Relentless",
+		tree: "Combat",
+		cost: 2,
+		prereq: "Deathless",
+	},
+	{
+		name: "Get it Together",
+		tree: "Combat",
+		cost: 3,
+	},
+	{
 		name: "Hand-and-a-half",
 		tree: "Combat",
 		cost: 1,
