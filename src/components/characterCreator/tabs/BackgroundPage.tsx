@@ -1,8 +1,8 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
-import { SectionDivider, SectionWrapper } from "../../creator/SectionDivider/SectionDivider";
+import { SectionDivider } from "../../creator/SectionDivider/SectionDivider";
 import { AccordionSection } from "../../common/Accordion/AccordionSection";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getRealmData } from "@/utils/data-helper";
 import { Chip } from "@/components/common/Chip/Chip";
 
@@ -10,6 +10,14 @@ import { archetypes } from "@/data/tables/archetypes";
 import { graces } from "@/data/tables/graces";
 import { Input, TextArea } from "@/components/common/Input/Input";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
+import { getGroupList } from "@/hooks/use-firebase";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
 export function BackgroundPage() {
 	const { form, toggleItem, setField } = useFormContext();
@@ -24,10 +32,20 @@ export function BackgroundPage() {
 		oocGoals,
 		backstory,
 		invDetails,
+		gamesPlayed,
 	} = form;
 	const fullRealm = realm ? getRealmData(realm) : undefined;
+	const [bands, setBands] = useState<string[]>([]);
 
-	useEffect(() => {}, [realm, archetype]);
+	useEffect(() => {
+		async function fetchData() {
+			const data = await getGroupList();
+			if (data) {
+				setBands(data.bands || []);
+			}
+		}
+		fetchData();
+	}, [realm, archetype]);
 
 	const renderedArchetype = useMemo(() => {
 		if (realm) {
@@ -132,20 +150,52 @@ export function BackgroundPage() {
 			link: "Player_Groups",
 			content: (
 				<div className="flex flex-col gap-2 w-full my-4">
-					<Input
-						placeholder="Name of your Band (if any)"
-						type="text"
-						label="Band"
-						value={warband}
-						onChange={(e) => setField("warband", e.target.value)}
-					/>
-					<Input
-						placeholder="Name of your Sect (if any)"
-						type="text"
-						label="Sect"
-						value={sect}
-						onChange={(e) => setField("sect", e.target.value)}
-					/>
+					{!gamesPlayed || gamesPlayed === 0 ? (
+						<p>
+							To join a Band or Sect, your Hero must have the relevant ceremony cast
+							on them at a Summit. Options will become available after your first
+							game.
+						</p>
+					) : (
+						<>
+							<p className="text-sm text-muted-foreground">
+								Only select a Band or Sect if your Hero has had the relevant
+								ceremony performed on them at a Summit. If your Band is not listed,
+								get in touch with your Band leader.
+							</p>
+
+							<div className="flex flex-col">
+								<p>Band</p>
+								<p className="text-sm text-muted-foreground"></p>
+								<Select
+									value={warband ?? ""}
+									onValueChange={(v) =>
+										setField("warband", v === "[None]" ? undefined : v)
+									}
+								>
+									<SelectTrigger>
+										<SelectValue placeholder="Select your band (if any)" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="[None]">[None]</SelectItem>
+										{bands.map((band) => (
+											<SelectItem value={band} key={band}>
+												{band}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</div>
+
+							<Input
+								placeholder="Name of your Sect (if any)"
+								type="text"
+								label="Sect"
+								value={sect}
+								onChange={(e) => setField("sect", e.target.value)}
+							/>
+						</>
+					)}
 				</div>
 			),
 		},
