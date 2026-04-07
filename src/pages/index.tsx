@@ -3,28 +3,17 @@ import ContentWrapper from "@/components/layout/ContentWrapper";
 import FormContextProvider from "@/context/formContext";
 import useUserContext from "@/hooks/use-user-context";
 import { fadeStripStyle } from "@/styles/Global";
-import {
-	PATH_APPROVALS,
-	PATH_CEREMONIES,
-	PATH_DOWNTIME,
-	PATH_GROUPS,
-	PATH_HERO,
-} from "@/utils/constants";
+import { PATH_APPROVALS, PATH_DOWNTIME, PATH_GROUPS, PATH_HERO } from "@/utils/constants";
+import { copyText } from "@/utils/odd-jobs";
 import { getSiteSettings } from "@/utils/settings";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
 import { FaStamp, FaUser, FaUsers } from "react-icons/fa";
-import { GiCircleClaws, GiScrollQuill, GiScrollUnfurled } from "react-icons/gi";
+import { GiScrollQuill } from "react-icons/gi";
 
 export default function Home() {
 	const router = useRouter();
 	const { isAdmin, loading } = useUserContext();
 	const siteSettings = getSiteSettings();
-
-	function copyText(text: string) {
-		navigator.clipboard.writeText(text);
-		toast.success(`Copied '${text}' to clipboard`);
-	}
 
 	return (
 		<FormContextProvider>

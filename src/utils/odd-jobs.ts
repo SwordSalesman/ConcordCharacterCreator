@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 export function copyText(text: string) {
 	navigator.clipboard.writeText(text);
-	toast.success(`Copied '${text}' to clipboard`);
+	toast.success(`Text copied`);
 }
 
 export function realmicPlayerGroupsLink(realm?: Realm) {

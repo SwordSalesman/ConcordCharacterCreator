@@ -40,11 +40,21 @@ export default function GroupsPage() {
 	}
 
 	if (!user) {
-		return <PreMessage message="Please sign in to submit your group for approval." />;
+		return (
+			<PreMessage
+				title="Sign In Required"
+				message="Please sign in to submit your group for approval."
+			/>
+		);
 	}
 
 	if (!date) {
-		return <PreMessage message="Please submit your Hero before submitting your group." />;
+		return (
+			<PreMessage
+				title="Hero Submission Required"
+				message="Please submit your Hero before submitting your group."
+			/>
+		);
 	}
 
 	// Selection screen for Band vs Sect builder
@@ -166,10 +176,10 @@ function GroupSubmissionGoogleFormLink() {
 	);
 }
 
-function PreMessage({ message }: { message: string }) {
+export function PreMessage({ title, message }: { title: string; message: string }) {
 	return (
-		<div className="mx-auto px-4 py-8 flex flex-col text-center gap-5">
-			<h1 className="text-2xl font-bold">Group Submissions</h1>
+		<div className="mx-auto px-4 py-8 flex flex-col text-center gap-2">
+			{title && <h1 className="text-2xl">{title}</h1>}
 			<p>{message}</p>
 		</div>
 	);

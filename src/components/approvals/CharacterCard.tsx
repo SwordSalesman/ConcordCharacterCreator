@@ -3,11 +3,11 @@ import { FaIdBadge } from "react-icons/fa";
 import { RiMessage2Fill, RiSwordFill, RiTodoFill } from "react-icons/ri";
 import { ImQuill } from "react-icons/im";
 import { GiScrollUnfurled, GiSpellBook } from "react-icons/gi";
-import toast from "react-hot-toast";
 import { prettifyDate } from "../../utils/date-helper";
 import { getArrayFromSummary, getSkillData, stringToNode } from "../../utils/data-helper";
 import { Character } from "./types";
 import { cn } from "@/lib/utils";
+import { copyText } from "@/utils/odd-jobs";
 
 function CharacterCard({ character }: { character: Character | null }) {
 	const skills = character?.skills?.split(", ");
@@ -17,11 +17,6 @@ function CharacterCard({ character }: { character: Character | null }) {
 	const skillsFull = getArrayFromSummary(character?.skills ?? "").map((s) => getSkillData(s));
 	const totalXp = 8 + parseInt(String(character?.gamesPlayed ?? 0));
 	const spentXp = skillsFull ? skillsFull.map((s) => s?.cost ?? 0).reduce((a, b) => a + b, 0) : 0;
-
-	function copyText(text: string) {
-		navigator.clipboard.writeText(text);
-		toast.success(`Copied '${text}' to clipboard`);
-	}
 
 	function changed(fieldName: keyof Character): boolean {
 		return !!(hasReview && changes && changes.includes(fieldName));
