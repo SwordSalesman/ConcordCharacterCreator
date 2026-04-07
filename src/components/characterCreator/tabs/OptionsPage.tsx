@@ -144,7 +144,7 @@ function getInactive(params: any): { inactive: boolean; inactiveReason: string |
 		};
 	}
 	if (
-		(regionIsNotCoastal(item.name) && investment?.length && investment[0].name === "Naval") ||
+		(regionIsNotCoastal(item.name) && !!investment && investment === "Naval") ||
 		(item.name === "Naval" && invRegion?.length && !regionIsCoastal(invRegion[0].name))
 	) {
 		return {
@@ -436,7 +436,7 @@ export function OptionsPage() {
 			)}
 			{totalDiversifyOptions.length > 0 && (
 				<div className="animate-warning-fade-in">
-					<AccordionSection title="Investment Diversify Option" align="left">
+					<AccordionSection title="Investment Diversification Option" align="left">
 						{totalDiversifyOptions.map((item) => {
 							let selected = invDiversify?.includes(item.name);
 							return (

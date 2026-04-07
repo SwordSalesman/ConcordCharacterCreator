@@ -21,9 +21,9 @@
 
 ## To Do list
 
+- Mastered Ceremonies should be managed by the church team, not the character creator
+    - Fix the divine lore per sphere giving known ceremonies thing, you know the one.
 - Test firebase rules for new document types (groups, groupApprovals, public)
-- Get rid of the current account/theme button and replace with a cog 'settings' button. It spawns a modal which has all the options you need on it.
-- Fix the divine lore per sphere giving known ceremonies thing, you know the one.
 - Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
 - EMAILS (requires a whole rebuild fml)
     - automatic confirmation emails when a player submits their character

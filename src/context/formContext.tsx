@@ -1,6 +1,6 @@
 import { createContext, useEffect, useMemo, useReducer, useState } from "react";
 import React from "react";
-import { getUserFormAndApproval } from "../hooks/use-firebase";
+import { getGroupList, getUserFormAndApproval } from "../hooks/use-firebase";
 import useUserContext from "../hooks/use-user-context";
 import {
 	getArrayFromSummary,
@@ -307,6 +307,8 @@ interface FormContextInterface {
 	};
 	validSkillChoice: (skill: string) => { valid: boolean; reason?: string };
 	getFormSummary: () => FormStateSummary;
+	// To do: this bands field shouldn't really be here. It should be in a 'data context' or something, since it's not form state.
+	bands: { realm: string; name: string }[];
 }
 
 export const FormContext = createContext<FormContextInterface>({
@@ -325,6 +327,7 @@ export const FormContext = createContext<FormContextInterface>({
 	resetForm: () => {},
 	remaining: { xp: 0, spells: 0, ceremonies: 0, crafts: 0, potions: 0, diversify: 0 },
 	getFormSummary: () => ({}) as FormStateSummary,
+	bands: [],
 });
 
 export default function FormContextProvider({ children }: { children: React.ReactNode }) {
@@ -332,6 +335,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	const [loading, setLoading] = useState(true);
 	const [approval, setApproval] = useState<Approval | undefined>(undefined);
 	const [formState, dispatch] = useReducer(formReducer, initialState);
+	const [bands, setBands] = useState<{ realm: string; name: string }[]>([]);
 
 	function setField<K extends keyof FormState>(field: K, value: FormState[K]) {
 		dispatch({ type: "SET_FIELD", field, value });
@@ -419,6 +423,12 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		async function downloadForm() {
 			setLoading(true);
 			const newForm = await getUserFormAndApproval();
+
+			const groupData = await getGroupList();
+			if (groupData) {
+				setBands(groupData.bands || []);
+			}
+
 			setLoading(false);
 			if (newForm) {
 				setFormFromSummaryData(newForm as unknown as FormStateSummary);
@@ -504,6 +514,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		loading,
 		approval,
 		form: formState,
+		bands,
 		setField,
 		toggleItem,
 		resetForm,

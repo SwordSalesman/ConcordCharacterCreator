@@ -25,6 +25,7 @@ export function ApprovalButton() {
 					onClick={() => setShowApprovalModal(true)}
 					spinner={formLoading}
 					className="animate-in fade-in"
+					variant="ghost"
 				>
 					<div className={`flex gap-2 items-center ${tickColorClass}`}>
 						<p>{submissionStatus}</p>

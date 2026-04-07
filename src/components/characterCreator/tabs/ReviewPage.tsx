@@ -1,5 +1,5 @@
 import useFormContext from "../../../hooks/use-form-context";
-import { xpWarning } from "../../../utils/validity-helper";
+import { bandWarning, xpWarning } from "../../../utils/validity-helper";
 import { graces } from "@/data/tables/graces";
 import { Warning } from "@/components/common/Accordion/AccordionSection";
 import { Input, TextArea } from "@/components/common/Input/Input";
@@ -8,9 +8,9 @@ import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 
 function ReviewItem({ label, children }: { label: string; children: React.ReactNode }) {
 	return (
-		<div className="w-full flex flex-col justify-between text-center">
+		<div className="w-full flex flex-col justify-between">
 			<div className="text-muted-foreground text-[0.8rem] leading-[0.8rem]">{label}</div>
-			<div className="text-foreground leading-[1.2rem] text-wrap-balance">{children}</div>
+			<div className="text-foreground leading-[1.2rem]">{children}</div>
 		</div>
 	);
 }
@@ -18,7 +18,7 @@ function ReviewItem({ label, children }: { label: string; children: React.ReactN
 const delimiter = ", ";
 
 export function ReviewPage() {
-	const { form, setField, validateForm, remaining } = useFormContext();
+	const { form, setField, validateForm, remaining, bands } = useFormContext();
 	const {
 		gamesPlayed,
 		realm,
@@ -40,6 +40,10 @@ export function ReviewPage() {
 		warband,
 		sect,
 		comments,
+		backstory,
+		invDetails,
+		icGoals,
+		oocGoals,
 	} = form;
 	const realmFull = realm ? getRealmData(realm) : undefined;
 	const { valid, validRealm, validName, validInvestment } = validateForm();
@@ -53,7 +57,7 @@ export function ReviewPage() {
 	console.debug(form);
 
 	const invalidWarning = (
-		<div className="text-destructive italic mb-2.5 text-center">
+		<div className="text-destructive italic mb-2.5">
 			<p>Required fields:</p>
 			<ul>
 				{!validName ? <li>Hero Name</li> : null}
@@ -66,13 +70,17 @@ export function ReviewPage() {
 
 	const fullGrace = grace ? graces.find((g) => g.name === grace) : undefined;
 
+	const bandWarningText = bandWarning({ warband, realm, bands });
+	const fullReview = false;
+
 	return (
-		<ContentPane layout="narrow">
+		<ContentPane layout="narrow" className="">
 			{!valid ? invalidWarning : null}
 			{xpWarningText && <Warning>{xpWarningText}</Warning>}
-			<div className="flex flex-col items-center mt-2 gap-2 mb-6">
+			{bandWarningText && <Warning>{bandWarningText}</Warning>}
+			<div className="flex flex-col mt-2 gap-[10px] mb-6">
 				<div>
-					<h2 className="text-xl leading-6">{heroName ? heroName : "Nameless Hero"}</h2>
+					<h2 className="text-xl">{heroName ? heroName : "Nameless Hero"}</h2>
 					<div className="italic text-muted-foreground">
 						{realmFull ? realmFull.citizen : "Realmless"}
 						{archetype ? " " + archetype : ""}
@@ -120,6 +128,17 @@ export function ReviewPage() {
 				{ceremonies.length > 0 && (
 					<ReviewItem label="Ceremonies">{ceremonies.join(delimiter)}</ReviewItem>
 				)}
+				{fullReview && (
+					<>
+						<StyledBorder />
+						{backstory && <ReviewItem label="Backstory">{backstory}</ReviewItem>}
+						{icGoals && <ReviewItem label="IC Goals">{icGoals}</ReviewItem>}
+						{oocGoals && <ReviewItem label="OOC Goals">{oocGoals}</ReviewItem>}
+						{invDetails && (
+							<ReviewItem label="Investment Details">{invDetails}</ReviewItem>
+						)}
+					</>
+				)}
 			</div>
 			<div className="rounded-[12px] px-2 [&_div_textarea]:border [&_div_textarea]:border-border [&_div_textarea]:border-solid">
 				<div className="flex flex-col gap-2 w-full my-4">
@@ -137,6 +156,7 @@ export function ReviewPage() {
 
 function StyledBorder() {
 	return (
-		<div className="w-full h-px bg-[linear-gradient(90deg,transparent_0%,var(--border)_50%,transparent_100%)]" />
+		// <div className="w-full h-px bg-[linear-gradient(90deg,transparent_0%,var(--border)_50%,transparent_100%)]" />
+		<div className="w-full h-px bg-gradient-to-r" />
 	);
 }

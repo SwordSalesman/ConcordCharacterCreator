@@ -1,16 +1,15 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
 import { SectionDivider } from "../../creator/SectionDivider/SectionDivider";
-import { AccordionSection } from "../../common/Accordion/AccordionSection";
-import { useEffect, useMemo, useState } from "react";
+import { AccordionSection, Warning } from "../../common/Accordion/AccordionSection";
+import { useMemo } from "react";
 import { getRealmData } from "@/utils/data-helper";
 import { Chip } from "@/components/common/Chip/Chip";
 
 import { archetypes } from "@/data/tables/archetypes";
 import { graces } from "@/data/tables/graces";
-import { Input, TextArea } from "@/components/common/Input/Input";
+import { Input, TEXT_AREA_LIMIT, TextArea } from "@/components/common/Input/Input";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
-import { getGroupList } from "@/hooks/use-firebase";
 import {
 	Select,
 	SelectContent,
@@ -18,9 +17,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { bandWarning } from "@/utils/validity-helper";
 
 export function BackgroundPage() {
-	const { form, toggleItem, setField } = useFormContext();
+	const { form, toggleItem, setField, bands } = useFormContext();
 	const {
 		realm,
 		archetype,
@@ -35,17 +35,8 @@ export function BackgroundPage() {
 		gamesPlayed,
 	} = form;
 	const fullRealm = realm ? getRealmData(realm) : undefined;
-	const [bands, setBands] = useState<{ realm: string; name: string }[]>([]);
 
-	useEffect(() => {
-		async function fetchData() {
-			const data = await getGroupList();
-			if (data) {
-				setBands(data.bands || []);
-			}
-		}
-		fetchData();
-	}, [realm, archetype]);
+	const bandWarningText = bandWarning({ warband, realm, bands });
 
 	const renderedArchetype = useMemo(() => {
 		if (realm) {
@@ -165,6 +156,7 @@ export function BackgroundPage() {
 							</p>
 
 							<div className="flex flex-col">
+								{bandWarningText && <Warning>{bandWarningText}</Warning>}
 								<p>Band</p>
 								<p className="text-sm text-muted-foreground"></p>
 								<Select
@@ -209,14 +201,14 @@ export function BackgroundPage() {
 						value={icGoals}
 						onChange={(e) => setField("icGoals", e.target.value)}
 						label="In Character Goals"
-						placeholder="3000 character limit"
+						placeholder={`${TEXT_AREA_LIMIT} character limit`}
 						style={{ minHeight: "3em" }}
 					/>
 					<TextArea
 						value={oocGoals}
 						onChange={(e) => setField("oocGoals", e.target.value)}
 						label="Out of Character Goals"
-						placeholder="3000 character limit"
+						placeholder={`${TEXT_AREA_LIMIT} character limit`}
 						style={{ minHeight: "3em" }}
 					/>
 				</div>
@@ -230,14 +222,14 @@ export function BackgroundPage() {
 						value={backstory}
 						onChange={(e) => setField("backstory", e.target.value)}
 						label="Character Backstory"
-						placeholder="3000 character limit"
+						placeholder={`${TEXT_AREA_LIMIT} character limit`}
 						style={{ minHeight: "3em" }}
 					/>
 					<TextArea
 						value={invDetails}
 						onChange={(e) => setField("invDetails", e.target.value)}
 						label="Investment Description"
-						placeholder="3000 character limit"
+						placeholder={`${TEXT_AREA_LIMIT} character limit`}
 						style={{ minHeight: "3em" }}
 					/>
 				</div>

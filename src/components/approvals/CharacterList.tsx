@@ -21,7 +21,7 @@ function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
 							key={i}
 							onClick={() => handleSelect(c)}
 							className={cn(
-								"p-1.5 border-b border-border cursor-pointer leading-[1em] text-[0.9em] overflow-hidden flex justify-between flex-col relative hover:brightness-95 dark:hover:brightness-110",
+								"p-1 px-2 border-b border-border cursor-pointer leading-[1em] text-[0.9em] overflow-hidden flex justify-between flex-col relative hover:brightness-95 dark:hover:brightness-110",
 								active ? "bg-background-300" : "bg-background",
 							)}
 						>

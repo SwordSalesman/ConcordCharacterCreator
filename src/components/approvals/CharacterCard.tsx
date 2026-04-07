@@ -45,7 +45,7 @@ function CharacterCard({ character }: { character: Character | null }) {
 	return (
 		<div className="text-sm p-2 overflow-y-scroll pb-16 h-[100%] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 			<div className={changeWrapperClass(changed("heroName"))}>
-				<h1 className="text-[1.5em] leading-[1.2em] font-bold font-[Georgia,'Times_New_Roman',Times,serif]">
+				<h1 className="text-2xl leading-[1.2em] font-[Georgia,'Times_New_Roman',Times,serif]">
 					{character.heroName}
 				</h1>
 			</div>
