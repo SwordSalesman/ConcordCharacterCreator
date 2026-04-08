@@ -21,11 +21,11 @@ function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
 							key={i}
 							onClick={() => handleSelect(c)}
 							className={cn(
-								"p-1 px-2 border-b border-border cursor-pointer leading-[1em] text-[0.9em] overflow-hidden flex justify-between flex-col relative hover:brightness-95 dark:hover:brightness-110",
+								"p-2 border-b border-border cursor-pointer text-sm overflow-hidden flex justify-between flex-col relative hover:brightness-95 dark:hover:brightness-110",
 								active ? "bg-background-300" : "bg-background",
 							)}
 						>
-							<div className="relative break-all h-[1rem] overflow-hidden w-[80%]">
+							<div className="relative break-all h-5 overflow-hidden w-[80%]">
 								<div
 									className={cn(
 										"h-full w-[50px] absolute right-0 z-[2]",
@@ -34,13 +34,13 @@ function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
 								/>
 								<b>{c.heroName}</b>
 							</div>
-							<div className="flex justify-between items-center text-[0.8em] italic">
+							<div className="flex justify-between items-center text-xs italic">
 								<p>{`${prettifyDate(c.date, {
 									hideTime: true,
 									shortDate: false,
 								})} ~ ${c.player}`}</p>
 							</div>
-							<div className="absolute text-[0.8em] top-[7px] right-[8px] z-[4]">
+							<div className="absolute text-xs top-2 right-3 z-4">
 								{c.approval?.status ?? PENDING}
 							</div>
 						</li>

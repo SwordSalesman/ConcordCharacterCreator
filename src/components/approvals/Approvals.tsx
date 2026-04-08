@@ -13,6 +13,7 @@ import { CSVLink } from "react-csv";
 import { getCurrentDate } from "../../utils/date-helper";
 import { ApprovalRecord, Character } from "./types";
 import { getSiteSettings } from "@/utils/settings";
+import { Realm } from "@/data/tables/realms";
 
 export interface Counts {
 	pending: number;
@@ -32,7 +33,9 @@ export function Approvals() {
 	const [characters, setCharacters] = useState<Character[]>([]);
 	const [selectedChar, setSelectedChar] = useState<Character | null>(null);
 	const [filter, setFilter] = useState<string | null>(PENDING);
-	const [dateOrder, setDateOrder] = useState(true);
+	const [realmFilter, setRealmFilter] = useState<Realm | null>(null);
+	const [search, setSearch] = useState("");
+	const [dateOrder, setDateOrder] = useState(false);
 	const { isAdmin } = useUserContext();
 	const [counts, setCounts] = useState<Counts>({
 		pending: 0,
@@ -137,6 +140,19 @@ export function Approvals() {
 			}
 			return c.approval?.status === filter;
 		})
+		.filter((c) => {
+			if (!search) return true;
+			const lowerSearch = search.toLowerCase();
+			return (
+				c.heroName.toLowerCase().includes(lowerSearch) ||
+				c.player.toLowerCase().includes(lowerSearch) ||
+				c.email.toLowerCase().includes(lowerSearch)
+			);
+		})
+		.filter((c) => {
+			if (!realmFilter) return true;
+			return c.realm === realmFilter;
+		})
 		.sort((a, b) => a.date.localeCompare(b.date) * (dateOrder ? 1 : -1));
 
 	const csvHeaders = [
@@ -176,7 +192,7 @@ export function Approvals() {
 	if (!isAdmin) return null;
 
 	return (
-		<div className="mx-auto mt-2 flex flex-col sm:flex-row gap-1 sm:h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,Helvetica,sans-serif]">
+		<div className="mx-auto mt-2 flex flex-col sm:flex-row gap-2 sm:h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,sans-serif]">
 			<div className="flex flex-col items-center justify-center gap-1.5 h-[400px] sm:flex-1 flex-none sm:h-full">
 				<CSVLink
 					data={csvData}
@@ -191,7 +207,7 @@ export function Approvals() {
 					</Button>
 				</CSVLink>
 				{/* <UploadGroupList /> */}
-				<div className="border border-border rounded-tl-[10px] rounded-tr-[10px] flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+				<div className="border border-border rounded-tl-lg rounded-tr-lg flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 					{getSiteSettings().features.groupSubmissions && (
 						<div className="flex justify-around">
 							<Button
@@ -213,6 +229,10 @@ export function Approvals() {
 						selectFilter={handleSelectFilter}
 						dateOrder={dateOrder}
 						toggleDateOrder={toggleDateOrder}
+						search={search}
+						setSearch={setSearch}
+						realmFilter={realmFilter}
+						setRealmFilter={setRealmFilter}
 						counts={counts}
 					/>
 					<CharacterList

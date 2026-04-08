@@ -38,7 +38,7 @@ function CharacterCard({ character }: { character: Character | null }) {
 	}
 
 	return (
-		<div className="text-sm p-2 overflow-y-scroll pb-16 h-[100%] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+		<div className="text-sm p-2 overflow-y-scroll pb-8 pt-8 sm:pb-14 sm:pt-0 h-[100%] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&_li]:ml-4">
 			<div className={changeWrapperClass(changed("heroName"))}>
 				<h1 className="text-2xl leading-[1.2em] font-[Georgia,'Times_New_Roman',Times,serif]">
 					{character.heroName}
@@ -159,10 +159,12 @@ function CharacterCard({ character }: { character: Character | null }) {
 				)}
 			</p>
 			{/*  */}
-			<CharSectionTitle>
-				<BiSolidCastle />
-				Investment
-			</CharSectionTitle>
+			<div className={changeWrapperClass(changed("invDetails"))}>
+				<CharSectionTitle>
+					<BiSolidCastle />
+					Investment
+				</CharSectionTitle>
+			</div>
 			<div>
 				<i className={changeWrapperClass(changed("invTier"))}>
 					{character.invTier ? `Tier ${character.invTier} ` : " "}
@@ -191,7 +193,7 @@ function CharacterCard({ character }: { character: Character | null }) {
 					)}
 				</i>
 			</div>
-			<div className={changeWrapperClass(changed("invDetails"))}>
+			<div>
 				<p>
 					{character.invDetails ? (
 						stringToNode(character.invDetails)
