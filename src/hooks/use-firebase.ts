@@ -1,0 +1,382 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import {
+	GoogleAuthProvider,
+	getAuth,
+	signInWithPopup,
+	signInWithEmailAndPassword,
+	createUserWithEmailAndPassword,
+	sendPasswordResetEmail,
+	signOut,
+	deleteUser,
+} from "firebase/auth";
+import {
+	getFirestore,
+	query,
+	getDocs,
+	collection,
+	where,
+	getDoc,
+	doc,
+	setDoc,
+	updateDoc,
+} from "firebase/firestore";
+import { getCurrentDate } from "../utils/date-helper";
+import { GroupType } from "@/context/groupContext";
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+	apiKey: process.env.NEXT_PUBLIC_API_KEY,
+	authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+	projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+	storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+	messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+	appId: process.env.NEXT_PUBLIC_APP_ID,
+	measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// FIREBASE AUTH **************************************************************
+
+const googleProvider = new GoogleAuthProvider();
+const signInWithGoogle = async () => {
+	try {
+		const res = await signInWithPopup(auth, googleProvider);
+		const user = res.user;
+		const q = query(collection(db, "users"), where("uid", "==", user.uid));
+		const docs = await getDocs(q);
+		if (docs.docs.length === 0) {
+			await setDoc(doc(db, "users", user.uid), {
+				uid: user.uid,
+				name: user.displayName,
+				authProvider: "google",
+				email: user.email,
+			});
+		}
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+const logInWithEmailAndPassword = async (email: string, password: string) => {
+	try {
+		await signInWithEmailAndPassword(auth, email, password);
+	} catch (err: any) {
+		if (err.code === "auth/wrong-password") {
+			throw new Error("incorrect password");
+		} else {
+			throw new Error(err.message);
+		}
+	}
+};
+
+const registerWithEmailAndPassword = async (name: string, email: string, password: string) => {
+	let res;
+	try {
+		res = await createUserWithEmailAndPassword(auth, email, password);
+	} catch (err: any) {
+		if (err.code === "auth/email-already-in-use") {
+			throw new Error("Email already in use");
+		} else {
+			throw new Error(err.message);
+		}
+	}
+	try {
+		const user = res.user;
+		await setDoc(doc(db, "users", user.uid), {
+			uid: user.uid,
+			name,
+			authProvider: "email",
+			email,
+			role: 1,
+		});
+		return;
+	} catch (err: any) {
+		// Delete the auth user in the case that the doc rules were violated but the auth ones weren't
+		deleteUser(res.user);
+		if (err.code === "auth/email-already-in-use") {
+			throw new Error("Email already in used");
+		} else {
+			throw new Error(err.message);
+		}
+	}
+};
+
+const sendPasswordReset = async (email: string) => {
+	try {
+		await sendPasswordResetEmail(auth, email);
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+const logout = async () => {
+	await signOut(auth).then();
+};
+
+// FIRESTORE PUTTING **************************************************************
+
+const saveUserForm = async (
+	form: Record<string, any>,
+	setSubmissionDate: (date: string) => void,
+	name: string,
+) => {
+	const date = getCurrentDate();
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	let fullForm = {
+		player: name,
+		email: auth.currentUser.email,
+		...form,
+		date: date,
+	};
+	await setDoc(doc(db, "characters", auth.currentUser.uid), fullForm);
+	setSubmissionDate(date);
+	return fullForm;
+};
+
+const saveApproval = async ({
+	name,
+	comment,
+	status,
+	subjectUid,
+}: {
+	name: string;
+	comment: string;
+	status: string;
+	subjectUid: string;
+}) => {
+	const date = getCurrentDate();
+	let approval = {
+		author: name,
+		date: date,
+		comment: comment,
+		status: status,
+	};
+	await setDoc(doc(db, "approvals", subjectUid), approval);
+	await updateDoc(doc(db, "characters", subjectUid), {
+		changes: null,
+	});
+	return approval;
+};
+
+const saveGroup = async ({ group, type }: { group: Record<string, any>; type: GroupType }) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const date = getCurrentDate();
+
+	await setDoc(doc(db, type === "Band" ? "bands" : "sects", auth.currentUser.uid), {
+		...group,
+		date: date,
+	});
+	return;
+};
+
+const saveGroupApproval = async ({
+	approval,
+	type,
+	subjectUid,
+}: {
+	approval: Record<string, any>;
+	type: GroupType;
+	subjectUid: string;
+}) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const date = getCurrentDate();
+
+	await setDoc(doc(db, type === "Band" ? "bandApprovals" : "sectApprovals", subjectUid), {
+		...approval,
+		date: date,
+	});
+	return;
+};
+
+type GroupListEntryType = {
+	name: string;
+	realm: string;
+};
+
+type GroupListType = {
+	bands: GroupListEntryType[];
+	sects: GroupListEntryType[];
+};
+
+const saveGroupList = async ({ list }: { list: GroupListType }) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const date = getCurrentDate();
+
+	await setDoc(doc(db, "public", "groupList"), {
+		...list,
+		date: date,
+	});
+	return;
+};
+
+// Used in admin commands to update users without updating their submission date
+const migrateUser = async (userId: string, form: Record<string, any>) => {
+	await setDoc(doc(db, "characters", userId), form);
+	return form;
+};
+
+// FIRESTORE GETTING **************************************************************
+
+const getUserForm = async () => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const docRef = doc(db, "characters", auth.currentUser.uid);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
+const getUserFormAndApproval = async () => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const formRef = doc(db, "characters", auth.currentUser.uid);
+	const apprRef = doc(db, "approvals", auth.currentUser.uid);
+	const formSnap = await getDoc(formRef);
+	const apprSnap = await getDoc(apprRef);
+	if (formSnap.exists()) {
+		const form = formSnap.data();
+		if (apprSnap.exists()) {
+			const appr = apprSnap.data();
+			return { ...form, approval: appr };
+		}
+		return { ...form, approval: null };
+	} else {
+		return null;
+	}
+};
+
+const getUserDetails = async () => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const docRef = doc(db, "users", auth.currentUser.uid);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		const details = {
+			name: docSnap.data().name,
+			role: docSnap.data().role,
+			uid: docSnap.data().uid,
+		};
+		return details;
+	} else {
+		return null;
+	}
+};
+
+const getUserApproval = async () => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const docRef = doc(db, "approvals", auth.currentUser.uid);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
+const getApproval = async (uid: string) => {
+	const docRef = doc(db, "approvals", uid);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
+const getGroup = async ({ type }: { type: GroupType }) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const docRef = doc(db, type === "Band" ? "bands" : "sects", auth.currentUser.uid);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
+const getGroupApproval = async ({ type }: { type: GroupType }) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const docRef = doc(
+		db,
+		type === "Band" ? "bandApprovals" : "sectApprovals",
+		auth.currentUser.uid,
+	);
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
+const getGroupList = async () => {
+	const docRef = doc(db, "public", "groupList");
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		return docSnap.data();
+	} else {
+		return null;
+	}
+};
+
+const getCharacterList = async (): Promise<any[]> => {
+	const charactersRef = collection(db, "characters");
+	const q = query(charactersRef);
+	try {
+		const querySnap = await getDocs(q);
+		let list: any[] = [];
+		querySnap.forEach((doc) => {
+			list.push({ id: doc.id, ...doc.data() });
+		});
+		return list;
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
+};
+
+const getApprovalList = async (): Promise<any[]> => {
+	const approvalsRef = collection(db, "approvals");
+	const q = query(approvalsRef);
+	try {
+		const querySnap = await getDocs(q);
+		let list: any[] = [];
+		querySnap.forEach((doc) => {
+			list.push({ id: doc.id, ...doc.data() });
+		});
+		return list;
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
+};
+
+export {
+	auth,
+	db,
+	signInWithGoogle,
+	logInWithEmailAndPassword,
+	registerWithEmailAndPassword,
+	sendPasswordReset,
+	saveUserForm,
+	getUserForm,
+	migrateUser,
+	getUserFormAndApproval,
+	getUserDetails,
+	getCharacterList,
+	saveApproval,
+	saveGroup,
+	saveGroupList,
+	getApproval,
+	getGroup,
+	getUserApproval,
+	getApprovalList,
+	getGroupList,
+	logout,
+};

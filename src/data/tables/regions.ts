@@ -1,0 +1,67 @@
+import { Realm } from "./realms";
+
+export interface Region {
+	name: string;
+	realm: Realm;
+	link?: string;
+	territories: string[];
+	coastal: boolean;
+}
+
+export const regions: Region[] = [
+	{
+		name: "The Tribelands",
+		realm: "Andash",
+		link: "The_Tribelands",
+		territories: ["True Wilds", "Tanebar South", "The Crescent", "La Calidez Woods"],
+		coastal: false,
+	},
+	{
+		name: "Mukarrem",
+		realm: "Andash",
+		link: "Mukarrem",
+		territories: ["The Priado Expanse", "The Salt Road", "Mitricasa Rise"],
+		coastal: true,
+	},
+	{
+		name: "Lerona Mere",
+		realm: "Lerona Mere",
+		link: "Lerona_Mere_(The_Region)",
+		territories: ["Legend City", "Est Speranza", "Madre Campo", "Riverside and Lake Isabella"],
+		coastal: true,
+	},
+	{
+		name: "Mancante Terra",
+		realm: "Lerona Mere",
+		territories: ["Boisombre", "Marepato", "Plateau of the Gods"],
+		coastal: true,
+	},
+	{
+		name: "Resinderholz",
+		realm: "Greenweald Baronies",
+		link: "Resinderholz",
+		territories: ["Ravensreach Wilds", "The Hunters Wood", "The Sableheart"],
+		coastal: false,
+	},
+	{
+		name: "Weiland",
+		realm: "Kingdom of Bordevar",
+		link: "Weiland",
+		territories: ["Starscar", "Heartsgrave", "Everguarde"],
+		coastal: false,
+	},
+	{
+		name: "Bolsterlee",
+		realm: "Iron Valley",
+		link: "Bolsterlee",
+		territories: ["Highward", "Bayward North", "Bayward South", "The Bailite Woods"],
+		coastal: true,
+	},
+	{
+		name: "Windholme",
+		realm: "Iron Valley",
+		link: "Windholme",
+		territories: ["Windholme East", "Windholme West"],
+		coastal: false,
+	},
+];
