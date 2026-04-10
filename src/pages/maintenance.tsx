@@ -1,5 +1,5 @@
 import { FaHammer } from "react-icons/fa";
-import ConcordLogo from "../../data/images/concord-logo.png";
+import ConcordLogo from "../data/images/concord-logo.png";
 import Image from "next/image";
 
 export default function MaintenanceScreen() {

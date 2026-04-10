@@ -242,7 +242,7 @@ export function Approvals() {
 					/>
 				</div>
 			</div>
-			<div className="flex-2 flex flex-col justify-between max-h-[100%] overflow-hidden">
+			<div className="flex-2 flex flex-col justify-between max-h-[100%]">
 				<CharacterCard character={selectedChar} />
 				<ApprovalPanel character={selectedChar} handleApproval={handleApproval} />
 			</div>

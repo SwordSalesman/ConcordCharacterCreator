@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { TextArea } from "../common/Input/Input";
 import { Button } from "../common/Button/Button";
 import useUserContext from "../../hooks/use-user-context";
@@ -9,6 +10,39 @@ import { prettifyDate } from "../../utils/date-helper";
 import { ApprovalRecord, Character } from "./types";
 import { cn } from "@/lib/utils";
 import { stringToNode } from "@/utils/data-helper";
+import { CharacterSheet } from "../characterCreator/CharacterSheet";
+import { characterToFormState } from "@/utils/character-to-form-state";
+import { AiOutlineCopy, AiOutlineSend } from "react-icons/ai";
+
+const EMAIL_STYLE_PROPS = [
+	"font-size",
+	"font-weight",
+	"font-family",
+	"font-style",
+	"gap",
+	"padding",
+	"margin",
+	"display",
+	"flex-direction",
+	"justify-content",
+	"align-items",
+	"border",
+	"border-radius",
+	"max-width",
+];
+
+function inlineComputedStyles(source: Element, clone: Element) {
+	if (source instanceof HTMLElement && clone instanceof HTMLElement) {
+		const computed = window.getComputedStyle(source);
+		const inlined = EMAIL_STYLE_PROPS.map((p) => `${p}:${computed.getPropertyValue(p)}`).join(
+			";",
+		);
+		clone.setAttribute("style", inlined);
+	}
+	for (let i = 0; i < source.children.length; i++) {
+		inlineComputedStyles(source.children[i], clone.children[i]);
+	}
+}
 
 interface Props {
 	character: Character | null;
@@ -17,6 +51,10 @@ interface Props {
 
 function ApprovalPanel({ character, handleApproval }: Props) {
 	const [loading, setLoading] = useState(false);
+	const [copying, setCopying] = useState(false);
+	const [isMounted, setIsMounted] = useState(false);
+	const sheetRef = useRef<HTMLDivElement>(null);
+	useEffect(() => setIsMounted(true), []);
 	const [author, setAuthor] = useState("");
 	const [date, setDate] = useState("");
 	const [comment, setComment] = useState("");
@@ -89,6 +127,30 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 		return validStatus && validComment;
 	};
 
+	async function copyEmailContent() {
+		if (!sheetRef.current || !character) return;
+		setCopying(true);
+		try {
+			const clone = sheetRef.current.cloneNode(true) as HTMLElement;
+			inlineComputedStyles(sheetRef.current, clone);
+
+			const comment = `<p>${previousComment.replace(/\n/g, "<br>")}</p><p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>`;
+			const htmlContent = `${comment}${clone.outerHTML}`;
+
+			await navigator.clipboard.write([
+				new ClipboardItem({
+					"text/html": new Blob([htmlContent], { type: "text/html" }),
+					"text/plain": new Blob([previousComment], { type: "text/plain" }),
+				}),
+			]);
+			toast.success("Email content copied!");
+		} catch {
+			toast.error("Failed to copy email content");
+		} finally {
+			setCopying(false);
+		}
+	}
+
 	const approvalOptions = [
 		{
 			status: APPROVED,
@@ -127,8 +189,24 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 		);
 	});
 
+	const sheetData = character ? characterToFormState(character) : null;
+
 	return (
 		<div className="relative">
+			{/* Portal to body: rendered off-screen so computed styles (including CSS variable resolution) are available */}
+			{isMounted &&
+				sheetData &&
+				createPortal(
+					<div
+						ref={sheetRef}
+						aria-hidden
+						className="fixed top-0 left-0 w-[480px] p-3 max-w-[480px] text-xs pointer-events-none border-1 rounded-xl"
+						style={{ opacity: 0, zIndex: -1 }}
+					>
+						<CharacterSheet data={sheetData} full simple />
+					</div>,
+					document.body,
+				)}
 			{/* Gradient fade effect above the panel */}
 			<div className="w-full h-10 absolute -top-8 bg-gradient-to-t from-background-raised to-transparent" />
 			<div
@@ -185,9 +263,20 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 								: undefined
 						}
 					/>
-					<div className="mt-2">
+					<div className="mt-2 flex justify-between items-center gap-2">
 						<Button variant="outline" disabled={disabled}>
+							<AiOutlineSend />
 							Submit
+						</Button>
+						<Button
+							type="button"
+							variant="outline"
+							disabled={disabled || copying}
+							onClick={copyEmailContent}
+							size="sm"
+						>
+							<AiOutlineCopy />
+							{"Copy Email Content"}
 						</Button>
 					</div>
 				</form>

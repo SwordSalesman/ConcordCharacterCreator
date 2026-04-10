@@ -7,6 +7,8 @@ import { PageMeta } from "@/components/layout/PageMeta";
 import { Header } from "@/components/layout/Header";
 import UserContextProvider from "@/context/userContext";
 import FormContextProvider from "@/context/formContext";
+import { getSiteSettings } from "@/utils/settings";
+import MaintenanceScreen from "./maintenance";
 
 export default function App({ Component, pageProps }: AppProps) {
 	const defaultTheme =
@@ -36,13 +38,15 @@ export default function App({ Component, pageProps }: AppProps) {
 		console.debug(`Debug text: '${process.env.NEXT_PUBLIC_DEBUG_TEXT}'`);
 	}, []);
 
+	const maintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE?.toLowerCase() === "true";
+
 	return (
 		<>
 			<PageMeta />
 			<UserContextProvider>
 				<FormContextProvider>
 					<Header toggleTheme={toggleTheme} />
-					<Component {...pageProps} />
+					{maintenanceMode ? <MaintenanceScreen /> : <Component {...pageProps} />}
 					<Toaster
 						toastOptions={{
 							style: {

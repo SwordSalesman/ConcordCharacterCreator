@@ -41,7 +41,7 @@ import { investments } from "@/data/tables/investments";
 			4. Api server saves SUMMARY form data, and the changes made, to firestore
 */
 
-interface FormState {
+export interface FormState {
 	date?: string;
 	realm?: Realm;
 	gamesPlayed: number;
