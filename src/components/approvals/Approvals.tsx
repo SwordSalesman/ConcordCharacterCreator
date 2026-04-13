@@ -71,10 +71,12 @@ export function Approvals() {
 					.filter((c) => c.approval?.status !== ARCHIVED)
 					.map((c) => ({
 						...c,
+						heroName: removeAllNewlines(c.heroName),
 						backstory: removeAllNewlines(c.backstory),
 						invDetails: removeAllNewlines(c.invDetails),
 						icGoals: removeAllNewlines(c.icGoals),
 						oocGoals: removeAllNewlines(c.oocGoals),
+						comments: removeAllNewlines(c.comments),
 						approval: {
 							...c.approval,
 							comment: removeAllNewlines(c.approval?.comment),

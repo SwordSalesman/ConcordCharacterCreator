@@ -63,7 +63,11 @@ function CharacterCard({ character }: { character: Character | null }) {
 				</CharSectionTitle>
 			</div>
 			<i>
-				{character.comments ? character.comments : <i className="opacity-75">No message</i>}
+				{character.comments ? (
+					stringToNode(character.comments)
+				) : (
+					<i className="opacity-75">No message</i>
+				)}
 			</i>
 			{/*  */}
 			<CharSectionTitle>
