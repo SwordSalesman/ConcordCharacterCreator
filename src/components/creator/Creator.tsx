@@ -9,6 +9,7 @@ import { fadeStripStyle } from "@/styles/Global.ts";
 import Image from "next/image";
 import { getRealmData } from "@/utils/data-helper.tsx";
 import useFormContext from "@/hooks/use-form-context.ts";
+import { Banner } from "../common/Banner/Banner.tsx";
 
 export interface Tab {
 	name: string;
@@ -108,7 +109,7 @@ export function Creator({
 
 	return (
 		<>
-			{/* <Banner /> */}
+			<Banner />
 
 			<div
 				className={cn(

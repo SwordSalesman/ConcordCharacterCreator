@@ -5,7 +5,7 @@ import { RiExternalLinkLine } from "react-icons/ri";
 import { cn } from "@/lib/utils";
 
 export function Banner() {
-	const submissionsOpen = true;
+	const submissionsOpen = false;
 
 	return (
 		<BannerInternal

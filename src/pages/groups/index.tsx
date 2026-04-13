@@ -152,26 +152,47 @@ export default function GroupsPage() {
 }
 
 function GroupSubmissionGoogleFormLink() {
+	const bandSubmissionsOpen = false;
+
 	return (
 		<div className="mx-auto px-4 py-8 max-w-[500px] flex flex-col text-center gap-5">
 			<h1 className="text-2xl font-bold">Group Submissions</h1>
-			<p>
-				If you're in a band and it hasn't been submitted via the Google Form below, please
-				do so before <b className="text-destructive">April 11th</b>. Only one member of your
-				band needs to submit.
-			</p>
-			<div className="w-fit mx-auto">
-				<a
-					href="https://docs.google.com/forms/d/e/1FAIpQLSfs5PK55UuYUo6MSvzwRGFeBMerAavh61ADhYZK7oJmO2A0qw/viewform"
-					target="_blank"
-					rel="noreferrer"
-				>
-					<div className="text-center px-3.5 py-1.5 rounded bg-primary text-primary-foreground flex items-center justify-center gap-2">
-						Submit your group
-						<FaExternalLinkAlt size={15} />
+			{bandSubmissionsOpen ? (
+				<>
+					<p>
+						If you're in a band and it hasn't been submitted via the Google Form below,
+						please do so before <b className="text-destructive">April 11th</b>. Only one
+						member of your band needs to submit.
+					</p>
+					<div className="w-fit mx-auto">
+						<a
+							href="https://docs.google.com/forms/d/e/1FAIpQLSfs5PK55UuYUo6MSvzwRGFeBMerAavh61ADhYZK7oJmO2A0qw/viewform"
+							target="_blank"
+							rel="noreferrer"
+						>
+							<div className="text-center px-3.5 py-1.5 rounded bg-primary text-primary-foreground flex items-center justify-center gap-2">
+								Submit your group
+								<FaExternalLinkAlt size={15} />
+							</div>
+						</a>
 					</div>
-				</a>
-			</div>
+				</>
+			) : (
+				<>
+					<p>
+						<b>We are no long accepting submissions</b>. If you have submitted your
+						group already I will get back to you shortly! If you have any queries,
+						please email{" "}
+						<span
+							className="cursor-pointer italic"
+							onClick={() => copyText("concordcharacters@gmail.com")}
+						>
+							<u>concordcharacters@gmail.com</u>
+						</span>
+					</p>
+					<p>Thanks - Dee, Player Group Support</p>
+				</>
+			)}
 		</div>
 	);
 }
