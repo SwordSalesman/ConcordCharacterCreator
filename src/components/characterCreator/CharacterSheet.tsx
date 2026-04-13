@@ -1,5 +1,5 @@
 import { graces } from "@/data/tables/graces";
-import { getRealmData, getSummaryFromArray } from "@/utils/data-helper";
+import { getRealmData, getSummaryFromArray, stringToNode } from "@/utils/data-helper";
 import { FormState } from "@/context/formContext";
 
 /* The 'simple' version of these components are used for rendering the email content
@@ -156,15 +156,23 @@ export function CharacterSheet({
 				<>
 					<StyledBorderWrapper />
 					{backstory && (
-						<ReviewItemWrapper label="Backstory">{backstory}</ReviewItemWrapper>
+						<ReviewItemWrapper label="Backstory">
+							{stringToNode(backstory)}
+						</ReviewItemWrapper>
 					)}
-					{icGoals && <ReviewItemWrapper label="IC Goals">{icGoals}</ReviewItemWrapper>}
+					{icGoals && (
+						<ReviewItemWrapper label="IC Goals">
+							{stringToNode(icGoals)}
+						</ReviewItemWrapper>
+					)}
 					{oocGoals && (
-						<ReviewItemWrapper label="OOC Goals">{oocGoals}</ReviewItemWrapper>
+						<ReviewItemWrapper label="OOC Goals">
+							{stringToNode(oocGoals)}
+						</ReviewItemWrapper>
 					)}
 					{invDetails && (
 						<ReviewItemWrapper label="Investment Details">
-							{invDetails}
+							{stringToNode(invDetails)}
 						</ReviewItemWrapper>
 					)}
 				</>
