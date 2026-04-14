@@ -55,12 +55,16 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 	const [isMounted, setIsMounted] = useState(false);
 	const sheetRef = useRef<HTMLDivElement>(null);
 	useEffect(() => setIsMounted(true), []);
-	const [author, setAuthor] = useState("");
-	const [date, setDate] = useState("");
+
 	const [comment, setComment] = useState("");
-	const [previousComment, setPreviousComment] = useState("");
-	const [previousStatus, setPreviousStatus] = useState("");
 	const [status, setStatus] = useState<string | null>(null);
+	const [date, setDate] = useState(character?.approval?.date ?? "");
+	const [author, setAuthor] = useState(character?.approval?.author ?? "");
+	const { comment: previousComment, status: previousStatus } = character?.approval || {
+		comment: "",
+		status: null,
+	};
+
 	const { name } = useUserContext();
 	const [validInputs, setValidInputs] = useState({
 		validStatus: true,
@@ -110,16 +114,6 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 		);
 	}
 
-	useEffect(() => {
-		setPreviousComment(character?.approval?.comment ?? "");
-		setPreviousStatus(character?.approval?.status ?? "");
-		setComment("");
-		setStatus(null);
-		setAuthor(character?.approval?.author ?? "");
-		setDate(character?.approval?.date ?? "");
-		setValidInputs({ validStatus: true, validComment: true });
-	}, [character]);
-
 	const validateInputs = () => {
 		const validStatus = status !== null;
 		const validComment = status === APPROVED || comment.length > 0;
@@ -134,8 +128,9 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 			const clone = sheetRef.current.cloneNode(true) as HTMLElement;
 			inlineComputedStyles(sheetRef.current, clone);
 
-			const comment = `<p>${previousComment.replace(/\n/g, "<br>")}</p><p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>`;
-			const htmlContent = `${comment}${clone.outerHTML}`;
+			const comment = `<p>${previousComment.replace(/\n/g, "<br>")}</p>`;
+			const divider = `<p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>`;
+			const htmlContent = `${comment}${divider}${clone.outerHTML}`;
 
 			await navigator.clipboard.write([
 				new ClipboardItem({

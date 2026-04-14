@@ -1,5 +1,6 @@
 import { PENDING } from "../../utils/constants";
 import { prettifyDate } from "../../utils/date-helper";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 import { Character } from "./types";
 import { cn } from "@/lib/utils";
 
@@ -7,9 +8,10 @@ interface Props {
 	characters: Character[];
 	handleSelect: (character: Character) => void;
 	activeCharacter: Character | null;
+	loading: boolean;
 }
 
-function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
+function CharacterList({ characters, handleSelect, activeCharacter, loading }: Props) {
 	const renderedList =
 		characters.length > 0
 			? characters.map((c, i) => {
@@ -50,7 +52,15 @@ function CharacterList({ characters, handleSelect, activeCharacter }: Props) {
 
 	return (
 		<ul className="overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-			{renderedList}
+			{loading ? (
+				<div className={"mt-12"}>
+					<LoadingSpinner />
+				</div>
+			) : (
+				(renderedList ?? (
+					<p className="text-center mt-12 text-sm italic">No characters found</p>
+				))
+			)}
 		</ul>
 	);
 }

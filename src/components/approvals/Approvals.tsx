@@ -23,20 +23,23 @@ export interface Counts {
 	archived: number;
 }
 
+export type DateType = "submission" | "approval";
+
 function removeAllNewlines(input?: string): string {
 	if (!input) return "";
 	return input.replace(/(?:\r\n|\r|\n)/g, ". ").replace(/"/g, "'");
 }
 
 export function Approvals() {
-	const router = useRouter();
 	const [characters, setCharacters] = useState<Character[]>([]);
+	const [fetched, setFetched] = useState(false);
 	const [selectedChar, setSelectedChar] = useState<Character | null>(null);
 	const [filter, setFilter] = useState<string | null>(PENDING);
 	const [realmFilter, setRealmFilter] = useState<Realm | null>(null);
 	const [search, setSearch] = useState("");
 	const [dateOrder, setDateOrder] = useState(false);
-	const { isAdmin } = useUserContext();
+	const [dateType, setDateType] = useState<DateType>("submission");
+
 	const [counts, setCounts] = useState<Counts>({
 		pending: 0,
 		approved: 0,
@@ -46,10 +49,6 @@ export function Approvals() {
 	});
 	const isDev = process.env.NEXT_PUBLIC_DEBUG_TEXT === "DevMode";
 	const [csvData, setCsvData] = useState<any[]>([]);
-
-	useEffect(() => {
-		if (!isAdmin) router.replace(PATH_HOME);
-	}, [isAdmin, router]);
 
 	useEffect(() => {
 		async function fetchCharacters() {
@@ -84,14 +83,14 @@ export function Approvals() {
 					}));
 				setCsvData(newCsvData);
 
+				setFetched(true);
+
 				console.debug("Fetched characters and approvals:", newChars);
 			}
 		}
-		if (isAdmin) {
-			fetchCharacters();
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isAdmin]);
+
+		fetchCharacters();
+	}, []);
 
 	function handleSelectFilter(f: string) {
 		setFilter(filter === f ? null : f);
@@ -125,10 +124,6 @@ export function Approvals() {
 		calcCounts(newChars);
 	}
 
-	function toggleDateOrder() {
-		setDateOrder(!dateOrder);
-	}
-
 	const now = getCurrentDate().slice(0, 19);
 
 	const sortedFilteredCharacters = characters
@@ -155,7 +150,15 @@ export function Approvals() {
 			if (!realmFilter) return true;
 			return c.realm === realmFilter;
 		})
-		.sort((a, b) => a.date.localeCompare(b.date) * (dateOrder ? 1 : -1));
+		.sort((a, b) => {
+			if (dateType === "submission") {
+				return a.date.localeCompare(b.date) * (dateOrder ? 1 : -1);
+			} else {
+				const aDate = a.approval?.date || "";
+				const bDate = b.approval?.date || "";
+				return aDate.localeCompare(bDate) * (dateOrder ? 1 : -1);
+			}
+		});
 
 	const csvHeaders = [
 		{ label: "Database ID", key: "id" },
@@ -190,8 +193,6 @@ export function Approvals() {
 		{ label: "IC Goals", key: "icGoals" },
 		{ label: "OOC Goals", key: "oocGoals" },
 	];
-
-	if (!isAdmin) return null;
 
 	return (
 		<div className="mx-auto mt-2 flex flex-col sm:flex-row gap-2 sm:h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,sans-serif]">
@@ -230,7 +231,11 @@ export function Approvals() {
 						filter={filter}
 						selectFilter={handleSelectFilter}
 						dateOrder={dateOrder}
-						toggleDateOrder={toggleDateOrder}
+						toggleDateOrder={() => setDateOrder(!dateOrder)}
+						dateType={dateType}
+						toggleDateType={() =>
+							setDateType(dateType === "submission" ? "approval" : "submission")
+						}
 						search={search}
 						setSearch={setSearch}
 						realmFilter={realmFilter}
@@ -241,12 +246,17 @@ export function Approvals() {
 						characters={sortedFilteredCharacters}
 						handleSelect={setSelectedChar}
 						activeCharacter={selectedChar}
+						loading={!fetched}
 					/>
 				</div>
 			</div>
 			<div className="flex-2 flex flex-col justify-between max-h-[100%]">
 				<CharacterCard character={selectedChar} />
-				<ApprovalPanel character={selectedChar} handleApproval={handleApproval} />
+				<ApprovalPanel
+					character={selectedChar}
+					handleApproval={handleApproval}
+					key={selectedChar ? selectedChar.id : "no-char"}
+				/>
 			</div>
 		</div>
 	);
