@@ -23,12 +23,12 @@ export function ApprovalReport({
 	const note = !submitDateString
 		? "When you submit your character you'll be able to see your approval status here."
 		: submitDateString
-			? `${author} on ${approvalDateString?.replaceAll("/", "-")}`
+			? `${author} on ${approvalDateString}`
 			: "Your character is set to be approved by the team";
 
 	return (
 		<div className="text-left">
-			<h2 className={`text-lg font-bold ${tickColorClass}`}>{submissionStatus}</h2>
+			<h2 className={`text-lg font-bold`}>{submissionStatus}</h2>
 			<p className="text-sm text-muted-foreground mb-2">
 				{submitDateString
 					? `You last submitted on ${submitDateString}`
@@ -39,7 +39,7 @@ export function ApprovalReport({
 					{status} by {note}
 				</p>
 				{comment && (
-					<blockquote className={`pl-2 border-l-4 border-primary italic leading-5`}>
+					<blockquote className={`pl-2 py-2 border-l-4 border-primary italic leading-5`}>
 						{stringToNode(comment)}
 					</blockquote>
 				)}

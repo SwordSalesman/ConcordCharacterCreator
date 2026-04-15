@@ -196,7 +196,7 @@ export function Approvals() {
 
 	return (
 		<div className="mx-auto mt-2 flex flex-col sm:flex-row gap-2 sm:h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,sans-serif]">
-			<div className="flex flex-col items-center justify-center gap-1.5 h-[400px] sm:flex-1 flex-none sm:h-full">
+			<div className="flex flex-col items-center justify-center gap-1.5 h-[450px] sm:flex-1 flex-none sm:h-full">
 				<CSVLink
 					data={csvData}
 					filename={`character-export-${now}.csv`}
