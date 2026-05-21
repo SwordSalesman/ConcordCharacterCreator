@@ -109,7 +109,7 @@ export function Creator({
 
 	return (
 		<>
-			<Banner />
+			{/* <Banner /> */}
 
 			<div
 				className={cn(

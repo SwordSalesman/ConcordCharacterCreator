@@ -40,13 +40,18 @@ export function Modal({
 			<DialogContent
 				showCloseButton={false}
 				className={`${size === "small" ? "w-[300px]" : "w-[500px]"} text-left`}
+				{...(!subtitle && !title && { "aria-describedby": undefined })}
 			>
 				<div className="flex flex-col gap-4">
-					{(title || subtitle) && (
+					{title || subtitle ? (
 						<DialogHeader>
 							{title && <DialogTitle>{title}</DialogTitle>}
 							{subtitle && <DialogDescription>{subtitle}</DialogDescription>}
 						</DialogHeader>
+					) : (
+						<div className="hidden" aria-hidden="true" id="dialog-header">
+							<DialogTitle>Dialog</DialogTitle>
+						</div>
 					)}
 					{body}
 					{actions && (
