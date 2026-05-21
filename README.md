@@ -21,10 +21,12 @@
 
 ## To Do list
 
+- Further options for characters. Bordervar common/noble/knight options.
 - Mastered Ceremonies should be managed by the church team, not the character creator
     - Fix the divine lore per sphere giving known ceremonies thing, you know the one.
 - Test firebase rules for new document types (groups, groupApprovals, public)
 - Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
+    - Could save a whole copy of the hero submission under "HeroesApproved" instead of "Heroes", which is only updated when a Hero gets approved. Comparisons become a lot easier, direct 1:1
 - EMAILS (requires a whole rebuild fml)
     - automatic confirmation emails when a player submits their character
     - optional automatic email when a character is approved/denied/generally reviewed

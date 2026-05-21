@@ -208,9 +208,11 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 					document.body,
 				)}
 			{/* Gradient fade effect above the panel */}
+
 			<div className="w-full h-10 absolute -top-8 bg-gradient-to-t from-background-raised to-transparent" />
+
 			<div
-				className="border rounded-tl-lg rounded-tr-lg h-[100%] max-h-[450px] relative overflow-scroll
+				className="border rounded-tl-lg rounded-tr-lg h-[100%] sm:max-h-[450px] relative overflow-scroll
 			text-sm p-3 flex flex-col gap-5 z-1 bg-background
 			[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
 			>
@@ -225,7 +227,9 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 									: "Archived"}{" "}
 							by {author} on {prettifyDate(date)}:
 						</p>
-						<blockquote className={`pl-2 border-l-4 border-primary italic`}>
+						<blockquote
+							className={`pl-2 border-l-4 border-primary italic text-wrap break-words`}
+						>
 							{previousComment ? (
 								stringToNode(previousComment)
 							) : (
