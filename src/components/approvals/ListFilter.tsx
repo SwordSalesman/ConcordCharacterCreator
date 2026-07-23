@@ -34,7 +34,7 @@ function ListFilter({
 	const [localSearch, setLocalSearch] = useState(search);
 	const timeout = useRef<NodeJS.Timeout | null>(null);
 
-	const showRealmFilter = false;
+	const showRealmFilter = true;
 
 	// Debounced search input. Only calls setSearch after user stops typing for 250ms
 	function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -103,7 +103,8 @@ function ListFilter({
 								onClick={() =>
 									setRealmFilter(realm.name === realmFilter ? null : realm.name)
 								}
-								size="icon"
+								className={"flex-1"}
+								key={realm.name}
 							>
 								<Image
 									src={realm.image}
