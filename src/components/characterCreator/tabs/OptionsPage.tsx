@@ -52,6 +52,7 @@ import { potions as potionsData } from "@/data/tables/potions";
 import { spells as spellsData } from "@/data/tables/spells";
 import { getNextInvestmentOption } from "@/utils/data-helper";
 import { gridMirrorStyle } from "@/styles/Global";
+import { canSelectPotion, isPotionMandatoryForHero } from "@/utils/validity-helper";
 
 const chipIcons = true;
 
@@ -126,7 +127,7 @@ function chipIcon(type: string) {
 }
 
 function getInactive(params: any): { inactive: boolean; inactiveReason: string | undefined } {
-	const { item, selected, remainingPicks, realm, invRegion, investment } = params;
+	const { item, selected, remainingPicks, realm, archetype, invRegion, investment } = params;
 
 	if (!selected && remainingPicks <= 0) {
 		return { inactive: true, inactiveReason: undefined };
@@ -136,6 +137,20 @@ function getInactive(params: any): { inactive: boolean; inactiveReason: string |
 			inactive: true,
 			inactiveReason: `Cannot unlearn ${item.name}`,
 		};
+	}
+	if (item.type === "Potion" || item.type === "Tonic") {
+		if (selected && isPotionMandatoryForHero(item.name, archetype)) {
+			return {
+				inactive: true,
+				inactiveReason: `Cannot unlearn ${item.name}`,
+			};
+		}
+		if (!canSelectPotion(item, realm, archetype)) {
+			return {
+				inactive: true,
+				inactiveReason: `Only Crow Doktors and Lerona Merians can select ${item.name}`,
+			};
+		}
 	}
 	if (item.realm && item.realm !== realm) {
 		return {
@@ -165,6 +180,7 @@ const genTabContent = (params: {
 	remainingPicks: number;
 	subSectionTitle?: string;
 	realm?: Realm;
+	archetype?: string;
 	invRegion?: string;
 	comment?: string;
 	filterFunction?: (item: any) => boolean;
@@ -178,6 +194,7 @@ const genTabContent = (params: {
 		remainingPicks,
 		subSectionTitle,
 		realm,
+		archetype,
 		invRegion,
 		comment,
 		filterFunction,
@@ -223,6 +240,7 @@ const genTabContent = (params: {
 											selected: selected,
 											remainingPicks: remainingPicks,
 											realm: realm,
+											archetype: archetype,
 											invRegion: invRegion,
 										});
 
@@ -282,6 +300,7 @@ const genSelectedContent = (
 	items: string[],
 	toggleFunction: (item: string) => void,
 	noDisable?: boolean,
+	disableItemFunction?: (item: string) => boolean,
 ) => {
 	if (!items.length || items[0] === undefined) {
 		return null;
@@ -292,7 +311,12 @@ const genSelectedContent = (
 				onClick={() => toggleFunction(i)}
 				shadow
 				key={i}
-				disabled={!noDisable && (i === "Channel Waystone" || i === "Artisans Oil")}
+				disabled={
+					!noDisable &&
+					(i === "Channel Waystone" ||
+						i === "Artisans Oil" ||
+						(disableItemFunction ? disableItemFunction(i) : false))
+				}
 			>
 				{i}
 			</Chip>
@@ -316,6 +340,7 @@ export function OptionsPage() {
 		ceremonies,
 		startingItem,
 		realm,
+		archetype,
 	} = form;
 
 	const showSpells = skills.includes("Magus");
@@ -341,7 +366,12 @@ export function OptionsPage() {
 		(i) => toggleItem("startingItem", i),
 		true,
 	);
-	var renderedPotions = genSelectedContent(potions, (i) => toggleItem("potions", i));
+	var renderedPotions = genSelectedContent(
+		potions,
+		(i) => toggleItem("potions", i),
+		false,
+		(i) => isPotionMandatoryForHero(i, archetype),
+	);
 	var renderedCeremonies = genSelectedContent(ceremonies, (i) => toggleItem("ceremonies", i));
 
 	const investmentData = investmentsData.find((i) => i.name === investment);
@@ -568,6 +598,7 @@ export function OptionsPage() {
 				remainingPicks: remaining.potions,
 				subSectionTitle: "type",
 				realm: realm,
+				archetype: archetype,
 			}),
 		);
 	if (showCeremonies) {

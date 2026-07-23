@@ -1,7 +1,33 @@
-import { Archetype } from "@/data/tables/archetypes";
+import { Potion } from "@/data/tables/potions";
 import { getRegionRealm } from "./data-helper";
 
-import { archetypes } from "@/data/tables/archetypes";
+const CROW_DOKTOR = "Crow Doktor";
+const CROWDOKTOR_FREE_POTION = "Al-Asah's Antidote";
+
+export function isCrowDoktor(archetype?: string) {
+	return archetype === CROW_DOKTOR;
+}
+
+export function canSelectPotion(potion: Potion, realm?: string, archetype?: string) {
+	if (potion.name === 'Charr') console.log('Checking Charr potion for realm:', realm, 'archetype:', archetype, potion);
+
+	const hasRealmLock = !!potion.allowedRealms?.length;
+	const hasArchetypeLock = !!potion.allowedArchetypes?.length;
+	if (!hasRealmLock && !hasArchetypeLock) return true;
+
+	const realmAllowed = hasRealmLock ? !!realm && !!potion.allowedRealms?.includes(realm) : true;
+	const archetypeAllowed = hasArchetypeLock ? !!archetype && !!potion.allowedArchetypes?.includes(archetype) : true;
+
+	return realmAllowed || archetypeAllowed;
+}
+
+export function getMandatoryPotions(archetype?: string) {
+	return isCrowDoktor(archetype) ? [CROWDOKTOR_FREE_POTION] : [];
+}
+
+export function isPotionMandatoryForHero(potionName: string, archetype?: string) {
+	return getMandatoryPotions(archetype).includes(potionName);
+}
 
 export function investmentRegionWarning(realm?: string, invRegion?: string) {
 	if (!invRegion || !realm) return "";
