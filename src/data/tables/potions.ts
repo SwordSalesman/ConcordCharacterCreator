@@ -1,7 +1,8 @@
 export interface Potion {
 	name: string;
 	type: "Potion" | "Tonic";
-	realm?: string;
+	allowedRealms?: string[];
+	allowedArchetypes?: string[];
 }
 
 export const potions: Potion[] = [
@@ -24,6 +25,18 @@ export const potions: Potion[] = [
 	{
 		name: "Caricanium Solution",
 		type: "Potion",
+	},
+	{
+		name: "Boarders Breath",
+		type: "Potion",
+		allowedRealms: ["Lerona Mere"],
+		allowedArchetypes: ["Crow Doktor"],
+	},
+	{
+		name: "Charr",
+		type: "Potion",
+		allowedRealms: ["Lerona Mere"],
+		allowedArchetypes: ["Crow Doktor"],
 	},
 	{
 		name: "Concoction of Bright Morning",
@@ -92,6 +105,7 @@ export const potions: Potion[] = [
 	{
 		name: "Stormseeker",
 		type: "Potion",
-		realm: "Lerona Mere",
+		allowedRealms: ["Lerona Mere"],
+		allowedArchetypes: ["Crow Doktor"],
 	},
 ];

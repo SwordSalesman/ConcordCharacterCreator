@@ -10,6 +10,13 @@ import {
 } from "../utils/data-helper";
 import { Realm } from "@/data/tables/realms";
 import { investments } from "@/data/tables/investments";
+import { potions as potionData } from "@/data/tables/potions";
+import {
+	canSelectPotion,
+	getMandatoryPotions,
+	isCrowDoktor,
+	isPotionMandatoryForHero,
+} from "@/utils/validity-helper";
 
 /*
 	Form Context
@@ -239,6 +246,42 @@ function applyOptionSideEffects(state: FormState): FormState {
 	return { ...state, invDiversify };
 }
 
+function calculateMaxPotions(skills: string[], archetype?: string): number {
+	const baseMax =
+		skills.filter((s) => s.startsWith("Apothecary")).length * 3 +
+		skills.filter((s) => s.startsWith("Extra Recipe")).length * 2 +
+		(isCrowDoktor(archetype) ? 1 : 0); // Crows get Al-Asah's Antidote for free, but it doesn't count against their max potions.
+	return baseMax;
+}
+
+function applyPotionSideEffects(state: FormState): FormState {
+	const hasApothecary = state.skills.includes("Apothecary");
+	if (!hasApothecary) {
+		return { ...state, potions: [] };
+	}
+
+	const mandatoryPotions = getMandatoryPotions(state.archetype);
+	const allowedPotions = state.potions.filter((name, index, all) => {
+		if (all.indexOf(name) !== index) return false;
+		const potion = potionData.find((p) => p.name === name);
+		if (!potion) return false;
+		return canSelectPotion(potion, state.realm, state.archetype);
+	});
+	const orderedPotions = [...mandatoryPotions, ...allowedPotions];
+	const dedupedPotions = orderedPotions.filter((name, index, all) => all.indexOf(name) === index);
+	const maxPotions = calculateMaxPotions(state.skills, state.archetype);
+	const potions = dedupedPotions.slice(0, maxPotions);
+
+	return { ...state, potions };
+}
+
+function normalizeFormState(state: FormState): FormState {
+	let normalized = applySkillSideEffects(state);
+	normalized = applyOptionSideEffects(normalized);
+	normalized = applyPotionSideEffects(normalized);
+	return normalized;
+}
+
 // Pure helper: applies cascading side effects for any field that has them.
 // Called by both SET_FIELD and TOGGLE_ITEM so behaviour is consistent regardless of how a field is set.
 function applyFieldSideEffects(state: FormState, field: keyof FormState): FormState {
@@ -247,11 +290,12 @@ function applyFieldSideEffects(state: FormState, field: keyof FormState): FormSt
 		newState.changes = [...state.changes, field];
 	}
 
-	if (field === "realm") return { ...newState, archetype: undefined };
+	if (field === "realm") return normalizeFormState({ ...newState, archetype: undefined });
+	if (field === "archetype" || field === "potions") return applyPotionSideEffects(newState);
 	if (field === "investment") return { ...newState, invOption: undefined, invDiversify: [] };
 	if (field === "invRegion") return { ...newState, invTerritory: undefined };
 	if (field === "invDiversify" || field === "invTier") return applyOptionSideEffects(newState);
-	if (field === "skills" || field === "gamesPlayed") return applySkillSideEffects(newState);
+	if (field === "skills" || field === "gamesPlayed") return normalizeFormState(newState);
 	return newState;
 }
 
@@ -262,7 +306,7 @@ function formReducer(state: FormState, action: FormAction): FormState {
 			return applyFieldSideEffects(newState, action.field);
 		}
 		case "SET_FORM":
-			return { ...initialState, ...action.payload };
+			return normalizeFormState({ ...initialState, ...action.payload });
 		case "RESET_FORM":
 			return initialState;
 		case "TOGGLE_ITEM": {
@@ -272,6 +316,8 @@ function formReducer(state: FormState, action: FormAction): FormState {
 			// They're added/removed automatically by applySkillSideEffects — not manually.
 			if (field === "spells" && item === "Channel Waystone") return state;
 			if (field === "crafts" && item === "Artisans Oil") return state;
+			if (field === "potions" && isPotionMandatoryForHero(item, state.archetype))
+				return state;
 
 			const currentField = state[field];
 			let newFieldValue: any;
@@ -396,11 +442,8 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	const remainingCrafts = maxCrafts - crafts.length;
 
 	const maxPotions = useMemo(() => {
-		return (
-			skills.filter((s) => s.startsWith("Apothecary")).length * 3 +
-			skills.filter((s) => s.startsWith("Extra Recipe")).length * 2
-		);
-	}, [skills]);
+		return calculateMaxPotions(skills, formState.archetype);
+	}, [skills, formState.archetype]);
 	const remainingPotions = maxPotions - potions.length;
 
 	const remainingDiversifyOptions = calculateRemainingDiversifyOptions({
