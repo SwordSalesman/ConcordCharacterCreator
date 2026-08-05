@@ -152,7 +152,7 @@ export default function GroupsPage() {
 }
 
 function GroupSubmissionGoogleFormLink() {
-	const bandSubmissionsOpen = false;
+	const bandSubmissionsOpen = true;
 
 	return (
 		<div className="mx-auto px-4 py-8 max-w-[500px] flex flex-col text-center gap-5">
@@ -161,8 +161,8 @@ function GroupSubmissionGoogleFormLink() {
 				<>
 					<p>
 						If you're in a band and it hasn't been submitted via the Google Form below,
-						please do so before <b className="text-destructive">April 11th</b>. Only one
-						member of your band needs to submit.
+						please do so before <b className="text-destructive">September 12th</b>. Only
+						one member of your band needs to submit.
 					</p>
 					<div className="w-fit mx-auto">
 						<a
