@@ -11,6 +11,10 @@
 		"predeploy": "npm run build"
 	},
 	"dependencies": {
+		"@dnd-kit/modifiers": "^9.0.0",
+		"@dnd-kit/react": "^0.5.0",
+		"@dnd-kit/sortable": "^10.0.0",
+		"@dnd-kit/utilities": "^3.2.2",
 		"@headlessui/react": "^1.7.13",
 		"@mui/material": "^5.13.6",
 		"@radix-ui/react-accordion": "^1.2.12",
@@ -19,6 +23,7 @@
 		"@radix-ui/react-select": "^2.2.6",
 		"@tailwindcss/postcss": "^4.1.13",
 		"@types/react-csv": "^1.1.10",
+		"animejs": "^4.5.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"firebase": "^9.23.0",

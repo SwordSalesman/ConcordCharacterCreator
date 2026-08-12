@@ -10,6 +10,8 @@ import {
 	sendPasswordReset,
 } from "@/hooks/use-firebase";
 import toast from "react-hot-toast";
+import { PATH_APOTHECARY } from "@/utils/constants";
+import Link from "next/link";
 
 export default function LoginModal({ open, onClose }: { open: boolean; onClose: () => void }) {
 	const [loading, setLoading] = useState(false);
@@ -203,7 +205,14 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 							<p className="text-sm text-muted-foreground">Email</p>
 							<p className="">{user.email}</p>
 						</span>
-						{isAdmin ? <p className="text-primary">You have admin access!</p> : null}
+						{isAdmin ? (
+							<div className="flex justify-between">
+								<p className="text-primary">You have admin access!</p>
+								<Link href={PATH_APOTHECARY} onClick={handleClose}>
+									🌱
+								</Link>
+							</div>
+						) : null}
 					</div>
 				}
 				size="small"

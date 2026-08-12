@@ -42,16 +42,13 @@ export type ButtonVariant =
 	| null
 	| undefined;
 
-function Button({
-	className,
-	variant,
-	size,
-	spinner,
-	children,
-	...props
-}: { spinner?: boolean } & React.ComponentProps<"button"> & VariantProps<typeof buttonVariants>) {
+const Button = React.forwardRef<
+	HTMLButtonElement,
+	{ spinner?: boolean } & React.ComponentProps<"button"> & VariantProps<typeof buttonVariants>
+>(function Button({ className, variant, size, spinner, children, ...props }, ref) {
 	return (
 		<button
+			ref={ref}
 			data-slot="button"
 			className={cn(buttonVariants({ variant, size }), className)}
 			{...props}
@@ -59,6 +56,6 @@ function Button({
 			{spinner ? <CgSpinner className="animate-spin" /> : children}
 		</button>
 	);
-}
+});
 
 export { Button, buttonVariants };
