@@ -10,6 +10,7 @@ export function PageMeta() {
 		"/groups": "Groups",
 		"/maintenance": "Maintenance",
 		"/approvals": "Approvals",
+		"/apothecary": "Apothecary",
 	};
 
 	const name = pathName[pathname];
