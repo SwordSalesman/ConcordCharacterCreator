@@ -14,22 +14,40 @@ import { GiBeerStein } from "react-icons/gi";
 import { displayNumber } from "./helpers/numberHelper";
 import { Gardens } from "./components/Gardens";
 import { ResourcesPanel } from "./components/ResourcesPanel";
+import { Modal } from "../common/Modal/Modal";
+import { MdSettings } from "react-icons/md";
 
 const TUTORIAL_MODE = false;
 
 export default function GameMain() {
-	const { money, herbs, potions, workers, farmerAssignments, canHireWorker, hireWorker } =
-		useContext(GameContext);
+	const {
+		money,
+		herbs,
+		potions,
+		workers,
+		farmerAssignments,
+		canHireWorker,
+		hireWorker,
+		resetGame,
+	} = useContext(GameContext);
 	const { active, toggleActive } = useApothecaryAnimation();
 
 	const [showLab, setShowLab] = useState(false);
 	const [showMarket, setShowMarket] = useState(false);
 	const [showTavern, setShowTavern] = useState(false);
+	const [showSettings, setShowSettings] = useState(false);
 
 	const assignedFarmers = HERB_IDS.reduce((sum, herbId) => sum + farmerAssignments[herbId], 0);
 	const unassignedFarmers = Math.max(0, workers.farmers - assignedFarmers);
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);
 	const potionTotal = Object.values(potions).reduce((sum, amount) => sum + amount, 0);
+
+	function handleResetGame() {
+		if (!window.confirm("Reset your save? This cannot be undone.")) {
+			return;
+		}
+		resetGame();
+	}
 
 	useEffect(() => {
 		if (herbTotal > 0 && !showLab) {
@@ -47,11 +65,31 @@ export default function GameMain() {
 		<>
 			<ContentWrapper layout="narrow">
 				<div className="flex flex-col gap-6 p-1 pb-16">
-					<div className="flex w-full justify-end">
-						<Button onClick={toggleActive} size="sm">
-							Animations {active ? "ON" : "OFF"}
+					<div className="flex justify-end gap-2">
+						<Button onClick={() => setShowSettings(true)} size="icon" className="">
+							<MdSettings />
 						</Button>
 					</div>
+					<Modal
+						open={showSettings}
+						onClose={() => setShowSettings(false)}
+						title="Settings"
+						size="small"
+						body={
+							<div className="flex flex-col items-center gap-2">
+								<div>
+									<Button onClick={toggleActive}>
+										Animations {active ? "ON" : "OFF"}
+									</Button>
+								</div>
+								<div>
+									<Button onClick={handleResetGame} variant="destructive">
+										Reset Game
+									</Button>
+								</div>
+							</div>
+						}
+					/>
 
 					<SectionWrapper
 						title="Resources"
