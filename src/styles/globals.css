@@ -164,12 +164,36 @@ body {
 		}
 		30%,
 		70% {
-			transform: rotate(-5deg);
+			transform: rotate(-10deg);
 		}
 		50% {
-			transform: rotate(5deg);
+			transform: rotate(10deg);
 		}
 	}
+
+	--animate-quick-fade-in: quickFadeIn 0.15s ease-in-out;
+	@keyframes quickFadeIn {
+		from {
+			scale: 0.5;
+			opacity: 0;
+		}
+		to {
+			scale: 1;
+			opacity: 1;
+		}
+	}
+
+	/* --animate-quick-pulse: quickPulse 1.0s ease-in-out infinite;
+	@keyframes quickPulse {
+		0%,
+		20%,
+		100% {
+			scale: 1;
+		}
+		10% {
+			scale: 1.2;
+		}
+	} */
 }
 
 :root {

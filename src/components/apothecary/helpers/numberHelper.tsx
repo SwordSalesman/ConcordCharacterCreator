@@ -1,12 +1,23 @@
 export function displayNumber(value: number): string {
-	if (value >= 1_000_000_000) {
-		return (value / 1_000_000_000).toFixed(2) + "B";
+	if (value < 10_000) {
+		return value.toLocaleString("en-US");
 	}
-	if (value >= 1_000_000) {
-		return (value / 1_000_000).toFixed(2) + "M";
-	}
-	if (value >= 1_000) {
-		return `${Math.floor(value / 1000)},${value % 1000}`;
+
+	const suffixes = [
+		{ threshold: 1_000_000_000_000, suffix: "T" },
+		{ threshold: 1_000_000_000, suffix: "B" },
+		{ threshold: 1_000_000, suffix: "M" },
+		{ threshold: 1_000, suffix: "k" },
+	] as const;
+
+	for (const { threshold, suffix } of suffixes) {
+		if (value >= threshold) {
+			const scaled = value / threshold;
+			const integerDigits = Math.floor(scaled).toString().length;
+			const decimals = Math.max(0, 4 - integerDigits);
+
+			return `${scaled.toFixed(decimals)}${suffix}`;
+		}
 	}
 
 	return value.toString();

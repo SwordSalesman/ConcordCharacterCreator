@@ -6,14 +6,16 @@ export function SectionWrapper({
 	title,
 	icon,
 	subtitle,
+	className,
 }: {
-	children: ReactNode;
+	children?: ReactNode;
 	title: string;
 	icon?: ReactNode;
 	subtitle?: string;
+	className?: string;
 }) {
 	return (
-		<section className="flex flex-col gap-2">
+		<section className={`flex flex-col gap-2 ${className ? className : ""}`}>
 			<div className="">
 				<div className="flex items-center gap-1">
 					{icon ? icon : <></>}
@@ -21,7 +23,7 @@ export function SectionWrapper({
 				</div>
 				{subtitle ? <p className="text-sm text-muted-foreground">{subtitle}</p> : null}
 			</div>
-			<div className="">{children}</div>
+			{children ? <div className="">{children}</div> : null}
 		</section>
 	);
 }

@@ -2,7 +2,8 @@ import { useContext } from "react";
 import {
 	useSensor,
 	useSensors,
-	PointerSensor,
+	MouseSensor,
+	TouchSensor,
 	KeyboardSensor,
 	DndContext,
 	closestCenter,
@@ -43,30 +44,26 @@ function SortablePotionCraftButton({
 	const style = {
 		transform: CSS.Transform.toString(transform),
 		transition,
-		cursor: "grab",
 	};
 
 	return (
-		<div ref={setNodeRef} {...attributes} style={style}>
+		<div ref={setNodeRef} {...attributes} style={style} className="flex gap-0.5 items-center">
+			<div className="rounded-xs p-0.5 cursor-move" {...listeners}>
+				<MdReorder className="size-5" />
+			</div>
 			<Button
 				ref={anchorRef}
 				onClick={() => {
 					isCraftable && onCraft(potionId);
 				}}
-				className="w-full flex justify-between duration-100 hover:scale-103 active:scale-98"
+				className="flex-1 flex justify-between duration-100 hover:scale-103 active:scale-98 select-none"
+				disabled={!isCraftable}
 			>
-				<div className="flex items-center gap-2">
-					<div className="rounded-xs p-0.5 cursor-move" {...listeners}>
-						<MdReorder className="size-5" />
-					</div>
-					<span className={isCraftable ? "" : "opacity-50"}>
-						{POTIONS[potionId].name}
-					</span>
-				</div>
+				<div className="flex items-center gap-2">{POTIONS[potionId].name}</div>
 				{!isActivePreference && " ❌"}
 				<p>
 					{Object.entries(POTIONS[potionId].recipe).map(([herbId, amount]) => (
-						<span key={herbId} className={isCraftable ? "" : "opacity-50"}>
+						<span key={herbId}>
 							{HERBS[herbId as (typeof HERB_IDS)[number]].emoji.repeat(amount)}{" "}
 						</span>
 					))}
@@ -88,7 +85,12 @@ export function Laboratory() {
 	];
 
 	const sensors = useSensors(
-		useSensor(PointerSensor),
+		useSensor(MouseSensor, {
+			activationConstraint: { distance: 4 },
+		}),
+		useSensor(TouchSensor, {
+			activationConstraint: { delay: 0, tolerance: 8 },
+		}),
 		useSensor(KeyboardSensor, {
 			coordinateGetter: sortableKeyboardCoordinates,
 		}),
