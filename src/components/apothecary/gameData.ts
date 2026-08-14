@@ -1,8 +1,9 @@
 // ********************************************************** Herbs
 
-export const HERB_IDS = ["GS", "TB", "ST"] as const;
+export const HERB_IDS = ["GS", "TB", "ST", "BR", "RK", "BS"] as const;
 export type HerbId = (typeof HERB_IDS)[number];
 
+export const HERB_BASE_UNLOCK_COST = 20;
 export interface HerbDefinition {
 	id: HerbId;
 	name: string;
@@ -13,6 +14,7 @@ export interface PotionDefinition {
 	id: PotionId;
 	name: string;
 	sellValue: number;
+	unlockBaseCost: number;
 	recipe: Partial<Record<HerbId, number>>;
 }
 
@@ -32,15 +34,30 @@ export const HERBS: Record<HerbId, HerbDefinition> = {
 		name: "Stone Stem",
 		emoji: "🫚",
 	},
-	// beggars root: 🫜
-	// rakoric: 🪻
-	// blacksap: 🫐
+	BR: {
+		id: "BR",
+		name: "Beggars Root",
+		emoji: "🫜",
+	},
+	RK: {
+		id: "RK",
+		name: "Rakoric",
+		emoji: "🪻",
+	},
+	BS: {
+		id: "BS",
+		name: "Blacksap",
+		emoji: "🫐",
+	},
 };
 
 export const HERB_NAME_TO_ID: Record<string, HerbId> = {
 	"Green Sunleaf": "GS",
 	"Throne's Boon": "TB",
 	"Stone Stem": "ST",
+	"Beggars Root": "BR",
+	"Rakoric": "RK",
+	"Blacksap": "BS",
 };
 
 export function getHerbName(herbId: HerbId): string {
@@ -54,14 +71,15 @@ export function getHerbId(name: string): HerbId | undefined {
 
 // ********************************************************** Potions
 
-export const POTION_IDS = ["EV", "CS", "BB", "FA"] as const;
+export const POTION_IDS = ["EV", "CS", "BB", "FA", "AA", "BE", "WB"] as const;
 export type PotionId = (typeof POTION_IDS)[number];
 
 export const POTIONS: Record<PotionId, PotionDefinition> = {
 	EV: {
 		id: "EV",
 		name: "Elixir Vitae",
-		sellValue: 1,
+		sellValue: 3,
+		unlockBaseCost: 20,
 		recipe: {
 			GS: 1,
 			TB: 1,
@@ -70,7 +88,8 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 	CS: {
 		id: "CS",
 		name: "Caricanium Solution",
-		sellValue: 2,
+		sellValue: 4,
+		unlockBaseCost: 30,
 		recipe: {
 			GS: 2,
 			TB: 1,
@@ -79,7 +98,8 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
     BB: {
         id: "BB",
         name: "Boarder's Breath",
-        sellValue: 2,
+        sellValue: 5,
+		unlockBaseCost: 40,
         recipe: {
             TB: 1,
             GS: 1,
@@ -89,11 +109,44 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 	FA: {
 		id: "FA",
 		name: "Fool's Anaesthetic",
-        sellValue: 1,
+        sellValue: 3,
+		unlockBaseCost: 35,
         recipe: {
             GS: 1,
             ST: 1,
         }
+	},
+	AA: {
+		id: "AA",
+		name: "Al-Asah's Antidote",
+		recipe: {
+			TB: 1,
+			BR: 1,
+			RK: 1,
+			GS: 1,
+		},
+		sellValue: 6,
+		unlockBaseCost: 50,
+	},
+	BE: {
+		id: "BE",
+		name: "Believer's Burning Brew",
+		recipe: {
+			BR: 1,
+			RK: 1,
+		},
+		sellValue: 3,
+		unlockBaseCost: 20,
+	},
+	WB: {
+		id: "WB",
+		name: "Warbrew",
+		recipe: {
+			TB: 2,
+			RK: 1,
+		},
+		sellValue: 5,
+		unlockBaseCost: 30,
 	},
 };
 
@@ -102,6 +155,9 @@ export const POTION_NAME_TO_ID: Record<string, PotionId> = {
 	"Caricanium Solution": "CS",
 	"Boarder's Breath": "BB",
 	"Fool's Anaesthetic": "FA",
+	"Al-Asah's Antidote": "AA",
+	"Believer's Burning Brew": "BE",
+	"Warbrew": "WB",
 };
 
 
@@ -133,7 +189,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Farmers",
 		singularName: "Farmer",
 		emoji: "🪏",
-		baseCost: 12,
+		baseCost: 20,
 		costScale: 1.15,
 	},
 	apothecaries: {
@@ -141,7 +197,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Apothecaries",
 		singularName: "Apothecary",
 		emoji: "🧪",
-		baseCost: 20,
+		baseCost: 26,
 		costScale: 1.15,
 	},
 	merchants: {
@@ -149,7 +205,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Merchants",
 		singularName: "Merchant",
 		emoji: "💸",
-		baseCost: 16,
+		baseCost: 24,
 		costScale: 1.15,
 	},
 };

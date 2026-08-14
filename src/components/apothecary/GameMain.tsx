@@ -15,20 +15,38 @@ import { displayNumber } from "./helpers/numberHelper";
 import { Gardens } from "./components/Gardens";
 import { ResourcesPanel } from "./components/ResourcesPanel";
 
-export default function Apothecary() {
+const TUTORIAL_MODE = false;
+
+export default function GameMain() {
 	const { money, herbs, potions, workers, farmerAssignments, canHireWorker, hireWorker } =
 		useContext(GameContext);
 	const { active, toggleActive } = useApothecaryAnimation();
+
+	const [showLab, setShowLab] = useState(false);
+	const [showMarket, setShowMarket] = useState(false);
+	const [showTavern, setShowTavern] = useState(false);
 
 	const assignedFarmers = HERB_IDS.reduce((sum, herbId) => sum + farmerAssignments[herbId], 0);
 	const unassignedFarmers = Math.max(0, workers.farmers - assignedFarmers);
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);
 	const potionTotal = Object.values(potions).reduce((sum, amount) => sum + amount, 0);
 
+	useEffect(() => {
+		if (herbTotal > 0 && !showLab) {
+			setShowLab(true);
+		}
+		if (potionTotal > 0 && !showMarket) {
+			setShowMarket(true);
+		}
+		if (money > 0 && !showTavern) {
+			setShowTavern(true);
+		}
+	}, [herbTotal, potionTotal, money]);
+
 	return (
 		<>
 			<ContentWrapper layout="narrow">
-				<div className="flex flex-col gap-5 p-1 pb-16">
+				<div className="flex flex-col gap-6 p-1 pb-16">
 					<div className="flex w-full justify-end">
 						<Button onClick={toggleActive} size="sm">
 							Animations {active ? "ON" : "OFF"}
@@ -54,6 +72,7 @@ export default function Apothecary() {
 						title="Laboratory"
 						subtitle={`${workers.apothecaries} Apothecar${workers.apothecaries !== 1 ? "ies" : "y"}. Order potions by crafting preference.`}
 						icon={<FaMortarPestle />}
+						hide={TUTORIAL_MODE && !showLab}
 					>
 						<Laboratory />
 					</SectionWrapper>
@@ -62,6 +81,7 @@ export default function Apothecary() {
 						title="Market"
 						subtitle={`${workers.merchants} Merchant${workers.merchants !== 1 ? "s" : ""}. Most expensive potions are sold first.`}
 						icon={<FaBalanceScaleLeft />}
+						hide={TUTORIAL_MODE && !showMarket}
 					>
 						<Market />
 					</SectionWrapper>
@@ -70,6 +90,7 @@ export default function Apothecary() {
 						title="Tavern"
 						subtitle="Hire workers to help your operation."
 						icon={<GiBeerStein />}
+						hide={TUTORIAL_MODE && !showTavern}
 					>
 						<div className="grid grid-cols-1 gap-1 sm:grid-cols-3">
 							{WORKER_IDS.map((workerId) => (

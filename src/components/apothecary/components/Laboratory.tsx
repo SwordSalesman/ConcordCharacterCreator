@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
 	useSensor,
 	useSensors,
@@ -23,6 +23,8 @@ import { useApothecaryAnimation } from "../animationContext";
 import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
 import { MdReorder } from "react-icons/md";
+import { BiPlusCircle } from "react-icons/bi";
+import { PotionsMenu } from "./PotionsMenu.tsx";
 
 function SortablePotionCraftButton({
 	potionId,
@@ -60,7 +62,7 @@ function SortablePotionCraftButton({
 				disabled={!isCraftable}
 			>
 				<div className="flex items-center gap-2">{POTIONS[potionId].name}</div>
-				{!isActivePreference && " ❌"}
+				{/* {!isActivePreference && " ❌"} */}
 				<p>
 					{Object.entries(POTIONS[potionId].recipe).map(([herbId, amount]) => (
 						<span key={herbId}>
@@ -74,15 +76,27 @@ function SortablePotionCraftButton({
 }
 
 export function Laboratory() {
-	const { apothecaryPreferences, setApothecaryPotionOrder, craftPotion, canCraftPotion } =
-		useContext(GameContext);
+	const {
+		apothecaryPreferences,
+		setApothecaryPotionOrder,
+		craftPotion,
+		canCraftPotion,
+		unlockedPotions,
+	} = useContext(GameContext);
 	const { registerAnchor } = useApothecaryAnimation();
 	const craftAnchor = (potionId: PotionId) => registerAnchor(`craft:${potionId}`);
+	const [showPotionsMenu, setShowPotionsMenu] = useState(false);
 
 	const displayedPotionIds = [
-		...apothecaryPreferences,
-		...POTION_IDS.filter((potionId) => !apothecaryPreferences.includes(potionId)),
+		...apothecaryPreferences.filter((potionId) => unlockedPotions[potionId]),
+		...POTION_IDS.filter((potionId) => unlockedPotions[potionId]).filter(
+			(potionId) => !apothecaryPreferences.includes(potionId),
+		),
 	];
+
+	const totalPotionTypes = POTION_IDS.length;
+	const unlockedPotionCount = POTION_IDS.filter((potionId) => unlockedPotions[potionId]).length;
+	const showAddPotionButton = unlockedPotionCount < totalPotionTypes;
 
 	const sensors = useSensors(
 		useSensor(MouseSensor, {
@@ -112,29 +126,45 @@ export function Laboratory() {
 	};
 
 	return (
-		<DndContext
-			sensors={sensors}
-			collisionDetection={closestCenter}
-			onDragEnd={handleDragEnd}
-			modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-		>
-			<SortableContext items={displayedPotionIds} strategy={verticalListSortingStrategy}>
-				<div className="flex gap-1 flex-col flex-wrap">
-					{displayedPotionIds.map((potionId) => {
-						const isActivePreference = apothecaryPreferences.indexOf(potionId) !== -1;
-						return (
-							<SortablePotionCraftButton
-								key={potionId}
-								potionId={potionId}
-								isActivePreference={isActivePreference}
-								isCraftable={canCraftPotion(potionId)}
-								onCraft={(id) => craftPotion(id, 1)}
-								anchorRef={craftAnchor(potionId)}
-							/>
-						);
-					})}
-				</div>
-			</SortableContext>
-		</DndContext>
+		<>
+			<DndContext
+				sensors={sensors}
+				collisionDetection={closestCenter}
+				onDragEnd={handleDragEnd}
+				modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+			>
+				<SortableContext items={displayedPotionIds} strategy={verticalListSortingStrategy}>
+					<div className="flex gap-1 flex-col flex-wrap">
+						{displayedPotionIds.map((potionId) => {
+							const isActivePreference =
+								apothecaryPreferences.indexOf(potionId) !== -1;
+							return (
+								<SortablePotionCraftButton
+									key={potionId}
+									potionId={potionId}
+									isActivePreference={isActivePreference}
+									isCraftable={canCraftPotion(potionId)}
+									onCraft={(id) => craftPotion(id, 1)}
+									anchorRef={craftAnchor(potionId)}
+								/>
+							);
+						})}
+					</div>
+					{showAddPotionButton ? (
+						<div className="flex justify-center p-1 mt-2">
+							<Button
+								className="opacity-80 hover:opacity-100"
+								onClick={() => setShowPotionsMenu(true)}
+								variant="outline"
+							>
+								<BiPlusCircle size={60} />
+								Learn Recipe
+							</Button>
+						</div>
+					) : null}
+				</SortableContext>
+			</DndContext>
+			<PotionsMenu open={showPotionsMenu} onClose={() => setShowPotionsMenu(false)} />
+		</>
 	);
 }

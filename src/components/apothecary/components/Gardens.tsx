@@ -1,16 +1,24 @@
 import { HERB_IDS, HerbId } from "../gameData";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import HerbPatch from "./HerbPatch";
 import { DragDropProvider, DragOverlay, PointerSensor } from "@dnd-kit/react";
 import { Feedback, PointerActivationConstraints } from "@dnd-kit/dom";
 import { GameContext } from "../gameContext";
 import { GiFarmer } from "react-icons/gi";
+import { GardensMenu } from "./GardensMenu";
+import { Button } from "@/components/common/Button/Button";
+import { BiPlusCircle } from "react-icons/bi";
 
 export function Gardens() {
-	const { farmerAssignments, setFarmerHerbAssignment } = useContext(GameContext);
+	const { farmerAssignments, setFarmerHerbAssignment, unlockedHerbs } = useContext(GameContext);
 
 	const [draggedId, setDraggedId] = useState<string | null>(null);
 	const [dragOverId, setDragOverId] = useState<string | null>(null);
+	const [showGardensMenu, setShowGardensMenu] = useState(false);
+
+	const allHerbCount = HERB_IDS.length;
+	const unlockedHerbCount = HERB_IDS.filter((herbId) => unlockedHerbs[herbId]).length;
+	const showAddHerbButton = unlockedHerbCount < allHerbCount;
 
 	return (
 		<DragDropProvider
@@ -54,15 +62,31 @@ export function Gardens() {
 			}}
 		>
 			<div className="grid grid-cols-2 gap-1 sm:grid-cols-3 select-none">
-				{HERB_IDS.map((herbId) => (
-					<HerbPatch key={herbId} herbId={herbId} dragOverId={dragOverId} />
-				))}
-				{HERB_IDS.length % 2 === 1 ? <div className="flex-1"></div> : null}
+				{HERB_IDS.map((herbId) =>
+					unlockedHerbs[herbId] ? (
+						<HerbPatch key={herbId} herbId={herbId} dragOverId={dragOverId} />
+					) : null,
+				)}
+				{showAddHerbButton ? (
+					<div
+						className={
+							`flex min-h-24 items-center justify-center ${unlockedHerbCount % 2 === 0 ? "col-span-2 sm:col-span-1" : "col-span-1"}`
+							// + "my-2 h-[100px] mt-5 mx-4 border-1 border-dashed rounded-md border-border"
+						}
+					>
+						<Button
+							className="opacity-80 hover:opacity-100"
+							onClick={() => setShowGardensMenu(true)}
+							variant="outline"
+						>
+							<BiPlusCircle size={60} />
+							Build Garden
+						</Button>
+					</div>
+				) : null}
 			</div>
-			<DragOverlay
-				dropAnimation={null}
-				className="absolute left-0 top-0 pointer-events-none z-50"
-			>
+			<GardensMenu open={showGardensMenu} onClose={() => setShowGardensMenu(false)} />
+			<DragOverlay dropAnimation={null} className="pointer-events-none">
 				{(source) => {
 					const sourceId = source?.id?.toString();
 					if (!sourceId?.startsWith("farmer:")) {
@@ -70,11 +94,16 @@ export function Gardens() {
 					}
 
 					return (
-						<div className="animate-quick-fade-in">
+						<div className="animate-quick-fade-in z-50">
 							<div
-								className={`p-0 w-24 h-24 sm:h-14 sm:w-14 rounded-sm animate-wiggle duration-200 flex justify-center items-center select-none pointer-events-none`}
+								className={`p-0 relative w-24 h-24 sm:h-14 sm:w-14 rounded-sm  duration-200 flex justify-center items-center select-none pointer-events-none`}
 							>
-								<GiFarmer size={90} />
+								<div className="hidden sm:inline animate-wiggle">
+									<GiFarmer size={60} />
+								</div>
+								<div className="inline sm:hidden absolute top-[-50px] left-[-40px] animate-wiggle animate-quick-fade-in">
+									<GiFarmer size={90} />
+								</div>
 							</div>
 						</div>
 					);
