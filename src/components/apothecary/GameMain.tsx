@@ -17,7 +17,7 @@ import { ResourcesPanel } from "./components/ResourcesPanel";
 import { Modal } from "../common/Modal/Modal";
 import { MdSettings } from "react-icons/md";
 
-const TUTORIAL_MODE = false;
+const TUTORIAL_MODE = true;
 
 export default function GameMain() {
 	const {
