@@ -20,19 +20,21 @@ export const HERBS: Record<HerbId, HerbDefinition> = {
 	GS: {
 		id: "GS",
 		name: "Green Sunleaf",
-		emoji: "☘️",
+		emoji: "🌿",
 	},
 	TB: {
 		id: "TB",
 		name: "Throne's Boon",
-		emoji: "🌼",
+		emoji: "🌷",
 	},
 	ST: {
 		id: "ST",
 		name: "Stone Stem",
 		emoji: "🫚",
 	},
-
+	// beggars root: 🫜
+	// rakoric: 🪻
+	// blacksap: 🫐
 };
 
 export const HERB_NAME_TO_ID: Record<string, HerbId> = {
@@ -120,6 +122,7 @@ export interface WorkerDefinition {
 	id: WorkerId;
 	name: string;
 	emoji: string;
+	singularName: string;
 	baseCost: number;
 	costScale: number;
 }
@@ -128,6 +131,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 	farmers: {
 		id: "farmers",
 		name: "Farmers",
+		singularName: "Farmer",
 		emoji: "🪏",
 		baseCost: 12,
 		costScale: 1.15,
@@ -135,6 +139,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 	apothecaries: {
 		id: "apothecaries",
 		name: "Apothecaries",
+		singularName: "Apothecary",
 		emoji: "🧪",
 		baseCost: 20,
 		costScale: 1.15,
@@ -142,6 +147,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 	merchants: {
 		id: "merchants",
 		name: "Merchants",
+		singularName: "Merchant",
 		emoji: "💸",
 		baseCost: 16,
 		costScale: 1.15,

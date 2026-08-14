@@ -206,7 +206,7 @@ function getCraftableCount(
 const initialGameState: GameState = {
 	herbs: createCountRecord(HERB_IDS),
 	potions: createCountRecord(POTION_IDS),
-	money: 1234,
+	money: 0,
 	workers: createCountRecord(WORKER_IDS),
 	farmerAssignments: createCountRecord(HERB_IDS),
 	apothecaryPreferences: [...POTION_IDS],

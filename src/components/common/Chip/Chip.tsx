@@ -45,7 +45,7 @@ export function Chip({
 	let interactive = `${
 		inactive
 			? "bg-muted text-muted-foreground"
-			: "sm:hover:brightness-95 dark:hover:brightness-[120%]"
+			: "sm:hover:brightness-95 dark:hover:brightness-[120%] active:brightness-90 dark:active:brightness-[120%]"
 	}`;
 
 	// Responsive classes
