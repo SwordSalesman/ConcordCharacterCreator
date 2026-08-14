@@ -466,7 +466,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
 			for (let i = 0; i < wholeSellAttempts; i++) {
 				let sold = false;
-				for (const potionId of POTION_IDS) {
+				const potionsByPrice = [...POTION_IDS].sort(
+					(a, b) => POTIONS[b].sellValue - POTIONS[a].sellValue,
+				);
+				for (const potionId of potionsByPrice) {
 					if (nextPotions[potionId] <= 0) {
 						continue;
 					}

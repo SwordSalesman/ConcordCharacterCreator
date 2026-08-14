@@ -61,7 +61,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 	EV: {
 		id: "EV",
 		name: "Elixir Vitae",
-		sellValue: 1,
+		sellValue: 3,
 		recipe: {
 			GS: 1,
 			TB: 1,
@@ -70,7 +70,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 	CS: {
 		id: "CS",
 		name: "Caricanium Solution",
-		sellValue: 2,
+		sellValue: 4,
 		recipe: {
 			GS: 2,
 			TB: 1,
@@ -79,7 +79,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
     BB: {
         id: "BB",
         name: "Boarder's Breath",
-        sellValue: 2,
+        sellValue: 5,
         recipe: {
             TB: 1,
             GS: 1,
@@ -89,7 +89,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 	FA: {
 		id: "FA",
 		name: "Fool's Anaesthetic",
-        sellValue: 1,
+        sellValue: 3,
         recipe: {
             GS: 1,
             ST: 1,
@@ -133,7 +133,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Farmers",
 		singularName: "Farmer",
 		emoji: "🪏",
-		baseCost: 12,
+		baseCost: 20,
 		costScale: 1.15,
 	},
 	apothecaries: {
@@ -141,7 +141,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Apothecaries",
 		singularName: "Apothecary",
 		emoji: "🧪",
-		baseCost: 20,
+		baseCost: 26,
 		costScale: 1.15,
 	},
 	merchants: {
@@ -149,7 +149,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Merchants",
 		singularName: "Merchant",
 		emoji: "💸",
-		baseCost: 16,
+		baseCost: 24,
 		costScale: 1.15,
 	},
 };

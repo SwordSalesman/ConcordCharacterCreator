@@ -1,3 +1,4 @@
+import { PATH_HERB_GARDEN } from "@/utils/constants";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -10,7 +11,7 @@ export function PageMeta() {
 		"/groups": "Groups",
 		"/maintenance": "Maintenance",
 		"/approvals": "Approvals",
-		"/apothecary": "Apothecary",
+		[PATH_HERB_GARDEN]: "Herb Garden",
 	};
 
 	const name = pathName[pathname];

@@ -7,15 +7,19 @@ export function SectionWrapper({
 	icon,
 	subtitle,
 	className,
+	hide,
 }: {
 	children?: ReactNode;
 	title: string;
 	icon?: ReactNode;
 	subtitle?: string;
 	className?: string;
+	hide?: boolean;
 }) {
 	return (
-		<section className={`flex flex-col gap-2 ${className ? className : ""}`}>
+		<section
+			className={`flex flex-col gap-2 ${className ? className : ""} ${hide ? "hidden" : "inline"} animate-in fade-in`}
+		>
 			<div className="">
 				<div className="flex items-center gap-1">
 					{icon ? icon : <></>}

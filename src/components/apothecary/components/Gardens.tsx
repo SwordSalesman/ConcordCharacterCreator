@@ -59,10 +59,7 @@ export function Gardens() {
 				))}
 				{HERB_IDS.length % 2 === 1 ? <div className="flex-1"></div> : null}
 			</div>
-			<DragOverlay
-				dropAnimation={null}
-				className="absolute left-0 top-0 pointer-events-none z-50"
-			>
+			<DragOverlay dropAnimation={null} className="pointer-events-none">
 				{(source) => {
 					const sourceId = source?.id?.toString();
 					if (!sourceId?.startsWith("farmer:")) {
@@ -70,11 +67,16 @@ export function Gardens() {
 					}
 
 					return (
-						<div className="animate-quick-fade-in">
+						<div className="animate-quick-fade-in z-50">
 							<div
-								className={`p-0 w-24 h-24 sm:h-14 sm:w-14 rounded-sm animate-wiggle duration-200 flex justify-center items-center select-none pointer-events-none`}
+								className={`p-0 relative w-24 h-24 sm:h-14 sm:w-14 rounded-sm  duration-200 flex justify-center items-center select-none pointer-events-none`}
 							>
-								<GiFarmer size={90} />
+								<div className="hidden sm:inline animate-wiggle">
+									<GiFarmer size={60} />
+								</div>
+								<div className="inline sm:hidden absolute top-[-50px] left-[-40px] animate-wiggle animate-quick-fade-in">
+									<GiFarmer size={90} />
+								</div>
 							</div>
 						</div>
 					);
