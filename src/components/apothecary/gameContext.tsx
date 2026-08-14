@@ -1,9 +1,8 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useRef } from "react";
 import type { ReactNode } from "react";
 import {
 	createCountRecord,
 	getWorkerHireTotalCost,
-	HERBS,
 	HERB_IDS,
 	POTIONS,
 	POTION_IDS,
@@ -13,6 +12,12 @@ import {
 	type WorkerId,
 	HERB_BASE_UNLOCK_COST,
 } from "./gameData";
+import {
+	clearSavedGame,
+	GAME_AUTOSAVE_INTERVAL_MS,
+	hydrateGameStateFromStorage,
+	saveGameState,
+} from "./helpers/saveGame";
 
 const GAME_CLOCK_INTERVAL_MS = 200;
 
@@ -45,6 +50,7 @@ interface GameContextInterface {
 	tickAdvance: (dtMs: number) => void;
 	deltaEvents: GameDeltaEvent[];
 	acknowledgeDeltaEvents: (lastEventId: number) => void;
+	resetGame: () => void;
 }
 
 export type AnimationAnchorId = `herb:${HerbId}` | `craft:${PotionId}` | `sell:${PotionId}`;
@@ -148,6 +154,13 @@ type GameAction =
 	| {
 			type: "ACKNOWLEDGE_DELTA_EVENTS";
 			lastEventId: number;
+	  }
+	| {
+			type: "RESET_GAME";
+	  }
+	| {
+			type: "HYDRATE_GAME_STATE";
+			state: GameState;
 	  };
 
 const FARMER_ACTIONS_PER_SECOND = 0.4;
@@ -170,6 +183,9 @@ const INITIAL_UNLOCKED_POTIONS: Record<PotionId, boolean> = {
 	CS: false,
 	BB: false,
 	FA: false,
+	AA: false,
+	BE: false,
+	WB: false,
 };
 
 const STARTING_UNLOCKED_HERB_COUNT = HERB_IDS.filter(
@@ -293,23 +309,27 @@ function getPotionUnlockCostForState(
 	return Math.ceil(POTIONS[potionId].unlockBaseCost * POTION_UNLOCK_COST_SCALE ** unlockTier);
 }
 
-const initialGameState: GameState = {
-	herbs: createCountRecord(HERB_IDS),
-	unlockedHerbs: INITIAL_UNLOCKED_HERBS,
-	potions: createCountRecord(POTION_IDS),
-	unlockedPotions: INITIAL_UNLOCKED_POTIONS,
-	money: 0,
-	workers: createCountRecord(WORKER_IDS),
-	farmerAssignments: createCountRecord(HERB_IDS),
-	apothecaryPreferences: ["EV", "CS"],
-	accumulators: {
-		herbProduction: createCountRecord(HERB_IDS),
-		craftAttempts: 0,
-		sellAttempts: 0,
-	},
-	deltaEvents: [],
-	nextDeltaEventId: 1,
-};
+function createInitialGameState(): GameState {
+	return {
+		herbs: createCountRecord(HERB_IDS),
+		unlockedHerbs: { ...INITIAL_UNLOCKED_HERBS },
+		potions: createCountRecord(POTION_IDS),
+		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS },
+		money: 0,
+		workers: createCountRecord(WORKER_IDS),
+		farmerAssignments: createCountRecord(HERB_IDS),
+		apothecaryPreferences: ["EV", "CS"],
+		accumulators: {
+			herbProduction: createCountRecord(HERB_IDS),
+			craftAttempts: 0,
+			sellAttempts: 0,
+		},
+		deltaEvents: [],
+		nextDeltaEventId: 1,
+	};
+}
+
+const initialGameState = createInitialGameState();
 
 function gameReducer(state: GameState, action: GameAction): GameState {
 	switch (action.type) {
@@ -682,6 +702,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				deltaEvents: state.deltaEvents.filter((event) => event.id > action.lastEventId),
 			};
 		}
+		case "RESET_GAME": {
+			return createInitialGameState();
+		}
+		case "HYDRATE_GAME_STATE": {
+			return action.state;
+		}
 		default:
 			return state;
 	}
@@ -716,10 +742,12 @@ export const GameContext = createContext<GameContextInterface>({
 	tickAdvance: () => {},
 	deltaEvents: [],
 	acknowledgeDeltaEvents: () => {},
+	resetGame: () => {},
 });
 
 export default function GameContextProvider({ children }: { children: ReactNode }) {
 	const [gameState, dispatch] = useReducer(gameReducer, initialGameState);
+	const gameStateRef = useRef(gameState);
 
 	function getHerbUnlockCost() {
 		return getHerbUnlockCostForState(gameState.unlockedHerbs);
@@ -819,10 +847,38 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		dispatch({ type: "ACKNOWLEDGE_DELTA_EVENTS", lastEventId });
 	}
 
+	function resetGame() {
+		clearSavedGame();
+		dispatch({ type: "RESET_GAME" });
+	}
+
 	useEffect(() => {
 		const interval = setInterval(() => {
 			tickAdvance(GAME_CLOCK_INTERVAL_MS);
 		}, GAME_CLOCK_INTERVAL_MS);
+
+		return () => clearInterval(interval);
+	}, []);
+
+	useEffect(() => {
+		dispatch({
+			type: "HYDRATE_GAME_STATE",
+			state: hydrateGameStateFromStorage(createInitialGameState, {
+				initialUnlockedHerbs: INITIAL_UNLOCKED_HERBS,
+				initialUnlockedPotions: INITIAL_UNLOCKED_POTIONS,
+				defaultPotionOrder: ["EV", "CS"],
+			}),
+		});
+	}, []);
+
+	useEffect(() => {
+		gameStateRef.current = gameState;
+	}, [gameState]);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			saveGameState(gameStateRef.current);
+		}, GAME_AUTOSAVE_INTERVAL_MS);
 
 		return () => clearInterval(interval);
 	}, []);
@@ -856,6 +912,7 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		tickAdvance,
 		deltaEvents: gameState.deltaEvents,
 		acknowledgeDeltaEvents,
+		resetGame,
 	};
 
 	return <GameContext.Provider value={gameContext}>{children}</GameContext.Provider>;
