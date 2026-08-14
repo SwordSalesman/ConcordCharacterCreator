@@ -17,7 +17,7 @@ import { ResourcesPanel } from "./components/ResourcesPanel";
 
 const TUTORIAL_MODE = false;
 
-export default function HerbGarden() {
+export default function GameMain() {
 	const { money, herbs, potions, workers, farmerAssignments, canHireWorker, hireWorker } =
 		useContext(GameContext);
 	const { active, toggleActive } = useApothecaryAnimation();
@@ -46,7 +46,7 @@ export default function HerbGarden() {
 	return (
 		<>
 			<ContentWrapper layout="narrow">
-				<div className="flex flex-col gap-5 p-1 pb-16">
+				<div className="flex flex-col gap-6 p-1 pb-16">
 					<div className="flex w-full justify-end">
 						<Button onClick={toggleActive} size="sm">
 							Animations {active ? "ON" : "OFF"}

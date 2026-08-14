@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import {
 	createCountRecord,
 	getWorkerHireTotalCost,
+	HERBS,
 	HERB_IDS,
 	POTIONS,
 	POTION_IDS,
@@ -10,20 +11,29 @@ import {
 	type HerbId,
 	type PotionId,
 	type WorkerId,
+	HERB_BASE_UNLOCK_COST,
 } from "./gameData";
 
 const GAME_CLOCK_INTERVAL_MS = 200;
 
 interface GameContextInterface {
 	herbs: Record<HerbId, number>;
+	unlockedHerbs: Record<HerbId, boolean>;
 	potions: Record<PotionId, number>;
+	unlockedPotions: Record<PotionId, boolean>;
 	money: number;
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
+	getHerbUnlockCost: () => number;
+	canUnlockHerb: () => boolean;
+	getPotionUnlockCost: (potionId: PotionId) => number;
+	canUnlockPotion: (potionId: PotionId) => boolean;
 	canCraftPotion: (potionId: PotionId) => boolean;
 	canSellPotion: (potionId: PotionId) => boolean;
 	canHireWorker: (workerId: WorkerId) => boolean;
+	unlockHerb: (herbId: HerbId) => void;
+	unlockPotion: (potionId: PotionId) => void;
 	gatherHerb: (herbId: HerbId, amount?: number) => void;
 	consumeHerb: (herbId: HerbId, amount?: number) => void;
 	hireWorker: (workerId: WorkerId, amount?: number) => void;
@@ -72,7 +82,9 @@ type GameDeltaEventInput =
 
 interface GameState {
 	herbs: Record<HerbId, number>;
+	unlockedHerbs: Record<HerbId, boolean>;
 	potions: Record<PotionId, number>;
+	unlockedPotions: Record<PotionId, boolean>;
 	money: number;
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
@@ -101,6 +113,14 @@ type GameAction =
 			type: "HIRE_WORKER";
 			workerId: WorkerId;
 			amount: number;
+	  }
+	| {
+			type: "UNLOCK_HERB";
+			herbId: HerbId;
+	  }
+	| {
+			type: "UNLOCK_POTION";
+			potionId: PotionId;
 	  }
 	| {
 			type: "SET_FARMER_HERB_ASSIGNMENT";
@@ -133,6 +153,32 @@ type GameAction =
 const FARMER_ACTIONS_PER_SECOND = 0.4;
 const APOTHECARY_CRAFT_ATTEMPTS_PER_SECOND = 0.25;
 const MERCHANT_SELL_ATTEMPTS_PER_SECOND = 0.3;
+const HERB_UNLOCK_COST_SCALE = 2.2;
+const POTION_UNLOCK_COST_SCALE = 2;
+
+const INITIAL_UNLOCKED_HERBS: Record<HerbId, boolean> = {
+	GS: true,
+	TB: true,
+	ST: false,
+	BR: false,
+	RK: false,
+	BS: false,
+};
+
+const INITIAL_UNLOCKED_POTIONS: Record<PotionId, boolean> = {
+	EV: true,
+	CS: false,
+	BB: false,
+	FA: false,
+};
+
+const STARTING_UNLOCKED_HERB_COUNT = HERB_IDS.filter(
+	(herbId) => INITIAL_UNLOCKED_HERBS[herbId],
+).length;
+
+const STARTING_UNLOCKED_POTION_COUNT = POTION_IDS.filter(
+	(potionId) => INITIAL_UNLOCKED_POTIONS[potionId],
+).length;
 
 function addDeltaEvent(
 	events: GameDeltaEvent[],
@@ -143,7 +189,10 @@ function addDeltaEvent(
 	return nextEventId + 1;
 }
 
-function normalizePotionOrder(order: PotionId[]): PotionId[] {
+function normalizePotionOrder(
+	order: PotionId[],
+	unlockedPotions: Record<PotionId, boolean>,
+): PotionId[] {
 	const seen = new Set<PotionId>();
 	const normalized: PotionId[] = [];
 
@@ -155,15 +204,20 @@ function normalizePotionOrder(order: PotionId[]): PotionId[] {
 		normalized.push(potionId);
 	}
 
-	return normalized;
+	return normalized.filter((potionId) => unlockedPotions[potionId]);
 }
 
 function normalizeFarmerAssignments(
 	assignments: Record<HerbId, number>,
+	unlockedHerbs: Record<HerbId, boolean>,
 	totalFarmers: number,
 ): Record<HerbId, number> {
 	const normalized = { ...assignments };
 	for (const herbId of HERB_IDS) {
+		if (!unlockedHerbs[herbId]) {
+			normalized[herbId] = 0;
+			continue;
+		}
 		normalized[herbId] = Math.max(0, Math.floor(normalized[herbId]));
 	}
 
@@ -203,13 +257,51 @@ function getCraftableCount(
 	return craftableCount;
 }
 
+function getUnlockedHerbCount(unlockedHerbs: Record<HerbId, boolean>): number {
+	return HERB_IDS.filter((herbId) => unlockedHerbs[herbId]).length;
+}
+
+function getHerbUnlockCostForState(unlockedHerbs: Record<HerbId, boolean>): number {
+	if (getUnlockedHerbCount(unlockedHerbs) === HERB_IDS.length) {
+		return 0;
+	}
+
+	const unlockTier = Math.max(
+		0,
+		getUnlockedHerbCount(unlockedHerbs) - STARTING_UNLOCKED_HERB_COUNT,
+	);
+	return Math.ceil(HERB_BASE_UNLOCK_COST * HERB_UNLOCK_COST_SCALE ** unlockTier);
+}
+
+function getUnlockedPotionCount(unlockedPotions: Record<PotionId, boolean>): number {
+	return POTION_IDS.filter((potionId) => unlockedPotions[potionId]).length;
+}
+
+function getPotionUnlockCostForState(
+	unlockedPotions: Record<PotionId, boolean>,
+	potionId: PotionId,
+): number {
+	if (unlockedPotions[potionId]) {
+		return 0;
+	}
+
+	const unlockTier = Math.max(
+		0,
+		getUnlockedPotionCount(unlockedPotions) - STARTING_UNLOCKED_POTION_COUNT,
+	);
+
+	return Math.ceil(POTIONS[potionId].unlockBaseCost * POTION_UNLOCK_COST_SCALE ** unlockTier);
+}
+
 const initialGameState: GameState = {
 	herbs: createCountRecord(HERB_IDS),
+	unlockedHerbs: INITIAL_UNLOCKED_HERBS,
 	potions: createCountRecord(POTION_IDS),
+	unlockedPotions: INITIAL_UNLOCKED_POTIONS,
 	money: 0,
 	workers: createCountRecord(WORKER_IDS),
 	farmerAssignments: createCountRecord(HERB_IDS),
-	apothecaryPreferences: [...POTION_IDS],
+	apothecaryPreferences: ["EV", "CS"],
 	accumulators: {
 		herbProduction: createCountRecord(HERB_IDS),
 		craftAttempts: 0,
@@ -223,7 +315,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 	switch (action.type) {
 		case "GATHER_HERB": {
 			const gainedAmount = Math.max(0, Math.floor(action.amount));
-			if (gainedAmount === 0) {
+			if (gainedAmount === 0 || !state.unlockedHerbs[action.herbId]) {
 				return state;
 			}
 
@@ -290,6 +382,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 								...state.farmerAssignments,
 								GS: state.farmerAssignments.GS + affordableAmount,
 							},
+							state.unlockedHerbs,
 							nextWorkers.farmers,
 						)
 					: state.farmerAssignments;
@@ -301,12 +394,57 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				farmerAssignments: nextFarmerAssignments,
 			};
 		}
+		case "UNLOCK_HERB": {
+			if (state.unlockedHerbs[action.herbId]) {
+				return state;
+			}
+
+			const unlockCost = getHerbUnlockCostForState(state.unlockedHerbs);
+			if (state.money < unlockCost) {
+				return state;
+			}
+
+			return {
+				...state,
+				money: state.money - unlockCost,
+				unlockedHerbs: {
+					...state.unlockedHerbs,
+					[action.herbId]: true,
+				},
+			};
+		}
+		case "UNLOCK_POTION": {
+			if (state.unlockedPotions[action.potionId]) {
+				return state;
+			}
+
+			const unlockCost = getPotionUnlockCostForState(state.unlockedPotions, action.potionId);
+			if (state.money < unlockCost) {
+				return state;
+			}
+
+			const unlockedPotions = {
+				...state.unlockedPotions,
+				[action.potionId]: true,
+			};
+
+			return {
+				...state,
+				money: state.money - unlockCost,
+				unlockedPotions,
+				apothecaryPreferences: normalizePotionOrder(
+					[...state.apothecaryPreferences, action.potionId],
+					unlockedPotions,
+				),
+			};
+		}
 		case "SET_FARMER_HERB_ASSIGNMENT": {
 			const nextAssignments = normalizeFarmerAssignments(
 				{
 					...state.farmerAssignments,
 					[action.herbId]: Math.max(0, Math.floor(action.assignedCount)),
 				},
+				state.unlockedHerbs,
 				state.workers.farmers,
 			);
 
@@ -318,12 +456,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 		case "SET_APOTHECARY_POTION_ORDER": {
 			return {
 				...state,
-				apothecaryPreferences: normalizePotionOrder(action.order),
+				apothecaryPreferences: normalizePotionOrder(action.order, state.unlockedPotions),
 			};
 		}
 		case "CRAFT_POTION": {
 			const requestedAmount = Math.max(0, Math.floor(action.amount));
-			if (requestedAmount === 0) {
+			if (requestedAmount === 0 || !state.unlockedPotions[action.potionId]) {
 				return state;
 			}
 
@@ -362,7 +500,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 		}
 		case "SELL_POTION": {
 			const requestedAmount = Math.max(0, Math.floor(action.amount));
-			if (requestedAmount === 0) {
+			if (requestedAmount === 0 || !state.unlockedPotions[action.potionId]) {
 				return state;
 			}
 
@@ -409,6 +547,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			const soldByPotion = createCountRecord(POTION_IDS);
 
 			for (const herbId of HERB_IDS) {
+				if (!state.unlockedHerbs[herbId]) {
+					nextHerbProductionAcc[herbId] = 0;
+					continue;
+				}
+
 				const assignedFarmers = state.farmerAssignments[herbId];
 				const herbRatePerSecond = assignedFarmers * FARMER_ACTIONS_PER_SECOND;
 				nextHerbProductionAcc[herbId] += herbRatePerSecond * dtSeconds;
@@ -435,6 +578,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			for (let i = 0; i < wholeCraftAttempts; i++) {
 				let crafted = false;
 				for (const potionId of state.apothecaryPreferences) {
+					if (!state.unlockedPotions[potionId]) {
+						continue;
+					}
+
 					if (getCraftableCount(nextHerbs, potionId, 1) === 0) {
 						continue;
 					}
@@ -470,6 +617,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					(a, b) => POTIONS[b].sellValue - POTIONS[a].sellValue,
 				);
 				for (const potionId of potionsByPrice) {
+					if (!state.unlockedPotions[potionId]) {
+						continue;
+					}
+
 					if (nextPotions[potionId] <= 0) {
 						continue;
 					}
@@ -538,14 +689,22 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
 export const GameContext = createContext<GameContextInterface>({
 	herbs: initialGameState.herbs,
+	unlockedHerbs: initialGameState.unlockedHerbs,
 	potions: initialGameState.potions,
+	unlockedPotions: initialGameState.unlockedPotions,
 	money: initialGameState.money,
 	workers: initialGameState.workers,
 	farmerAssignments: initialGameState.farmerAssignments,
 	apothecaryPreferences: initialGameState.apothecaryPreferences,
+	getHerbUnlockCost: () => 0,
+	canUnlockHerb: () => false,
+	getPotionUnlockCost: () => 0,
+	canUnlockPotion: () => false,
 	canCraftPotion: () => false,
 	canSellPotion: () => false,
 	canHireWorker: () => false,
+	unlockHerb: () => {},
+	unlockPotion: () => {},
 	gatherHerb: () => {},
 	consumeHerb: () => {},
 	hireWorker: () => {},
@@ -562,12 +721,39 @@ export const GameContext = createContext<GameContextInterface>({
 export default function GameContextProvider({ children }: { children: ReactNode }) {
 	const [gameState, dispatch] = useReducer(gameReducer, initialGameState);
 
+	function getHerbUnlockCost() {
+		return getHerbUnlockCostForState(gameState.unlockedHerbs);
+	}
+
+	function canUnlockHerb() {
+		if (getUnlockedHerbCount(gameState.unlockedHerbs) === HERB_IDS.length) {
+			return false;
+		}
+
+		return gameState.money >= getHerbUnlockCost();
+	}
+
+	function getPotionUnlockCost(potionId: PotionId) {
+		return getPotionUnlockCostForState(gameState.unlockedPotions, potionId);
+	}
+
+	function canUnlockPotion(potionId: PotionId) {
+		if (gameState.unlockedPotions[potionId]) {
+			return false;
+		}
+
+		return gameState.money >= getPotionUnlockCost(potionId);
+	}
+
 	function canCraftPotion(potionId: PotionId) {
-		return getCraftableCount(gameState.herbs, potionId, 1) > 0;
+		return (
+			gameState.unlockedPotions[potionId] &&
+			getCraftableCount(gameState.herbs, potionId, 1) > 0
+		);
 	}
 
 	function canSellPotion(potionId: PotionId) {
-		return gameState.potions[potionId] > 0;
+		return gameState.unlockedPotions[potionId] && gameState.potions[potionId] > 0;
 	}
 
 	function canHireWorker(workerId: WorkerId) {
@@ -584,6 +770,14 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 
 	function hireWorker(workerId: WorkerId, amount = 1) {
 		dispatch({ type: "HIRE_WORKER", workerId, amount });
+	}
+
+	function unlockHerb(herbId: HerbId) {
+		dispatch({ type: "UNLOCK_HERB", herbId });
+	}
+
+	function unlockPotion(potionId: PotionId) {
+		dispatch({ type: "UNLOCK_POTION", potionId });
 	}
 
 	function setFarmerHerbAssignment(herbId: HerbId, assignedCount: number) {
@@ -635,14 +829,22 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 
 	const gameContext: GameContextInterface = {
 		herbs: gameState.herbs,
+		unlockedHerbs: gameState.unlockedHerbs,
 		potions: gameState.potions,
+		unlockedPotions: gameState.unlockedPotions,
 		money: gameState.money,
 		workers: gameState.workers,
 		farmerAssignments: gameState.farmerAssignments,
 		apothecaryPreferences: gameState.apothecaryPreferences,
+		getHerbUnlockCost,
+		canUnlockHerb,
+		getPotionUnlockCost,
+		canUnlockPotion,
 		canCraftPotion,
 		canSellPotion,
 		canHireWorker,
+		unlockHerb,
+		unlockPotion,
 		gatherHerb,
 		consumeHerb,
 		hireWorker,

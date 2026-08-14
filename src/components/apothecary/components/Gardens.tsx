@@ -1,16 +1,24 @@
 import { HERB_IDS, HerbId } from "../gameData";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import HerbPatch from "./HerbPatch";
 import { DragDropProvider, DragOverlay, PointerSensor } from "@dnd-kit/react";
 import { Feedback, PointerActivationConstraints } from "@dnd-kit/dom";
 import { GameContext } from "../gameContext";
 import { GiFarmer } from "react-icons/gi";
+import { GardensMenu } from "./GardensMenu";
+import { Button } from "@/components/common/Button/Button";
+import { BiPlusCircle } from "react-icons/bi";
 
 export function Gardens() {
-	const { farmerAssignments, setFarmerHerbAssignment } = useContext(GameContext);
+	const { farmerAssignments, setFarmerHerbAssignment, unlockedHerbs } = useContext(GameContext);
 
 	const [draggedId, setDraggedId] = useState<string | null>(null);
 	const [dragOverId, setDragOverId] = useState<string | null>(null);
+	const [showGardensMenu, setShowGardensMenu] = useState(false);
+
+	const allHerbCount = HERB_IDS.length;
+	const unlockedHerbCount = HERB_IDS.filter((herbId) => unlockedHerbs[herbId]).length;
+	const showAddHerbButton = unlockedHerbCount < allHerbCount;
 
 	return (
 		<DragDropProvider
@@ -54,11 +62,30 @@ export function Gardens() {
 			}}
 		>
 			<div className="grid grid-cols-2 gap-1 sm:grid-cols-3 select-none">
-				{HERB_IDS.map((herbId) => (
-					<HerbPatch key={herbId} herbId={herbId} dragOverId={dragOverId} />
-				))}
-				{HERB_IDS.length % 2 === 1 ? <div className="flex-1"></div> : null}
+				{HERB_IDS.map((herbId) =>
+					unlockedHerbs[herbId] ? (
+						<HerbPatch key={herbId} herbId={herbId} dragOverId={dragOverId} />
+					) : null,
+				)}
+				{showAddHerbButton ? (
+					<div
+						className={
+							`flex min-h-24 items-center justify-center ${unlockedHerbCount % 2 === 0 ? "col-span-2 sm:col-span-1" : "col-span-1"}`
+							// + "my-2 h-[100px] mt-5 mx-4 border-1 border-dashed rounded-md border-border"
+						}
+					>
+						<Button
+							className="opacity-80 hover:opacity-100"
+							onClick={() => setShowGardensMenu(true)}
+							variant="outline"
+						>
+							<BiPlusCircle size={60} />
+							Build Garden
+						</Button>
+					</div>
+				) : null}
 			</div>
+			<GardensMenu open={showGardensMenu} onClose={() => setShowGardensMenu(false)} />
 			<DragOverlay dropAnimation={null} className="pointer-events-none">
 				{(source) => {
 					const sourceId = source?.id?.toString();

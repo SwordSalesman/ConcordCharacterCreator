@@ -34,7 +34,7 @@ export default function HerbPatch({
 			<button
 				ref={registerAnchor(`herb:${herbId}`)}
 				onClick={() => gatherHerb(herbId, 1)}
-				className="flex items-center flex-col rounded-md border border-border bg-background p-2 pt-6 cursor-pointer hover:bg-accent dark:hover:bg-input/50 active:bg-accent dark:active:bg-input/50 min-w-34 w-full h-30 relative justify-center align-middle duration-100 hover:scale-105 active:scale-95"
+				className="flex items-center flex-col rounded-md border border-border bg-background p-2 pt-6 cursor-pointer hover:bg-accent dark:hover:bg-input/50 active:bg-accent dark:active:bg-input/50 min-w-34 w-full h-30 relative justify-center align-middle duration-100 hover:scale-103 active:scale-95"
 			>
 				<div className="flex justify-center items-center gap-2">
 					<span className="text-2xl">{HERBS[herbId].emoji}</span>
