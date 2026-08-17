@@ -10,7 +10,7 @@ import {
 	type ReactNode,
 } from "react";
 import { GameContext, type AnimationAnchorId, type GameDeltaEvent } from "./gameContext";
-import { HERBS } from "./gameData";
+import { HERBS } from "../components/data/gameData";
 
 interface FloatingParticle {
 	id: number;
@@ -51,7 +51,7 @@ export function useApothecaryAnimation() {
 	return useContext(AnimationContext);
 }
 
-export function ApothecaryAnimationProvider({ children }: { children: ReactNode }) {
+export default function ApothecaryAnimationProvider({ children }: { children: ReactNode }) {
 	const { deltaEvents, acknowledgeDeltaEvents } = useContext(GameContext);
 	const rootRef = useRef<HTMLDivElement | null>(null);
 	const scopeRef = useRef<ReturnType<typeof createScope> | null>(null);

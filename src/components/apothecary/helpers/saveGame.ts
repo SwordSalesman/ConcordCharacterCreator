@@ -1,4 +1,5 @@
 import {
+	createBooleanRecord,
 	createCountRecord,
 	HERB_IDS,
 	POTION_IDS,
@@ -6,11 +7,16 @@ import {
 	type HerbId,
 	type PotionId,
 	type WorkerId,
-} from "../gameData";
-
+} from "../components/data/gameData";
+import {
+	UPGRADE_IDS,
+	type UpgradeId,
+} from "../components/data/upgrades";
 export const GAME_AUTOSAVE_INTERVAL_MS = 3000;
 export const GAME_SAVE_KEY = "apothecary.save.v1";
-const GAME_SAVE_VERSION = 1;
+const GAME_SAVE_VERSION = 2;
+
+type SaveVersion = 1 | 2;
 
 interface PersistedGameStateV1 {
 	herbs: Record<HerbId, number>;
@@ -23,10 +29,14 @@ interface PersistedGameStateV1 {
 	apothecaryPreferences: PotionId[];
 }
 
+interface PersistedGameStateV2 extends PersistedGameStateV1 {
+	purchasedUpgrades: Record<UpgradeId, boolean>;
+}
+
 interface PersistedGameSave {
-	version: number;
+	version: SaveVersion;
 	updatedAt: string;
-	state: PersistedGameStateV1;
+	state: PersistedGameStateV1 | PersistedGameStateV2;
 }
 
 interface GameStateForPersistence {
@@ -38,6 +48,7 @@ interface GameStateForPersistence {
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
+	purchasedUpgrades: Record<UpgradeId, boolean>;
 }
 
 function sanitizeNumber(value: unknown): number {
@@ -122,6 +133,19 @@ function sanitizeUnlockedPotions(
 	return normalized;
 }
 
+function sanitizePurchasedUpgrades(value: unknown): Record<UpgradeId, boolean> {
+	const normalized = createBooleanRecord(UPGRADE_IDS);
+	if (!value || typeof value !== "object") {
+		return normalized;
+	}
+
+	for (const upgradeId of UPGRADE_IDS) {
+		normalized[upgradeId] = Boolean((value as Partial<Record<UpgradeId, unknown>>)[upgradeId]);
+	}
+
+	return normalized;
+}
+
 function normalizePotionOrder(
 	order: PotionId[],
 	unlockedPotions: Record<PotionId, boolean>,
@@ -192,7 +216,7 @@ function normalizeFarmerAssignments(
 	return normalized;
 }
 
-function buildPersistedState(state: GameStateForPersistence): PersistedGameStateV1 {
+function buildPersistedState(state: GameStateForPersistence): PersistedGameStateV2 {
 	return {
 		herbs: state.herbs,
 		unlockedHerbs: state.unlockedHerbs,
@@ -202,6 +226,7 @@ function buildPersistedState(state: GameStateForPersistence): PersistedGameState
 		workers: state.workers,
 		farmerAssignments: state.farmerAssignments,
 		apothecaryPreferences: state.apothecaryPreferences,
+		purchasedUpgrades: state.purchasedUpgrades,
 	};
 }
 
@@ -228,7 +253,7 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 		}
 
 		const parsed = JSON.parse(raw) as Partial<PersistedGameSave>;
-		if (parsed.version !== GAME_SAVE_VERSION || !parsed.state) {
+		if ((parsed.version !== 1 && parsed.version !== 2) || !parsed.state) {
 			return fallback;
 		}
 
@@ -260,6 +285,9 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 				parsed.state.apothecaryPreferences,
 				unlockedPotions,
 				options.defaultPotionOrder,
+			),
+			purchasedUpgrades: sanitizePurchasedUpgrades(
+				(parsed.state as Partial<PersistedGameStateV2>).purchasedUpgrades,
 			),
 		};
 	} catch {

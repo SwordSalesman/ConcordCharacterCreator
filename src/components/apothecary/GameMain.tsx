@@ -1,9 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import ContentWrapper from "../layout/ContentWrapper";
-import { GameContext } from "./gameContext";
-import { getWorkerHireCost, HERB_IDS, WORKER_IDS, WORKERS } from "./gameData";
+import { GameContext } from "./context/gameContext";
+import { TutorialContext } from "./context/tutorialContext";
+import { getWorkerHireCost, HERB_IDS, WORKER_IDS, WORKERS } from "./components/data/gameData";
+import { BuildingId } from "./components/data/upgrades";
 import { Button } from "../common/Button/Button";
-import { useApothecaryAnimation } from "./animationContext";
+import { useApothecaryAnimation } from "./context/animationContext";
 import { SectionWrapper } from "./components/SectionWrapper";
 import { Laboratory } from "./components/laboratory/Laboratory";
 import { Market } from "./components/market/Market";
@@ -16,9 +18,8 @@ import { Gardens } from "./components/gardens/Gardens";
 import { ResourcesPanel } from "./components/ResourcesPanel";
 import { Modal } from "../common/Modal/Modal";
 import { MdSettings } from "react-icons/md";
-import { env } from "process";
-
-const TUTORIAL_MODE = env.NEXT_PUBLIC_HERB_JUMPSTART !== "true";
+import { GiStakeHammer } from "react-icons/gi";
+import { UpgradeMenu } from "./components/UpgradeMenu";
 
 export default function GameMain() {
 	const {
@@ -32,16 +33,19 @@ export default function GameMain() {
 		resetGame,
 	} = useContext(GameContext);
 	const { active, toggleActive } = useApothecaryAnimation();
+	const { tutorialSettings } = useContext(TutorialContext);
+	const tutorialFadeIn = `animate-in fade-in ${tutorialSettings.showTutorial ?? "duration-1500"}`;
 
-	const [showLab, setShowLab] = useState(false);
-	const [showMarket, setShowMarket] = useState(false);
-	const [showTavern, setShowTavern] = useState(false);
 	const [showSettings, setShowSettings] = useState(false);
+	const [showGardenUpgradeMenu, setShowGardenUpgradeMenu] = useState(false);
+	const [showLabUpgradeMenu, setShowLabUpgradeMenu] = useState(false);
+	const [showMarketUpgradeMenu, setShowMarketUpgradeMenu] = useState(false);
+	const [showTavernUpgradeMenu, setShowTavernUpgradeMenu] = useState(false);
 
-	const assignedFarmers = HERB_IDS.reduce((sum, herbId) => sum + farmerAssignments[herbId], 0);
-	const unassignedFarmers = Math.max(0, workers.farmers - assignedFarmers);
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);
 	const potionTotal = Object.values(potions).reduce((sum, amount) => sum + amount, 0);
+	const assignedFarmers = HERB_IDS.reduce((sum, herbId) => sum + farmerAssignments[herbId], 0);
+	const unassignedFarmers = Math.max(0, workers.farmers - assignedFarmers);
 
 	function handleResetGame() {
 		if (!window.confirm("Reset your save? This cannot be undone.")) {
@@ -50,24 +54,45 @@ export default function GameMain() {
 		resetGame();
 	}
 
-	useEffect(() => {
-		if (herbTotal > 0 && !showLab) {
-			setShowLab(true);
-		}
-		if (potionTotal > 0 && !showMarket) {
-			setShowMarket(true);
-		}
-		if (money > 0 && !showTavern) {
-			setShowTavern(true);
-		}
-	}, [herbTotal, potionTotal, money]);
+	function getUpgradeButton(buildingId: BuildingId) {
+		return tutorialSettings.showUpgrades ? (
+			<div className={tutorialFadeIn}>
+				<Button
+					onClick={() => {
+						switch (buildingId) {
+							case "gardens":
+								setShowGardenUpgradeMenu(true);
+								break;
+							case "laboratory":
+								setShowLabUpgradeMenu(true);
+								break;
+							case "market":
+								setShowMarketUpgradeMenu(true);
+								break;
+							case "tavern":
+								setShowTavernUpgradeMenu(true);
+								break;
+						}
+					}}
+					size="sm"
+				>
+					{/* <GiFlatHammer /> */}
+					<GiStakeHammer />
+					Upgrade
+				</Button>
+			</div>
+		) : null;
+	}
 
 	return (
 		<>
 			<ContentWrapper layout="narrow">
 				<div className="flex flex-col gap-6 p-1 pb-16">
-					<div className="flex justify-end gap-2">
-						<Button onClick={() => setShowSettings(true)} size="icon" className="">
+					<div className="flex justify-between gap-2">
+						<div className="text-lg font-bold text-muted-foreground font-mono">
+							herb-garden
+						</div>
+						<Button onClick={() => setShowSettings(true)} size="sm" className="">
 							<MdSettings />
 						</Button>
 					</div>
@@ -79,12 +104,23 @@ export default function GameMain() {
 						body={
 							<div className="flex flex-col items-center gap-2">
 								<div>
-									<Button onClick={toggleActive}>
+									<Button
+										onClick={() => {
+											toggleActive();
+											setShowSettings(false);
+										}}
+									>
 										Animations {active ? "ON" : "OFF"}
 									</Button>
 								</div>
 								<div>
-									<Button onClick={handleResetGame} variant="destructive">
+									<Button
+										onClick={() => {
+											handleResetGame();
+											setShowSettings(false);
+										}}
+										variant="destructive"
+									>
 										Reset Game
 									</Button>
 								</div>
@@ -92,35 +128,48 @@ export default function GameMain() {
 						}
 					/>
 
-					<SectionWrapper
-						title="Resources"
-						icon={<GiLockedChest />}
-						className="mb-[-16px]"
-					/>
+					<div className="mb-[-24px]">
+						<SectionWrapper title="Resources" icon={<GiLockedChest />} />
+					</div>
 					<ResourcesPanel money={money} herbTotal={herbTotal} potionTotal={potionTotal} />
 
 					<SectionWrapper
 						title="Gardens"
-						subtitle={`${workers.farmers} Farmer${workers.farmers !== 1 ? "s" : ""}${unassignedFarmers > 0 ? ` (${unassignedFarmers} unassigned)` : ""}. Drag farmers to reassign them.`}
+						subtitle={
+							tutorialSettings.showWorkers
+								? `${workers.farmers} Farmer${workers.farmers !== 1 ? "s" : ""}${unassignedFarmers > 0 ? ` (${unassignedFarmers} unassigned)` : ""}. Drag farmers to reassign them.`
+								: "Click to harvest herbs"
+						}
 						icon={<PiPlantFill />}
+						action={getUpgradeButton("gardens")}
 					>
 						<Gardens />
 					</SectionWrapper>
 
 					<SectionWrapper
 						title="Laboratory"
-						subtitle={`${workers.apothecaries} Apothecar${workers.apothecaries !== 1 ? "ies" : "y"}. Order potions by crafting preference.`}
+						subtitle={
+							tutorialSettings.showWorkers
+								? `${workers.apothecaries} Apothecar${workers.apothecaries !== 1 ? "ies" : "y"}. Order potions by crafting preference.`
+								: "Click to brew potions."
+						}
 						icon={<FaMortarPestle />}
-						hide={TUTORIAL_MODE && !showLab}
+						hide={!tutorialSettings.showLab}
+						action={getUpgradeButton("laboratory")}
 					>
 						<Laboratory />
 					</SectionWrapper>
 
 					<SectionWrapper
 						title="Market"
-						subtitle={`${workers.merchants} Merchant${workers.merchants !== 1 ? "s" : ""}. Most expensive potions are sold first.`}
+						subtitle={
+							tutorialSettings.showWorkers
+								? `${workers.merchants} Merchant${workers.merchants !== 1 ? "s" : ""}. Most expensive potions are sold first.`
+								: "Click to sell potions."
+						}
 						icon={<FaBalanceScaleLeft />}
-						hide={TUTORIAL_MODE && !showMarket}
+						hide={!tutorialSettings.showMarket}
+						action={getUpgradeButton("market")}
 					>
 						<Market />
 					</SectionWrapper>
@@ -129,7 +178,8 @@ export default function GameMain() {
 						title="Tavern"
 						subtitle="Hire workers to help your operation."
 						icon={<GiBeerStein />}
-						hide={TUTORIAL_MODE && !showTavern}
+						hide={!tutorialSettings.showTavern}
+						action={getUpgradeButton("tavern")}
 					>
 						<div className="grid grid-cols-1 gap-1 sm:grid-cols-3">
 							{WORKER_IDS.map((workerId) => (
@@ -152,6 +202,27 @@ export default function GameMain() {
 							))}
 						</div>
 					</SectionWrapper>
+
+					<UpgradeMenu
+						open={showGardenUpgradeMenu}
+						onClose={() => setShowGardenUpgradeMenu(false)}
+						buildingId="gardens"
+					/>
+					<UpgradeMenu
+						open={showLabUpgradeMenu}
+						onClose={() => setShowLabUpgradeMenu(false)}
+						buildingId="laboratory"
+					/>
+					<UpgradeMenu
+						open={showMarketUpgradeMenu}
+						onClose={() => setShowMarketUpgradeMenu(false)}
+						buildingId="market"
+					/>
+					<UpgradeMenu
+						open={showTavernUpgradeMenu}
+						onClose={() => setShowTavernUpgradeMenu(false)}
+						buildingId="tavern"
+					/>
 				</div>
 			</ContentWrapper>
 		</>

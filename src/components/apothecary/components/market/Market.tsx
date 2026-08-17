@@ -1,8 +1,8 @@
-import { POTION_IDS, PotionId, POTIONS } from "../../gameData";
+import { POTION_IDS, PotionId, POTIONS } from "../data/gameData";
 import { Button } from "../../../common/Button/Button";
 import { useContext } from "react";
-import { GameContext } from "../../gameContext";
-import { useApothecaryAnimation } from "../../animationContext";
+import { GameContext } from "../../context/gameContext";
+import { useApothecaryAnimation } from "../../context/animationContext";
 import { displayNumber } from "../../helpers/numberHelper";
 
 export function Market() {
