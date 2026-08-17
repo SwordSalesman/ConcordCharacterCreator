@@ -1,7 +1,7 @@
 import { Modal } from "@/components/common/Modal/Modal";
-import { GameContext } from "../gameContext";
+import { GameContext } from "../../gameContext";
 import { useContext } from "react";
-import { HERB_IDS, HERBS } from "../gameData";
+import { HERB_IDS, HERBS } from "../../gameData";
 import { Button } from "@/components/common/Button/Button";
 
 export function GardensMenu({ open, onClose }: { open: boolean; onClose: () => void }) {

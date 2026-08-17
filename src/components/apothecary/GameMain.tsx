@@ -5,19 +5,20 @@ import { getWorkerHireCost, HERB_IDS, WORKER_IDS, WORKERS } from "./gameData";
 import { Button } from "../common/Button/Button";
 import { useApothecaryAnimation } from "./animationContext";
 import { SectionWrapper } from "./components/SectionWrapper";
-import { Laboratory } from "./components/Laboratory";
-import { Market } from "./components/Market";
+import { Laboratory } from "./components/laboratory/Laboratory";
+import { Market } from "./components/market/Market";
 import { FaBalanceScaleLeft, FaMortarPestle } from "react-icons/fa";
 import { GiLockedChest } from "react-icons/gi";
 import { PiPlantFill } from "react-icons/pi";
 import { GiBeerStein } from "react-icons/gi";
 import { displayNumber } from "./helpers/numberHelper";
-import { Gardens } from "./components/Gardens";
+import { Gardens } from "./components/gardens/Gardens";
 import { ResourcesPanel } from "./components/ResourcesPanel";
 import { Modal } from "../common/Modal/Modal";
 import { MdSettings } from "react-icons/md";
+import { env } from "process";
 
-const TUTORIAL_MODE = true;
+const TUTORIAL_MODE = env.NEXT_PUBLIC_HERB_JUMPSTART !== "true";
 
 export default function GameMain() {
 	const {

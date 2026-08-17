@@ -1,9 +1,9 @@
-import { HERB_IDS, HerbId } from "../gameData";
+import { HERB_IDS, HerbId } from "../../gameData";
 import { useContext, useMemo, useState } from "react";
 import HerbPatch from "./HerbPatch";
 import { DragDropProvider, DragOverlay, PointerSensor } from "@dnd-kit/react";
 import { Feedback, PointerActivationConstraints } from "@dnd-kit/dom";
-import { GameContext } from "../gameContext";
+import { GameContext } from "../../gameContext";
 import { GiFarmer } from "react-icons/gi";
 import { GardensMenu } from "./GardensMenu";
 import { Button } from "@/components/common/Button/Button";
@@ -94,14 +94,14 @@ export function Gardens() {
 					}
 
 					return (
-						<div className="animate-quick-fade-in z-50">
+						<div className="z-50 animate-quick-fade-in">
 							<div
 								className={`p-0 relative w-24 h-24 sm:h-14 sm:w-14 rounded-sm  duration-200 flex justify-center items-center select-none pointer-events-none`}
 							>
 								<div className="hidden sm:inline animate-wiggle">
 									<GiFarmer size={60} />
 								</div>
-								<div className="inline sm:hidden absolute top-[-50px] left-[-40px] animate-wiggle animate-quick-fade-in">
+								<div className="inline sm:hidden absolute top-[-50px] left-[-40px] animate-wiggle">
 									<GiFarmer size={90} />
 								</div>
 							</div>

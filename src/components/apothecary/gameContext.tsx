@@ -315,7 +315,7 @@ function createInitialGameState(): GameState {
 		unlockedHerbs: { ...INITIAL_UNLOCKED_HERBS },
 		potions: createCountRecord(POTION_IDS),
 		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS },
-		money: 0,
+		money: process.env.NEXT_PUBLIC_HERB_JUMPSTART === "true" ? 1000 : 0,
 		workers: createCountRecord(WORKER_IDS),
 		farmerAssignments: createCountRecord(HERB_IDS),
 		apothecaryPreferences: ["EV", "CS"],

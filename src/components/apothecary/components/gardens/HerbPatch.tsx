@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { HerbId, HERBS } from "../gameData";
-import { GameContext } from "../gameContext";
-import { useApothecaryAnimation } from "../animationContext";
-import { displayNumber } from "../helpers/numberHelper";
+import { HerbId, HERBS } from "../../gameData";
+import { GameContext } from "../../gameContext";
+import { useApothecaryAnimation } from "../../animationContext";
+import { displayNumber } from "../../helpers/numberHelper";
 import { GiFarmer } from "react-icons/gi";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
 

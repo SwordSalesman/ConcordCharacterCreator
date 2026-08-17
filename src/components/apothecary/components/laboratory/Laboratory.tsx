@@ -16,15 +16,15 @@ import {
 	verticalListSortingStrategy,
 	arrayMove,
 } from "@dnd-kit/sortable";
-import { GameContext } from "./../gameContext";
-import { HERB_IDS, HERBS, POTION_IDS, POTIONS, type PotionId } from "../gameData";
-import { Button } from "../../common/Button/Button";
-import { useApothecaryAnimation } from "../animationContext";
+import { GameContext } from "../../gameContext";
+import { HERB_IDS, HERBS, POTION_IDS, POTIONS, type PotionId } from "../../gameData";
+import { Button } from "../../../common/Button/Button";
+import { useApothecaryAnimation } from "../../animationContext";
 import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
 import { MdReorder } from "react-icons/md";
 import { BiPlusCircle } from "react-icons/bi";
-import { PotionsMenu } from "./PotionsMenu.tsx";
+import { PotionsMenu } from "./PotionsMenu";
 
 function SortablePotionCraftButton({
 	potionId,

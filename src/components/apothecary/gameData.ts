@@ -16,6 +16,7 @@ export interface PotionDefinition {
 	sellValue: number;
 	unlockBaseCost: number;
 	recipe: Partial<Record<HerbId, number>>;
+	tier: number;
 }
 
 export const HERBS: Record<HerbId, HerbDefinition> = {
@@ -71,7 +72,7 @@ export function getHerbId(name: string): HerbId | undefined {
 
 // ********************************************************** Potions
 
-export const POTION_IDS = ["EV", "CS", "BB", "FA", "AA", "BE", "WB"] as const;
+export const POTION_IDS = ["EV", "CS", "BB", "FA", "AA", "BE", "WB", "GM","LB","KS","MB"] as const;
 export type PotionId = (typeof POTION_IDS)[number];
 
 export const POTIONS: Record<PotionId, PotionDefinition> = {
@@ -84,6 +85,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 			GS: 1,
 			TB: 1,
 		},
+		tier: 1,
 	},
 	CS: {
 		id: "CS",
@@ -94,6 +96,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 			GS: 2,
 			TB: 1,
 		},
+		tier: 1,
 	},
     BB: {
         id: "BB",
@@ -105,6 +108,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
             GS: 1,
             ST: 3,
         },
+		tier: 2,
     },
 	FA: {
 		id: "FA",
@@ -114,7 +118,8 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
         recipe: {
             GS: 1,
             ST: 1,
-        }
+        },
+		tier: 1,
 	},
 	AA: {
 		id: "AA",
@@ -127,6 +132,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		},
 		sellValue: 6,
 		unlockBaseCost: 50,
+		tier: 2,
 	},
 	BE: {
 		id: "BE",
@@ -137,6 +143,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		},
 		sellValue: 3,
 		unlockBaseCost: 20,
+		tier: 1,
 	},
 	WB: {
 		id: "WB",
@@ -145,8 +152,21 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 			TB: 2,
 			RK: 1,
 		},
-		sellValue: 5,
+		sellValue: 4,
 		unlockBaseCost: 30,
+		tier: 1,
+	},
+	GM: {
+		id: "GM",
+		name: "Guardians Memory",
+		recipe: {
+			TB: 2,
+			GS: 1,
+			ST: 2,
+		},
+		sellValue: 7,
+		unlockBaseCost: 60,
+		tier: 3,
 	},
 };
 
@@ -190,7 +210,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		singularName: "Farmer",
 		emoji: "🪏",
 		baseCost: 20,
-		costScale: 1.15,
+		costScale: 1.125,
 	},
 	apothecaries: {
 		id: "apothecaries",

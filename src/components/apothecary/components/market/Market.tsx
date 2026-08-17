@@ -1,9 +1,9 @@
-import { POTION_IDS, PotionId, POTIONS } from "../gameData";
-import { Button } from "../../common/Button/Button";
+import { POTION_IDS, PotionId, POTIONS } from "../../gameData";
+import { Button } from "../../../common/Button/Button";
 import { useContext } from "react";
-import { GameContext } from "../gameContext";
-import { useApothecaryAnimation } from "../animationContext";
-import { displayNumber } from "../helpers/numberHelper";
+import { GameContext } from "../../gameContext";
+import { useApothecaryAnimation } from "../../animationContext";
+import { displayNumber } from "../../helpers/numberHelper";
 
 export function Market() {
 	const { canSellPotion, sellPotion, potions, unlockedPotions } = useContext(GameContext);
@@ -28,7 +28,7 @@ export function Market() {
 							{displayNumber(potions[potionId])}
 						</span>
 					</div>
-					<div>{displayNumber(POTIONS[potionId].sellValue)} 🗝️</div>
+					<div>+{displayNumber(POTIONS[potionId].sellValue)} 🗝️</div>
 				</Button>
 			))}
 		</div>
