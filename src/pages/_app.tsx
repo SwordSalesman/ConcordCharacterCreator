@@ -7,16 +7,22 @@ import { PageMeta } from "@/components/layout/PageMeta";
 import { Header } from "@/components/layout/Header";
 import UserContextProvider from "@/context/userContext";
 import FormContextProvider from "@/context/formContext";
-import { getSiteSettings } from "@/utils/settings";
 import MaintenanceScreen from "./maintenance";
 
 export default function App({ Component, pageProps }: AppProps) {
-	const defaultTheme =
+	const systemTheme =
 		typeof window !== "undefined"
+			? window.matchMedia("(prefers-color-scheme: dark)").matches
+				? "dark"
+				: "light"
+			: undefined;
+	const localStorageTheme =
+		typeof window !== "undefined" && window.localStorage.getItem("theme")
 			? window.localStorage.getItem("theme") === "dark"
 				? "dark"
 				: "light"
-			: "light";
+			: undefined;
+	const defaultTheme = localStorageTheme || systemTheme || "light";
 
 	const [themeName, setThemeName] = useState(defaultTheme);
 
