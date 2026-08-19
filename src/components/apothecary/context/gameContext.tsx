@@ -78,6 +78,7 @@ export type GameDeltaEvent =
 			herbId: HerbId;
 			anchorId: `herb:${HerbId}`;
 			amount: number;
+			magnitude: number;
 			source: "manual" | "passive";
 	  }
 	| {
@@ -86,6 +87,7 @@ export type GameDeltaEvent =
 			potionId: PotionId;
 			anchorId: `craft:${PotionId}`;
 			amount: number;
+			magnitude: number;
 			source: "manual" | "passive";
 	  }
 	| {
@@ -94,6 +96,7 @@ export type GameDeltaEvent =
 			potionId: PotionId;
 			anchorId: `sell:${PotionId}`;
 			amount: number;
+			magnitude: number;
 			source: "manual" | "passive";
 	  };
 
@@ -346,6 +349,8 @@ function getUpgradeEffects(
 		manualHerbGatherMultiplier: 1,
 		manualPotionCraftMultiplier: 1,
 		manualPotionSellMultiplier: 1,
+		workerRateMultiplier: 1,
+		apothecaryExtraPotionChance: 0,
 	};
 
 	for (const upgradeId of UPGRADE_IDS) {
@@ -361,6 +366,8 @@ function getUpgradeEffects(
 		aggregated.manualHerbGatherMultiplier *= effect.manualHerbGatherMultiplier ?? 1;
 		aggregated.manualPotionCraftMultiplier *= effect.manualPotionCraftMultiplier ?? 1;
 		aggregated.manualPotionSellMultiplier *= effect.manualPotionSellMultiplier ?? 1;
+		aggregated.workerRateMultiplier *= effect.workerRateMultiplier ?? 1;
+		aggregated.apothecaryExtraPotionChance += effect.apothecaryExtraPotionChance ?? 0;
 	}
 
 	return aggregated;
@@ -406,7 +413,7 @@ function createInitialGameState(): GameState {
 		potions: createCountRecord(POTION_IDS),
 		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS },
 		purchasedUpgrades: createBooleanRecord(UPGRADE_IDS),
-		money: process.env.NEXT_PUBLIC_HERB_JUMPSTART === "true" ? 1000 : 0,
+		money: process.env.NEXT_PUBLIC_HERB_JUMPSTART === "true" ? 100000000 : 0,
 		workers: createCountRecord(WORKER_IDS),
 		farmerAssignments: createCountRecord(HERB_IDS),
 		apothecaryPreferences: ["EV", "CS"],
@@ -439,7 +446,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				type: "herbGain",
 				herbId: action.herbId,
 				anchorId: `herb:${action.herbId}`,
-				amount: gainedAmount,
+				amount: 1,
+				magnitude: gainedAmount,
 				source: "manual",
 			});
 
@@ -624,7 +632,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 						type: "potionCraft",
 						potionId: action.potionId,
 						anchorId: `craft:${action.potionId}`,
-						amount: craftableCount,
+						amount: 1,
+						magnitude: craftableCount,
 						source: "manual",
 					},
 				],
@@ -662,7 +671,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 						type: "potionSell",
 						potionId: action.potionId,
 						anchorId: `sell:${action.potionId}`,
-						amount: sellCount,
+						amount: 1,
+						magnitude: sellCount,
 						source: "manual",
 					},
 				],
@@ -684,6 +694,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			const deltaEvents = [...state.deltaEvents];
 			let nextDeltaEventId = state.nextDeltaEventId;
 			const craftedByPotion = createCountRecord(POTION_IDS);
+			const doubleCraftedByPotion = createCountRecord(POTION_IDS);
 			const soldByPotion = createCountRecord(POTION_IDS);
 
 			for (const herbId of HERB_IDS) {
@@ -694,7 +705,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
 				const assignedFarmers = state.farmerAssignments[herbId];
 				const herbRatePerSecond =
-					assignedFarmers * FARMER_ACTIONS_PER_SECOND * effects.farmerRateMultiplier;
+					assignedFarmers *
+					FARMER_ACTIONS_PER_SECOND *
+					effects.farmerRateMultiplier *
+					effects.workerRateMultiplier;
 				nextHerbProductionAcc[herbId] += herbRatePerSecond * dtSeconds;
 				const harvestedAmount = Math.floor(nextHerbProductionAcc[herbId]);
 				if (harvestedAmount > 0) {
@@ -705,6 +719,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 						herbId,
 						anchorId: `herb:${herbId}`,
 						amount: harvestedAmount,
+						magnitude: 1,
 						source: "passive",
 					});
 				}
@@ -715,6 +730,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				state.workers.apothecaries *
 					APOTHECARY_CRAFT_ATTEMPTS_PER_SECOND *
 					effects.apothecaryRateMultiplier *
+					effects.workerRateMultiplier *
 					dtSeconds;
 			const wholeCraftAttempts = Math.floor(nextCraftAttemptsAcc);
 			nextCraftAttemptsAcc -= wholeCraftAttempts;
@@ -738,8 +754,16 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 						}
 						nextHerbs[herbId] -= herbCost;
 					}
-					nextPotions[potionId] += 1;
-					craftedByPotion[potionId] += 1;
+
+					const doubleCraftChance = effects.apothecaryExtraPotionChance;
+					if (Math.random() < doubleCraftChance) {
+						nextPotions[potionId] += 2;
+						doubleCraftedByPotion[potionId] += 1;
+					} else {
+						nextPotions[potionId] += 1;
+						craftedByPotion[potionId] += 1;
+					}
+
 					crafted = true;
 					break;
 				}
@@ -754,6 +778,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				state.workers.merchants *
 					MERCHANT_SELL_ATTEMPTS_PER_SECOND *
 					effects.merchantRateMultiplier *
+					effects.workerRateMultiplier *
 					dtSeconds;
 			const wholeSellAttempts = Math.floor(nextSellAttemptsAcc);
 			nextSellAttemptsAcc -= wholeSellAttempts;
@@ -791,6 +816,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 						potionId,
 						anchorId: `craft:${potionId}`,
 						amount: craftedByPotion[potionId],
+						magnitude: 1,
+						source: "passive",
+					});
+				}
+				if (doubleCraftedByPotion[potionId] > 0) {
+					nextDeltaEventId = addDeltaEvent(deltaEvents, nextDeltaEventId, {
+						type: "potionCraft",
+						potionId,
+						anchorId: `craft:${potionId}`,
+						amount: doubleCraftedByPotion[potionId],
+						magnitude: 2,
 						source: "passive",
 					});
 				}
@@ -800,6 +836,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 						potionId,
 						anchorId: `sell:${potionId}`,
 						amount: soldByPotion[potionId],
+						magnitude: 1,
 						source: "passive",
 					});
 				}

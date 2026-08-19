@@ -128,7 +128,7 @@ export default function GameMain() {
 						}
 					/>
 
-					<div className="mb-[-24px]">
+					<div className="mb-[-22px]">
 						<SectionWrapper title="Resources" icon={<GiLockedChest />} />
 					</div>
 					<ResourcesPanel money={money} herbTotal={herbTotal} potionTotal={potionTotal} />
@@ -207,21 +207,25 @@ export default function GameMain() {
 						open={showGardenUpgradeMenu}
 						onClose={() => setShowGardenUpgradeMenu(false)}
 						buildingId="gardens"
+						icon={<PiPlantFill size={24} />}
 					/>
 					<UpgradeMenu
 						open={showLabUpgradeMenu}
 						onClose={() => setShowLabUpgradeMenu(false)}
 						buildingId="laboratory"
+						icon={<FaMortarPestle size={24} />}
 					/>
 					<UpgradeMenu
 						open={showMarketUpgradeMenu}
 						onClose={() => setShowMarketUpgradeMenu(false)}
 						buildingId="market"
+						icon={<FaBalanceScaleLeft size={24} />}
 					/>
 					<UpgradeMenu
 						open={showTavernUpgradeMenu}
 						onClose={() => setShowTavernUpgradeMenu(false)}
 						buildingId="tavern"
+						icon={<GiBeerStein size={24} />}
 					/>
 				</div>
 			</ContentWrapper>

@@ -25,6 +25,10 @@ body {
 		Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
 }
 
+@utility small-caps {
+	font-variant-caps: small-caps;
+}
+
 @theme inline {
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);

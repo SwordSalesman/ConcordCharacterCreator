@@ -60,6 +60,10 @@ export function Gardens() {
 						?.toString()
 						.replace("herb:", "") as HerbId;
 
+					if (sourceHerbId === targetHerbId) {
+						return;
+					}
+
 					setFarmerHerbAssignment(sourceHerbId, farmerAssignments[sourceHerbId] - 1);
 					setFarmerHerbAssignment(targetHerbId, farmerAssignments[targetHerbId] + 1);
 				}}

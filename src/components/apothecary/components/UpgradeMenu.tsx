@@ -4,8 +4,18 @@ import { useContext } from "react";
 import { type BuildingId, UPGRADES } from "./data/upgrades";
 import { GameContext } from "../context/gameContext";
 import { displayNumber } from "../helpers/numberHelper";
-import { FaCheckCircle } from "react-icons/fa";
-import { MdCheckCircle, MdCheckCircleOutline } from "react-icons/md";
+import { MdCheckCircleOutline } from "react-icons/md";
+
+export function AquiredItem({ name }: { name: string }) {
+	return (
+		<span
+			className="text-muted-foreground italic text-sm flex items-center gap-1 px-2 animate-in fade-in duration-300"
+			key={name}
+		>
+			{<MdCheckCircleOutline />} {name}
+		</span>
+	);
+}
 
 function getBuildingTitle(buildingId: BuildingId): string {
 	switch (buildingId) {
@@ -26,10 +36,12 @@ export function UpgradeMenu({
 	open,
 	onClose,
 	buildingId,
+	icon,
 }: {
 	open: boolean;
 	onClose: () => void;
 	buildingId: BuildingId;
+	icon?: React.ReactNode;
 }) {
 	const {
 		getBuildingUpgrades,
@@ -47,27 +59,30 @@ export function UpgradeMenu({
 		<Modal
 			open={open}
 			onClose={onClose}
-			title={<div className="text-center mt-1">Upgrade {getBuildingTitle(buildingId)}</div>}
+			title={
+				<div className="text-center mt-1 flex gap-3 justify-center items-center">
+					{icon ? <span className="">{icon}</span> : null}
+					<span>Upgrade {getBuildingTitle(buildingId)}</span>
+				</div>
+			}
 			body={
 				<div className="flex flex-col gap-0">
-					<div className="flex flex-wrap mb-2 justify-center">
+					<div className="flex flex-wrap mb-2 justify-center z-2">
 						{upgrades
 							.filter((upgradeId) => isUpgradePurchased(upgradeId))
 							.map((upgradeId) => (
-								<span
-									className="text-muted-foreground italic text-sm flex items-center gap-1 px-2 animate-in fade-in duration-300"
-									key={upgradeId}
-								>
-									{<MdCheckCircleOutline />} {UPGRADES[upgradeId].name}
-								</span>
+								<AquiredItem
+									name={UPGRADES[upgradeId].name}
+									key={upgradeId + "-acquired"}
+								/>
 							))}
 					</div>
 					{upgrades
 						.filter((upgradeId) => !isUpgradePurchased(upgradeId))
 						.map((upgradeId) => (
 							<div
-								key={upgradeId}
-								className="flex items-center justify-center gap-0 animate-in fade-in"
+								key={upgradeId + "-purchase"}
+								className="flex items-center justify-center gap-0 animate-in fade-in z-10"
 							>
 								{isUpgradePurchased(upgradeId) ? (
 									<span className="text-muted-foreground italic text-sm flex items-center gap-1">
