@@ -6,7 +6,8 @@ import { useApothecaryAnimation } from "../../context/animationContext";
 import { displayNumber } from "../../helpers/numberHelper";
 
 export function Market() {
-	const { canSellPotion, sellPotion, potions, unlockedPotions } = useContext(GameContext);
+	const { canSellPotion, sellPotion, potions, unlockedPotions, getEffectivePotionSellValue } =
+		useContext(GameContext);
 	const { registerAnchor } = useApothecaryAnimation();
 	const sellAnchor = (potionId: PotionId) => registerAnchor(`sell:${potionId}`);
 
@@ -28,7 +29,7 @@ export function Market() {
 							{displayNumber(potions[potionId])}
 						</span>
 					</div>
-					<div>+{displayNumber(POTIONS[potionId].sellValue)} 🗝️</div>
+					<div>+{displayNumber(getEffectivePotionSellValue(potionId))} 🗝️</div>
 				</Button>
 			))}
 		</div>

@@ -44,9 +44,11 @@ interface GameContextInterface {
 	getHerbUnlockCost: () => number;
 	canUnlockHerb: () => boolean;
 	getPotionUnlockCost: (potionId: PotionId) => number;
+	canUnlockPotionTier: (tier: number) => boolean;
 	canUnlockPotion: (potionId: PotionId) => boolean;
 	canCraftPotion: (potionId: PotionId) => boolean;
 	canSellPotion: (potionId: PotionId) => boolean;
+	getEffectivePotionSellValue: (potionId: PotionId) => number;
 	canHireWorker: (workerId: WorkerId) => boolean;
 	getBuildingUpgrades: (buildingId: BuildingId) => UpgradeId[];
 	isUpgradePurchased: (upgradeId: UpgradeId) => boolean;
@@ -338,6 +340,34 @@ function getPotionUnlockCostForState(
 	return Math.ceil(POTIONS[potionId].unlockBaseCost * POTION_UNLOCK_COST_SCALE ** unlockTier);
 }
 
+function getRequiredRecipeUpgradeForTier(tier: number): UpgradeId | null {
+	if (tier <= 1) {
+		return null;
+	}
+
+	if (tier === 2) {
+		return "laboratory.advanced_recipes_1";
+	}
+
+	if (tier === 3) {
+		return "laboratory.advanced_recipes_2";
+	}
+
+	return null;
+}
+
+function canUnlockPotionTierForState(
+	purchasedUpgrades: Record<UpgradeId, boolean>,
+	tier: number,
+): boolean {
+	const requiredUpgradeId = getRequiredRecipeUpgradeForTier(tier);
+	if (!requiredUpgradeId) {
+		return true;
+	}
+
+	return purchasedUpgrades[requiredUpgradeId];
+}
+
 function getUpgradeEffects(
 	purchasedUpgrades: Record<UpgradeId, boolean>,
 ): AggregatedUpgradeEffects {
@@ -398,7 +428,7 @@ function canPurchaseUpgradeForState(state: GameState, upgradeId: UpgradeId): boo
 	return state.money >= UPGRADES[upgradeId].cost;
 }
 
-function getEffectivePotionSellValue(
+function getEffectivePotionSellValueState(
 	potionId: PotionId,
 	purchasedUpgrades: Record<UpgradeId, boolean>,
 ): number {
@@ -541,6 +571,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				return state;
 			}
 
+			const potionTier = POTIONS[action.potionId].tier;
+			if (!canUnlockPotionTierForState(state.purchasedUpgrades, potionTier)) {
+				return state;
+			}
+
 			const unlockCost = getPotionUnlockCostForState(state.unlockedPotions, action.potionId);
 			if (state.money < unlockCost) {
 				return state;
@@ -655,7 +690,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				return state;
 			}
 
-			const sellValue = getEffectivePotionSellValue(action.potionId, state.purchasedUpgrades);
+			const sellValue = getEffectivePotionSellValueState(
+				action.potionId,
+				state.purchasedUpgrades,
+			);
 
 			return {
 				...state,
@@ -798,7 +836,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					}
 
 					nextPotions[potionId] -= 1;
-					nextMoney += getEffectivePotionSellValue(potionId, state.purchasedUpgrades);
+					nextMoney += getEffectivePotionSellValueState(
+						potionId,
+						state.purchasedUpgrades,
+					);
 					soldByPotion[potionId] += 1;
 					sold = true;
 					break;
@@ -890,10 +931,12 @@ export const GameContext = createContext<GameContextInterface>({
 	getHerbUnlockCost: () => 0,
 	canUnlockHerb: () => false,
 	getPotionUnlockCost: () => 0,
+	canUnlockPotionTier: () => false,
 	canUnlockPotion: () => false,
 	canCraftPotion: () => false,
 	canSellPotion: () => false,
 	canHireWorker: () => false,
+	getEffectivePotionSellValue: () => 0,
 	getBuildingUpgrades: () => [],
 	isUpgradePurchased: () => false,
 	upgradePrerequisitesMet: () => false,
@@ -935,8 +978,16 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		return getPotionUnlockCostForState(gameState.unlockedPotions, potionId);
 	}
 
+	function canUnlockPotionTier(tier: number) {
+		return canUnlockPotionTierForState(gameState.purchasedUpgrades, tier);
+	}
+
 	function canUnlockPotion(potionId: PotionId) {
 		if (gameState.unlockedPotions[potionId]) {
+			return false;
+		}
+
+		if (!canUnlockPotionTier(POTIONS[potionId].tier)) {
 			return false;
 		}
 
@@ -952,6 +1003,10 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 
 	function canSellPotion(potionId: PotionId) {
 		return gameState.unlockedPotions[potionId] && gameState.potions[potionId] > 0;
+	}
+
+	function getEffectivePotionSellValue(potionId: PotionId) {
+		return getEffectivePotionSellValueState(potionId, gameState.purchasedUpgrades);
 	}
 
 	function canHireWorker(workerId: WorkerId) {
@@ -1086,10 +1141,12 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		getHerbUnlockCost,
 		canUnlockHerb,
 		getPotionUnlockCost,
+		canUnlockPotionTier,
 		canUnlockPotion,
 		canCraftPotion,
 		canSellPotion,
 		canHireWorker,
+		getEffectivePotionSellValue,
 		getBuildingUpgrades,
 		isUpgradePurchased,
 		upgradePrerequisitesMet,

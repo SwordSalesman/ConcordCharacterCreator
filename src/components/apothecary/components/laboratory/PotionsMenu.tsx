@@ -6,8 +6,14 @@ import { GameContext } from "../../context/gameContext";
 import { AquiredItem } from "../UpgradeMenu";
 
 export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
-	const { unlockedPotions, getPotionUnlockCost, canUnlockPotion, unlockPotion } =
-		useContext(GameContext);
+	const {
+		unlockedPotions,
+		getPotionUnlockCost,
+		canUnlockPotionTier,
+		canUnlockPotion,
+		unlockPotion,
+		getEffectivePotionSellValue,
+	} = useContext(GameContext);
 
 	const potionsByTier: Record<number, PotionId[]> = {};
 	POTION_IDS.forEach((potionId: PotionId) => {
@@ -21,6 +27,18 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 	const tiers = Object.keys(potionsByTier)
 		.map(Number)
 		.sort((a, b) => a - b);
+
+	function getTierLockMessage(tier: number) {
+		if (tier === 2) {
+			return "Unable to learn Tier 2 potions.";
+		}
+
+		if (tier === 3) {
+			return "Unable to learn Tier 3 potions.";
+		}
+
+		return `Unable to learn Tier ${tier} potions.`;
+	}
 
 	return (
 		<Modal
@@ -40,70 +58,84 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 									{potionsByTier[tier]
 										.filter((potionId) => unlockedPotions[potionId])
 										.map((potionId) => (
-											<AquiredItem name={POTIONS[potionId].name} />
+											<AquiredItem
+												key={`unlocked-potion-${potionId}`}
+												name={POTIONS[potionId].name}
+											/>
 										))}
 								</div>
 								<div className="rounded-md text-center flex flex-col gap-2">
-									{potionsByTier[tier]
-										.filter((potionId) => !unlockedPotions[potionId])
-										.map((potionId) => (
-											<Button
-												disabled={!canUnlockPotion(potionId)}
-												onClick={() => {
-													unlockPotion(potionId);
-													onClose();
-												}}
-												key={`potionButton-${potionId}`}
-												className={`flex h-fit flex-row items-center justify-between rounded-md p-2`}
-											>
-												<div className="flex flex-col gap-1">
-													<div
-														className={`items-center flex text-lg text-wrap text-left leading-6`}
-													>
-														{POTIONS[potionId].name}
-													</div>
-													<span className={``}>
-														<div className="flex gap-2 text-sm ">
-															<span className="text-muted-foreground text-sm text-left">
-																Recipe
+									{!canUnlockPotionTier(tier) && (
+										<div className="text-sm text-muted-foreground px-2 py-3 text-center">
+											{getTierLockMessage(tier)}
+										</div>
+									)}
+									{canUnlockPotionTier(tier) &&
+										potionsByTier[tier]
+											.filter((potionId) => !unlockedPotions[potionId])
+											.map((potionId) => (
+												<Button
+													disabled={!canUnlockPotion(potionId)}
+													onClick={() => {
+														unlockPotion(potionId);
+														onClose();
+													}}
+													key={`potionButton-${potionId}`}
+													className={`flex h-fit flex-row items-center justify-between rounded-md p-2`}
+												>
+													<div className="flex flex-col gap-1">
+														<div
+															className={`items-center flex text-lg text-wrap text-left leading-6`}
+														>
+															{POTIONS[potionId].name}
+														</div>
+														<span className={``}>
+															<div className="flex gap-2 text-sm ">
+																<span className="text-muted-foreground text-sm text-left">
+																	Recipe
+																</span>
+																<span>
+																	{Object.entries(
+																		POTIONS[potionId].recipe,
+																	).map(([herbId, amount]) => {
+																		const emoji =
+																			HERBS[
+																				herbId as (typeof HERB_IDS)[number]
+																			].emoji;
+																		return (
+																			<span key={herbId}>
+																				{amount > 1
+																					? `${amount}${emoji}`
+																					: emoji.repeat(
+																							amount,
+																						)}{" "}
+																			</span>
+																		);
+																	})}
+																</span>
+															</div>
+														</span>
+														<div
+															className={`flex gap-2 text-sm items-center`}
+														>
+															<span className="text-muted-foreground">
+																Sell price
 															</span>
 															<span>
-																{Object.entries(
-																	POTIONS[potionId].recipe,
-																).map(([herbId, amount]) => {
-																	const emoji =
-																		HERBS[
-																			herbId as (typeof HERB_IDS)[number]
-																		].emoji;
-																	return (
-																		<span key={herbId}>
-																			{amount > 1
-																				? `${amount}${emoji}`
-																				: emoji.repeat(
-																						amount,
-																					)}{" "}
-																		</span>
-																	);
-																})}
+																{getEffectivePotionSellValue(
+																	potionId,
+																)}{" "}
+																🗝️
 															</span>
 														</div>
-													</span>
-													<div
-														className={`flex gap-2 text-sm items-center`}
-													>
-														<span className="text-muted-foreground">
-															Sell price
-														</span>
+													</div>
+													<div className="flex  text-lg">
 														<span>
-															{POTIONS[potionId].sellValue} 🗝️
+															{getPotionUnlockCost(potionId)} 🗝️
 														</span>
 													</div>
-												</div>
-												<div className="flex  text-lg">
-													<span>{getPotionUnlockCost(potionId)} 🗝️</span>
-												</div>
-											</Button>
-										))}
+												</Button>
+											))}
 								</div>
 							</div>
 						))}
