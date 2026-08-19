@@ -16,15 +16,16 @@ import {
 	verticalListSortingStrategy,
 	arrayMove,
 } from "@dnd-kit/sortable";
-import { GameContext } from "./../gameContext";
-import { HERB_IDS, HERBS, POTION_IDS, POTIONS, type PotionId } from "../gameData";
-import { Button } from "../../common/Button/Button";
-import { useApothecaryAnimation } from "../animationContext";
+import { GameContext } from "../../context/gameContext";
+import { HERB_IDS, HERBS, POTION_IDS, POTIONS, type PotionId } from "../data/gameData";
+import { Button } from "../../../common/Button/Button";
+import { useApothecaryAnimation } from "../../context/animationContext";
 import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
 import { MdReorder } from "react-icons/md";
-import { BiPlusCircle } from "react-icons/bi";
-import { PotionsMenu } from "./PotionsMenu.tsx";
+import { PotionsMenu } from "./PotionsMenu";
+import { TutorialContext } from "../../context/tutorialContext";
+import { GiSpellBook } from "react-icons/gi";
 
 function SortablePotionCraftButton({
 	potionId,
@@ -58,12 +59,12 @@ function SortablePotionCraftButton({
 				onClick={() => {
 					isCraftable && onCraft(potionId);
 				}}
-				className="flex-1 flex justify-between duration-100 hover:scale-103 active:scale-98 select-none"
+				className="flex-1 flex flex-wrap justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
 				disabled={!isCraftable}
 			>
 				<div className="flex items-center gap-2">{POTIONS[potionId].name}</div>
 				{/* {!isActivePreference && " ❌"} */}
-				<p>
+				<p className="ml-auto">
 					{Object.entries(POTIONS[potionId].recipe).map(([herbId, amount]) => (
 						<span key={herbId}>
 							{HERBS[herbId as (typeof HERB_IDS)[number]].emoji.repeat(amount)}{" "}
@@ -86,6 +87,7 @@ export function Laboratory() {
 	const { registerAnchor } = useApothecaryAnimation();
 	const craftAnchor = (potionId: PotionId) => registerAnchor(`craft:${potionId}`);
 	const [showPotionsMenu, setShowPotionsMenu] = useState(false);
+	const { tutorialSettings } = useContext(TutorialContext);
 
 	const displayedPotionIds = [
 		...apothecaryPreferences.filter((potionId) => unlockedPotions[potionId]),
@@ -96,7 +98,8 @@ export function Laboratory() {
 
 	const totalPotionTypes = POTION_IDS.length;
 	const unlockedPotionCount = POTION_IDS.filter((potionId) => unlockedPotions[potionId]).length;
-	const showAddPotionButton = unlockedPotionCount < totalPotionTypes;
+	const showAddPotionButton =
+		unlockedPotionCount < totalPotionTypes && tutorialSettings.showUnlocks;
 
 	const sensors = useSensors(
 		useSensor(MouseSensor, {
@@ -151,13 +154,13 @@ export function Laboratory() {
 						})}
 					</div>
 					{showAddPotionButton ? (
-						<div className="flex justify-center p-1 mt-2">
+						<div className="flex justify-center p-1 mt-2 animate-in fade-in">
 							<Button
 								className="opacity-80 hover:opacity-100"
 								onClick={() => setShowPotionsMenu(true)}
 								variant="outline"
 							>
-								<BiPlusCircle size={60} />
+								<GiSpellBook size={60} />
 								Learn Recipe
 							</Button>
 						</div>

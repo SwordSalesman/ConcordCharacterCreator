@@ -10,13 +10,14 @@ import {
 	type ReactNode,
 } from "react";
 import { GameContext, type AnimationAnchorId, type GameDeltaEvent } from "./gameContext";
-import { HERBS } from "./gameData";
+import { HERBS } from "../components/data/gameData";
 
 interface FloatingParticle {
 	id: number;
 	emoji: string;
 	x: number;
 	y: number;
+	magnitude: number;
 }
 
 interface AnimationContextInterface {
@@ -51,7 +52,7 @@ export function useApothecaryAnimation() {
 	return useContext(AnimationContext);
 }
 
-export function ApothecaryAnimationProvider({ children }: { children: ReactNode }) {
+export default function ApothecaryAnimationProvider({ children }: { children: ReactNode }) {
 	const { deltaEvents, acknowledgeDeltaEvents } = useContext(GameContext);
 	const rootRef = useRef<HTMLDivElement | null>(null);
 	const scopeRef = useRef<ReturnType<typeof createScope> | null>(null);
@@ -145,6 +146,7 @@ export function ApothecaryAnimationProvider({ children }: { children: ReactNode 
 				particlesToAnimate.push({
 					id: nextParticleIdRef.current++,
 					emoji,
+					magnitude: event.magnitude,
 					x: originX + jitterX,
 					y: originY + jitterY,
 				});
@@ -173,11 +175,13 @@ export function ApothecaryAnimationProvider({ children }: { children: ReactNode 
 				continue;
 			}
 
+			const scaleModifier = (1.2 * (particle.magnitude - 1)) / 7; // Maps size 1-8 to modifier 0-1.2
+
 			animatedParticleIdsRef.current.add(particle.id);
 			animate(element, {
 				translateY: -25 - Math.random() * 20,
 				translateX: (Math.random() - 0.5) * 30,
-				scale: [0.8, 1.1, 0.9],
+				scale: [0.8 + scaleModifier, 1.1 + scaleModifier, 0.9 + scaleModifier],
 				opacity: [1, 1, 0],
 				ease: "out(3)",
 				duration: 700,
@@ -231,6 +235,7 @@ export function ApothecaryAnimationProvider({ children }: { children: ReactNode 
 								top: particle.y,
 							}}
 						>
+							{particle.magnitude > 1 ? <span>{particle.magnitude}</span> : null}
 							{particle.emoji}
 						</span>
 					))}

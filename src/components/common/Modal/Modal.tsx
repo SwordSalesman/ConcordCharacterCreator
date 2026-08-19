@@ -28,7 +28,7 @@ export function Modal({
 		variant?: ButtonVariant;
 	}[];
 	body?: React.ReactNode;
-	size?: "small" | "medium";
+	size?: "small" | "medium" | "large";
 }) {
 	return (
 		<Dialog
@@ -39,7 +39,7 @@ export function Modal({
 		>
 			<DialogContent
 				showCloseButton={false}
-				className={`${size === "small" ? "w-[300px]" : "w-[500px]"} text-left`}
+				className={`${size === "small" ? "w-[300px]" : size === "large" ? "w-[700px]" : "w-[500px]"} text-left`}
 				{...(!subtitle && !title && { "aria-describedby": undefined })}
 			>
 				<div className="flex flex-col gap-4">
