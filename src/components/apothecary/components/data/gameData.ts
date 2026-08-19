@@ -1,6 +1,8 @@
 // ********************************************************** Herbs
 
-export const HERB_IDS = ["GS", "TB", "ST", "BR", "RK", "BS"] as const;
+export const HERB_IDS = ["GS", "TB", "ST", "BR", "RK",
+	// "BS"
+] as const;
 export type HerbId = (typeof HERB_IDS)[number];
 
 export const HERB_BASE_UNLOCK_COST = 20;
@@ -45,11 +47,11 @@ export const HERBS: Record<HerbId, HerbDefinition> = {
 		name: "Rakoric",
 		emoji: "🪻",
 	},
-	BS: {
-		id: "BS",
-		name: "Blacksap",
-		emoji: "🫐",
-	},
+	// BS: {
+	// 	id: "BS",
+	// 	name: "Blacksap",
+	// 	emoji: "🫐",
+	// },
 };
 
 export const HERB_NAME_TO_ID: Record<string, HerbId> = {
@@ -58,7 +60,7 @@ export const HERB_NAME_TO_ID: Record<string, HerbId> = {
 	"Stone Stem": "ST",
 	"Beggars Root": "BR",
 	"Rakoric": "RK",
-	"Blacksap": "BS",
+	// "Blacksap": "BS",
 };
 
 export function getHerbName(herbId: HerbId): string {
@@ -86,7 +88,7 @@ export const POTION_IDS = [
 	"MB",
 	"AS",
 	"BQ",
-	"CH",
+	// "CH",
 	"CB",
 	"CN",
 	"CA",
@@ -254,18 +256,18 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		unlockBaseCost: 20,
 		tier: 2,
 	},
-	CH: {
-		id: "CH",
-		name: "Charr",
-		recipe: {
-			TB: 1,
-			GS: 1,
-			BS: 1,
-		},
-		sellValue: 5,
-		unlockBaseCost: 20,
-		tier: 2,
-	},
+	// CH: {
+	// 	id: "CH",
+	// 	name: "Charr",
+	// 	recipe: {
+	// 		TB: 1,
+	// 		GS: 1,
+	// 		BS: 1,
+	// 	},
+	// 	sellValue: 5,
+	// 	unlockBaseCost: 20,
+	// 	tier: 2,
+	// },
 	CB: {
 		id: "CB",
 		name: "Concoction of Bright Morning",
@@ -411,7 +413,7 @@ export const POTION_NAME_TO_ID: Record<string, PotionId> = {
 	Mageblood: "MB",
 	"Arcmages Spirit": "AS",
 	"Blessed Water of the Questing Knight": "BQ",
-	Charr: "CH",
+	// Charr: "CH",
 	"Concoction of Bright Morning": "CB",
 	"Concoction of the Cold Night": "CN",
 	"Conquerors Ale": "CA",

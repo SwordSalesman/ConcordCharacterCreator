@@ -201,7 +201,7 @@ export const INITIAL_UNLOCKED_HERBS: Record<HerbId, boolean> = {
 	ST: false,
 	BR: false,
 	RK: false,
-	BS: false,
+	// BS: false,
 };
 
 export const INITIAL_UNLOCKED_POTIONS: Record<PotionId, boolean> = {
