@@ -53,7 +53,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Birch Shovel",
 		description: "Each click gathers twice the herbs",
-		cost: 20,
+		cost: 80,
 		effects: {
 			manualHerbGatherMultiplier: 2,
 		},
@@ -63,7 +63,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Hartswood Shovel",
 		description: "Each click gathers four times the herbs",
-		cost: 20,
+		cost: 500,
 		effects: {
 			manualHerbGatherMultiplier: 2,
 		},
@@ -74,7 +74,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Thunderoak Shovel",
 		description: "Each click gathers eight times the herbs",
-		cost: 20,
+		cost: 3200,
 		effects: {
 			manualHerbGatherMultiplier: 2,
 		},
@@ -85,7 +85,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Faster Harvest I",
 		description: "Farmers gather herbs 50% faster.",
-		cost: 20,
+		cost: 75,
 		effects: {
 			farmerRateMultiplier: 1.5,
 		},
@@ -95,7 +95,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Faster Harvest II",
 		description: "Farmers gather herbs another 50% faster.",
-		cost: 20,
+		cost: 350,
 		prerequisites: ["gardens.faster_harvest_1"],
 		effects: {
 			farmerRateMultiplier: 1.5,
@@ -106,7 +106,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Faster Harvest III",
 		description: "Farmers gather herbs another 50% faster.",
-		cost: 20,
+		cost: 2700,
 		prerequisites: ["gardens.faster_harvest_2"],
 		effects: {
 			farmerRateMultiplier: 1.5,
@@ -117,7 +117,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "laboratory",
 		name: "Stone Mortar",
 		description: "Each click brews twice the potions",
-		cost: 20,
+		cost: 80,
 		effects: {
 			manualPotionCraftMultiplier: 2,
 		},
@@ -127,7 +127,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "laboratory",
 		name: "Essencite Mortar",
 		description: "Each click brews four times the potions",
-		cost: 20,
+		cost: 500,
 		effects: {
             manualPotionCraftMultiplier: 2,
 		},
@@ -138,7 +138,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "laboratory",
 		name: "Arcstone Mortar",
 		description: "Each click brews eight times the potions",
-		cost: 20,
+		cost: 3200,
 		effects: {
             manualPotionCraftMultiplier: 2,
 		},
@@ -149,7 +149,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "laboratory",
 		name: "Dilution I",
 		description: "Apothecaries have a 15% chance to produce an extra potion for free.",
-		cost: 20,
+		cost: 75,
 		effects: {
 			apothecaryExtraPotionChance: 0.15,
 		}
@@ -160,7 +160,7 @@ const UPGRADE_DEFINITIONS = [
 		name: "Dilution II",
 		description: "Apothecaries have a 25% chance to produce an extra potion for free.",
 		prerequisites: ["laboratory.dilution_1"],
-		cost: 20,
+		cost: 350,
 		effects: {
 			apothecaryExtraPotionChance: 0.10,
 		}
@@ -171,7 +171,7 @@ const UPGRADE_DEFINITIONS = [
 		name: "Dilution III",
 		description: "Apothecaries have a 35% chance to produce an extra potion for free.",
 		prerequisites: ["laboratory.dilution_2"],
-		cost: 20,
+		cost: 1700,
 		effects: {
 			apothecaryExtraPotionChance: 0.10,
 		}
@@ -203,7 +203,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Iron Scales",
 		description: "Each click sells twice the potions",
-		cost: 20,
+		cost: 80,
 		effects: {
 			manualPotionSellMultiplier: 2,
 		},
@@ -213,7 +213,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Forgesteel Scales",
 		description: "Each click sells four times the potions",
-		cost: 20,
+		cost: 350,
 		effects: {
 			manualPotionSellMultiplier: 2,
 		},
@@ -224,7 +224,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Mithril Scales",
 		description: "Each click sells eight times the potions",
-		cost: 20,
+		cost: 2700,
 		effects: {
 			manualPotionSellMultiplier: 2,
 		},
@@ -235,7 +235,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Silver Tongues I",
 		description: "Potions sell for 15% more.",
-		cost: 20,
+		cost: 75,
 		effects: {
 			potionSellValueMultiplier: 1.15,
 		},
@@ -245,7 +245,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Silver Tongues II",
 		description: "Potions sell for another 15% more.",
-		cost: 20,
+		cost: 350,
 		prerequisites: ["market.silver_tongues_1"],
 		effects: {
 			potionSellValueMultiplier: 1.15,
@@ -256,29 +256,29 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Silver Tongues III",
 		description: "Potions sell for another 15% more.",
-		cost: 20,
+		cost: 3900,
 		prerequisites: ["market.silver_tongues_2"],
 		effects: {
 			potionSellValueMultiplier: 1.15,
 		},
 	},
-	{
-		id: "market.demand_1",
-		buildingId: "market",
-		name: "Demand Tracking",
-		description: "Unlock demand-based potion pricing.",
-		cost: 20,
-		prerequisites: ["market.silver_tongues_1"],
-		effects: {
-			// potionSellValueMultiplier: 1.15,
-		},
-	},
+	// {
+	// 	id: "market.demand_1",
+	// 	buildingId: "market",
+	// 	name: "Demand Tracking",
+	// 	description: "Unlock demand-based potion pricing.",
+	// 	cost: 20,
+	// 	prerequisites: ["market.silver_tongues_1"],
+	// 	effects: {
+	// 		// potionSellValueMultiplier: 1.15,
+	// 	},
+	// },
 	{
 		id: "tavern.house_special_1",
 		buildingId: "tavern",
 		name: "House Special I",
 		description: "All workers operate 10% faster.",
-		cost: 20,
+		cost: 150,
 		effects: {
 			workerRateMultiplier: 1.1,
 		},
@@ -288,7 +288,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "tavern",
 		name: "House Special II",
 		description: "All workers operate another 10% faster.",
-		cost: 20,
+		cost: 1400,
 		prerequisites: ["tavern.house_special_1"],
 		effects: {
 			workerRateMultiplier: 1.1,
@@ -336,7 +336,7 @@ export interface UpgradeDefinition {
 	buildingId: BuildingId;
 	name: string;
 	description: string;
-	cost: 20;
+	cost: number;
 	prerequisites: UpgradeId[];
 	effects: UpgradeEffect;
 }
