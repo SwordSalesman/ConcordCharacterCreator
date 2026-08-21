@@ -193,28 +193,32 @@ const FARMER_ACTIONS_PER_SECOND = 0.5;
 const APOTHECARY_CRAFT_ATTEMPTS_PER_SECOND = 0.3;
 const MERCHANT_SELL_ATTEMPTS_PER_SECOND = 0.3;
 const HERB_UNLOCK_COST_SCALE = 2.2;
-const POTION_UNLOCK_COST_SCALE = 2;
+const POTION_UNLOCK_COST_SCALE = 1.25;
 
-export const INITIAL_UNLOCKED_HERBS: Record<HerbId, boolean> = {
-	GS: true,
-	TB: true,
-	ST: false,
-	BR: false,
-	RK: false,
-	// BS: false,
-};
+export const INITIAL_UNLOCKED_HERBS: HerbId[] = ["GS", "TB"];
+export const INITIAL_UNLOCKED_HERBS_RECORD = HERB_IDS.reduce(
+	(record, herbId) => {
+		record[herbId] = INITIAL_UNLOCKED_HERBS.includes(herbId);
+		return record;
+	},
+	{} as Record<HerbId, boolean>,
+);
 
-export const INITIAL_UNLOCKED_POTIONS: Record<PotionId, boolean> = {
-	...createBooleanRecord(POTION_IDS),
-	EV: true,
-};
+export const INITIAL_UNLOCKED_POTIONS: PotionId[] = ["EV"];
+export const INITIAL_UNLOCKED_POTIONS_RECORD = POTION_IDS.reduce(
+	(record, potionId) => {
+		record[potionId] = INITIAL_UNLOCKED_POTIONS.includes(potionId);
+		return record;
+	},
+	{} as Record<PotionId, boolean>,
+);
 
-const STARTING_UNLOCKED_HERB_COUNT = HERB_IDS.filter(
-	(herbId) => INITIAL_UNLOCKED_HERBS[herbId],
+const STARTING_UNLOCKED_HERB_COUNT = HERB_IDS.filter((herbId) =>
+	INITIAL_UNLOCKED_HERBS.includes(herbId),
 ).length;
 
-const STARTING_UNLOCKED_POTION_COUNT = POTION_IDS.filter(
-	(potionId) => INITIAL_UNLOCKED_POTIONS[potionId],
+const STARTING_UNLOCKED_POTION_COUNT = POTION_IDS.filter((potionId) =>
+	INITIAL_UNLOCKED_POTIONS.includes(potionId),
 ).length;
 
 const UPGRADES_BY_BUILDING: Record<BuildingId, UpgradeId[]> = BUILDING_IDS.reduce(
@@ -439,9 +443,9 @@ function getEffectivePotionSellValueState(
 function createInitialGameState(): GameState {
 	return {
 		herbs: createCountRecord(HERB_IDS),
-		unlockedHerbs: { ...INITIAL_UNLOCKED_HERBS },
+		unlockedHerbs: { ...INITIAL_UNLOCKED_HERBS_RECORD },
 		potions: createCountRecord(POTION_IDS),
-		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS },
+		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS_RECORD },
 		purchasedUpgrades: createBooleanRecord(UPGRADE_IDS),
 		money: process.env.NEXT_PUBLIC_HERB_JUMPSTART === "true" ? 100000000 : 0,
 		workers: createCountRecord(WORKER_IDS),
@@ -1109,8 +1113,8 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		dispatch({
 			type: "HYDRATE_GAME_STATE",
 			state: hydrateGameStateFromStorage(createInitialGameState, {
-				initialUnlockedHerbs: INITIAL_UNLOCKED_HERBS,
-				initialUnlockedPotions: INITIAL_UNLOCKED_POTIONS,
+				initialUnlockedHerbs: INITIAL_UNLOCKED_HERBS_RECORD,
+				initialUnlockedPotions: INITIAL_UNLOCKED_POTIONS_RECORD,
 				defaultPotionOrder: ["EV", "CS"],
 			}),
 		});

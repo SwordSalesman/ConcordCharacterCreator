@@ -26,6 +26,7 @@ import { MdReorder } from "react-icons/md";
 import { PotionsMenu } from "./PotionsMenu";
 import { TutorialContext } from "../../context/tutorialContext";
 import { GiSpellBook } from "react-icons/gi";
+import { NewWrapper } from "../NewWrapper";
 
 function SortablePotionCraftButton({
 	potionId,
@@ -33,12 +34,14 @@ function SortablePotionCraftButton({
 	isCraftable,
 	onCraft,
 	anchorRef,
+	showReorder,
 }: {
 	potionId: PotionId;
 	isActivePreference: boolean;
 	isCraftable: boolean;
 	onCraft: (potionId: PotionId) => void;
 	anchorRef: ReturnType<ReturnType<typeof useApothecaryAnimation>["registerAnchor"]>;
+	showReorder: boolean;
 }) {
 	const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
 		id: potionId,
@@ -51,9 +54,11 @@ function SortablePotionCraftButton({
 
 	return (
 		<div ref={setNodeRef} {...attributes} style={style} className="flex gap-0.5 items-center">
-			<div className="rounded-xs p-0.5 cursor-move" {...listeners}>
-				<MdReorder className="size-5" />
-			</div>
+			{showReorder ? (
+				<div className="rounded-xs p-0.5 cursor-move animate-in fade-in" {...listeners}>
+					<MdReorder className="size-5" />
+				</div>
+			) : null}
 			<Button
 				ref={anchorRef}
 				onClick={() => {
@@ -87,7 +92,7 @@ export function Laboratory() {
 	const { registerAnchor } = useApothecaryAnimation();
 	const craftAnchor = (potionId: PotionId) => registerAnchor(`craft:${potionId}`);
 	const [showPotionsMenu, setShowPotionsMenu] = useState(false);
-	const { tutorialSettings } = useContext(TutorialContext);
+	const { tutorialSettings, newComponents, setComponentStale } = useContext(TutorialContext);
 
 	const displayedPotionIds = [
 		...apothecaryPreferences.filter((potionId) => unlockedPotions[potionId]),
@@ -149,20 +154,26 @@ export function Laboratory() {
 									isCraftable={canCraftPotion(potionId)}
 									onCraft={(id) => craftPotion(id, 1)}
 									anchorRef={craftAnchor(potionId)}
+									showReorder={showAddPotionButton}
 								/>
 							);
 						})}
 					</div>
 					{showAddPotionButton ? (
 						<div className="flex justify-center p-1 mt-2 animate-in fade-in">
-							<Button
-								className="opacity-80 hover:opacity-100"
-								onClick={() => setShowPotionsMenu(true)}
-								variant="outline"
-							>
-								<GiSpellBook size={60} />
-								Learn Recipe
-							</Button>
+							<NewWrapper isNew={newComponents.learnRecipe}>
+								<Button
+									className="opacity-80 hover:opacity-100"
+									onClick={() => {
+										setShowPotionsMenu(true);
+										setComponentStale("learnRecipe");
+									}}
+									variant="outline"
+								>
+									<GiSpellBook size={60} />
+									Learn Recipe
+								</Button>
+							</NewWrapper>
 						</div>
 					) : null}
 				</SortableContext>

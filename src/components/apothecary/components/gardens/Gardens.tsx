@@ -1,18 +1,19 @@
 import { HERB_IDS, HerbId } from "../data/gameData";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TutorialContext } from "../../context/tutorialContext";
 import HerbPatch from "./HerbPatch";
 import { DragDropProvider, DragOverlay, PointerSensor } from "@dnd-kit/react";
 import { Feedback, PointerActivationConstraints } from "@dnd-kit/dom";
-import { GameContext } from "../../context/gameContext";
+import { GameContext, INITIAL_UNLOCKED_HERBS } from "../../context/gameContext";
 import { GiFarmer } from "react-icons/gi";
 import { GardensMenu } from "./GardensMenu";
 import { Button } from "@/components/common/Button/Button";
 import { GiSpade } from "react-icons/gi";
+import { NewWrapper } from "../NewWrapper";
 
 export function Gardens() {
 	const { farmerAssignments, setFarmerHerbAssignment, unlockedHerbs } = useContext(GameContext);
-	const { tutorialSettings } = useContext(TutorialContext);
+	const { tutorialSettings, newComponents, setComponentStale } = useContext(TutorialContext);
 
 	const [draggedId, setDraggedId] = useState<string | null>(null);
 	const [dragOverId, setDragOverId] = useState<string | null>(null);
@@ -44,6 +45,7 @@ export function Gardens() {
 				plugins={(defaults) => [...defaults, Feedback.configure({ dropAnimation: null })]}
 				onDragStart={({ operation }) => {
 					setDraggedId(operation.source?.id?.toString() ?? null);
+					setComponentStale("farmer");
 				}}
 				onDragEnd={({ operation }) => {
 					setDraggedId(null);
@@ -84,14 +86,19 @@ export function Gardens() {
 								// + "my-2 h-[100px] mt-5 mx-4 border-1 border-dashed rounded-md border-border"
 							}
 						>
-							<Button
-								className="opacity-80 hover:opacity-100"
-								onClick={() => setShowGardensMenu(true)}
-								variant="outline"
-							>
-								<GiSpade size={60} />
-								Build Garden
-							</Button>
+							<NewWrapper isNew={newComponents.buildGarden}>
+								<Button
+									className="opacity-80 hover:opacity-100"
+									onClick={() => {
+										setShowGardensMenu(true);
+										setComponentStale("buildGarden");
+									}}
+									variant="outline"
+								>
+									<GiSpade size={60} />
+									Build Garden
+								</Button>
+							</NewWrapper>
 						</div>
 					) : null}
 				</div>
