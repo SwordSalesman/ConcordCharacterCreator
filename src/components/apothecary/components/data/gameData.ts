@@ -141,7 +141,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		id: "FA",
 		name: "Fool's Anaesthetic",
         sellValue: 3,
-		unlockBaseCost: 25,
+		unlockBaseCost: 20,
         recipe: {
             GS: 1,
             ST: 1,

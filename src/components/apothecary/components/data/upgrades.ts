@@ -348,7 +348,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "tavern",
 		name: "Push To Declare War",
 		description: "Use your Senate connections to declare war. Potion sell price doubles.",
-		cost: 4000,
+		cost: 8000,
 		prerequisites: ["tavern.commissions_1"],
 		effects: {
 			potionSellValueMultiplier: 2,
@@ -376,6 +376,96 @@ const UPGRADE_DEFINITIONS = [
 	// 		// potionSellValueMultiplier: 1.1,
 	// 	},
 	// },
+	{
+		id: "tavern.senator_1",
+		buildingId: "tavern",
+		name: "Buy the Senator for Mukkarem",
+		description: "A guaranteed vote in the Senate.",
+		cost: 4000,
+		prerequisites: ["tavern.commissions_1"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.senator_2",
+		buildingId: "tavern",
+		name: "Buy the Senator for Lerona Mere",
+		description: "A guaranteed vote in the Senate.",
+		cost: 8000,
+		prerequisites: ["tavern.senator_1"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.senator_3",
+		buildingId: "tavern",
+		name: "Buy the Senator for Bolsterlee",
+		description: "A guaranteed vote in the Senate.",
+		cost: 16000,
+		prerequisites: ["tavern.senator_2"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.senator_4",
+		buildingId: "tavern",
+		name: "Buy the Senator for Mancante Terra",
+		description: "A guaranteed vote in the Senate.",
+		cost: 32000,
+		prerequisites: ["tavern.senator_3"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.senator_5",
+		buildingId: "tavern",
+		name: "Buy the Senator for Weiland",
+		description: "A guaranteed vote in the Senate.",
+		cost: 64000,
+		prerequisites: ["tavern.senator_4"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.senator_6",
+		buildingId: "tavern",
+		name: "Buy the Senator for Resinderholtz",
+		description: "A guaranteed vote in the Senate.",
+		cost: 125000,
+		prerequisites: ["tavern.senator_5"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.senator_7",
+		buildingId: "tavern",
+		name: "Buy the Senator for Windholme",
+		description: "A guaranteed vote in the Senate.",
+		cost: 250000,
+		prerequisites: ["tavern.senator_6"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.senator_8",
+		buildingId: "tavern",
+		name: "Buy the Senator for The Tribelands",
+		description: "A guaranteed vote in the Senate.",
+		cost: 500000,
+		prerequisites: ["tavern.senator_7"],
+		effects: {
+		},
+	},
+	{
+		id: "tavern.throne",
+		buildingId: "tavern",
+		name: "Claim the Throne of the Concord",
+		description: "The Senate is yours to command. The Concord is yours to rule.",
+		cost: 1000000,
+		prerequisites: ["tavern.senator_8"],
+		effects: {
+		},
+	},
 ] as const satisfies readonly UpgradeDefinitionInput[];
 
 export type UpgradeId = (typeof UPGRADE_DEFINITIONS)[number]["id"];

@@ -6,6 +6,7 @@ import { displayNumber } from "../../helpers/numberHelper";
 import { GiFarmer } from "react-icons/gi";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
 import { TutorialContext } from "../../context/tutorialContext";
+import { NewWrapper } from "../NewWrapper";
 
 export default function HerbPatch({
 	herbId,
@@ -15,7 +16,7 @@ export default function HerbPatch({
 	dragOverId: string | null;
 }) {
 	const { herbs, farmerAssignments, gatherHerb } = useContext(GameContext);
-	const { tutorialSettings } = useContext(TutorialContext);
+	const { tutorialSettings, newComponents, setComponentStale } = useContext(TutorialContext);
 	const showFarmers = tutorialSettings.showWorkers;
 
 	const hasFarmers = farmerAssignments[herbId] > 0;
@@ -57,9 +58,11 @@ export default function HerbPatch({
 					>
 						<GiFarmer size={30} />
 					</div>
-					<div className="text-muted-foreground text-md">
-						{displayNumber(farmerAssignments[herbId])}
-					</div>
+					<NewWrapper isNew={newComponents.farmer && herbId === "GS"}>
+						<div className="text-muted-foreground text-md">
+							{displayNumber(farmerAssignments[herbId])}
+						</div>
+					</NewWrapper>
 				</div>
 			</div>
 		</span>

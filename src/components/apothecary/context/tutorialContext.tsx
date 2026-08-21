@@ -1,11 +1,18 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { GameContext, INITIAL_UNLOCKED_HERBS, INITIAL_UNLOCKED_POTIONS } from "./gameContext";
+import {
+	GameContext,
+	INITIAL_UNLOCKED_HERBS,
+	INITIAL_UNLOCKED_HERBS_RECORD,
+	INITIAL_UNLOCKED_POTIONS,
+	INITIAL_UNLOCKED_POTIONS_RECORD,
+} from "./gameContext";
 
 import { HERB_IDS, POTION_IDS } from "../components/data/gameData";
 
 const TUTORIAL_MODE = process.env.NEXT_PUBLIC_HERB_JUMPSTART !== "true";
+const TUTORIAL_STORAGE_KEY = "apothecary:tutorial-context:v1";
 
-interface TutorialContextInterface {
+interface TutorialSettingsInterface {
 	showTutorial: boolean;
 	showTutorialSkip: boolean;
 	showLab: boolean;
@@ -16,7 +23,7 @@ interface TutorialContextInterface {
 	showUpgrades: boolean;
 }
 
-const defaultTutorialSettings: TutorialContextInterface = {
+const defaultTutorialSettings: TutorialSettingsInterface = {
 	showTutorial: TUTORIAL_MODE,
 	showTutorialSkip: false,
 	showLab: false,
@@ -27,7 +34,7 @@ const defaultTutorialSettings: TutorialContextInterface = {
 	showUpgrades: false,
 };
 
-const defaultTutorialSettingsOFF: TutorialContextInterface = {
+const defaultTutorialSettingsOFF: TutorialSettingsInterface = {
 	showTutorial: false,
 	showTutorialSkip: false,
 	showLab: true,
@@ -38,10 +45,46 @@ const defaultTutorialSettingsOFF: TutorialContextInterface = {
 	showUpgrades: true,
 };
 
+interface NewComponentInterface {
+	buildGarden: boolean;
+	learnRecipe: boolean;
+	upgradeGarden: boolean;
+	upgradeLaboratory: boolean;
+	upgradeTavern: boolean;
+	upgradeMarket: boolean;
+	farmer: boolean;
+}
+
+const defaultNewComponents: NewComponentInterface = {
+	buildGarden: true,
+	learnRecipe: true,
+	upgradeGarden: true,
+	upgradeLaboratory: true,
+	upgradeTavern: true,
+	upgradeMarket: true,
+	farmer: true,
+};
+
+const defaultNewComponentsOFF: NewComponentInterface = {
+	buildGarden: false,
+	learnRecipe: false,
+	upgradeGarden: false,
+	upgradeLaboratory: false,
+	upgradeTavern: false,
+	upgradeMarket: false,
+	farmer: false,
+};
+
 export const TutorialContext = createContext<{
-	tutorialSettings: TutorialContextInterface;
+	tutorialSettings: TutorialSettingsInterface;
+	newComponents: NewComponentInterface;
+	setComponentStale: (component: keyof NewComponentInterface) => void;
+	resetTutorial: () => void;
 }>({
 	tutorialSettings: defaultTutorialSettings,
+	newComponents: defaultNewComponents,
+	setComponentStale: () => {},
+	resetTutorial: () => {},
 });
 
 export default function TutorialContextProvider({ children }: { children: ReactNode }) {
@@ -54,8 +97,8 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 	const oneOfEachWorker =
 		workers.farmers > 0 && workers.apothecaries > 0 && workers.merchants > 0;
 	const unlockedHerbOrPotion =
-		!!HERB_IDS.find((id) => unlockedHerbs[id] && !INITIAL_UNLOCKED_HERBS[id]) ||
-		!!POTION_IDS.find((id) => unlockedPotions[id] && !INITIAL_UNLOCKED_POTIONS[id]);
+		!!HERB_IDS.find((id) => unlockedHerbs[id] && !INITIAL_UNLOCKED_HERBS_RECORD[id]) ||
+		!!POTION_IDS.find((id) => unlockedPotions[id] && !INITIAL_UNLOCKED_POTIONS_RECORD[id]);
 
 	const [tutorialSettings, setTutorialSettings] = useState(
 		TUTORIAL_MODE
@@ -71,6 +114,67 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 				}
 			: defaultTutorialSettingsOFF,
 	);
+	const [newComponents, setNewComponents] = useState(
+		TUTORIAL_MODE ? defaultNewComponents : defaultNewComponentsOFF,
+	);
+	const [isStorageHydrated, setIsStorageHydrated] = useState(false);
+
+	function updateState({
+		settings,
+		components,
+	}: {
+		settings?: Partial<TutorialSettingsInterface>;
+		components?: Partial<NewComponentInterface>;
+	}) {
+		if (settings) {
+			setTutorialSettings((prev) => ({ ...prev, ...settings }));
+		}
+		if (components) {
+			setNewComponents((prev) => ({ ...prev, ...components }));
+		}
+	}
+
+	useEffect(() => {
+		if (typeof window === "undefined") {
+			return;
+		}
+
+		try {
+			const raw = window.localStorage.getItem(TUTORIAL_STORAGE_KEY);
+			if (!raw) {
+				setIsStorageHydrated(true);
+				return;
+			}
+
+			const parsed = JSON.parse(raw) as {
+				tutorialSettings?: Partial<TutorialSettingsInterface>;
+				newComponents?: Partial<NewComponentInterface>;
+			};
+
+			if (parsed.tutorialSettings) {
+				setTutorialSettings((prev) => ({ ...prev, ...parsed.tutorialSettings }));
+			}
+
+			if (parsed.newComponents) {
+				setNewComponents((prev) => ({ ...prev, ...parsed.newComponents }));
+			}
+		} catch {
+			// Ignore malformed storage and keep defaults.
+		}
+
+		setIsStorageHydrated(true);
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === "undefined" || !isStorageHydrated) {
+			return;
+		}
+
+		window.localStorage.setItem(
+			TUTORIAL_STORAGE_KEY,
+			JSON.stringify({ tutorialSettings, newComponents }),
+		);
+	}, [tutorialSettings, newComponents, isStorageHydrated]);
 
 	useEffect(() => {
 		if (!TUTORIAL_MODE) {
@@ -78,22 +182,22 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 		}
 
 		if (herbTotal > 0 && !tutorialSettings.showLab) {
-			setTutorialSettings((prev) => ({ ...prev, showLab: true }));
+			updateState({ settings: { showLab: true } });
 		}
 		if (potionTotal > 0 && !tutorialSettings.showMarket) {
-			setTutorialSettings((prev) => ({ ...prev, showMarket: true }));
+			updateState({ settings: { showMarket: true } });
 		}
 		if (money > 0 && !tutorialSettings.showTavern) {
-			setTutorialSettings((prev) => ({ ...prev, showTavern: true }));
+			updateState({ settings: { showTavern: true } });
 		}
 		if (workerTotal > 0 && !tutorialSettings.showWorkers) {
-			setTutorialSettings((prev) => ({ ...prev, showWorkers: true }));
+			updateState({ settings: { showWorkers: true } });
 		}
 		if (oneOfEachWorker && !tutorialSettings.showUnlocks) {
-			setTutorialSettings((prev) => ({ ...prev, showUnlocks: true }));
+			updateState({ settings: { showUnlocks: true } });
 		}
 		if (unlockedHerbOrPotion && !tutorialSettings.showUpgrades) {
-			setTutorialSettings((prev) => ({ ...prev, showUpgrades: true }));
+			updateState({ settings: { showUpgrades: true } });
 		}
 	}, [
 		herbTotal,
@@ -105,7 +209,22 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 		unlockedPotions,
 	]);
 
+	function setComponentStale(component: keyof NewComponentInterface) {
+		updateState({ components: { [component]: false } });
+	}
+
+	function resetTutorial() {
+		updateState({
+			settings: defaultTutorialSettings,
+			components: defaultNewComponents,
+		});
+	}
+
 	return (
-		<TutorialContext.Provider value={{ tutorialSettings }}>{children}</TutorialContext.Provider>
+		<TutorialContext.Provider
+			value={{ tutorialSettings, newComponents, setComponentStale, resetTutorial }}
+		>
+			{children}
+		</TutorialContext.Provider>
 	);
 }

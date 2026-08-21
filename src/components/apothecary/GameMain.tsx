@@ -20,6 +20,7 @@ import { Modal } from "../common/Modal/Modal";
 import { MdSettings } from "react-icons/md";
 import { GiStakeHammer } from "react-icons/gi";
 import { UpgradeMenu } from "./components/UpgradeMenu";
+import { NewWrapper } from "./components/NewWrapper";
 
 export default function GameMain() {
 	const {
@@ -33,7 +34,8 @@ export default function GameMain() {
 		resetGame,
 	} = useContext(GameContext);
 	const { active, toggleActive } = useApothecaryAnimation();
-	const { tutorialSettings } = useContext(TutorialContext);
+	const { tutorialSettings, newComponents, setComponentStale, resetTutorial } =
+		useContext(TutorialContext);
 	const tutorialFadeIn = `animate-in fade-in ${tutorialSettings.showTutorial ?? "duration-1500"}`;
 
 	const [showSettings, setShowSettings] = useState(false);
@@ -52,35 +54,52 @@ export default function GameMain() {
 			return;
 		}
 		resetGame();
+		resetTutorial();
 	}
 
 	function getUpgradeButton(buildingId: BuildingId) {
+		let action = () => {};
+		let isNew = false;
+		switch (buildingId) {
+			case "gardens":
+				action = () => {
+					setShowGardenUpgradeMenu(true);
+					setComponentStale("upgradeGarden");
+				};
+				isNew = newComponents.upgradeGarden;
+				break;
+			case "laboratory":
+				action = () => {
+					setShowLabUpgradeMenu(true);
+					setComponentStale("upgradeLaboratory");
+				};
+				isNew = newComponents.upgradeLaboratory;
+				break;
+			case "market":
+				action = () => {
+					setShowMarketUpgradeMenu(true);
+					setComponentStale("upgradeMarket");
+				};
+				isNew = newComponents.upgradeMarket;
+				break;
+			case "tavern":
+				action = () => {
+					setShowTavernUpgradeMenu(true);
+					setComponentStale("upgradeTavern");
+				};
+				isNew = newComponents.upgradeTavern;
+				break;
+		}
+
 		return tutorialSettings.showUpgrades ? (
-			<div className={tutorialFadeIn}>
-				<Button
-					onClick={() => {
-						switch (buildingId) {
-							case "gardens":
-								setShowGardenUpgradeMenu(true);
-								break;
-							case "laboratory":
-								setShowLabUpgradeMenu(true);
-								break;
-							case "market":
-								setShowMarketUpgradeMenu(true);
-								break;
-							case "tavern":
-								setShowTavernUpgradeMenu(true);
-								break;
-						}
-					}}
-					size="sm"
-				>
-					{/* <GiFlatHammer /> */}
-					<GiStakeHammer />
-					Upgrade
-				</Button>
-			</div>
+			<NewWrapper isNew={isNew}>
+				<div className={tutorialFadeIn}>
+					<Button onClick={action} size="sm">
+						<GiStakeHammer />
+						Upgrade
+					</Button>
+				</div>
+			</NewWrapper>
 		) : null;
 	}
 
