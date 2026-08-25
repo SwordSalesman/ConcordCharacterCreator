@@ -1,7 +1,7 @@
 import Accordion from "../../common/Accordion/Accordion";
 import useFormContext from "../../../hooks/use-form-context";
 import { xpWarning } from "../../../utils/validity-helper";
-import { Warning } from "../../common/Accordion/AccordionSection";
+import { Warning } from "../../common/Warning";
 import { Chip, ChipSkillWrapper } from "@/components/common/Chip/Chip";
 import { getNextSkill, getSkillsData } from "@/utils/data-helper";
 import { skills as baseSkills, Skill } from "@/data/tables/skills";
