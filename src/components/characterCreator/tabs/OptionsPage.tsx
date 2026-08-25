@@ -327,6 +327,7 @@ const genSelectedContent = (
 export function OptionsPage() {
 	const { form, toggleItem, setField, remaining } = useFormContext();
 	const {
+		gamesPlayed,
 		skills,
 		spells,
 		investment,
@@ -341,6 +342,7 @@ export function OptionsPage() {
 		startingItem,
 		realm,
 		archetype,
+		changes,
 	} = form;
 
 	const showSpells = skills.includes("Magus");
@@ -422,30 +424,46 @@ export function OptionsPage() {
 					);
 				})}
 			</AccordionSection>
-			<AccordionSection title="Investment Tier" align="left">
-				<div className="flex justify-center items-center gap-2 ">
-					<Button
-						// secondary
-						onClick={() => {
-							if (invTier > 1) {
-								setField("invTier", invTier - 1);
-							}
-						}}
-					>
-						<BiMinus />
-					</Button>
-					<div className="text-xl">{invTier}</div>
-					<Button
-						// secondary
-						onClick={() => {
-							if (invTier < 10) {
-								setField("invTier", invTier + 1);
-							}
-						}}
-					>
-						<BiPlus />
-					</Button>
-				</div>
+			<AccordionSection
+				title="Investment Tier"
+				align="left"
+				warning={
+					changes.includes("invTier")
+						? "Only increment your investment tier if you have completed the necessary sign-out process at a Summit."
+						: undefined
+				}
+			>
+				{gamesPlayed < 1 ? (
+					<p className="text-sm text-left text-muted-foreground">
+						To increase your investment tier, ensure you have done the correct sign-out
+						process at a Summit. This option will become available after your first
+						game.
+					</p>
+				) : (
+					<div className="flex justify-center items-center gap-2 ">
+						<Button
+							// secondary
+							onClick={() => {
+								if (invTier > 1) {
+									setField("invTier", invTier - 1);
+								}
+							}}
+						>
+							<BiMinus />
+						</Button>
+						<div className="text-xl">{invTier}</div>
+						<Button
+							// secondary
+							onClick={() => {
+								if (invTier < 10) {
+									setField("invTier", invTier + 1);
+								}
+							}}
+						>
+							<BiPlus />
+						</Button>
+					</div>
+				)}
 			</AccordionSection>
 			{investmentOptions.length > 0 && (
 				<AccordionSection title="Investment Option" align="left">
@@ -486,7 +504,7 @@ export function OptionsPage() {
 			<AccordionSection
 				title="Investment Region"
 				link="Map_of_Esterra"
-				warning={investmentRegionWarning(realm, invRegion)}
+				warning={invRegion ? investmentRegionWarning(realm, invRegion) : undefined}
 				align="left"
 			>
 				{regionsData.map((region) => {

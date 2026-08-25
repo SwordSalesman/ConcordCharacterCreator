@@ -1,7 +1,8 @@
 import Accordion from "../../common/Accordion/Accordion";
+import { Warning } from "../../common/Warning";
 import useFormContext from "../../../hooks/use-form-context";
 import { SectionDivider } from "../../creator/SectionDivider/SectionDivider";
-import { AccordionSection, Warning } from "../../common/Accordion/AccordionSection";
+import { AccordionSection } from "../../common/Accordion/AccordionSection";
 import { useMemo } from "react";
 import { getRealmData } from "@/utils/data-helper";
 import { Chip } from "@/components/common/Chip/Chip";
@@ -142,7 +143,7 @@ export function BackgroundPage() {
 			content: (
 				<div className="flex flex-col gap-2 w-full my-4">
 					{!gamesPlayed || gamesPlayed === 0 ? (
-						<p>
+						<p className="text-sm text-muted-foreground">
 							To join a Band or Sect, your Hero must have the relevant ceremony cast
 							on them at a Summit. Options will become available after your first
 							game.

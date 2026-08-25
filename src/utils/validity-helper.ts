@@ -29,10 +29,9 @@ export function isPotionMandatoryForHero(potionName: string, archetype?: string)
 	return getMandatoryPotions(archetype).includes(potionName);
 }
 
-export function investmentRegionWarning(realm?: string, invRegion?: string) {
-	if (!invRegion || !realm) return "";
+export function investmentRegionWarning(realm: string | undefined, invRegion: string) {
 	const invRealm = getRegionRealm(invRegion);
-	if (realm && invRealm && realm !== invRealm) {
+	if (realm !== invRealm) {
 		return "Your investment is in a region not held by your Realm, so it will function at half capacity.";
 	}
 	return "";

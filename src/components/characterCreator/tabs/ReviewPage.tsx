@@ -1,6 +1,6 @@
 import useFormContext from "../../../hooks/use-form-context";
-import { bandWarning, xpWarning } from "../../../utils/validity-helper";
-import { Warning } from "@/components/common/Accordion/AccordionSection";
+import { bandWarning, investmentRegionWarning, xpWarning } from "../../../utils/validity-helper";
+import { Warning } from "@/components/common/Warning";
 import { TextArea } from "@/components/common/Input/Input";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 import { CharacterSheet } from "../CharacterSheet";
@@ -8,7 +8,16 @@ import { CharacterSheet } from "../CharacterSheet";
 export function ReviewPage() {
 	const { form, setField, validateForm, remaining, bands } = useFormContext();
 	const { comments, warband, realm } = form;
-	const { valid, validRealm, validName, validInvestment } = validateForm();
+	const {
+		valid,
+		validRealm,
+		validName,
+		validInvestment,
+		validBackstory,
+		validInvDetails,
+		validIcGoals,
+		validOocGoals,
+	} = validateForm();
 
 	// This simple check avoids the page crashing during a log in form reset
 	if (!form.spells || !form.crafts || !form.potions || !form.ceremonies) {
@@ -20,21 +29,31 @@ export function ReviewPage() {
 
 	const xpWarningText = xpWarning(remaining.xp);
 	const bandWarningText = bandWarning({ warband, realm, bands });
+	const investmentRegionWarningText =
+		form.invRegion && form.realm ? investmentRegionWarning(realm, form.invRegion) : undefined;
+
+	const requiredFields = [];
+	if (!validName) requiredFields.push("Hero Name");
+	if (!validRealm) requiredFields.push("Realm");
+	if (!validInvestment) requiredFields.push("Investment");
+	if (!validBackstory) requiredFields.push("Backstory");
+	if (!validInvDetails) requiredFields.push("Investment Details");
+	if (!validIcGoals) requiredFields.push("IC Goals");
+	if (!validOocGoals) requiredFields.push("OOC Goals");
 
 	return (
 		<ContentPane layout="narrow">
 			{!valid && (
-				<div className="text-destructive italic mb-2.5">
+				<Warning>
 					<p>Required fields:</p>
-					<ul>
-						{!validName ? <li>Hero Name</li> : null}
-						{!validRealm ? <li>Realm</li> : null}
-						{!validInvestment ? <li>Investment</li> : null}
-					</ul>
-				</div>
+					<p>{requiredFields.join(", ")}</p>
+				</Warning>
 			)}
-			{xpWarningText && <Warning>{xpWarningText}</Warning>}
 			{bandWarningText && <Warning>{bandWarningText}</Warning>}
+			{xpWarningText && <Warning variant="warning">{xpWarningText}</Warning>}
+			{investmentRegionWarningText && (
+				<Warning variant="warning">{investmentRegionWarningText}</Warning>
+			)}
 			<div className="mt-2 mb-6">
 				<CharacterSheet data={form} />
 			</div>

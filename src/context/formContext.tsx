@@ -203,6 +203,10 @@ function applySkillSideEffects(state: FormState): FormState {
 }
 
 function applyOptionSideEffects(state: FormState): FormState {
+	// Enforce investment level not increasing more than once per game
+	const maxInvTier = state.gamesPlayed + 1;
+	const invTier = Math.min(state.invTier, maxInvTier);
+
 	// For diversification options, need to enforce two rules:
 	// 1. Only allow the number of options as your tier allows
 	// 2. If a lower option is removed, remove all higher ones (if 2 is removed, remove 3, 4 etc)
@@ -211,7 +215,7 @@ function applyOptionSideEffects(state: FormState): FormState {
 	let invDiversify = state.invDiversify;
 	const remaining = calculateRemainingDiversifyOptions({
 		investment: state.investment,
-		invTier: state.invTier,
+		invTier: invTier,
 		invDiversify: state.invDiversify,
 	});
 	if (remaining < 0) {
@@ -243,7 +247,7 @@ function applyOptionSideEffects(state: FormState): FormState {
 		return parseInt(match[2]) <= maxValid;
 	});
 
-	return { ...state, invDiversify };
+	return { ...state, invDiversify, invTier };
 }
 
 function calculateMaxPotions(skills: string[], archetype?: string): number {
@@ -350,6 +354,10 @@ interface FormContextInterface {
 		validRealm: boolean;
 		validName: boolean;
 		validInvestment: boolean;
+		validBackstory: boolean;
+		validInvDetails: boolean;
+		validIcGoals: boolean;
+		validOocGoals: boolean;
 	};
 	validSkillChoice: (skill: string) => { valid: boolean; reason?: string };
 	getFormSummary: () => FormStateSummary;
@@ -368,6 +376,10 @@ export const FormContext = createContext<FormContextInterface>({
 		validRealm: false,
 		validName: false,
 		validInvestment: false,
+		validBackstory: false,
+		validInvDetails: false,
+		validIcGoals: false,
+		validOocGoals: false,
 	}),
 	validSkillChoice: () => ({ valid: false }),
 	resetForm: () => {},
@@ -411,6 +423,10 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		potions,
 		ceremonies,
 		heroName,
+		backstory,
+		invDetails,
+		icGoals,
+		oocGoals,
 	} = formState;
 
 	// Derived Variables
@@ -525,8 +541,28 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		const validRealm = !!realm;
 		const validName = !!heroName && heroName.trim() !== "";
 		const validInvestment = !!investment && !!invRegion && !!invTerritory;
-		const valid = validRealm && validName && validInvestment;
-		return { valid, validRealm, validName, validInvestment };
+		const validBackstory = !!backstory && backstory.trim() !== "";
+		const validInvDetails = !!invDetails && invDetails.trim() !== "";
+		const validIcGoals = !!icGoals && icGoals.trim() !== "";
+		const validOocGoals = !!oocGoals && oocGoals.trim() !== "";
+		const valid =
+			validRealm &&
+			validName &&
+			validInvestment &&
+			validBackstory &&
+			validInvDetails &&
+			validIcGoals &&
+			validOocGoals;
+		return {
+			valid,
+			validRealm,
+			validName,
+			validInvestment,
+			validBackstory,
+			validInvDetails,
+			validIcGoals,
+			validOocGoals,
+		};
 	};
 
 	// Exposed for UI feedback (e.g. greying out invalid skills on the skills page).
