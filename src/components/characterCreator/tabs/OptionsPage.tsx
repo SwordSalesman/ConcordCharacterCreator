@@ -486,7 +486,7 @@ export function OptionsPage() {
 			<AccordionSection
 				title="Investment Region"
 				link="Map_of_Esterra"
-				warning={investmentRegionWarning(realm, invRegion)}
+				warning={invRegion ? investmentRegionWarning(realm, invRegion) : undefined}
 				align="left"
 			>
 				{regionsData.map((region) => {

@@ -2,7 +2,7 @@ import { Realm } from "./realms";
 
 export interface Region {
 	name: string;
-	realm: Realm;
+	realm: Realm | undefined;
 	link?: string;
 	territories: string[];
 	coastal: boolean;
@@ -62,6 +62,12 @@ export const regions: Region[] = [
 		realm: "Iron Valley",
 		link: "Windholme",
 		territories: ["Windholme East", "Windholme West"],
+		coastal: false,
+	},
+	{
+		name: "Other",
+		realm: undefined,
+		territories: ["King's Pass"],
 		coastal: false,
 	},
 ];
