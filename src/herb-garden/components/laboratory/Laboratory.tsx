@@ -18,7 +18,6 @@ import {
 } from "@dnd-kit/sortable";
 import { GameContext } from "../../context/gameContext";
 import { HERB_IDS, HERBS, POTION_IDS, POTIONS, type PotionId } from "../data/gameData";
-import { Button } from "../../../common/Button/Button";
 import { useApothecaryAnimation } from "../../context/animationContext";
 import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
@@ -27,6 +26,7 @@ import { PotionsMenu } from "./PotionsMenu";
 import { TutorialContext } from "../../context/tutorialContext";
 import { GiSpellBook } from "react-icons/gi";
 import { NewWrapper } from "../NewWrapper";
+import { Button } from "@/components/common/Button/Button";
 
 function SortablePotionCraftButton({
 	potionId,

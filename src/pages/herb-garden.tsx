@@ -1,7 +1,7 @@
-import GameMain from "@/components/herb-garden/GameMain";
-import GameContextProvider from "@/components/herb-garden/context/gameContext";
-import ApothecaryAnimationProvider from "@/components/herb-garden/context/animationContext";
-import TutorialContextProvider from "@/components/herb-garden/context/tutorialContext";
+import GameMain from "@/herb-garden/GameMain";
+import GameContextProvider from "@/herb-garden/context/gameContext";
+import ApothecaryAnimationProvider from "@/herb-garden/context/animationContext";
+import TutorialContextProvider from "@/herb-garden/context/tutorialContext";
 
 export default function HerbGardenPage() {
 	return (

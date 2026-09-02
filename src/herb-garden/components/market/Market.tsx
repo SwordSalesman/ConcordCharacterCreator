@@ -1,9 +1,9 @@
 import { POTION_IDS, PotionId, POTIONS } from "../data/gameData";
-import { Button } from "../../../common/Button/Button";
 import { useContext } from "react";
 import { GameContext } from "../../context/gameContext";
 import { useApothecaryAnimation } from "../../context/animationContext";
 import { displayNumber } from "../../helpers/numberHelper";
+import { Button } from "@/components/common/Button/Button";
 
 export function Market() {
 	const { canSellPotion, sellPotion, potions, unlockedPotions, getEffectivePotionSellValue } =
