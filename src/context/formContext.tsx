@@ -203,9 +203,8 @@ function applySkillSideEffects(state: FormState): FormState {
 }
 
 function applyOptionSideEffects(state: FormState): FormState {
-	// Enforce investment level not increasing more than once per game
-	const maxInvTier = state.gamesPlayed + 1;
-	const invTier = Math.min(state.invTier, maxInvTier);
+	// Enforce investment level not increasing until a game has been played
+	const invTier = state.gamesPlayed === 0 ? 1 : state.invTier;
 
 	// For diversification options, need to enforce two rules:
 	// 1. Only allow the number of options as your tier allows
