@@ -130,6 +130,11 @@ export function CharacterSheet({
 					)}
 				</ReviewItemWrapper>
 			)}
+			{invTier === 0 ? (
+				<ReviewItemWrapper label="Investment">
+					<i>Lost or destroyed</i>
+				</ReviewItemWrapper>
+			) : null}
 			{(warband || sect) && <StyledBorderWrapper />}
 			{warband && <ReviewItemWrapper label="Band">{warband}</ReviewItemWrapper>}
 			{sect && <ReviewItemWrapper label="Sect">{sect}</ReviewItemWrapper>}

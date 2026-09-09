@@ -258,7 +258,7 @@ function applyOptionSideEffects(state: FormState): FormState {
 		return parseInt(match[2]) <= maxValid;
 	});
 
-	return { ...state, invDiversify, invTier, invRegion, invTerritory, investment };
+	return { ...state, invDiversify, invTier, invRegion, invTerritory, invOption, investment };
 }
 
 function calculateMaxPotions(skills: string[], archetype?: string): number {
@@ -520,7 +520,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		Object.keys(summaryForm).forEach((k) => {
 			const key = k as keyof FormStateSummary;
 			const value = summaryForm[key];
-			if (value) {
+			if (value !== undefined && value !== null) {
 				if (initialState[key] instanceof Array && typeof value === "string") {
 					(payload as any)[key] = getArrayFromSummary(value);
 				} else {
@@ -551,9 +551,9 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	const validateForm = () => {
 		const validRealm = !!realm;
 		const validName = !!heroName && heroName.trim() !== "";
-		const validInvestment = !!investment && !!invRegion && !!invTerritory;
+		const validInvestment = invTier === 0 || (!!investment && !!invRegion && !!invTerritory);
 		const validBackstory = !!backstory && backstory.trim() !== "";
-		const validInvDetails = !!invDetails && invDetails.trim() !== "";
+		const validInvDetails = invTier === 0 || (!!invDetails && invDetails.trim() !== "");
 		const validIcGoals = !!icGoals && icGoals.trim() !== "";
 		const validOocGoals = !!oocGoals && oocGoals.trim() !== "";
 		const valid =
