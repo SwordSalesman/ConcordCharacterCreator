@@ -27,7 +27,7 @@ export const regions: Region[] = [
 		name: "Lerona Mere",
 		realm: "Lerona Mere",
 		link: "Lerona_Mere_(The_Region)",
-		territories: ["Legend City", "Est Speranza", "Madre Campo", "Riverside and Lake Isabella"],
+		territories: ["Legend City", "Est Speranza", "Madre Campo", "The Riverlands"],
 		coastal: true,
 	},
 	{
