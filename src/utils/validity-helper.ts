@@ -9,8 +9,6 @@ export function isCrowDoktor(archetype?: string) {
 }
 
 export function canSelectPotion(potion: Potion, realm?: string, archetype?: string) {
-	if (potion.name === 'Charr') console.log('Checking Charr potion for realm:', realm, 'archetype:', archetype, potion);
-
 	const hasRealmLock = !!potion.allowedRealms?.length;
 	const hasArchetypeLock = !!potion.allowedArchetypes?.length;
 	if (!hasRealmLock && !hasArchetypeLock) return true;
