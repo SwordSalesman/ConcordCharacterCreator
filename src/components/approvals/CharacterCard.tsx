@@ -169,34 +169,42 @@ function CharacterCard({ character }: { character: Character | null }) {
 					Investment
 				</CharSectionTitle>
 			</div>
-			<div>
-				<i className={changeWrapperClass(changed("invTier"))}>
-					{character.invTier ? `Tier ${character.invTier} ` : " "}
-				</i>
-				<i className={changeWrapperClass(changed("invOption"))}>
-					{character.invOption ? `${character.invOption} ` : ""}
-				</i>
-				<i
-					className={changeWrapperClass(changed("investment"))}
-				>{`${character.investment} `}</i>
-				in{" "}
-				<i className={changeWrapperClass(changed("invTerritory"))}>
-					{`${character.invTerritory}, `}
-				</i>
-				<i
-					className={changeWrapperClass(changed("invRegion"))}
-				>{`${character.invRegion} `}</i>
-				<i className={changeWrapperClass(changed("invDiversify"))}>
-					{character.invDiversify ? (
-						<>
-							<br />
-							{`Diversified in ${character.invDiversify} `}
-						</>
-					) : (
-						" "
-					)}
-				</i>
-			</div>
+			{character.invTier === 0 ? (
+				<div>
+					<i className={changeWrapperClass(changed("invTier"))}>
+						Lost or destroyed (Tier 0)
+					</i>
+				</div>
+			) : (
+				<div>
+					<i className={changeWrapperClass(changed("invTier"))}>
+						{character.invTier ? `Tier ${character.invTier} ` : " "}
+					</i>
+					<i className={changeWrapperClass(changed("invOption"))}>
+						{character.invOption ? `${character.invOption} ` : ""}
+					</i>
+					<i
+						className={changeWrapperClass(changed("investment"))}
+					>{`${character.investment} `}</i>
+					in{" "}
+					<i className={changeWrapperClass(changed("invTerritory"))}>
+						{`${character.invTerritory}, `}
+					</i>
+					<i
+						className={changeWrapperClass(changed("invRegion"))}
+					>{`${character.invRegion} `}</i>
+					<i className={changeWrapperClass(changed("invDiversify"))}>
+						{character.invDiversify ? (
+							<>
+								<br />
+								{`Diversified in ${character.invDiversify} `}
+							</>
+						) : (
+							" "
+						)}
+					</i>
+				</div>
+			)}
 			<div>
 				<p>
 					{character.invDetails ? (
