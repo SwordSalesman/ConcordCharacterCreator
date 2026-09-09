@@ -203,19 +203,31 @@ function applySkillSideEffects(state: FormState): FormState {
 }
 
 function applyOptionSideEffects(state: FormState): FormState {
+	let { investment, invRegion, invTerritory, invTier, invDiversify, invOption, gamesPlayed } = {
+		...state,
+	};
+
 	// Enforce investment level not increasing until a game has been played
-	const invTier = state.gamesPlayed === 0 ? 1 : state.invTier;
+	invTier = gamesPlayed === 0 ? 1 : invTier;
+
+	// invTier 0 indicates a destroyed investment. Clear out all investment details in that case.
+	if (invTier === 0) {
+		investment = undefined;
+		invRegion = undefined;
+		invTerritory = undefined;
+		invDiversify = [];
+		invOption = undefined;
+	}
 
 	// For diversification options, need to enforce two rules:
 	// 1. Only allow the number of options as your tier allows
 	// 2. If a lower option is removed, remove all higher ones (if 2 is removed, remove 3, 4 etc)
 
 	// Enforcing rule 1
-	let invDiversify = state.invDiversify;
 	const remaining = calculateRemainingDiversifyOptions({
-		investment: state.investment,
+		investment: investment,
 		invTier: invTier,
-		invDiversify: state.invDiversify,
+		invDiversify: invDiversify,
 	});
 	if (remaining < 0) {
 		invDiversify = invDiversify.slice(0, remaining);
@@ -246,7 +258,7 @@ function applyOptionSideEffects(state: FormState): FormState {
 		return parseInt(match[2]) <= maxValid;
 	});
 
-	return { ...state, invDiversify, invTier };
+	return { ...state, invDiversify, invTier, invRegion, invTerritory, investment };
 }
 
 function calculateMaxPotions(skills: string[], archetype?: string): number {
