@@ -21,13 +21,11 @@ import {
 	GiLockedChest,
 	GiMoon,
 	GiNinjaArmor,
-	GiOakLeaf,
 	GiOpenBook,
 	GiPocketBow,
 	GiPotionBall,
 	GiRobe,
-	GiShipWheel,
-	GiShoonerSailboat,
+	GiSkullCrack,
 	GiSwordsEmblem,
 	GiTatteredBanner,
 	GiWarPick,
@@ -53,6 +51,8 @@ import { spells as spellsData } from "@/data/tables/spells";
 import { getNextInvestmentOption } from "@/utils/data-helper";
 import { gridMirrorStyle } from "@/styles/Global";
 import { canSelectPotion, isPotionMandatoryForHero } from "@/utils/validity-helper";
+import { useState } from "react";
+import { Modal } from "@/components/common/Modal/Modal";
 
 const chipIcons = true;
 
@@ -350,6 +350,10 @@ export function OptionsPage() {
 	const showPotions = skills.includes("Apothecary");
 	const showCeremonies = skills.filter((s) => s.startsWith("Divine Lore")).length > 0;
 
+	const [showInvTierWarning, setShowInvTierWarning] = useState(false);
+	const [showInvestmentDestroyedModal, setShowInvestmentDestroyedModal] = useState(false);
+	const [investmentDestroyed, setInvestmentDestroyed] = useState(false);
+
 	// Generate the 'selected' items on the left of the screen
 	var renderedInvestment = genSelectedContent([investment!], (i) => toggleItem("investment", i));
 	var renderedInvOption = genSelectedContent([invOption!], (i) => toggleItem("invOption", i));
@@ -414,8 +418,12 @@ export function OptionsPage() {
 						<Chip
 							onClick={() => toggleItem("investment", item.name)}
 							selected={selected}
-							inactive={inactive}
-							inactiveReason={inactiveReason}
+							inactive={invTier === 0 || inactive}
+							inactiveReason={
+								invTier === 0
+									? "Cannot select investment when tier is 0"
+									: inactiveReason
+							}
 							key={item.name}
 						>
 							{icon}
@@ -428,8 +436,8 @@ export function OptionsPage() {
 				title="Investment Tier"
 				align="left"
 				warning={
-					changes.includes("invTier")
-						? "Only increment your investment tier if you have completed the necessary sign-out process at a Summit."
+					showInvTierWarning
+						? "Only increase your investment tier if you have completed the necessary sign-out process at a Summit."
 						: undefined
 				}
 			>
@@ -443,7 +451,11 @@ export function OptionsPage() {
 					<div className="flex justify-center items-center gap-2 ">
 						<Button
 							// secondary
+							disabled={gamesPlayed > 0 ? invTier <= 0 : invTier <= 1}
 							onClick={() => {
+								if (invTier === 1 && gamesPlayed > 0) {
+									setShowInvestmentDestroyedModal(true);
+								}
 								if (invTier > 1) {
 									setField("invTier", invTier - 1);
 								}
@@ -456,6 +468,7 @@ export function OptionsPage() {
 							// secondary
 							onClick={() => {
 								if (invTier < 10) {
+									setShowInvTierWarning(true);
 									setField("invTier", invTier + 1);
 								}
 							}}
@@ -473,7 +486,7 @@ export function OptionsPage() {
 							<Chip
 								onClick={() => toggleItem("invOption", item.name)}
 								selected={selected}
-								inactive={!selected && !!invOption}
+								inactive={invTier === 0 || (!selected && !!invOption)}
 								key={item.name}
 							>
 								{item.name}
@@ -491,7 +504,9 @@ export function OptionsPage() {
 								<Chip
 									onClick={() => toggleItem("invDiversify", item.name)}
 									selected={selected}
-									inactive={!selected && remaining.diversify <= 0}
+									inactive={
+										invTier === 0 || (!selected && remaining.diversify <= 0)
+									}
 									key={item.name}
 								>
 									{item.name}
@@ -521,7 +536,7 @@ export function OptionsPage() {
 						<Chip
 							onClick={() => toggleItem("invRegion", region.name)}
 							selected={selected}
-							inactive={inactive}
+							inactive={invTier === 0 || inactive}
 							inactiveReason={inactiveReason}
 							key={region.name}
 						>
@@ -544,7 +559,7 @@ export function OptionsPage() {
 								<Chip
 									onClick={() => toggleItem("invTerritory", territory)}
 									selected={selected}
-									inactive={!selected && !!invTerritory}
+									inactive={invTier === 0 || (!selected && !!invTerritory)}
 									key={territory}
 								>
 									{territory}
@@ -555,6 +570,35 @@ export function OptionsPage() {
 					<p style={{ opacity: 0.5, fontStyle: "italic" }}>Select a Region first</p>
 				)}
 			</AccordionSection>
+			<Modal
+				open={showInvestmentDestroyedModal}
+				onClose={() => setShowInvestmentDestroyedModal(false)}
+				title={
+					<div className="flex gap-2 items-center justify-start">
+						<GiSkullCrack size={24} />
+						<p>Removing Investment</p>
+					</div>
+				}
+				body={
+					<p>
+						By setting your investment tier to 0, your current investment details will
+						be overwritten. Only do this if your investment has been{" "}
+						<b className="text-destructive">destroyed</b> (not damaged) or{" "}
+						<b className="text-destructive">permanently lost</b>.
+					</p>
+				}
+				actions={[
+					{ label: "Cancel", onClick: () => setShowInvestmentDestroyedModal(false) },
+					{
+						label: "Remove Investment",
+						onClick: () => {
+							setField("invTier", 0);
+							setShowInvestmentDestroyedModal(false);
+						},
+						variant: "destructive",
+					},
+				]}
+			/>
 		</div>
 	);
 
@@ -644,7 +688,7 @@ export function OptionsPage() {
 				<div className="flex flex-col flex-4 gap-3">
 					<div>
 						<SectionDivider>
-							Investment {!investment ? ` (1 remaining)` : ""}
+							Investment {!investment && invTier > 0 ? ` (1 remaining)` : ""}
 						</SectionDivider>
 						{renderedInvestment || renderedInvOption || renderedInvRegion ? (
 							// Left align the right column and right align the left column
@@ -690,9 +734,9 @@ export function OptionsPage() {
 									padding: "0 20px",
 								}}
 							>
-								{
-									"Select your Investment, as well as any other options you may need."
-								}
+								{invTier === 0
+									? "Your Investment is lost or destroyed"
+									: "Select your Investment, as well as any other options you may need."}
 							</div>
 						)}
 					</div>

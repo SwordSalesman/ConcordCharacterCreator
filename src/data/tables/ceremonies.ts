@@ -17,7 +17,7 @@ export const ceremonies: Ceremony[] = [
 		sphere: "Anarch",
 		name: "Anarchic Missive",
 		type: "-",
-		Magnitude: 2,
+		Magnitude: 4,
 	},
 	{
 		sphere: "Anarch",
@@ -156,9 +156,9 @@ export const ceremonies: Ceremony[] = [
 	},
 	{
 		sphere: "Arcadian",
-		name: "Missive of Courage",
+		name: "Courageous Missive",
 		type: "-",
-		Magnitude: 2,
+		Magnitude: 4,
 	},
 	{
 		sphere: "Arcadian",
@@ -276,6 +276,11 @@ export const ceremonies: Ceremony[] = [
 	},
 	{
 		sphere: "Arcadian",
+		name: "Tempest's Calling",
+		Magnitude: 30,
+	},
+	{
+		sphere: "Arcadian",
 		name: "Lions Roar",
 		type: "Enchantment",
 		Magnitude: 40,
@@ -312,7 +317,7 @@ export const ceremonies: Ceremony[] = [
 		sphere: "Cervitas",
 		name: "Comrade's Missive",
 		type: "-",
-		Magnitude: 2,
+		Magnitude: 4,
 	},
 	{
 		sphere: "Cervitas",
@@ -471,7 +476,7 @@ export const ceremonies: Ceremony[] = [
 		sphere: "Lumos",
 		name: "Believer's Missive",
 		type: "-",
-		Magnitude: 2,
+		Magnitude: 4,
 	},
 	{
 		sphere: "Lumos",
@@ -618,7 +623,7 @@ export const ceremonies: Ceremony[] = [
 		sphere: "Stallia",
 		name: "Knowledgeable Missive",
 		type: "-",
-		Magnitude: 2,
+		Magnitude: 4,
 	},
 	{
 		sphere: "Stallia",
@@ -765,7 +770,7 @@ export const ceremonies: Ceremony[] = [
 		sphere: "Panoply",
 		name: "Investor's Missive",
 		type: "-",
-		Magnitude: 2,
+		Magnitude: 4,
 	},
 	{
 		sphere: "Panoply",

@@ -12,15 +12,6 @@ export interface HerbDefinition {
 	emoji: string;
 }
 
-export interface PotionDefinition {
-	id: PotionId;
-	name: string;
-	sellValue: number;
-	unlockBaseCost: number;
-	recipe: Partial<Record<HerbId, number>>;
-	tier: number;
-}
-
 export const HERBS: Record<HerbId, HerbDefinition> = {
 	GS: {
 		id: "GS",
@@ -74,6 +65,18 @@ export function getHerbId(name: string): HerbId | undefined {
 
 // ********************************************************** Potions
 
+export type Tag = "health" | "cleansing" | "mana" | "energy" | "divine" | "weird";
+
+export interface PotionDefinition {
+	id: PotionId;
+	name: string;
+	sellValue: number;
+	unlockBaseCost: number;
+	recipe: Partial<Record<HerbId, number>>;
+	tier: number;
+	tags: Tag[];
+}
+
 export const POTION_IDS = [
 	"EV",
 	"CS",
@@ -113,6 +116,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 			TB: 1,
 		},
 		tier: 1,
+		tags: ['health']
 	},
 	CS: {
 		id: "CS",
@@ -124,6 +128,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 			TB: 1,
 		},
 		tier: 1,
+		tags: ['cleansing']
 	},
     BB: {
         id: "BB",
@@ -136,6 +141,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
             ST: 3,
         },
 		tier: 2,
+		tags: ['energy']
     },
 	FA: {
 		id: "FA",
@@ -147,6 +153,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
             ST: 1,
         },
 		tier: 1,
+		tags: ['cleansing']
 	},
 	AA: {
 		id: "AA",
@@ -160,6 +167,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 6,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['cleansing']
 	},
 	BE: {
 		id: "BE",
@@ -171,6 +179,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 3,
 		unlockBaseCost: 20,
 		tier: 1,
+		tags: ['cleansing']
 	},
 	WB: {
 		id: "WB",
@@ -182,6 +191,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 5,
 		unlockBaseCost: 20,
 		tier: 1,
+		tags: ['energy']
 	},
 	GM: {
 		id: "GM",
@@ -194,6 +204,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 8,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['health']
 	},
 	LB: {
 		id: "LB",
@@ -206,6 +217,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 8,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['health']
 	},
 	KS: {
 		id: "KS",
@@ -217,6 +229,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 6,
 		unlockBaseCost: 20,
 		tier: 1,
+		tags: ['health']
 	},
 	MB: {
 		id: "MB",
@@ -228,6 +241,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 3,
 		unlockBaseCost: 20,
 		tier: 1,
+		tags: ['mana']
 	},
 	AS: {
 		id: "AS",
@@ -241,6 +255,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 15,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['mana']
 	},
 	BQ: {
 		id: "BQ",
@@ -255,6 +270,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 18,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['energy']
 	},
 	// CH: {
 	// 	id: "CH",
@@ -279,6 +295,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 12,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['divine']
 	},
 	CN: {
 		id: "CN",
@@ -291,6 +308,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 12,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['divine']
 	},
 	CA: {
 		id: "CA",
@@ -304,6 +322,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 12,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['energy']
 	},
 	FS: {
 		id: "FS",
@@ -318,6 +337,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 18,
 		unlockBaseCost: 20,
 		tier: 3,
+		tags: ['cleansing', 'health']
 	},
 	RS: {
 		id: "RS",
@@ -332,6 +352,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 15,
 		unlockBaseCost: 20,
 		tier: 3,
+		tags: ['divine']
 	},
 	SF: {
 		id: "SF",
@@ -345,6 +366,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 21,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['divine']
 	},
 	SB: {
 		id: "SB",
@@ -359,6 +381,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 15,
 		unlockBaseCost: 20,
 		tier: 3,
+		tags: ['divine']
 	},
 	SS: {
 		id: "SS",
@@ -370,6 +393,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 8,
 		unlockBaseCost: 20,
 		tier: 1,
+		tags: ['weird']
 	},
 	TA: {
 		id: "TA",
@@ -383,6 +407,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 21,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['divine']
 	},
 	VD: {
 		id: "VD",
@@ -396,6 +421,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 12,
 		unlockBaseCost: 20,
 		tier: 2,
+		tags: ['mana']
 	},
 };
 

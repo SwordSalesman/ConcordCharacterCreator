@@ -183,6 +183,11 @@ export const crafts: Craft[] = [
 	},
 	{
 		rarity: "Expert",
+		name: "Daphne's Deathwhistle",
+		type: "Talisman: Tool",
+	},
+	{
+		rarity: "Expert",
 		name: "Dawns Pestle",
 		type: "Talisman: Tool",
 	},
