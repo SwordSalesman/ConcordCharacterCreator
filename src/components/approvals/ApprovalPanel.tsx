@@ -7,12 +7,15 @@ import { saveApproval } from "../../hooks/use-firebase";
 import toast from "react-hot-toast";
 import { APPROVED, ARCHIVED, DENIED } from "../../utils/constants";
 import { prettifyDate } from "../../utils/date-helper";
-import { ApprovalRecord, Character } from "./types";
+import { ApprovalRecord, Character, ApprovalStatus } from "./types";
 import { cn } from "@/lib/utils";
 import { stringToNode } from "@/utils/data-helper";
 import { CharacterSheet } from "../characterCreator/CharacterSheet";
 import { characterToFormState } from "@/utils/character-to-form-state";
 import { AiOutlineCopy, AiOutlineSend } from "react-icons/ai";
+import { LuMailCheck, LuMailX } from "react-icons/lu";
+import { Modal } from "../common/Modal/Modal";
+import { Chip } from "../common/Chip/Chip";
 
 const EMAIL_STYLE_PROPS = [
 	"font-size",
@@ -56,8 +59,10 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 	const sheetRef = useRef<HTMLDivElement>(null);
 	useEffect(() => setIsMounted(true), []);
 
+	const [sendEmail, setSendEmail] = useState(true);
+	const [confirmModal, setConfirmModal] = useState(false);
 	const [comment, setComment] = useState("");
-	const [status, setStatus] = useState<string | null>(null);
+	const [status, setStatus] = useState<ApprovalStatus | null>(null);
 	const [date, setDate] = useState(character?.approval?.date ?? "");
 	const [author, setAuthor] = useState(character?.approval?.author ?? "");
 	const { comment: previousComment, status: previousStatus } = character?.approval || {
@@ -73,8 +78,7 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 	const disabled = !character || loading;
 	const [archiveConfirm, setArchiveConfirm] = useState(false);
 
-	function handleSubmit(e: React.FormEvent) {
-		e.preventDefault();
+	async function handleSubmit() {
 		const valid = validateInputs();
 		if (!valid) return;
 		if (!status) return;
@@ -84,31 +88,62 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 			saveApproval({
 				name,
 				comment,
-				status: status || "",
+				status: status,
 				subjectUid: character!.id,
+				sendEmail,
 			}),
 			{
-				success: (approval) => {
+				success: ({ approval }) => {
 					setLoading(false);
 					handleApproval({ ...approval, id: character!.id });
 					setAuthor(name);
 					setDate(approval.date);
 
+					let approvalMessage = "";
 					switch (approval.status) {
 						case APPROVED:
-							return "Approval submitted";
+							approvalMessage = "Approval submitted.";
+							break;
 						case DENIED:
-							return "Changes requested";
+							approvalMessage = "Changes requested.";
+							break;
 						case ARCHIVED:
-							return "Character archived";
+							approvalMessage = "Character archived.";
+							break;
 						default:
-							return "Unexpected status. Verify approval.";
+							approvalMessage = "Unexpected status. Verify approval.";
 					}
+					let emailMessage = "";
+					if (sendEmail) {
+						switch (approval.email.status) {
+							case "failed":
+								emailMessage = "Failed to send email.";
+								break;
+							case "not sent":
+								emailMessage = "Email not sent.";
+								break;
+							case "pending":
+								emailMessage = "Email pending.";
+								break;
+							case "sent":
+								emailMessage = "Email sent.";
+								break;
+							default:
+								emailMessage = "Unexpected status. Verify email.";
+						}
+					}
+
+					return `${approvalMessage}${emailMessage ? ` ${emailMessage}` : ""}`;
 				},
 				loading: "Submitting...",
 				error: (err) => {
 					setLoading(false);
 					return `Failed to submit approval, ${err}`;
+				},
+			},
+			{
+				success: {
+					icon: undefined,
 				},
 			},
 		);
@@ -172,7 +207,7 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 				key={s.status}
 				onClick={(e) => {
 					e.preventDefault();
-					setStatus(status === s.status ? null : s.status);
+					setStatus(status === s.status ? null : (s.status as ApprovalStatus));
 				}}
 				size="sm"
 				disabled={disabled}
@@ -235,7 +270,7 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 				) : (
 					<i>This submission has not yet been reviewed</i>
 				)}
-				<form className="gap-1 flex flex-col" onSubmit={handleSubmit}>
+				<form className="gap-1 flex flex-col">
 					<h2 className="text-lg font-bold">Approval Form</h2>
 
 					<div
@@ -263,10 +298,22 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 						}
 					/>
 					<div className="mt-2 flex justify-between items-center gap-2">
-						<Button variant="outline" disabled={disabled}>
-							<AiOutlineSend />
-							Submit
-						</Button>
+						<div className="flex flex-row gap-2">
+							<Button
+								variant="outline"
+								disabled={disabled}
+								onClick={(e) => {
+									e.preventDefault();
+									setConfirmModal(true);
+								}}
+							>
+								<AiOutlineSend />
+								Submit
+							</Button>
+							<Chip onClick={() => setSendEmail(!sendEmail)} selected={sendEmail}>
+								{sendEmail ? <LuMailCheck size={20} /> : <LuMailX size={20} />}
+							</Chip>
+						</div>
 						<Button
 							type="button"
 							variant="outline"
@@ -279,6 +326,34 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 						</Button>
 					</div>
 				</form>
+				<Modal
+					title="Submitting Approval"
+					body={
+						<div className="flex flex-row gap-3 items-center">
+							{sendEmail ? <LuMailCheck size={24} /> : <LuMailX size={24} />}
+							{sendEmail
+								? `An email will be sent upon submission. This will take a moment.`
+								: "No email will be sent."}
+						</div>
+					}
+					open={confirmModal}
+					onClose={() => setConfirmModal(false)}
+					actions={[
+						{
+							label: "Cancel",
+							onClick: () => setConfirmModal(false),
+							variant: "outline",
+						},
+						{
+							label: sendEmail ? "Submit and Email" : "Submit",
+							onClick: () => {
+								setConfirmModal(false);
+								handleSubmit();
+							},
+							variant: "primary",
+						},
+					]}
+				/>
 			</div>
 		</div>
 	);

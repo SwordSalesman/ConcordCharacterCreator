@@ -21,6 +21,7 @@ import {
 	setDoc,
 	updateDoc,
 } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { getCurrentDate } from "../utils/date-helper";
 import { GroupType } from "@/context/groupContext";
 
@@ -40,6 +41,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const functions = getFunctions(app);
 
 // FIREBASE AUTH **************************************************************
 
@@ -139,29 +141,42 @@ const saveUserForm = async (
 	return fullForm;
 };
 
+const APPROVAL_STATUSES = ["Approved", "Denied", "Archived"] as const;
+type ApprovalStatus = (typeof APPROVAL_STATUSES)[number];
+type EmailStatus = "pending" | "sent" | "not sent" | "failed";
+
+interface Approval {
+    author: string
+    date: string
+    comment: string
+    status: ApprovalStatus
+    email: {
+        status: EmailStatus
+        sentAt: string
+        failedAt: string
+        gmailMessageId: string | null
+    }
+}
+
 const saveApproval = async ({
 	name,
 	comment,
 	status,
 	subjectUid,
+	sendEmail,
 }: {
 	name: string;
 	comment: string;
-	status: string;
+	status: ApprovalStatus;
 	subjectUid: string;
+	sendEmail: boolean;
 }) => {
-	const date = getCurrentDate();
-	let approval = {
-		author: name,
-		date: date,
-		comment: comment,
-		status: status,
-	};
-	await setDoc(doc(db, "approvals", subjectUid), approval);
-	await updateDoc(doc(db, "characters", subjectUid), {
-		changes: null,
-	});
-	return approval;
+	const submitApproval = httpsCallable<
+		{ subjectUid: string; status: ApprovalStatus; comment: string; sendEmail: boolean },
+		{ approval: Approval }
+	>(functions, "submitApproval");
+	const result = await submitApproval({ subjectUid, status, comment, sendEmail });
+	return result.data;
 };
 
 const saveGroup = async ({ group, type }: { group: Record<string, any>; type: GroupType }) => {
