@@ -27,9 +27,7 @@
 - Test firebase rules for new document types (groups, groupApprovals, public)
 - Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
     - Could save a whole copy of the hero submission under "HeroesApproved" instead of "Heroes", which is only updated when a Hero gets approved. Comparisons become a lot easier, direct 1:1
-- EMAILS (requires a whole rebuild fml)
-    - automatic confirmation emails when a player submits their character
-    - optional automatic email when a character is approved/denied/generally reviewed
+- Automatic confirmation emails when a player submits their character
 - Make the alert banner adjustable without a deploy, make it read from firebase probably.
 - Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
     - New submission widget for groups, just like the character creator
@@ -60,6 +58,52 @@ Firestore is the cloud database which goes hand in hand with Firebase Auth. We u
 #### 🔐 Firestore Access
 
 The Firestore API is public by nature of it being used by the front end. The database is protected by security rules set in the Firestore console. These rules restrict access to the database to only (1) logged in users, (2) which own the document they are accessing === malicious actors can't edit/delete documents unless they made the documents.
+
+### ✉️ Approval Emails
+
+The approval screen calls the `submitApproval` Firebase Callable Function rather than writing approvals directly from the browser. The function verifies the signed-in reviewer's role, reads the character and recipient address from Firestore, writes the approval, clears the character's `changes` value, then sends the review email through the Gmail API.
+
+The approval is written before the email is sent. Each approval records `email.status` as `pending`, `sent`, or `failed`, so a Gmail failure does not lose the review. The Gmail message is sent by the shared mailbox that authorized the OAuth application.
+
+The Cloudflare-hosted frontend never receives Gmail credentials. The function reads these Firebase Secret Manager secrets only while it runs:
+
+```text
+GMAIL_CLIENT_ID
+GMAIL_CLIENT_SECRET
+GMAIL_REFRESH_TOKEN
+```
+
+These secrets are separate for the production and development Firebase projects. Do not commit their values, add them to frontend environment variables, or use a `NEXT_PUBLIC_` name for them.
+
+#### Function Development And Deployment
+
+The `functions/` directory is source-controlled with the frontend. Build the function locally before deployment:
+
+```sh
+npm --prefix functions run build
+```
+
+Deploy to the development Firebase project first. It is the default project and is also named by the explicit `development` alias:
+
+```sh
+npx -y firebase-tools@latest deploy --only functions --project development
+```
+
+After testing with development data and a safe test recipient, deploy the same source to production:
+
+```sh
+npx -y firebase-tools@latest deploy --only functions --project production
+```
+
+Set or rotate each Gmail secret for the project being deployed. The Firebase CLI prompts for the value and stores it in Google Cloud Secret Manager:
+
+```sh
+npx -y firebase-tools@latest functions:secrets:set GMAIL_CLIENT_ID --project development
+npx -y firebase-tools@latest functions:secrets:set GMAIL_CLIENT_SECRET --project development
+npx -y firebase-tools@latest functions:secrets:set GMAIL_REFRESH_TOKEN --project development
+```
+
+Use `--project production` instead when configuring production secrets. Deploy the function again after adding or changing a secret so the deployed function receives the updated secret version.
 
 ## Notes
 

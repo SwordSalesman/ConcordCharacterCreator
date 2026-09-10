@@ -1,9 +1,19 @@
+import {APPROVED, DENIED, ARCHIVED} from '../../utils/constants'
+
+export type ApprovalStatus = typeof APPROVED | typeof DENIED | typeof ARCHIVED
+
 export interface ApprovalRecord {
 	id?: string;
 	date: string;
 	author: string;
-	status: string;
+	status: ApprovalStatus;
 	comment: string;
+	email: {
+		status: string;
+		sentAt: string;
+		gmailMessageId: string | null;
+		failedAt: string;
+	}
 }
 
 export interface Character {
