@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "concordcharactercreatordev",
+    "production": "concordcharactercreator",
+    "development": "concordcharactercreatordev"
+  },
+  "targets": {},
+  "etags": {}
+}

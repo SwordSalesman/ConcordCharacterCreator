@@ -35,9 +35,11 @@ export function ApprovalReport({
 					: `You have not submitted your character yet`}
 			</p>
 			<div className="flex flex-col gap-1">
-				<p className="text-sm text-muted-foreground">
-					{status} by {note}
-				</p>
+				{status && note ? (
+					<p className="text-sm text-muted-foreground">
+						{status} by {note}
+					</p>
+				) : null}
 				{comment && (
 					<blockquote className={`pl-2 py-2 border-l-4 border-primary italic leading-5`}>
 						{stringToNode(comment)}

@@ -7,12 +7,16 @@ import { saveApproval } from "../../hooks/use-firebase";
 import toast from "react-hot-toast";
 import { APPROVED, ARCHIVED, DENIED } from "../../utils/constants";
 import { prettifyDate } from "../../utils/date-helper";
-import { ApprovalRecord, Character } from "./types";
+import { ApprovalRecord, Character, ApprovalStatus } from "./types";
 import { cn } from "@/lib/utils";
 import { stringToNode } from "@/utils/data-helper";
 import { CharacterSheet } from "../characterCreator/CharacterSheet";
 import { characterToFormState } from "@/utils/character-to-form-state";
 import { AiOutlineCopy, AiOutlineSend } from "react-icons/ai";
+import { LuClipboardPaste, LuMailCheck, LuMailX } from "react-icons/lu";
+import { Modal } from "../common/Modal/Modal";
+import { Chip } from "../common/Chip/Chip";
+import { getApprovalTemplate } from "./approvalTemplates";
 
 const EMAIL_STYLE_PROPS = [
 	"font-size",
@@ -55,12 +59,20 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 	const [isMounted, setIsMounted] = useState(false);
 	const sheetRef = useRef<HTMLDivElement>(null);
 	useEffect(() => setIsMounted(true), []);
-	const [author, setAuthor] = useState("");
-	const [date, setDate] = useState("");
+
+	const [confirmModal, setConfirmModal] = useState(false);
 	const [comment, setComment] = useState("");
-	const [previousComment, setPreviousComment] = useState("");
-	const [previousStatus, setPreviousStatus] = useState("");
-	const [status, setStatus] = useState<string | null>(null);
+	const [sendEmail, setSendEmail] = useState(true);
+	const [status, setStatus] = useState<ApprovalStatus | null>(null);
+	const shouldSendEmail = status !== ARCHIVED && sendEmail;
+	const [date, setDate] = useState(character?.approval?.date ?? "");
+	const [author, setAuthor] = useState(character?.approval?.author ?? "");
+	const lastEmail = character?.approval?.email;
+	const { comment: previousComment, status: previousStatus } = character?.approval || {
+		comment: "",
+		status: null,
+	};
+
 	const { name } = useUserContext();
 	const [validInputs, setValidInputs] = useState({
 		validStatus: true,
@@ -69,8 +81,7 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 	const disabled = !character || loading;
 	const [archiveConfirm, setArchiveConfirm] = useState(false);
 
-	function handleSubmit(e: React.FormEvent) {
-		e.preventDefault();
+	async function handleSubmit() {
 		const valid = validateInputs();
 		if (!valid) return;
 		if (!status) return;
@@ -80,26 +91,52 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 			saveApproval({
 				name,
 				comment,
-				status: status || "",
+				status: status,
 				subjectUid: character!.id,
+				sendEmail: shouldSendEmail,
 			}),
 			{
-				success: (approval) => {
+				success: ({ approval }) => {
 					setLoading(false);
 					handleApproval({ ...approval, id: character!.id });
 					setAuthor(name);
 					setDate(approval.date);
 
+					let approvalMessage = "";
 					switch (approval.status) {
 						case APPROVED:
-							return "Approval submitted";
+							approvalMessage = "Approval submitted.";
+							break;
 						case DENIED:
-							return "Changes requested";
+							approvalMessage = "Changes requested.";
+							break;
 						case ARCHIVED:
-							return "Character archived";
+							approvalMessage = "Character archived.";
+							break;
 						default:
-							return "Unexpected status. Verify approval.";
+							approvalMessage = "Unexpected status. Verify approval.";
 					}
+					let emailMessage = "";
+					if (shouldSendEmail) {
+						switch (approval.email.status) {
+							case "failed":
+								emailMessage = "Failed to send email.";
+								break;
+							case "not sent":
+								emailMessage = "Email not sent.";
+								break;
+							case "pending":
+								emailMessage = "Email pending.";
+								break;
+							case "sent":
+								emailMessage = "Email sent.";
+								break;
+							default:
+								emailMessage = "Unexpected status. Verify email.";
+						}
+					}
+
+					return `${approvalMessage}${emailMessage ? ` ${emailMessage}` : ""}`;
 				},
 				loading: "Submitting...",
 				error: (err) => {
@@ -107,18 +144,13 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 					return `Failed to submit approval, ${err}`;
 				},
 			},
+			{
+				success: {
+					icon: undefined,
+				},
+			},
 		);
 	}
-
-	useEffect(() => {
-		setPreviousComment(character?.approval?.comment ?? "");
-		setPreviousStatus(character?.approval?.status ?? "");
-		setComment("");
-		setStatus(null);
-		setAuthor(character?.approval?.author ?? "");
-		setDate(character?.approval?.date ?? "");
-		setValidInputs({ validStatus: true, validComment: true });
-	}, [character]);
 
 	const validateInputs = () => {
 		const validStatus = status !== null;
@@ -127,15 +159,32 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 		return validStatus && validComment;
 	};
 
-	async function copyEmailContent() {
+	async function getCharSheetHtml() {
 		if (!sheetRef.current || !character) return;
-		setCopying(true);
 		try {
 			const clone = sheetRef.current.cloneNode(true) as HTMLElement;
 			inlineComputedStyles(sheetRef.current, clone);
+			return clone.outerHTML;
+		} catch {
+			toast.error("Failed to generate character sheet html");
+			return undefined;
+		}
+	}
 
-			const comment = `<p>${previousComment.replace(/\n/g, "<br>")}</p><p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>`;
-			const htmlContent = `${comment}${clone.outerHTML}`;
+	async function copyEmailContent() {
+		if (!sheetRef.current || !character) return;
+		setCopying(true);
+
+		const sheetHtml = await getCharSheetHtml();
+		if (!sheetHtml) {
+			setCopying(false);
+			return;
+		}
+
+		try {
+			const comment = `<p>${previousComment.replace(/\n/g, "<br>")}</p>`;
+			const divider = `<p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>`;
+			const htmlContent = `${comment}${divider}${sheetHtml}`;
 
 			await navigator.clipboard.write([
 				new ClipboardItem({
@@ -149,6 +198,22 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 		} finally {
 			setCopying(false);
 		}
+	}
+
+	function applyTemplate() {
+		if (!status || !character) return;
+
+		function getFirstName(fullName: string) {
+			const parts = fullName.trim().split(" ");
+			return parts.length > 0 ? parts[0] : fullName;
+		}
+
+		const template = getApprovalTemplate({
+			approvalStatus: status,
+			playerName: getFirstName(character.player),
+			approverName: getFirstName(name),
+		});
+		setComment(template);
 	}
 
 	const approvalOptions = [
@@ -177,7 +242,7 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 				key={s.status}
 				onClick={(e) => {
 					e.preventDefault();
-					setStatus(status === s.status ? null : s.status);
+					setStatus(status === s.status ? null : (s.status as ApprovalStatus));
 				}}
 				size="sm"
 				disabled={disabled}
@@ -219,71 +284,147 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 				{author && date ? (
 					<div>
 						<h2 className="text-lg font-bold">Previous Approval</h2>
-						<p>
-							{previousStatus === APPROVED
-								? "Approved"
-								: previousStatus === DENIED
-									? "Changes Requested"
-									: "Archived"}{" "}
-							by {author} on {prettifyDate(date)}:
-						</p>
-						<blockquote
-							className={`pl-2 border-l-4 border-primary italic text-wrap break-words`}
-						>
-							{previousComment ? (
-								stringToNode(previousComment)
+						<div className="flex flex-col gap-1">
+							<p>
+								{previousStatus === APPROVED
+									? "Approved"
+									: previousStatus === DENIED
+										? "Changes Requested"
+										: "Archived"}{" "}
+								by {author} on {prettifyDate(date)}
+							</p>
+							<blockquote
+								className={`pl-2 border-l-4 border-primary italic text-wrap break-words`}
+							>
+								{previousComment ? (
+									stringToNode(previousComment)
+								) : (
+									<i className="text-muted-foreground">No comment</i>
+								)}
+							</blockquote>
+							{!lastEmail?.status ? (
+								<p className="text-muted-foreground">
+									No automatic email record found
+								</p>
 							) : (
-								<i className="text-muted-foreground">No comment</i>
+								<p>
+									{lastEmail.status === "sent" &&
+										`Email sent on ${prettifyDate(lastEmail.sentAt)}`}
+									{lastEmail.status === "not sent" && `Email not sent`}
+									{lastEmail.status === "failed" &&
+										`Email failed to send on ${prettifyDate(lastEmail.sentAt)}`}
+								</p>
 							)}
-						</blockquote>
+						</div>
 					</div>
 				) : (
 					<i>This submission has not yet been reviewed</i>
 				)}
-				<form className="gap-1 flex flex-col" onSubmit={handleSubmit}>
-					<h2 className="text-lg font-bold">Approval Form</h2>
-
-					<div
-						className={cn(
-							"flex flex-col items-left sm:flex-row sm:justify-between gap-1 rounded-md",
-							!validInputs.validStatus ? "p-1 border-1 border-destructive" : "",
-						)}
-					>
-						<div className="flex flex-row gap-1">
-							{approvalOptions[0]}
-							{approvalOptions[1]}
-						</div>
-						<div>{approvalOptions[2]}</div>
-					</div>
-					<TextArea
-						value={comment}
-						onChange={(e) => setComment(e.target.value)}
-						placeholder="This will be shown to the player"
-						label="Comments"
-						disabled={disabled}
-						error={
-							!validInputs.validComment
-								? "Denied or archived submissions should include a comment"
-								: undefined
-						}
-					/>
-					<div className="mt-2 flex justify-between items-center gap-2">
-						<Button variant="outline" disabled={disabled}>
-							<AiOutlineSend />
-							Submit
-						</Button>
-						<Button
-							type="button"
-							variant="outline"
-							disabled={disabled || copying}
-							onClick={copyEmailContent}
-							size="sm"
+				<form className="gap-2 flex flex-col">
+					<div>
+						<h2 className="text-lg font-bold">Approval Form</h2>
+						<div
+							className={cn(
+								"flex flex-col items-left sm:flex-row sm:justify-between gap-1 rounded-md",
+								!validInputs.validStatus ? "p-1 border-1 border-destructive" : "",
+							)}
 						>
-							<AiOutlineCopy />
-							{"Copy Email Content"}
-						</Button>
+							<div className="flex flex-row gap-1">
+								{approvalOptions[0]}
+								{approvalOptions[1]}
+							</div>
+							<div>{approvalOptions[2]}</div>
+						</div>
+					</div>
+					<div className="flex gap-1 flex-col">
+						<TextArea
+							value={comment}
+							onChange={(e) => setComment(e.target.value)}
+							placeholder="This will be shown to the player"
+							label="Comments"
+							disabled={disabled}
+							error={
+								!validInputs.validComment
+									? "Denied or archived submissions should include a comment"
+									: undefined
+							}
+						/>
+					</div>
+					<div className="flex justify-between items-center gap-2">
+						<div className="flex flex-row gap-1">
+							<Chip
+								onClick={() => setSendEmail(!sendEmail)}
+								selected={sendEmail}
+								disabled={disabled}
+							>
+								{sendEmail ? <LuMailCheck size={18} /> : <LuMailX size={18} />}
+							</Chip>
+							<Button
+								variant="secondary"
+								disabled={disabled}
+								onClick={(e) => {
+									e.preventDefault();
+									const valid = validateInputs();
+									if (valid) {
+										setConfirmModal(true);
+									}
+								}}
+							>
+								<AiOutlineSend />
+								Submit
+							</Button>
+						</div>
+						<div className="flex flex-col items-end gap-1">
+							<Button
+								type="button"
+								disabled={disabled || copying || !status}
+								onClick={applyTemplate}
+								size="sm"
+							>
+								<LuClipboardPaste />
+								{`Apply ${status ?? ""} Template`}
+							</Button>
+							<Button
+								type="button"
+								variant="outline"
+								disabled={disabled || copying}
+								onClick={copyEmailContent}
+								size="sm"
+							>
+								<AiOutlineCopy />
+								{"Copy Email Content"}
+							</Button>
+						</div>
 					</div>
 				</form>
+				<Modal
+					title="Submitting Approval"
+					body={
+						<div className="flex flex-row gap-3 items-center">
+							{shouldSendEmail ? <LuMailCheck size={24} /> : <LuMailX size={24} />}
+							{shouldSendEmail
+								? `An email will be sent upon submission. This will take a moment.`
+								: `No email will be sent. ${status === ARCHIVED ? "(No email is sent when archiving)" : ""}`}
+						</div>
+					}
+					open={confirmModal}
+					onClose={() => setConfirmModal(false)}
+					actions={[
+						{
+							label: "Cancel",
+							onClick: () => setConfirmModal(false),
+							variant: "outline",
+						},
+						{
+							label: shouldSendEmail ? "Submit and Email" : "Submit",
+							onClick: () => {
+								setConfirmModal(false);
+								handleSubmit();
+							},
+							variant: "primary",
+						},
+					]}
+				/>
 			</div>
 		</div>
 	);
