@@ -31,6 +31,7 @@
     "src/components/characterCreator/Creator.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "functions"
   ]
 }
