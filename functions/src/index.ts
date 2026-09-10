@@ -50,12 +50,6 @@ interface ApprovalInput {
     sendEmail: boolean;
 }
 
-interface CharacterData {
-    email?: unknown;
-    heroName?: unknown;
-    player?: unknown;
-}
-
 function isApprovalInput(value: unknown): value is ApprovalInput {
     if (!value || typeof value !== "object") return false;
 
@@ -67,6 +61,10 @@ function isApprovalInput(value: unknown): value is ApprovalInput {
         (APPROVAL_STATUSES as readonly string[]).includes(input.status) &&
         typeof input.comment === "string"
     );
+}
+
+function encodeMimeBody(value: string): string {
+    return Buffer.from(value, "utf8").toString("base64").match(/.{1,76}/g)?.join("\r\n") ?? "";
 }
 
 function escapeHtml(value: string): string {
@@ -82,16 +80,77 @@ function escapeHtml(value: string): string {
     });
 }
 
+function createCharacterSheetHtml(character: Record<string, unknown>): string {
+
+	function removeNewLines(input?: string): string {
+		if (!input) return "";
+		return input.replace(/(?:\r\n|\r|\n)/g, ". ").replace(/"/g, "'");
+	}
+
+	const value = (field: unknown) => {
+		if (field === undefined || field === null || field === "") return undefined;
+		return escapeHtml(removeNewLines(String(field))).replace(/\r?\n/g, "<br>");
+	};
+	const field = (label: string, fieldValue: unknown) =>
+		value(fieldValue)
+			? `<p style="margin: 0 0 12px;">
+                <strong>${label}</strong>
+                <br />
+                ${value(fieldValue)}
+                </p>`
+			: "";
+
+	const investmentText =
+		(character.invTier ? `Tier ${character.invTier}` : "") +
+		(character.invOption ? ` ${character.invOption}` : "") +
+		(character.investment ? ` ${character.investment}` : "") +
+		(character.invTerritory ? ` in ${character.invTerritory}` : "") +
+		(character.invRegion ? `, ${character.invRegion}` : "") +
+		(character.invDiversify ? `, Diversified in ${character.invDiversify}` : "");
+
+	return `<div style="border: 1px solid; border-radius: 8px; padding: 14px; padding-bottom: 6px; margin: 16px 8px; font-family: Georgia;">
+        <p style="margin: 0 0 0px; font-size: 1.3em;"><strong>${character.heroName}</strong></p>
+        <p style="margin: 0 0 8px;">
+            <i>
+                ${character.realm}
+                ${character.archetype ? " ~ " + character.archetype : ""}
+                ${character.grace ? " ~ " + character.grace : ""}
+            </i>
+        </p>
+
+        ${field("Message to approver", character.comments)}
+
+        ${field("Summits Attended", character.gamesPlayed)}
+        ${field("Band", character.warband)}
+        ${field("Sect", character.sect)}
+        
+        ${field("Investment", investmentText)}
+
+        ${field("Skills", character.skills)}
+
+        ${field("Spells", character.spells)}
+        ${field("Crafts", character.crafts)}
+        ${field("Starting Item", character.startingItem)}
+        ${field("Potions", character.potions)}
+        ${field("Ceremonies", character.ceremonies)}
+
+        ${field("Backstory", character.backstory)}
+        ${field("Investment Details", character.invDetails)}
+        ${field("In Character Goals", character.icGoals)}
+        ${field("Out of Character Goals", character.oocGoals)}
+    </div>`;
+}
+
 function createEmailMessage({
     recipient,
     sender,
-    characterName,
+    character,
     status,
     comment,
 }: {
     recipient: string;
     sender: string;
-    characterName: string;
+    character: Record<string, unknown>;
     status: ApprovalStatus;
     comment: string;
 }): string {
@@ -105,26 +164,23 @@ function createEmailMessage({
             break;
     }
 
-    const heroNameCallout = `The review for ${characterName} has been completed.`;
-
-    const text = [heroNameCallout, comment].join("\n") || "";
-    const html = `<p>${escapeHtml(text).replace(/\n/g, "<br>")}</p>`;
+    const charSheetHtml = createCharacterSheetHtml(character);
+    const commentHtml = comment ? `<p>${escapeHtml(comment).replace(/\r?\n/g, "<br>")}</p>` : "";
+    const html =
+        `${commentHtml}<p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>${charSheetHtml}`;
 
     const rawMessage = [
         `To: ${recipient}`,
-        `From: ${sender}`,
+        `From: Player Support Team <${sender}>`,
         `Subject: ${subject}`,
         "MIME-Version: 1.0",
         'Content-Type: multipart/alternative; boundary="approval-boundary"',
         "",
         "--approval-boundary",
-        'Content-Type: text/plain; charset="UTF-8"',
-        "",
-        text,
-        "--approval-boundary",
         'Content-Type: text/html; charset="UTF-8"',
+        "Content-Transfer-Encoding: base64",
         "",
-        html,
+        encodeMimeBody(html),
         "--approval-boundary--",
     ].join("\r\n");
 
@@ -178,7 +234,10 @@ export const submitApproval = onCall(
             throw new HttpsError("not-found", "Character submission not found.");
         }
 
-        const character = characterSnapshot.data() as CharacterData;
+        const character = characterSnapshot.data();
+        if (!character || typeof character !== "object") {
+            throw new HttpsError("not-found", "Character submission not found.");
+        }
         if (typeof character.email !== "string" || !character.email) {
             throw new HttpsError("failed-precondition", "Character submission has no email address.");
         }
@@ -227,7 +286,7 @@ export const submitApproval = onCall(
                     raw: createEmailMessage({
                         recipient: character.email,
                         sender,
-                        characterName: character.heroName,
+                        character: character,
                         status: request.data.status,
                         comment: request.data.comment,
                     }),
