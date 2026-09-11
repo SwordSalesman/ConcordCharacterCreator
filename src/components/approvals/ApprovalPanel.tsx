@@ -51,9 +51,11 @@ function inlineComputedStyles(source: Element, clone: Element) {
 interface Props {
 	character: Character | null;
 	handleApproval: (approval: ApprovalRecord) => void;
+	sendEmailOption: boolean;
+	setSendEmailOption: (value: boolean) => void;
 }
 
-function ApprovalPanel({ character, handleApproval }: Props) {
+function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmailOption }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [copying, setCopying] = useState(false);
 	const [isMounted, setIsMounted] = useState(false);
@@ -62,9 +64,8 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 
 	const [confirmModal, setConfirmModal] = useState(false);
 	const [comment, setComment] = useState("");
-	const [sendEmail, setSendEmail] = useState(true);
 	const [status, setStatus] = useState<ApprovalStatus | null>(null);
-	const shouldSendEmail = status !== ARCHIVED && sendEmail;
+	const shouldSendEmail = status !== ARCHIVED && sendEmailOption;
 	const [date, setDate] = useState(character?.approval?.date ?? "");
 	const [author, setAuthor] = useState(character?.approval?.author ?? "");
 	const lastEmail = character?.approval?.email;
@@ -72,6 +73,11 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 		comment: "",
 		status: null,
 	};
+
+	useEffect(() => {
+		setComment("");
+		setStatus(null);
+	}, [character]);
 
 	const { name } = useUserContext();
 	const [validInputs, setValidInputs] = useState({
@@ -353,14 +359,17 @@ function ApprovalPanel({ character, handleApproval }: Props) {
 					<div className="flex justify-between items-center gap-2">
 						<div className="flex flex-row gap-1">
 							<Chip
-								onClick={() => setSendEmail(!sendEmail)}
-								selected={sendEmail}
+								onClick={() => setSendEmailOption(!sendEmailOption)}
+								selected={sendEmailOption}
 								disabled={disabled}
 							>
-								{sendEmail ? <LuMailCheck size={18} /> : <LuMailX size={18} />}
+								{sendEmailOption ? (
+									<LuMailCheck size={18} />
+								) : (
+									<LuMailX size={18} />
+								)}
 							</Chip>
 							<Button
-								variant="secondary"
 								disabled={disabled}
 								onClick={(e) => {
 									e.preventDefault();
