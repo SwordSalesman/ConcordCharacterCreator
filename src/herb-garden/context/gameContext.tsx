@@ -35,6 +35,9 @@ interface GameContextInterface {
 	herbs: Record<HerbId, number>;
 	unlockedHerbs: Record<HerbId, boolean>;
 	potions: Record<PotionId, number>;
+	potionDemand: Record<PotionId, number>;
+	minPotionDemand: number;
+	maxPotionDemand: number;
 	unlockedPotions: Record<PotionId, boolean>;
 	purchasedUpgrades: Record<UpgradeId, boolean>;
 	money: number;
@@ -48,6 +51,7 @@ interface GameContextInterface {
 	canUnlockPotion: (potionId: PotionId) => boolean;
 	canCraftPotion: (potionId: PotionId) => boolean;
 	canSellPotion: (potionId: PotionId) => boolean;
+	getPotionDemand: (potionId: PotionId) => number;
 	getEffectivePotionSellValue: (potionId: PotionId) => number;
 	canHireWorker: (workerId: WorkerId) => boolean;
 	getBuildingUpgrades: (buildingId: BuildingId) => UpgradeId[];
@@ -111,6 +115,7 @@ interface GameState {
 	herbs: Record<HerbId, number>;
 	unlockedHerbs: Record<HerbId, boolean>;
 	potions: Record<PotionId, number>;
+	potionDemand: Record<PotionId, number>;
 	unlockedPotions: Record<PotionId, boolean>;
 	purchasedUpgrades: Record<UpgradeId, boolean>;
 	money: number;
@@ -194,6 +199,12 @@ const APOTHECARY_CRAFT_ATTEMPTS_PER_SECOND = 0.3;
 const MERCHANT_SELL_ATTEMPTS_PER_SECOND = 0.3;
 const HERB_UNLOCK_COST_SCALE = 2.2;
 const POTION_UNLOCK_COST_SCALE = 1.25;
+const DEMAND_UPGRADE_ID: UpgradeId = "market.demand_based_pricing";
+const DEFAULT_POTION_DEMAND = 1;
+const MIN_POTION_DEMAND = 0.5;
+const MAX_POTION_DEMAND = 1.5;
+const DEMAND_LOSS_PER_POTION = 0.025;
+const DEMAND_RECOVERY_PER_SECOND = 0.015;
 
 export const INITIAL_UNLOCKED_HERBS: HerbId[] = ["GS", "TB"];
 export const INITIAL_UNLOCKED_HERBS_RECORD = HERB_IDS.reduce(
@@ -385,6 +396,9 @@ function getUpgradeEffects(
 		manualPotionSellMultiplier: 1,
 		workerRateMultiplier: 1,
 		apothecaryExtraPotionChance: 0,
+		potionDemandMaxIncrease: 0,
+		potionDemandRecoveryMultiplier: 1,
+		potionDemandLossMultiplier: 1,
 	};
 
 	for (const upgradeId of UPGRADE_IDS) {
@@ -402,6 +416,9 @@ function getUpgradeEffects(
 		aggregated.manualPotionSellMultiplier *= effect.manualPotionSellMultiplier ?? 1;
 		aggregated.workerRateMultiplier *= effect.workerRateMultiplier ?? 1;
 		aggregated.apothecaryExtraPotionChance += effect.apothecaryExtraPotionChance ?? 0;
+		aggregated.potionDemandMaxIncrease += effect.potionDemandMaxIncrease ?? 0;
+		aggregated.potionDemandRecoveryMultiplier *= effect.potionDemandRecoveryMultiplier ?? 1;
+		aggregated.potionDemandLossMultiplier *= effect.potionDemandLossMultiplier ?? 1;
 	}
 
 	return aggregated;
@@ -435,9 +452,28 @@ function canPurchaseUpgradeForState(state: GameState, upgradeId: UpgradeId): boo
 function getEffectivePotionSellValueState(
 	potionId: PotionId,
 	purchasedUpgrades: Record<UpgradeId, boolean>,
+	potionDemand: Record<PotionId, number>,
 ): number {
 	const effects = getUpgradeEffects(purchasedUpgrades);
-	return Math.max(1, Math.ceil(POTIONS[potionId].sellValue * effects.potionSellValueMultiplier));
+	const demandMultiplier = purchasedUpgrades[DEMAND_UPGRADE_ID]
+		? potionDemand[potionId]
+		: DEFAULT_POTION_DEMAND;
+	return Math.max(
+		1,
+		Math.ceil(
+			POTIONS[potionId].sellValue * effects.potionSellValueMultiplier * demandMultiplier,
+		),
+	);
+}
+
+function createPotionDemandRecord(): Record<PotionId, number> {
+	return POTION_IDS.reduce(
+		(record, potionId) => {
+			record[potionId] = DEFAULT_POTION_DEMAND;
+			return record;
+		},
+		{} as Record<PotionId, number>,
+	);
 }
 
 function createInitialGameState(): GameState {
@@ -445,6 +481,7 @@ function createInitialGameState(): GameState {
 		herbs: createCountRecord(HERB_IDS),
 		unlockedHerbs: { ...INITIAL_UNLOCKED_HERBS_RECORD },
 		potions: createCountRecord(POTION_IDS),
+		potionDemand: createPotionDemandRecord(),
 		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS_RECORD },
 		purchasedUpgrades: createBooleanRecord(UPGRADE_IDS),
 		money: process.env.NEXT_PUBLIC_HERB_JUMPSTART === "true" ? 100000000 : 0,
@@ -697,7 +734,20 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			const sellValue = getEffectivePotionSellValueState(
 				action.potionId,
 				state.purchasedUpgrades,
+				state.potionDemand,
 			);
+			const potionDemand = state.purchasedUpgrades[DEMAND_UPGRADE_ID]
+				? {
+						...state.potionDemand,
+						[action.potionId]: Math.max(
+							MIN_POTION_DEMAND,
+							state.potionDemand[action.potionId] -
+								sellCount *
+									DEMAND_LOSS_PER_POTION *
+									effects.potionDemandLossMultiplier,
+						),
+					}
+				: state.potionDemand;
 
 			return {
 				...state,
@@ -705,6 +755,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					...state.potions,
 					[action.potionId]: state.potions[action.potionId] - sellCount,
 				},
+				potionDemand,
 				money: state.money + sellCount * sellValue,
 				deltaEvents: [
 					...state.deltaEvents,
@@ -731,6 +782,20 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			const effects = getUpgradeEffects(state.purchasedUpgrades);
 			const nextHerbs = { ...state.herbs };
 			const nextPotions = { ...state.potions };
+			const nextPotionDemand = { ...state.potionDemand };
+			const demandEnabled = state.purchasedUpgrades[DEMAND_UPGRADE_ID];
+			const maxPotionDemand = MAX_POTION_DEMAND + effects.potionDemandMaxIncrease;
+			if (demandEnabled) {
+				for (const potionId of POTION_IDS) {
+					nextPotionDemand[potionId] = Math.min(
+						maxPotionDemand,
+						nextPotionDemand[potionId] +
+							DEMAND_RECOVERY_PER_SECOND *
+								effects.potionDemandRecoveryMultiplier *
+								dtSeconds,
+					);
+				}
+			}
 			const nextHerbProductionAcc = { ...state.accumulators.herbProduction };
 			let nextMoney = state.money;
 			const deltaEvents = [...state.deltaEvents];
@@ -828,7 +893,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			for (let i = 0; i < wholeSellAttempts; i++) {
 				let sold = false;
 				const potionsByPrice = [...POTION_IDS].sort(
-					(a, b) => POTIONS[b].sellValue - POTIONS[a].sellValue,
+					(a, b) =>
+						getEffectivePotionSellValueState(
+							b,
+							state.purchasedUpgrades,
+							nextPotionDemand,
+						) -
+						getEffectivePotionSellValueState(
+							a,
+							state.purchasedUpgrades,
+							nextPotionDemand,
+						),
 				);
 				for (const potionId of potionsByPrice) {
 					if (!state.unlockedPotions[potionId]) {
@@ -843,7 +918,15 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					nextMoney += getEffectivePotionSellValueState(
 						potionId,
 						state.purchasedUpgrades,
+						nextPotionDemand,
 					);
+					if (demandEnabled) {
+						nextPotionDemand[potionId] = Math.max(
+							MIN_POTION_DEMAND,
+							nextPotionDemand[potionId] -
+								DEMAND_LOSS_PER_POTION * effects.potionDemandLossMultiplier,
+						);
+					}
 					soldByPotion[potionId] += 1;
 					sold = true;
 					break;
@@ -891,6 +974,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				herbs: nextHerbs,
 				potions: nextPotions,
+				potionDemand: nextPotionDemand,
 				money: nextMoney,
 				deltaEvents,
 				nextDeltaEventId,
@@ -926,6 +1010,9 @@ export const GameContext = createContext<GameContextInterface>({
 	herbs: initialGameState.herbs,
 	unlockedHerbs: initialGameState.unlockedHerbs,
 	potions: initialGameState.potions,
+	potionDemand: initialGameState.potionDemand,
+	minPotionDemand: MIN_POTION_DEMAND,
+	maxPotionDemand: MAX_POTION_DEMAND,
 	unlockedPotions: initialGameState.unlockedPotions,
 	purchasedUpgrades: initialGameState.purchasedUpgrades,
 	money: initialGameState.money,
@@ -940,6 +1027,7 @@ export const GameContext = createContext<GameContextInterface>({
 	canCraftPotion: () => false,
 	canSellPotion: () => false,
 	canHireWorker: () => false,
+	getPotionDemand: () => DEFAULT_POTION_DEMAND,
 	getEffectivePotionSellValue: () => 0,
 	getBuildingUpgrades: () => [],
 	isUpgradePurchased: () => false,
@@ -1010,7 +1098,22 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 	}
 
 	function getEffectivePotionSellValue(potionId: PotionId) {
-		return getEffectivePotionSellValueState(potionId, gameState.purchasedUpgrades);
+		return getEffectivePotionSellValueState(
+			potionId,
+			gameState.purchasedUpgrades,
+			gameState.potionDemand,
+		);
+	}
+
+	function getPotionDemand(potionId: PotionId) {
+		return gameState.potionDemand[potionId];
+	}
+
+	function getMaxPotionDemand() {
+		return (
+			MAX_POTION_DEMAND +
+			getUpgradeEffects(gameState.purchasedUpgrades).potionDemandMaxIncrease
+		);
 	}
 
 	function canHireWorker(workerId: WorkerId) {
@@ -1136,6 +1239,9 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		herbs: gameState.herbs,
 		unlockedHerbs: gameState.unlockedHerbs,
 		potions: gameState.potions,
+		potionDemand: gameState.potionDemand,
+		minPotionDemand: MIN_POTION_DEMAND,
+		maxPotionDemand: getMaxPotionDemand(),
 		unlockedPotions: gameState.unlockedPotions,
 		purchasedUpgrades: gameState.purchasedUpgrades,
 		money: gameState.money,
@@ -1150,6 +1256,7 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		canCraftPotion,
 		canSellPotion,
 		canHireWorker,
+		getPotionDemand,
 		getEffectivePotionSellValue,
 		getBuildingUpgrades,
 		isUpgradePurchased,

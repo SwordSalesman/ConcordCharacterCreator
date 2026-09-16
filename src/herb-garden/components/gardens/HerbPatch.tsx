@@ -42,7 +42,7 @@ export default function HerbPatch({
 			>
 				<div className="flex justify-center items-center gap-2">
 					<span className="text-2xl">{HERBS[herbId].emoji}</span>
-					<span className="text-sm text-muted-foreground">
+					<span className="text-sm font-mono text-muted-foreground">
 						{displayNumber(herbs[herbId])}
 					</span>
 				</div>
@@ -59,7 +59,7 @@ export default function HerbPatch({
 						<GiFarmer size={30} />
 					</div>
 					<NewWrapper isNew={newComponents.farmer && herbId === "GS"}>
-						<div className="text-muted-foreground text-md">
+						<div className="text-muted-foreground font-mono text-md">
 							{displayNumber(farmerAssignments[herbId])}
 						</div>
 					</NewWrapper>

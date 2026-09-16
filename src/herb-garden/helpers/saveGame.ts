@@ -14,9 +14,9 @@ import {
 } from "../components/data/upgrades";
 export const GAME_AUTOSAVE_INTERVAL_MS = 3000;
 export const GAME_SAVE_KEY = "apothecary.save.v1";
-const GAME_SAVE_VERSION = 2;
+const GAME_SAVE_VERSION = 3;
 
-type SaveVersion = 1 | 2;
+type SaveVersion = 1 | 2 | 3;
 
 interface PersistedGameStateV1 {
 	herbs: Record<HerbId, number>;
@@ -33,16 +33,21 @@ interface PersistedGameStateV2 extends PersistedGameStateV1 {
 	purchasedUpgrades: Record<UpgradeId, boolean>;
 }
 
+interface PersistedGameStateV3 extends PersistedGameStateV2 {
+	potionDemand: Record<PotionId, number>;
+}
+
 interface PersistedGameSave {
 	version: SaveVersion;
 	updatedAt: string;
-	state: PersistedGameStateV1 | PersistedGameStateV2;
+	state: PersistedGameStateV1 | PersistedGameStateV2 | PersistedGameStateV3;
 }
 
 interface GameStateForPersistence {
 	herbs: Record<HerbId, number>;
 	unlockedHerbs: Record<HerbId, boolean>;
 	potions: Record<PotionId, number>;
+	potionDemand: Record<PotionId, number>;
 	unlockedPotions: Record<PotionId, boolean>;
 	money: number;
 	workers: Record<WorkerId, number>;
@@ -81,6 +86,28 @@ function sanitizePotionCounts(value: unknown): Record<PotionId, number> {
 		normalized[potionId] = sanitizeNumber(
 			(value as Partial<Record<PotionId, unknown>>)[potionId],
 		);
+	}
+
+	return normalized;
+}
+
+function sanitizePotionDemand(value: unknown): Record<PotionId, number> {
+	const normalized = POTION_IDS.reduce(
+		(record, potionId) => {
+			record[potionId] = 1;
+			return record;
+		},
+		{} as Record<PotionId, number>,
+	);
+	if (!value || typeof value !== "object") {
+		return normalized;
+	}
+
+	for (const potionId of POTION_IDS) {
+		const demand = (value as Partial<Record<PotionId, unknown>>)[potionId];
+		if (typeof demand === "number" && Number.isFinite(demand)) {
+			normalized[potionId] = Math.min(2.5, Math.max(0.5, demand));
+		}
 	}
 
 	return normalized;
@@ -216,11 +243,12 @@ function normalizeFarmerAssignments(
 	return normalized;
 }
 
-function buildPersistedState(state: GameStateForPersistence): PersistedGameStateV2 {
+function buildPersistedState(state: GameStateForPersistence): PersistedGameStateV3 {
 	return {
 		herbs: state.herbs,
 		unlockedHerbs: state.unlockedHerbs,
 		potions: state.potions,
+		potionDemand: state.potionDemand,
 		unlockedPotions: state.unlockedPotions,
 		money: sanitizeNumber(state.money),
 		workers: state.workers,
@@ -253,7 +281,7 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 		}
 
 		const parsed = JSON.parse(raw) as Partial<PersistedGameSave>;
-		if ((parsed.version !== 1 && parsed.version !== 2) || !parsed.state) {
+		if ((parsed.version !== 1 && parsed.version !== 2 && parsed.version !== 3) || !parsed.state) {
 			return fallback;
 		}
 
@@ -277,6 +305,9 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 			herbs: sanitizeHerbCounts(parsed.state.herbs),
 			unlockedHerbs,
 			potions: sanitizePotionCounts(parsed.state.potions),
+			potionDemand: sanitizePotionDemand(
+				(parsed.state as Partial<PersistedGameStateV3>).potionDemand,
+			),
 			unlockedPotions,
 			money: sanitizeNumber(parsed.state.money),
 			workers,

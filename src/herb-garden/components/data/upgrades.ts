@@ -12,6 +12,9 @@ export interface AggregatedUpgradeEffects {
     manualPotionCraftMultiplier: number;
     manualPotionSellMultiplier: number;
 	workerRateMultiplier: number;
+	potionDemandMaxIncrease: number;
+	potionDemandRecoveryMultiplier: number;
+	potionDemandLossMultiplier: number;
 }
 
 export interface UpgradeEffect extends Partial<AggregatedUpgradeEffects> {} 
@@ -258,6 +261,60 @@ const UPGRADE_DEFINITIONS = [
 		},
 	},
 	{
+		id: "market.demand_based_pricing",
+		buildingId: "market",
+		name: "Demand Based Pricing",
+		description: "Potion prices rise and fall with market demand.",
+		cost: 10,
+		effects: {},
+	},
+	{
+		id: "market.town_criers",
+		buildingId: "market",
+		name: "Advertise with Town Criers",
+		description: "Increases maximum potion demand to 200%.",
+		cost: 250,
+		prerequisites: ["market.demand_based_pricing"],
+		effects: {
+			potionDemandMaxIncrease: 0.5,
+		},
+	},
+	{
+		id: "market.winged_messengers",
+		buildingId: "market",
+		name: "Advertise with Winged Messengers",
+		description: "Increases maximum potion demand to 250%.",
+		cost: 1500,
+		prerequisites: ["market.town_criers"],
+		effects: {
+			potionDemandMaxIncrease: 0.5,
+		},
+	},
+	{
+		id: "market.buy_out_competitor",
+		buildingId: "market",
+		name: "Buy Out A Competitor",
+		description: "Demand recovers 50% faster and falls 25% slower.",
+		cost: 300,
+		prerequisites: ["market.demand_based_pricing"],
+		effects: {
+			potionDemandRecoveryMultiplier: 1.5,
+			potionDemandLossMultiplier: 0.75,
+		},
+	},
+	{
+		id: "market.sabotage_competitor",
+		buildingId: "market",
+		name: "Sabotage A Competitor",
+		description: "Demand recovers another 50% faster and falls another 25% slower.",
+		cost: 1800,
+		prerequisites: ["market.buy_out_competitor"],
+		effects: {
+			potionDemandRecoveryMultiplier: 1.5,
+			potionDemandLossMultiplier: 0.75,
+		},
+	},
+	{
 		id: "market.sale_contracts_2",
 		buildingId: "market",
 		name: "Sale Contracts II",
@@ -268,17 +325,17 @@ const UPGRADE_DEFINITIONS = [
 			merchantRateMultiplier: 1.25,
 		},
 	},
-	{
-		id: "market.sale_contracts_3",
-		buildingId: "market",
-		name: "Sale Contracts III",
-		description: "Merchants sell potions another 25% faster.",
-		cost: 2400,
-		prerequisites: ["market.sale_contracts_2"],
-		effects: {
-			merchantRateMultiplier: 1.25,
-		},
-	},
+	// {
+	// 	id: "market.sale_contracts_3",
+	// 	buildingId: "market",
+	// 	name: "Sale Contracts III",
+	// 	description: "Merchants sell potions another 25% faster.",
+	// 	cost: 2400,
+	// 	prerequisites: ["market.sale_contracts_2"],
+	// 	effects: {
+	// 		merchantRateMultiplier: 1.25,
+	// 	},
+	// },
 	{
 		id: "market.upselling_1",
 		buildingId: "market",
@@ -301,17 +358,6 @@ const UPGRADE_DEFINITIONS = [
 			potionSellValueMultiplier: 1.25,
 		},
 	},
-	// {
-	// 	id: "market.demand_1",
-	// 	buildingId: "market",
-	// 	name: "Demand Tracking",
-	// 	description: "Unlock demand-based potion pricing.",
-	// 	cost: 20,
-	// 	prerequisites: ["market.silver_tongues_1"],
-	// 	effects: {
-	// 		// potionSellValueMultiplier: 1.15,
-	// 	},
-	// },
 	{
 		id: "tavern.house_special_1",
 		buildingId: "tavern",

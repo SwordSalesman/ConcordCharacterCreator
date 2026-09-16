@@ -211,7 +211,12 @@ export default function GameMain() {
 									<div className={canHireWorker(workerId) ? "" : "opacity-50"}>
 										{WORKERS[workerId].singularName}
 									</div>
-									<div className={canHireWorker(workerId) ? "" : "opacity-50"}>
+									<div
+										className={
+											"font-mono" +
+											(canHireWorker(workerId) ? "" : " opacity-50")
+										}
+									>
 										{displayNumber(
 											getWorkerHireCost(workerId, workers[workerId]),
 										)}{" "}

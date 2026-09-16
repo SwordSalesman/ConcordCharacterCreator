@@ -100,7 +100,9 @@ export function UpgradeMenu({
 											<span className="flex-1 text-left">
 												<span className="flex gap-2 items-center justify-between">
 													<p>{UPGRADES[upgradeId].name}</p>
-													{displayNumber(UPGRADES[upgradeId].cost)} 🗝️
+													<span className="font-mono">
+														{displayNumber(UPGRADES[upgradeId].cost)} 🗝️
+													</span>
 												</span>
 												<p className="text-sm text-muted-foreground text-wrap">
 													{UPGRADES[upgradeId].description}

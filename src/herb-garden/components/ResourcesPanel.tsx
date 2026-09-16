@@ -20,14 +20,14 @@ export function ResourcesPanel({
 	function ResourceCard({ emoji, name, amount }: ResourceCard) {
 		return (
 			<div
-				className={`relative flex gap-1.5 border-1 rounded-md pt-1 sm:pt-2 px-2 pb-4 sm:pb-5 flex-1 justify-center items-center text-sm sm:text-md ${compact ? "mb-3" : "mb-4"}`}
+				className={`relative flex gap-1.5 border-1 rounded-md pt-1 sm:pt-2 px-2 pb-4 sm:pb-5 flex-1 justify-center items-center text-sm sm:text-md ${compact ? "mb-3" : "mb-4"} select-none`}
 			>
 				<div className="flex flex-col justify-center items-center gap-0.5 sm:flex-row sm:gap-2">
 					<span>{emoji}</span>
 					<span className="text-xs sm:text-sm">{name}</span>
 				</div>
 				<div
-					className={`absolute text-muted-foreground bg-background rounded-md border-1 px-2 min-w-14 h-7 flex justify-center items-center ${compact ? "bottom-[-12px]" : "bottom-[-14px]"}`}
+					className={`absolute text-muted-foreground bg-background rounded-md border-1 px-2 min-w-14 h-7 font-mono flex justify-center items-center ${compact ? "bottom-[-12px]" : "bottom-[-14px]"}`}
 				>
 					{displayNumber(amount)}
 				</div>
