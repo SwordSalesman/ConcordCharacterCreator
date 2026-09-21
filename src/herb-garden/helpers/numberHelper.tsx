@@ -1,3 +1,5 @@
+import { HERBS, HERB_IDS, PotionId, POTIONS } from "../components/data/gameData";
+
 export function displayNumber(value: number): string {
 	if (value < 10_000) {
 		return value.toLocaleString("en-US");
@@ -21,4 +23,13 @@ export function displayNumber(value: number): string {
 	}
 
 	return value.toString();
+}
+
+export function potionRecipe(potionId: PotionId): string {
+	return Object.entries(POTIONS[potionId].recipe)
+		.map(([herbId, amount]) => {
+			const emoji = HERBS[herbId as (typeof HERB_IDS)[number]].emoji;
+			return amount > 1 ? `${amount}${emoji}` : emoji.repeat(amount);
+		})
+		.join(" ");
 }

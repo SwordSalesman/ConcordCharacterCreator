@@ -40,11 +40,11 @@ export function ResourcesPanel({
 			<div
 				className={`overflow-hidden bg-background pt-2 pb-0 px-0 transition-all duration-150 pointer-events-none`}
 			>
-				<div className="grid grid-cols-4 gap-1 sm:grid-cols-4">
+				<div className="grid grid-cols-3 gap-1 sm:grid-cols-3">
 					<ResourceCard emoji="🌱" name="Herbs" amount={herbTotal} />
 					<ResourceCard emoji="⚗️" name="Potions" amount={potionTotal} />
 					<ResourceCard emoji="🗝️" name="Keys" amount={money} />
-					<ResourceCard emoji="🪵" name="Thunderoak" amount={0} />
+					{/* <ResourceCard emoji="🪵" name="Thunderoak" amount={0} /> */}
 				</div>
 			</div>
 			<div className="h-4 w-full bg-gradient-to-b from-background to-transparent pointer-events-none"></div>

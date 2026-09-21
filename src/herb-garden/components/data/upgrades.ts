@@ -97,22 +97,22 @@ const UPGRADE_DEFINITIONS = [
 		id: "gardens.faster_harvest_2",
 		buildingId: "gardens",
 		name: "Faster Harvest II",
-		description: "Farmers gather herbs another 50% faster.",
+		description: "Farmers gather herbs another 75% faster.",
 		cost: 350,
 		prerequisites: ["gardens.faster_harvest_1"],
 		effects: {
-			farmerRateMultiplier: 1.5,
+			farmerRateMultiplier: 1.75,
 		},
 	},
 	{
 		id: "gardens.faster_harvest_3",
 		buildingId: "gardens",
 		name: "Faster Harvest III",
-		description: "Farmers gather herbs another 50% faster.",
+		description: "Farmers gather herbs another 100% faster.",
 		cost: 2700,
 		prerequisites: ["gardens.faster_harvest_2"],
 		effects: {
-			farmerRateMultiplier: 1.5,
+			farmerRateMultiplier: 2,
 		},
 	},
     {
@@ -168,34 +168,45 @@ const UPGRADE_DEFINITIONS = [
 		id: "laboratory.dilution_1",
 		buildingId: "laboratory",
 		name: "Dilution I",
-		description: "Apothecaries have a 15% chance to produce an extra potion for free.",
+		description: "Apothecaries have a 20% chance to produce an extra potion for free.",
 		cost: 75,
 		effects: {
-			apothecaryExtraPotionChance: 0.15,
+			apothecaryExtraPotionChance: 0.20,
 		}
 	},
 	{
 		id: "laboratory.dilution_2",
 		buildingId: "laboratory",
 		name: "Dilution II",
-		description: "Apothecaries have a 30% chance to produce an extra potion for free.",
+		description: "Apothecaries have a 40% chance to produce an extra potion for free.",
 		prerequisites: ["laboratory.dilution_1"],
 		cost: 350,
 		effects: {
-			apothecaryExtraPotionChance: 0.15,
+			apothecaryExtraPotionChance: 0.20,
 		}
 	},
-		{
+	{
 		id: "laboratory.dilution_3",
 		buildingId: "laboratory",
 		name: "Dilution III",
-		description: "Apothecaries have a 45% chance to produce an extra potion for free.",
+		description: "Apothecaries have a 60% chance to produce an extra potion for free.",
 		prerequisites: ["laboratory.dilution_2"],
 		cost: 1700,
 		effects: {
-			apothecaryExtraPotionChance: 0.15,
+			apothecaryExtraPotionChance: 0.20,
 		}
 	},
+	// {
+	// 	id: "laboratory.merchant_driven_brewing",
+	// 	buildingId: "laboratory",
+	// 	name: "Merchant-Driven Brewing",
+	// 	description: "Whenever a trend changes, automatically update potion preferences with matching potions on top.",
+	// 	prerequisites: ["market.trends_ingredients"],
+	// 	cost: 1700,
+	// 	effects: {
+	// 		// Not implemented yet
+	// 	}
+	// },
 	// {
 	// 	id: "laboratory.better_mortars_1",
 	// 	buildingId: "laboratory",
@@ -251,21 +262,38 @@ const UPGRADE_DEFINITIONS = [
         prerequisites: ["market.click_multiplier_2"],
 	},
 	{
-		id: "market.sale_contracts_1",
-		buildingId: "market",
-		name: "Sale Contracts I",
-		description: "Merchants sell potions 25% faster.",
-		cost: 75,
-		effects: {
-			merchantRateMultiplier: 1.25,
-		},
-	},
-	{
 		id: "market.demand_based_pricing",
 		buildingId: "market",
 		name: "Demand Based Pricing",
 		description: "Potion prices rise and fall with market demand.",
 		cost: 10,
+		effects: {},
+	},
+	{
+		id: "market.trends_tags",
+		buildingId: "market",
+		name: "Market Trends",
+		description: "Give the people what they want. Potions matching a trend sell for 50% more.",
+		cost: 500,
+		prerequisites: ["market.demand_based_pricing"],
+		effects: {},
+	},
+	{
+		id: "market.demand_selling",
+		buildingId: "market",
+		name: "Sell While It's Hot",
+		description: "Merchants now sell highest demand potions first",
+		cost: 2500,
+		prerequisites: ["market.trends_tags"],
+		effects: {},
+	},
+	{
+		id: "market.trends_ingredients",
+		buildingId: "market",
+		name: "Market Trends II",
+		description: "Trends can now include ingredients. Potions matching a double trend sell for 100% more.",
+		cost: 2500,
+		prerequisites: ["market.trends_tags"],
 		effects: {},
 	},
 	{
@@ -315,16 +343,26 @@ const UPGRADE_DEFINITIONS = [
 		},
 	},
 	{
-		id: "market.sale_contracts_2",
+		id: "market.sale_contracts_1",
 		buildingId: "market",
-		name: "Sale Contracts II",
-		description: "Merchants sell potions another 25% faster.",
-		cost: 350,
-		prerequisites: ["market.sale_contracts_1"],
+		name: "Sale Contracts",
+		description: "Merchants sell potions 25% faster.",
+		cost: 75,
 		effects: {
 			merchantRateMultiplier: 1.25,
 		},
 	},
+	// {
+	// 	id: "market.sale_contracts_2",
+	// 	buildingId: "market",
+	// 	name: "Sale Contracts II",
+	// 	description: "Merchants sell potions another 25% faster.",
+	// 	cost: 350,
+	// 	prerequisites: ["market.sale_contracts_1"],
+	// 	effects: {
+	// 		merchantRateMultiplier: 1.25,
+	// 	},
+	// },
 	// {
 	// 	id: "market.sale_contracts_3",
 	// 	buildingId: "market",
@@ -341,13 +379,13 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Upselling I",
 		description: "Potions sell for 25% more.",
-		cost: 4200,
+		cost: 2100,
 		prerequisites: ["market.sale_contracts_1"],
 		effects: {
 			potionSellValueMultiplier: 1.25,
 		},
 	},
-		{
+	{
 		id: "market.upselling_2",
 		buildingId: "market",
 		name: "Upselling II",
@@ -356,6 +394,17 @@ const UPGRADE_DEFINITIONS = [
 		prerequisites: ["market.upselling_1"],
 		effects: {
 			potionSellValueMultiplier: 1.25,
+		},
+	},
+	{
+		id: "market.upselling_3",
+		buildingId: "market",
+		name: "Upselling III",
+		description: "Potions sell for 100% more.",
+		cost: 1000,
+		prerequisites: ["market.sale_contracts_2"],
+		effects: {
+			potionSellValueMultiplier: 2,
 		},
 	},
 	{
@@ -395,11 +444,22 @@ const UPGRADE_DEFINITIONS = [
 		name: "Push To Declare War",
 		description: "Use your Senate connections to declare war. Potion sell price doubles.",
 		cost: 8000,
-		prerequisites: ["tavern.commissions_1"],
+		prerequisites: ["tavern.senator_3"],
 		effects: {
 			potionSellValueMultiplier: 2,
 		},
 	},
+	// {
+	// 	id: "tavern.alchemy_lab",
+	// 	buildingId: "tavern",
+	// 	name: "Commission Schlossmortis",
+	// 	description: "Push through a commission to research alchemy techniques. Potion crafting rate doubles.",
+	// 	cost: 12500,
+	// 	prerequisites: ["tavern.senator_5"],
+	// 	effects: {
+	// 		// potionCraftingRateMultiplier: 2,
+	// 	},
+	// },
 	// {
 	// 	id: "tavern.mercenaries_1",
 	// 	buildingId: "tavern",
