@@ -182,6 +182,7 @@ export function Approvals() {
 		{ label: "Investment", key: "investment" },
 		{ label: "Inv. Tier", key: "invTier" },
 		{ label: "Inv. Option", key: "invOption" },
+		{ label: "Inv. Diversify", key: "invDiversify" },
 		{ label: "Inv. Region", key: "invRegion" },
 		{ label: "Inv. Territory", key: "invTerritory" },
 		{ label: "Warband", key: "warband" },

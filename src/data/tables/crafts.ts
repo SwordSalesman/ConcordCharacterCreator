@@ -474,11 +474,6 @@ export const crafts: Craft[] = [
 	},
 	{
 		rarity: "Masterwork",
-		name: "Mercenary Banner",
-		type: "Concordia: Banner",
-	},
-	{
-		rarity: "Masterwork",
 		name: "Mundane Forcebarrier",
 		type: "Talisman: Shield",
 	},
