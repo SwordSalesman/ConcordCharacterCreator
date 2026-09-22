@@ -4,6 +4,7 @@ import { Modal } from "@/components/common/Modal/Modal";
 import { HERB_IDS, HERBS, POTION_IDS, PotionId, POTIONS } from "../data/gameData";
 import { GameContext } from "../../context/gameContext";
 import { AquiredItem } from "../UpgradeMenu";
+import { displayNumber, potionRecipe } from "@/herb-garden/helpers/numberHelper";
 
 export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 	const {
@@ -13,7 +14,10 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 		canUnlockPotion,
 		unlockPotion,
 		getEffectivePotionSellValue,
+		isUpgradePurchased,
 	} = useContext(GameContext);
+
+	const tagsUnlocked = isUpgradePurchased("market.trends_tags");
 
 	const potionsByTier: Record<number, PotionId[]> = {};
 	POTION_IDS.forEach((potionId: PotionId) => {
@@ -83,57 +87,63 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 													key={`potionButton-${potionId}`}
 													className={`flex h-fit flex-row items-center justify-between rounded-md p-2`}
 												>
-													<div className="flex flex-col gap-1">
-														<div
-															className={`items-center flex text-lg text-wrap text-left leading-6`}
-														>
-															{POTIONS[potionId].name}
-														</div>
-														<span className={``}>
-															<div className="flex gap-2 text-sm ">
-																<span className="text-muted-foreground text-sm text-left">
-																	Recipe
-																</span>
-																<span>
-																	{Object.entries(
-																		POTIONS[potionId].recipe,
-																	).map(([herbId, amount]) => {
-																		const emoji =
-																			HERBS[
-																				herbId as (typeof HERB_IDS)[number]
-																			].emoji;
-																		return (
-																			<span key={herbId}>
-																				{amount > 1
-																					? `${amount}${emoji}`
-																					: emoji.repeat(
-																							amount,
-																						)}{" "}
-																			</span>
-																		);
-																	})}
-																</span>
-															</div>
-														</span>
-														<div
-															className={`flex gap-2 text-sm items-center`}
-														>
-															<span className="text-muted-foreground">
-																Sell price
-															</span>
+													<span className="flex-1 text-left">
+														<span className="flex gap-2 items-center justify-between">
+															<p className="text-wrap">
+																{POTIONS[potionId].name}
+															</p>
 															<span>
-																{getEffectivePotionSellValue(
-																	potionId,
-																)}{" "}
+																Unlock{" "}
+																<span className="font-mono pl-1">
+																	{displayNumber(
+																		getPotionUnlockCost(
+																			potionId,
+																		),
+																	)}
+																</span>{" "}
 																🗝️
 															</span>
-														</div>
-													</div>
-													<div className="flex  text-lg">
-														<span>
-															{getPotionUnlockCost(potionId)} 🗝️
 														</span>
-													</div>
+														<div className="flex flex-col justify-left gap-0">
+															<span className={``}>
+																<div className="flex gap-2 text-sm ">
+																	<span className="text-muted-foreground text-sm text-left">
+																		Recipe
+																	</span>
+																	<span className="font-mono">
+																		{potionRecipe(potionId)}
+																	</span>
+																</div>
+															</span>
+															<div
+																className={`flex gap-2 text-sm items-center`}
+															>
+																<span className="text-muted-foreground">
+																	Sell price
+																</span>
+																<span>
+																	{getEffectivePotionSellValue(
+																		potionId,
+																	)}{" "}
+																	🗝️
+																</span>
+															</div>
+															{tagsUnlocked ? (
+																<div
+																	className={`flex gap-2 text-sm items-center`}
+																>
+																	<span className="text-muted-foreground">
+																		Tags
+																	</span>
+																	<span>
+																		{POTIONS[
+																			potionId
+																		].tags.join(", ")}
+																	</span>
+																</div>
+															) : null}
+														</div>
+													</span>
 												</Button>
 											))}
 								</div>

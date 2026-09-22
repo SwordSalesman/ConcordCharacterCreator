@@ -352,7 +352,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 15,
 		unlockBaseCost: 20,
 		tier: 3,
-		tags: ['divine']
+		tags: ['divine', 'weird']
 	},
 	SF: {
 		id: "SF",
@@ -381,7 +381,7 @@ export const POTIONS: Record<PotionId, PotionDefinition> = {
 		sellValue: 15,
 		unlockBaseCost: 20,
 		tier: 3,
-		tags: ['divine']
+		tags: ['divine', 'weird']
 	},
 	SS: {
 		id: "SS",
@@ -482,7 +482,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		singularName: "Farmer",
 		emoji: "🪏",
 		baseCost: 20,
-		costScale: 1.175,
+		costScale: 1.275,
 	},
 	apothecaries: {
 		id: "apothecaries",
@@ -490,7 +490,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		singularName: "Apothecary",
 		emoji: "🧪",
 		baseCost: 35,
-		costScale: 1.275,
+		costScale: 1.475,
 	},
 	merchants: {
 		id: "merchants",
@@ -498,7 +498,7 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		singularName: "Merchant",
 		emoji: "💸",
 		baseCost: 32,
-		costScale: 1.275,
+		costScale: 1.475,
 	},
 };
 

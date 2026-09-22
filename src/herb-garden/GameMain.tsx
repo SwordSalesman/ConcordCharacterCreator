@@ -32,11 +32,13 @@ export default function GameMain() {
 		canHireWorker,
 		hireWorker,
 		resetGame,
+		isUpgradePurchased,
 	} = useContext(GameContext);
 	const { active, toggleActive } = useApothecaryAnimation();
 	const { tutorialSettings, newComponents, setComponentStale, resetTutorial } =
 		useContext(TutorialContext);
 	const tutorialFadeIn = `animate-in fade-in ${tutorialSettings.showTutorial ?? "duration-1500"}`;
+	const demandSelling = isUpgradePurchased("market.demand_selling");
 
 	const [showSettings, setShowSettings] = useState(false);
 	const [showGardenUpgradeMenu, setShowGardenUpgradeMenu] = useState(false);
@@ -183,7 +185,7 @@ export default function GameMain() {
 						title="Market"
 						subtitle={
 							tutorialSettings.showWorkers
-								? `${workers.merchants} Merchant${workers.merchants !== 1 ? "s" : ""}. Most expensive potions are sold first.`
+								? `${workers.merchants} Merchant${workers.merchants !== 1 ? "s" : ""}. ${demandSelling ? "Highest demand" : "Most expensive"} potions are sold first.`
 								: "Click to sell potions."
 						}
 						icon={<FaBalanceScaleLeft />}
@@ -211,7 +213,12 @@ export default function GameMain() {
 									<div className={canHireWorker(workerId) ? "" : "opacity-50"}>
 										{WORKERS[workerId].singularName}
 									</div>
-									<div className={canHireWorker(workerId) ? "" : "opacity-50"}>
+									<div
+										className={
+											"font-mono" +
+											(canHireWorker(workerId) ? "" : " opacity-50")
+										}
+									>
 										{displayNumber(
 											getWorkerHireCost(workerId, workers[workerId]),
 										)}{" "}

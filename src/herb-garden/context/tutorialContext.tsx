@@ -1,9 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import {
 	GameContext,
-	INITIAL_UNLOCKED_HERBS,
 	INITIAL_UNLOCKED_HERBS_RECORD,
-	INITIAL_UNLOCKED_POTIONS,
 	INITIAL_UNLOCKED_POTIONS_RECORD,
 } from "./gameContext";
 
@@ -25,24 +23,13 @@ interface TutorialSettingsInterface {
 
 const defaultTutorialSettings: TutorialSettingsInterface = {
 	showTutorial: TUTORIAL_MODE,
-	showTutorialSkip: false,
-	showLab: false,
-	showMarket: false,
-	showTavern: false,
-	showWorkers: false,
-	showUnlocks: false,
-	showUpgrades: false,
-};
-
-const defaultTutorialSettingsOFF: TutorialSettingsInterface = {
-	showTutorial: false,
-	showTutorialSkip: false,
-	showLab: true,
-	showMarket: true,
-	showTavern: true,
-	showWorkers: true,
-	showUnlocks: true,
-	showUpgrades: true,
+	showTutorialSkip: !TUTORIAL_MODE,
+	showLab: !TUTORIAL_MODE,
+	showMarket: !TUTORIAL_MODE,
+	showTavern: !TUTORIAL_MODE,
+	showWorkers: !TUTORIAL_MODE,
+	showUnlocks: !TUTORIAL_MODE,
+	showUpgrades: !TUTORIAL_MODE,
 };
 
 interface NewComponentInterface {
@@ -56,23 +43,13 @@ interface NewComponentInterface {
 }
 
 const defaultNewComponents: NewComponentInterface = {
-	buildGarden: true,
-	learnRecipe: true,
-	upgradeGarden: true,
-	upgradeLaboratory: true,
-	upgradeTavern: true,
-	upgradeMarket: true,
-	farmer: true,
-};
-
-const defaultNewComponentsOFF: NewComponentInterface = {
-	buildGarden: false,
-	learnRecipe: false,
-	upgradeGarden: false,
-	upgradeLaboratory: false,
-	upgradeTavern: false,
-	upgradeMarket: false,
-	farmer: false,
+	buildGarden: TUTORIAL_MODE,
+	learnRecipe: TUTORIAL_MODE,
+	upgradeGarden: TUTORIAL_MODE,
+	upgradeLaboratory: TUTORIAL_MODE,
+	upgradeTavern: TUTORIAL_MODE,
+	upgradeMarket: TUTORIAL_MODE,
+	farmer: TUTORIAL_MODE,
 };
 
 export const TutorialContext = createContext<{
@@ -112,11 +89,9 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 					showUnlocks: unlockedHerbOrPotion,
 					showUpgrades: oneOfEachWorker,
 				}
-			: defaultTutorialSettingsOFF,
+			: defaultTutorialSettings,
 	);
-	const [newComponents, setNewComponents] = useState(
-		TUTORIAL_MODE ? defaultNewComponents : defaultNewComponentsOFF,
-	);
+	const [newComponents, setNewComponents] = useState(defaultNewComponents);
 	const [isStorageHydrated, setIsStorageHydrated] = useState(false);
 
 	function updateState({

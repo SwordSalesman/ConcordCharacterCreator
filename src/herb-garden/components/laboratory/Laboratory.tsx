@@ -27,6 +27,7 @@ import { TutorialContext } from "../../context/tutorialContext";
 import { GiSpellBook } from "react-icons/gi";
 import { NewWrapper } from "../NewWrapper";
 import { Button } from "@/components/common/Button/Button";
+import { potionRecipe } from "@/herb-garden/helpers/numberHelper";
 
 function SortablePotionCraftButton({
 	potionId,
@@ -64,18 +65,14 @@ function SortablePotionCraftButton({
 				onClick={() => {
 					isCraftable && onCraft(potionId);
 				}}
-				className="flex-1 flex flex-wrap justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
+				className="flex-1 flex justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
 				disabled={!isCraftable}
 			>
-				<div className="flex items-center gap-2">{POTIONS[potionId].name}</div>
+				<div className="flex items-center text-left gap-2 text-wrap">
+					{POTIONS[potionId].name}
+				</div>
 				{/* {!isActivePreference && " ❌"} */}
-				<p className="ml-auto">
-					{Object.entries(POTIONS[potionId].recipe).map(([herbId, amount]) => (
-						<span key={herbId}>
-							{HERBS[herbId as (typeof HERB_IDS)[number]].emoji.repeat(amount)}{" "}
-						</span>
-					))}
-				</p>
+				<p className="ml-auto font-mono">{potionRecipe(potionId)}</p>
 			</Button>
 		</div>
 	);
@@ -104,7 +101,7 @@ export function Laboratory() {
 	const totalPotionTypes = POTION_IDS.length;
 	const unlockedPotionCount = POTION_IDS.filter((potionId) => unlockedPotions[potionId]).length;
 	const showAddPotionButton =
-		unlockedPotionCount < totalPotionTypes && tutorialSettings.showUnlocks;
+		unlockedPotionCount <= totalPotionTypes && tutorialSettings.showUnlocks;
 
 	const sensors = useSensors(
 		useSensor(MouseSensor, {
