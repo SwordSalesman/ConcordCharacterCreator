@@ -146,16 +146,16 @@ type ApprovalStatus = (typeof APPROVAL_STATUSES)[number];
 type EmailStatus = "pending" | "sent" | "not sent" | "failed";
 
 interface Approval {
-    author: string
-    date: string
-    comment: string
-    status: ApprovalStatus
-    email: {
-        status: EmailStatus
-        sentAt: string
-        failedAt: string
-        gmailMessageId: string | null
-    }
+	author: string;
+	date: string;
+	comment: string;
+	status: ApprovalStatus;
+	email: {
+		status: EmailStatus;
+		sentAt: string;
+		failedAt: string;
+		gmailMessageId: string | null;
+	};
 }
 
 const saveApproval = async ({
@@ -204,6 +204,23 @@ const saveGroupApproval = async ({
 
 	await setDoc(doc(db, type === "Band" ? "bandApprovals" : "sectApprovals", subjectUid), {
 		...approval,
+		date: date,
+	});
+	return;
+};
+
+interface DowntimeOption {
+	title: string;
+	description?: string;
+	tags?: string[];
+}
+
+const setDowntimeOption = async ({ game, option }: { game: string; option: DowntimeOption }) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const date = getCurrentDate();
+
+	await setDoc(doc(db, "downtime", game, "options", option.title), {
+		...option,
 		date: date,
 	});
 	return;
@@ -372,6 +389,38 @@ const getApprovalList = async (): Promise<any[]> => {
 	}
 };
 
+const getDowntimeOptions = async ({ game }: { game: string }) => {
+	const docRef = collection(db, "downtime", game, "options");
+	const q = query(docRef);
+	try {
+		const querySnap = await getDocs(q);
+		let list: any[] = [];
+		querySnap.forEach((doc) => {
+			list.push({ id: doc.id, ...doc.data() });
+		});
+		return list;
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
+};
+
+const getDowntimeSubmissions = async ({ game }: { game: string }) => {
+	const docRef = collection(db, "downtime", game, "submissions");
+	const q = query(docRef);
+	try {
+		const querySnap = await getDocs(q);
+		let list: any[] = [];
+		querySnap.forEach((doc) => {
+			list.push({ id: doc.id, ...doc.data() });
+		});
+		return list;
+	} catch (err) {
+		console.error(err);
+		return [];
+	}
+};
+
 export {
 	auth,
 	db,
@@ -394,4 +443,7 @@ export {
 	getApprovalList,
 	getGroupList,
 	logout,
+	setDowntimeOption,
+	getDowntimeOptions,
+	getDowntimeSubmissions,
 };

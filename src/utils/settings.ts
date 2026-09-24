@@ -4,7 +4,7 @@ export function getSiteSettings() {
 			hero: true,
 			approvals: true,
 			groups: true,
-			downtime: false,
+			downtime: true,
 			ceremonies: false,
 		},
 		features: {

@@ -19,6 +19,7 @@ import {
 	NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { ApprovalButton } from "../common/Button/ApprovalButton";
+import { getSiteSettings } from "@/utils/settings";
 
 export function Header({
 	toggleTheme,
@@ -46,10 +47,16 @@ export function Header({
 		);
 	}
 
+	const downtimeEnabled = getSiteSettings().pages.downtime;
+
 	const headerLinksData = [
 		{ label: "Hero", url: PATH_HERO },
 		{ label: "Groups", url: PATH_GROUPS },
+		...(downtimeEnabled ? [{ label: "Downtime", url: "/downtime" }] : []),
 		...(isAdmin ? [{ label: "Approvals", url: PATH_APPROVALS }] : []),
+		...(downtimeEnabled && isAdmin
+			? [{ label: "Manage Downtime", url: "/downtime-manage" }]
+			: []),
 		{ label: "Wiki", url: "https://wiki.concordlarp.com/index.php/Main_Page", newtab: true },
 	];
 
@@ -100,7 +107,7 @@ export function Header({
 											?.label || "Menu"}
 									</NavigationMenuTrigger>
 									<NavigationMenuContent>
-										<ul className="grid w-[200px] gap-4">
+										<ul className="grid gap-4">
 											<li>
 												{headerLinksData.map((link) => {
 													return (

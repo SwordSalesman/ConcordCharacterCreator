@@ -3,12 +3,19 @@ import ContentWrapper from "@/components/layout/ContentWrapper";
 import FormContextProvider from "@/context/formContext";
 import useUserContext from "@/hooks/use-user-context";
 import { fadeStripStyle } from "@/styles/Global";
-import { PATH_APPROVALS, PATH_DOWNTIME, PATH_GROUPS, PATH_HERO } from "@/utils/constants";
+import {
+	PATH_APPROVALS,
+	PATH_DOWNTIME,
+	PATH_DOWNTIME_MANAGE,
+	PATH_GROUP_APPROVALS,
+	PATH_GROUPS,
+	PATH_HERO,
+} from "@/utils/constants";
 import { copyText } from "@/utils/odd-jobs";
 import { getSiteSettings } from "@/utils/settings";
 import { useRouter } from "next/router";
 import { FaStamp, FaUser, FaUsers } from "react-icons/fa";
-import { GiScrollQuill } from "react-icons/gi";
+import { GiScrollQuill, GiSwordInStone, GiTatteredBanner } from "react-icons/gi";
 
 export default function Home() {
 	const router = useRouter();
@@ -32,14 +39,16 @@ export default function Home() {
 					</i>
 					.
 				</p>
-				<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+				<div className="flex flex-col sm:flex-row items-center justify-center gap-3 animate-in fade-in animation-duration-[300ms]">
 					<Button onClick={() => router.push(PATH_HERO)} size="lg">
-						<FaUser className="size-6" />
+						<GiSwordInStone className="size-6" />
+						{/* <FaUser className="size-6" /> */}
 						<p className="text-lg">Submit your Hero</p>
 					</Button>
 					{siteSettings.pages.groups && (
 						<Button onClick={() => router.push(PATH_GROUPS)} size="lg">
-							<FaUsers className="size-6" />
+							<GiTatteredBanner className="size-6" />
+							{/* <FaUsers className="size-6" /> */}
 							{/* <FaBanner */}
 							<p className="text-lg">Submit your Group </p>
 						</Button>
@@ -62,9 +71,24 @@ export default function Home() {
 						</p>
 						<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
 							<Button onClick={() => router.push(PATH_APPROVALS)} size="lg">
-								<FaStamp className="size-6" />
-								<p className="text-lg">Approvals</p>
+								{/* <FaStamp className="size-6" /> */}
+								<GiSwordInStone className="size-6" />
+								<p className="text-lg">Hero Approvals</p>
 							</Button>
+							{siteSettings.pages.groups && (
+								<Button onClick={() => router.push(PATH_GROUP_APPROVALS)} size="lg">
+									{/* <FaStamp className="size-6" /> */}
+									<GiTatteredBanner className="size-6" />
+									<p className="text-lg">Group Approvals</p>
+								</Button>
+							)}
+							{siteSettings.pages.downtime && (
+								<Button onClick={() => router.push(PATH_DOWNTIME_MANAGE)} size="lg">
+									{/* <FaStamp className="size-6" /> */}
+									<GiScrollQuill className="size-6" />
+									<p className="text-lg">Manage Downtime</p>
+								</Button>
+							)}
 						</div>
 					</div>
 				)}
