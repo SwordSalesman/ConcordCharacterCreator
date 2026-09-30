@@ -3,6 +3,7 @@ import { prettifyDate } from "../../utils/date-helper";
 import { LoadingSpinner } from "../common/LoadingSpinner";
 import { Character } from "./types";
 import { cn } from "@/lib/utils";
+import { ManagerListItem } from "@/components/manager/Manager";
 
 interface Props {
 	characters: Character[];
@@ -19,14 +20,7 @@ function CharacterList({ characters, handleSelect, activeCharacter, loading }: P
 						activeCharacter?.heroName === c.heroName &&
 						activeCharacter?.email === c.email;
 					return (
-						<li
-							key={i}
-							onClick={() => handleSelect(c)}
-							className={cn(
-								"p-2 border-b border-border cursor-pointer text-sm overflow-hidden flex justify-between flex-col relative hover:brightness-95 dark:hover:brightness-110",
-								active ? "bg-background-300" : "bg-background",
-							)}
-						>
+						<ManagerListItem key={i} onClick={() => handleSelect(c)} active={active}>
 							<div className="relative break-all h-5 overflow-hidden w-[80%]">
 								<div
 									className={cn(
@@ -45,13 +39,13 @@ function CharacterList({ characters, handleSelect, activeCharacter, loading }: P
 							<div className="absolute text-xs top-2 right-3 z-4">
 								{c.approval?.status ?? PENDING}
 							</div>
-						</li>
+						</ManagerListItem>
 					);
 				})
 			: null;
 
 	return (
-		<ul className="overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+		<>
 			{loading ? (
 				<div className="mt-12">
 					<LoadingSpinner />
@@ -61,7 +55,7 @@ function CharacterList({ characters, handleSelect, activeCharacter, loading }: P
 					<p className="text-center mt-12 text-sm italic">No characters found</p>
 				))
 			)}
-		</ul>
+		</>
 	);
 }
 

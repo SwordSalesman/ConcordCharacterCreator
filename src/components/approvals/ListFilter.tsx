@@ -50,7 +50,7 @@ function ListFilter({
 	}
 
 	return (
-		<div className="p-1.5 border-b border-border sticky top-0 z-6 bg-background-raised flex flex-col gap-1.5">
+		<>
 			<div className="flex justify-between items-center">
 				<div className="grid grid-cols-4 items-center gap-1">
 					<Button
@@ -121,7 +121,7 @@ function ListFilter({
 					type="text"
 				/>
 			</div>
-		</div>
+		</>
 	);
 }
 

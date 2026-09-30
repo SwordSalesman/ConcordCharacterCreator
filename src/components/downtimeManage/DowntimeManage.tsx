@@ -8,12 +8,24 @@ import {
 	getDowntimeOptions,
 	getDowntimeSubmissions,
 } from "@/hooks/use-firebase";
+import {
+	Manager,
+	ManagerContent,
+	ManagerList,
+	ManagerListFilter,
+	ManagerListItem,
+	ManagerListItems,
+} from "../manager/Manager";
+import { CgAdd } from "react-icons/cg";
+import { CSVLink } from "react-csv";
+import { BiExport } from "react-icons/bi";
 
 export function DowntimeManage() {
 	const [loading, setLoading] = useState(false);
 	const [game, setGame] = useState<string | undefined>("S226");
 	const [downtimeOptions, setDowntimeOptions] = useState<any[]>([]);
 	const [downtimeSubmissions, setDowntimeSubmissions] = useState<any[]>([]);
+	const [selectedDowntimeOption, setSelectedDowntimeOption] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -26,9 +38,24 @@ export function DowntimeManage() {
 
 				const submissions = await getDowntimeSubmissions({ game });
 				setDowntimeSubmissions(submissions);
+				// setDowntimeSubmissions([
+				// 	{
+				// 		hero: "nice guy",
+				// 		downtimeId: "Birds or Paradise",
+				// 		comment: "This is a comment",
+				// 	},
+				// 	{
+				// 		hero: "mean guy",
+				// 		downtimeId: "Storming the Place",
+				// 	},
+				// 	{
+				// 		hero: "regular guy",
+				// 		downtimeId: "Birds or Paradise",
+				// 	},
+				// ]);
 
-				console.log(options);
-				console.log(submissions);
+				console.log("options", options);
+				console.log("submissions", submissions);
 			} catch (error) {
 				toast.error("Failed to load downtime options");
 			}
@@ -39,7 +66,7 @@ export function DowntimeManage() {
 		if (game) {
 			fetchData();
 		}
-	}, [game]);
+	}, []);
 
 	function handleAddNewDowntimeOption() {}
 
@@ -50,14 +77,38 @@ export function DowntimeManage() {
 	function handleSaveDowntimeOption() {}
 
 	return (
-		<div className="flex font-sans flex-col sm:flex-row h-full w-full gap-2 sm:h-[90vh] min-h-[600px] ">
-			<div className="sm:flex-1 h-[400px] sm:h-full border border-border rounded-md overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-				<div className="py-2 border-b flex flex-col justify-center items-center gap-3 sticky top-0 z-6 bg-background">
+		<Manager>
+			<ManagerList
+				actions={
+					<CSVLink
+						data={downtimeSubmissions
+							.sort((a, b) => (a.downtimeId > b.downtimeId ? 1 : -1))
+							.map((dt) => {
+								return {
+									hero: dt.hero,
+									downtime: dt.downtimeId,
+									comment: dt.comment,
+								};
+							})}
+						filename={`downtime-submissions-export-${new Date().toISOString()}.csv`}
+						headers={[
+							{ label: "Hero", key: "hero" },
+							{ label: "Downtime", key: "downtime" },
+							{ label: "Comment", key: "comment" },
+						]}
+					>
+						<Button variant="outline" size="sm">
+							<div className="flex items-center gap-2 mx-1">
+								<p>Export Submissions</p>
+								<BiExport />
+							</div>
+						</Button>
+					</CSVLink>
+				}
+			>
+				<ManagerListFilter>
 					<h2 className="text-lg font-bold text-center">Downtime Options</h2>
 					<div className="flex flex-col text-center items-center justify-center">
-						<p className="text-sm text-muted-foreground">
-							Showing downtime options for...
-						</p>
 						<Button variant="outline" onClick={handleChangeGame}>
 							{game ? (
 								<>
@@ -72,37 +123,53 @@ export function DowntimeManage() {
 							)}
 						</Button>
 					</div>
-					<div>
-						<Button
-							variant="outline"
-							onClick={handleAddNewDowntimeOption}
-							disabled={!game || loading}
-						>
-							Add New Downtime Option
-						</Button>
-					</div>
-				</div>
-				<div className="overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+				</ManagerListFilter>
+				<ManagerListItems>
 					<ul>
 						{loading ? (
 							<div className="mt-12">
 								<LoadingSpinner />
 							</div>
-						) : downtimeOptions.length > 0 ? (
-							downtimeOptions.map((d) => (
-								<li key={d.id} className="p-2 px-3 border-b">
-									{d.id}
-								</li>
-							))
 						) : (
-							<p className="text-center mt-12 text-sm italic">
-								No downtime options configured
-							</p>
+							<>
+								{downtimeOptions.length > 0 ? (
+									downtimeOptions.map((d) => (
+										<ManagerListItem
+											key={d.id}
+											onClick={() => setSelectedDowntimeOption(d.id)}
+										>
+											{d.id}
+										</ManagerListItem>
+									))
+								) : (
+									<p className="text-center mt-12 text-sm italic">
+										No downtime options configured
+									</p>
+								)}
+								<div className="flex justify-center mt-4 mb-6">
+									<Button
+										variant="outline"
+										onClick={handleAddNewDowntimeOption}
+										disabled={!game || loading}
+									>
+										<CgAdd className="size-6" />
+										Add New Downtime Option
+									</Button>
+								</div>
+							</>
 						)}
 					</ul>
+				</ManagerListItems>
+			</ManagerList>
+			<ManagerContent className="sm:flex-2 border border-border rounded-md h-[400px] sm:h-full p-1">
+				<div>
+					{selectedDowntimeOption ? (
+						<p>Selected Downtime Option ID: {selectedDowntimeOption}</p>
+					) : (
+						<p>nothing yet</p>
+					)}
 				</div>
-			</div>
-			<div className="sm:flex-2 border border-border rounded-md h-[400px] sm:h-full"></div>
-		</div>
+			</ManagerContent>
+		</Manager>
 	);
 }

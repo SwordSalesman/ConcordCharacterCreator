@@ -263,7 +263,7 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 	const sheetData = character ? characterToFormState(character) : null;
 
 	return (
-		<div className="relative">
+		<>
 			{/* Portal to body: rendered off-screen so computed styles (including CSS variable resolution) are available */}
 			{isMounted &&
 				sheetData &&
@@ -278,164 +278,148 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 					</div>,
 					document.body,
 				)}
-			{/* Gradient fade effect above the panel */}
-
-			<div className="w-full h-10 absolute -top-8 bg-gradient-to-t from-background-raised to-transparent" />
-
-			<div
-				className="border rounded-tl-lg rounded-tr-lg h-[100%] sm:max-h-[450px] relative overflow-scroll
-			text-sm p-3 flex flex-col gap-5 z-1 bg-background
-			[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-			>
-				{author && date ? (
-					<div>
-						<h2 className="text-lg font-bold">Previous Approval</h2>
-						<div className="flex flex-col gap-1">
-							<p>
-								{previousStatus === APPROVED
-									? "Approved"
-									: previousStatus === DENIED
-										? "Changes Requested"
-										: "Archived"}{" "}
-								by {author} on {prettifyDate(date)}
-							</p>
-							<blockquote
-								className={`pl-2 border-l-4 border-primary italic text-wrap break-words`}
-							>
-								{previousComment ? (
-									stringToNode(previousComment)
-								) : (
-									<i className="text-muted-foreground">No comment</i>
-								)}
-							</blockquote>
-							{!lastEmail?.status ? (
-								<p className="text-muted-foreground">
-									No automatic email record found
-								</p>
-							) : (
-								<p>
-									{lastEmail.status === "sent" &&
-										`Email sent on ${prettifyDate(lastEmail.sentAt)}`}
-									{lastEmail.status === "not sent" && `Email not sent`}
-									{lastEmail.status === "failed" &&
-										`Email failed to send on ${prettifyDate(lastEmail.sentAt)}`}
-								</p>
-							)}
-						</div>
-					</div>
-				) : (
-					<i>This submission has not yet been reviewed</i>
-				)}
-				<form className="gap-2 flex flex-col">
-					<div>
-						<h2 className="text-lg font-bold">Approval Form</h2>
-						<div
-							className={cn(
-								"flex flex-col items-left sm:flex-row sm:justify-between gap-1 rounded-md",
-								!validInputs.validStatus ? "p-1 border-1 border-destructive" : "",
-							)}
+			{author && date ? (
+				<div>
+					<h2 className="text-lg font-bold">Previous Approval</h2>
+					<div className="flex flex-col gap-1">
+						<p>
+							{previousStatus === APPROVED
+								? "Approved"
+								: previousStatus === DENIED
+									? "Changes Requested"
+									: "Archived"}{" "}
+							by {author} on {prettifyDate(date)}
+						</p>
+						<blockquote
+							className={`pl-2 border-l-4 border-primary italic text-wrap break-words`}
 						>
-							<div className="flex flex-row gap-1">
-								{approvalOptions[0]}
-								{approvalOptions[1]}
-							</div>
-							<div>{approvalOptions[2]}</div>
-						</div>
+							{previousComment ? (
+								stringToNode(previousComment)
+							) : (
+								<i className="text-muted-foreground">No comment</i>
+							)}
+						</blockquote>
+						{!lastEmail?.status ? (
+							<p className="text-muted-foreground">No automatic email record found</p>
+						) : (
+							<p>
+								{lastEmail.status === "sent" &&
+									`Email sent on ${prettifyDate(lastEmail.sentAt)}`}
+								{lastEmail.status === "not sent" && `Email not sent`}
+								{lastEmail.status === "failed" &&
+									`Email failed to send on ${prettifyDate(lastEmail.sentAt)}`}
+							</p>
+						)}
 					</div>
-					<div className="flex gap-1 flex-col">
-						<TextArea
-							value={comment}
-							onChange={(e) => setComment(e.target.value)}
-							placeholder="This will be shown to the player"
-							label="Comments"
-							disabled={disabled}
-							error={
-								!validInputs.validComment
-									? "Denied or archived submissions should include a comment"
-									: undefined
-							}
-						/>
-					</div>
-					<div className="flex justify-between items-center gap-2">
+				</div>
+			) : (
+				<i>This submission has not yet been reviewed</i>
+			)}
+			<form className="gap-2 flex flex-col">
+				<div>
+					<h2 className="text-lg font-bold">Approval Form</h2>
+					<div
+						className={cn(
+							"flex flex-col items-left sm:flex-row sm:justify-between gap-1 rounded-md",
+							!validInputs.validStatus ? "p-1 border-1 border-destructive" : "",
+						)}
+					>
 						<div className="flex flex-row gap-1">
-							<Chip
-								onClick={() => setSendEmailOption(!sendEmailOption)}
-								selected={sendEmailOption}
-								disabled={disabled}
-							>
-								{sendEmailOption ? (
-									<LuMailCheck size={18} />
-								) : (
-									<LuMailX size={18} />
-								)}
-							</Chip>
-							<Button
-								disabled={disabled}
-								onClick={(e) => {
-									e.preventDefault();
-									const valid = validateInputs();
-									if (valid) {
-										setConfirmModal(true);
-									}
-								}}
-							>
-								<AiOutlineSend />
-								Submit
-							</Button>
+							{approvalOptions[0]}
+							{approvalOptions[1]}
 						</div>
-						<div className="flex flex-col items-end gap-1">
-							<Button
-								type="button"
-								disabled={disabled || copying || !status}
-								onClick={applyTemplate}
-								size="sm"
-							>
-								<LuClipboardPaste />
-								{`Apply ${status ?? ""} Template`}
-							</Button>
-							<Button
-								type="button"
-								variant="outline"
-								disabled={disabled || copying}
-								onClick={copyEmailContent}
-								size="sm"
-							>
-								<AiOutlineCopy />
-								{"Copy Email Content"}
-							</Button>
-						</div>
+						<div>{approvalOptions[2]}</div>
 					</div>
-				</form>
-				<Modal
-					title="Submitting Approval"
-					body={
-						<div className="flex flex-row gap-3 items-center">
-							{shouldSendEmail ? <LuMailCheck size={24} /> : <LuMailX size={24} />}
-							{shouldSendEmail
-								? `An email will be sent upon submission. This will take a moment.`
-								: `No email will be sent. ${status === ARCHIVED ? "(No email is sent when archiving)" : ""}`}
-						</div>
-					}
-					open={confirmModal}
-					onClose={() => setConfirmModal(false)}
-					actions={[
-						{
-							label: "Cancel",
-							onClick: () => setConfirmModal(false),
-							variant: "outline",
+				</div>
+				<div className="flex gap-1 flex-col">
+					<TextArea
+						value={comment}
+						onChange={(e) => setComment(e.target.value)}
+						placeholder="This will be shown to the player"
+						label="Comments"
+						disabled={disabled}
+						error={
+							!validInputs.validComment
+								? "Denied or archived submissions should include a comment"
+								: undefined
+						}
+					/>
+				</div>
+				<div className="flex justify-between items-center gap-2">
+					<div className="flex flex-row gap-1">
+						<Chip
+							onClick={() => setSendEmailOption(!sendEmailOption)}
+							selected={sendEmailOption}
+							disabled={disabled}
+						>
+							{sendEmailOption ? <LuMailCheck size={18} /> : <LuMailX size={18} />}
+						</Chip>
+						<Button
+							disabled={disabled}
+							onClick={(e) => {
+								e.preventDefault();
+								const valid = validateInputs();
+								if (valid) {
+									setConfirmModal(true);
+								}
+							}}
+						>
+							<AiOutlineSend />
+							Submit
+						</Button>
+					</div>
+					<div className="flex flex-col items-end gap-1">
+						<Button
+							type="button"
+							disabled={disabled || copying || !status}
+							onClick={applyTemplate}
+							size="sm"
+						>
+							<LuClipboardPaste />
+							{`Apply ${status ?? ""} Template`}
+						</Button>
+						<Button
+							type="button"
+							variant="outline"
+							disabled={disabled || copying}
+							onClick={copyEmailContent}
+							size="sm"
+						>
+							<AiOutlineCopy />
+							{"Copy Email Content"}
+						</Button>
+					</div>
+				</div>
+			</form>
+			<Modal
+				title="Submitting Approval"
+				body={
+					<div className="flex flex-row gap-3 items-center">
+						{shouldSendEmail ? <LuMailCheck size={24} /> : <LuMailX size={24} />}
+						{shouldSendEmail
+							? `An email will be sent upon submission. This will take a moment.`
+							: `No email will be sent. ${status === ARCHIVED ? "(No email is sent when archiving)" : ""}`}
+					</div>
+				}
+				open={confirmModal}
+				onClose={() => setConfirmModal(false)}
+				actions={[
+					{
+						label: "Cancel",
+						onClick: () => setConfirmModal(false),
+						variant: "outline",
+					},
+					{
+						label: shouldSendEmail ? "Submit and Email" : "Submit",
+						onClick: () => {
+							setConfirmModal(false);
+							handleSubmit();
 						},
-						{
-							label: shouldSendEmail ? "Submit and Email" : "Submit",
-							onClick: () => {
-								setConfirmModal(false);
-								handleSubmit();
-							},
-							variant: "primary",
-						},
-					]}
-				/>
-			</div>
-		</div>
+						variant: "primary",
+					},
+				]}
+			/>
+		</>
 	);
 }
 

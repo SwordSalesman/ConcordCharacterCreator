@@ -14,6 +14,15 @@ import { getSiteSettings } from "@/utils/settings";
 import { Realm } from "@/data/tables/realms";
 import toast from "react-hot-toast";
 import { LuMailCheck, LuMailX } from "react-icons/lu";
+import {
+	Manager,
+	ManagerContent,
+	ManagerContentCard,
+	ManagerContentSubmitPanel,
+	ManagerList,
+	ManagerListFilter,
+	ManagerListItems,
+} from "@/components/manager/Manager";
 
 export interface Counts {
 	pending: number;
@@ -201,38 +210,40 @@ export function Approvals() {
 	}
 
 	return (
-		<div className="mx-auto mt-2 flex flex-col sm:flex-row gap-2 sm:h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,sans-serif]">
-			<div className="flex flex-col items-center justify-center gap-1.5 h-[400px] sm:flex-1 flex-none sm:h-full">
-				<CSVLink
-					data={csvData}
-					filename={`character-export-${now}.csv`}
-					headers={csvHeaders}
-				>
-					<Button variant="outline" size="sm">
-						<div className="flex items-center gap-2 mx-1">
-							<p>Export All</p>
-							<BiExport />
-						</div>
-					</Button>
-				</CSVLink>
-				{/* <UploadGroupList /> */}
-				<div className="border border-border rounded-tl-lg rounded-tr-lg flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-					{getSiteSettings().features.groupSubmissions && (
-						<div className="flex justify-around">
-							<Button
-								className="flex-1 border-none rounded-[0px] bg-background-raised"
-								variant="ghost"
-							>
-								Heroes
-							</Button>
-							<Button
-								className="flex-1 border-none rounded-[0px] bg-background-raised"
-								variant="ghost"
-							>
-								Bands
-							</Button>
-						</div>
-					)}
+		<Manager>
+			<ManagerList
+				actions={
+					<CSVLink
+						data={csvData}
+						filename={`character-export-${now}.csv`}
+						headers={csvHeaders}
+					>
+						<Button variant="outline" size="sm">
+							<div className="flex items-center gap-2 mx-1">
+								<p>Export All</p>
+								<BiExport />
+							</div>
+						</Button>
+					</CSVLink>
+				}
+			>
+				{getSiteSettings().features.groupSubmissions && (
+					<div className="flex justify-around">
+						<Button
+							className="flex-1 border-none rounded-[0px] bg-background-raised"
+							variant="ghost"
+						>
+							Heroes
+						</Button>
+						<Button
+							className="flex-1 border-none rounded-[0px] bg-background-raised"
+							variant="ghost"
+						>
+							Bands
+						</Button>
+					</div>
+				)}
+				<ManagerListFilter>
 					<ListFilter
 						filter={filter}
 						selectFilter={handleSelectFilter}
@@ -248,24 +259,30 @@ export function Approvals() {
 						setRealmFilter={setRealmFilter}
 						counts={counts}
 					/>
+				</ManagerListFilter>
+				<ManagerListItems>
 					<CharacterList
 						characters={sortedFilteredCharacters}
 						handleSelect={setSelectedChar}
 						activeCharacter={selectedChar}
 						loading={!fetched}
 					/>
-				</div>
-			</div>
-			<div className="flex-2 flex flex-col justify-between max-h-[100%]">
-				<CharacterCard character={selectedChar} />
-				<ApprovalPanel
-					character={selectedChar}
-					handleApproval={handleApproval}
-					key={selectedChar ? selectedChar.id : "no-char"}
-					sendEmailOption={sendEmailOption}
-					setSendEmailOption={handleSendEmailOption}
-				/>
-			</div>
-		</div>
+				</ManagerListItems>
+			</ManagerList>
+			<ManagerContent>
+				<ManagerContentCard>
+					<CharacterCard character={selectedChar} />
+				</ManagerContentCard>
+				<ManagerContentSubmitPanel>
+					<ApprovalPanel
+						character={selectedChar}
+						handleApproval={handleApproval}
+						key={selectedChar ? selectedChar.id : "no-char"}
+						sendEmailOption={sendEmailOption}
+						setSendEmailOption={handleSendEmailOption}
+					/>
+				</ManagerContentSubmitPanel>
+			</ManagerContent>
+		</Manager>
 	);
 }

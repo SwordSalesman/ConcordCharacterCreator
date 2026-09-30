@@ -31,14 +31,14 @@ function CharacterCard({ character }: { character: Character | null }) {
 
 	if (!character) {
 		return (
-			<i className="italic opacity-70 mx-auto mt-[100px]">
-				Select a submission on the side to get started
-			</i>
+			<div className="mt-[100px] w-full text-center">
+				<i className="italic opacity-70">Select a submission on the side to get started</i>
+			</div>
 		);
 	}
 
 	return (
-		<div className="text-sm p-2 overflow-y-scroll pb-8 pt-8 sm:pb-14 sm:pt-0 h-[100%] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&_li]:ml-4">
+		<>
 			<div className={changeWrapperClass(changed("heroName"))}>
 				<h1 className="text-2xl leading-[1.2em] font-[Georgia,'Times_New_Roman',Times,serif]">
 					{character.heroName}
@@ -242,7 +242,7 @@ function CharacterCard({ character }: { character: Character | null }) {
 					<i className="opacity-75">No out of character goals given</i>
 				)}
 			</p>
-		</div>
+		</>
 	);
 }
 

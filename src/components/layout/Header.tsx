@@ -136,7 +136,7 @@ export function Header({
 						</NavigationMenu>
 					</div>
 
-					<div className="flex items-center flex-row flex-1 gap-1 justify-end">
+					<div className="flex items-center flex-row gap-1 justify-end">
 						{pathname === PATH_HERO ? <ApprovalButton /> : null}
 						<Button
 							onClick={() => {
