@@ -5,7 +5,7 @@ import { CEREMONY_IDS, CeremonyId, CEREMONIES } from "../data/ceremonies";
 import { CRYSTAL_MANA_EMOJI } from "../data/gameData";
 import { GameContext } from "../../context/gameContext";
 import { AquiredItem } from "../UpgradeMenu";
-import { displayNumber } from "@/herb-garden/helpers/numberHelper";
+import { displayNumber } from "@/herb-garden/helpers/displayValueHelper";
 
 export function CeremoniesMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 	const { unlockedCeremonies, getCeremonyUnlockCost, canUnlockCeremony, unlockCeremony } =

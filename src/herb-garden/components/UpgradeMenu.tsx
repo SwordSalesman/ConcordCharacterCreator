@@ -3,7 +3,7 @@ import { Modal } from "@/components/common/Modal/Modal";
 import { useContext } from "react";
 import { type BuildingId, UPGRADES } from "./data/upgrades";
 import { GameContext } from "../context/gameContext";
-import { displayNumber } from "../helpers/numberHelper";
+import { displayNumber } from "../helpers/displayValueHelper";
 import { MdCheckCircleOutline } from "react-icons/md";
 
 export function AquiredItem({ name }: { name: string }) {

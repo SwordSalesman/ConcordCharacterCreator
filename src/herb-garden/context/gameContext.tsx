@@ -56,6 +56,8 @@ interface GameContextInterface {
 	unlockedPotions: Record<PotionId, boolean>;
 	purchasedUpgrades: Record<UpgradeId, boolean>;
 	money: number;
+	elapsedPlayTimeMs: number;
+	throneTimeMs: number | null;
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
@@ -177,6 +179,8 @@ interface GameState {
 	unlockedPotions: Record<PotionId, boolean>;
 	purchasedUpgrades: Record<UpgradeId, boolean>;
 	money: number;
+	elapsedPlayTimeMs: number;
+	throneTimeMs: number | null;
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
@@ -282,6 +286,7 @@ const COMBINED_TREND_SELL_VALUE_MULTIPLIER = 2;
 const CEREMONY_DURATION_MS = 15_000;
 const CEREMONY_PRAY_EXTENSION_MS = 100;
 const MAX_CRYSTAL_MANA = 100;
+const THRONE_UPGRADE_ID: UpgradeId = "tavern.throne";
 
 export const INITIAL_UNLOCKED_HERBS: HerbId[] = ["GS", "TB"];
 export const INITIAL_UNLOCKED_HERBS_RECORD = HERB_IDS.reduce(
@@ -742,6 +747,8 @@ function createInitialGameState(): GameState {
 		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS_RECORD },
 		purchasedUpgrades: createBooleanRecord(UPGRADE_IDS),
 		money: process.env.NEXT_PUBLIC_HERB_JUMPSTART === "true" ? 100000000 : 0,
+		elapsedPlayTimeMs: 0,
+		throneTimeMs: null,
 		workers: createCountRecord(WORKER_IDS),
 		farmerAssignments: createCountRecord(HERB_IDS),
 		apothecaryPreferences: ["EV", "CS"],
@@ -976,6 +983,11 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				money: state.money - UPGRADES[action.upgradeId].cost,
 				purchasedUpgrades,
+				// Freeze the player's Time to Throne the moment the win upgrade is bought; playtime keeps counting afterward.
+				throneTimeMs:
+					action.upgradeId === THRONE_UPGRADE_ID && state.throneTimeMs === null
+						? state.elapsedPlayTimeMs
+						: state.throneTimeMs,
 			};
 			return action.upgradeId === TAG_TREND_UPGRADE_ID
 				? {
@@ -1381,6 +1393,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				activeCeremonyId,
 				activeCeremonyRemainingMs,
 				money: nextMoney,
+				elapsedPlayTimeMs: state.elapsedPlayTimeMs + dtMs,
 				crystalMana: nextCrystalMana,
 				deltaEvents,
 				nextDeltaEventId,
@@ -1425,6 +1438,8 @@ export const GameContext = createContext<GameContextInterface>({
 	unlockedPotions: initialGameState.unlockedPotions,
 	purchasedUpgrades: initialGameState.purchasedUpgrades,
 	money: initialGameState.money,
+	elapsedPlayTimeMs: initialGameState.elapsedPlayTimeMs,
+	throneTimeMs: initialGameState.throneTimeMs,
 	workers: initialGameState.workers,
 	farmerAssignments: initialGameState.farmerAssignments,
 	apothecaryPreferences: initialGameState.apothecaryPreferences,
@@ -1736,6 +1751,8 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		unlockedPotions: gameState.unlockedPotions,
 		purchasedUpgrades: gameState.purchasedUpgrades,
 		money: gameState.money,
+		elapsedPlayTimeMs: gameState.elapsedPlayTimeMs,
+		throneTimeMs: gameState.throneTimeMs,
 		workers: gameState.workers,
 		farmerAssignments: gameState.farmerAssignments,
 		apothecaryPreferences: gameState.apothecaryPreferences,

@@ -106,13 +106,13 @@ export const CEREMONIES: Record<CeremonyId, CeremonyDefinition> = {
 	GW: {
 		id: "GW",
 		name: "God of War",
-		description: "You are an army of productivity. 2.5x click effectiveness.",
+		description: "You are an army of productivity. 3x click effectiveness.",
 		unlockCost: 5000,
 		manaCost: 100,
 		effects: {
-			manualHerbGatherMultiplier: 2.5,
-			manualPotionCraftMultiplier: 2.5,
-			manualPotionSellMultiplier: 2.5,
+			manualHerbGatherMultiplier: 3,
+			manualPotionCraftMultiplier: 3,
+			manualPotionSellMultiplier: 3,
 		},
 	},
 };

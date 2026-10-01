@@ -4,6 +4,31 @@ import { HERB_IDS, type HerbId } from "../components/data/herbs";
 import { POTIONS, POTION_IDS, type PotionId, type Tag } from "../components/data/potions";
 import { WORKER_IDS, type WorkerId } from "../components/data/workers";
 import { UPGRADE_IDS, type UpgradeId } from "../components/data/upgrades";
+
+// This file persists herb garden state to the browser's localStorage and reads it back on load.
+//
+// Storage strategy: the whole game state is serialized as one JSON blob under a single localStorage
+// key (GAME_SAVE_KEY). There is no server/database involved - the save only exists on the device/browser
+// that created it. `saveGameState` is called periodically (see GAME_AUTOSAVE_INTERVAL_MS) and writes a
+// fresh blob each time, overwriting the previous save (not diffed/merged).
+//
+// Versioning: the saved blob has a `version` number alongside the state. Right now only version 1
+// (GAME_SAVE_VERSION) exists. On load, if the stored version doesn't match the current version (or the
+// data is missing/corrupt), we don't attempt to migrate it - we just discard it and fall back to a fresh
+// default state. If/when the save shape changes in the future, bump GAME_SAVE_VERSION and add a migration
+// step here (e.g. a switch on the old version that upgrades the shape to the latest one) instead of
+// simply discarding old saves.
+//
+// Sanitizing vs normalizing (the two kinds of helper functions below):
+// - "Sanitize" functions take raw, untrusted `unknown` data (parsed JSON from localStorage, which could be
+//   missing fields, wrong types, or left over from an old/edited save) and coerce it into a safe, correctly
+//   typed value, falling back to sensible defaults for anything invalid. This protects the app from crashing
+//   or behaving strangely if the saved JSON doesn't match what we expect.
+// - "Normalize" functions take data that is already correctly typed and enforce the game's internal
+//   consistency rules on it - e.g. making sure farmer assignments don't add up to more than the number of
+//   farmers the player actually owns, or that the potion crafting order only contains potions that are
+//   unlocked and has no duplicates.
+// In practice sanitizing often calls normalizing once the raw value has been made type-safe.
 export const GAME_AUTOSAVE_INTERVAL_MS = 3000;
 export const GAME_SAVE_KEY = "apothecary.save.v1";
 const GAME_SAVE_VERSION = 1;
@@ -22,6 +47,8 @@ interface PersistedGameStateV1 {
 	trendRemainingMs: number;
 	unlockedPotions: Record<PotionId, boolean>;
 	money: number;
+	elapsedPlayTimeMs: number;
+	throneTimeMs: number | null;
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
@@ -40,6 +67,7 @@ interface PersistedGameSave {
 
 interface GameStateForPersistence extends PersistedGameStateV1 {}
 
+// Coerces any value into a non-negative whole number, defaulting to 0 if it isn't a usable number.
 function sanitizeNumber(value: unknown): number {
 	if (typeof value !== "number" || !Number.isFinite(value)) {
 		return 0;
@@ -47,6 +75,15 @@ function sanitizeNumber(value: unknown): number {
 	return Math.max(0, Math.floor(value));
 }
 
+// Keeps a saved throne time only if it's a valid non-negative number; otherwise treats the game as not yet won.
+function sanitizeThroneTimeMs(value: unknown): number | null {
+	if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+		return null;
+	}
+	return Math.floor(value);
+}
+
+// Rebuilds a herb-id -> count record from raw save data, defaulting every herb to 0 first.
 function sanitizeHerbCounts(value: unknown): Record<HerbId, number> {
 	const normalized = createCountRecord(HERB_IDS);
 	if (!value || typeof value !== "object") {
@@ -60,6 +97,7 @@ function sanitizeHerbCounts(value: unknown): Record<HerbId, number> {
 	return normalized;
 }
 
+// Rebuilds a potion-id -> count record from raw save data, defaulting every potion to 0 first.
 function sanitizePotionCounts(value: unknown): Record<PotionId, number> {
 	const normalized = createCountRecord(POTION_IDS);
 	if (!value || typeof value !== "object") {
@@ -75,6 +113,7 @@ function sanitizePotionCounts(value: unknown): Record<PotionId, number> {
 	return normalized;
 }
 
+// Rebuilds potion demand multipliers, clamping each to the valid 0.5-2.5 range and defaulting to 1.
 function sanitizePotionDemand(value: unknown): Record<PotionId, number> {
 	const normalized = POTION_IDS.reduce(
 		(record, potionId) => {
@@ -97,6 +136,7 @@ function sanitizePotionDemand(value: unknown): Record<PotionId, number> {
 	return normalized;
 }
 
+// Validates the saved market trend (a tag and/or affected herb ids), discarding it entirely if neither part is valid.
 function sanitizeMarketTrend(value: unknown): PersistedMarketTrend | null {
 	if (!value || typeof value !== "object") {
 		return null;
@@ -129,6 +169,7 @@ function sanitizeMarketTrend(value: unknown): PersistedMarketTrend | null {
 	};
 }
 
+// Rebuilds a worker-id -> count record from raw save data, defaulting every worker type to 0 first.
 function sanitizeWorkerCounts(value: unknown): Record<WorkerId, number> {
 	const normalized = createCountRecord(WORKER_IDS);
 	if (!value || typeof value !== "object") {
@@ -144,6 +185,7 @@ function sanitizeWorkerCounts(value: unknown): Record<WorkerId, number> {
 	return normalized;
 }
 
+// Rebuilds which herbs are unlocked, starting from the game's default unlocks and overriding with saved values.
 function sanitizeUnlockedHerbs(
 	value: unknown,
 	initialUnlockedHerbs: Record<HerbId, boolean>,
@@ -160,6 +202,7 @@ function sanitizeUnlockedHerbs(
 	return normalized;
 }
 
+// Rebuilds which potions are unlocked, starting from the game's default unlocks and overriding with saved values.
 function sanitizeUnlockedPotions(
 	value: unknown,
 	initialUnlockedPotions: Record<PotionId, boolean>,
@@ -176,6 +219,7 @@ function sanitizeUnlockedPotions(
 	return normalized;
 }
 
+// Rebuilds which upgrades have been purchased, defaulting every upgrade to not-purchased first.
 function sanitizePurchasedUpgrades(value: unknown): Record<UpgradeId, boolean> {
 	const normalized = createBooleanRecord(UPGRADE_IDS);
 	if (!value || typeof value !== "object") {
@@ -189,6 +233,7 @@ function sanitizePurchasedUpgrades(value: unknown): Record<UpgradeId, boolean> {
 	return normalized;
 }
 
+// Rebuilds which ceremonies are unlocked, starting from the game's default unlocks and overriding with saved values.
 function sanitizeUnlockedCeremonies(
 	value: unknown,
 	initialUnlockedCeremonies: Record<CeremonyId, boolean>,
@@ -207,6 +252,7 @@ function sanitizeUnlockedCeremonies(
 	return normalized;
 }
 
+// Keeps the saved active ceremony only if it's a real, currently-unlocked ceremony id; otherwise clears it to null.
 function sanitizeActiveCeremonyId(
 	value: unknown,
 	unlockedCeremonies: Record<CeremonyId, boolean>,
@@ -222,6 +268,7 @@ function sanitizeActiveCeremonyId(
 	return value as CeremonyId;
 }
 
+// Enforces the rules for a potion crafting order: no duplicates, no unknown ids, and only unlocked potions.
 function normalizePotionOrder(
 	order: PotionId[],
 	unlockedPotions: Record<PotionId, boolean>,
@@ -240,6 +287,7 @@ function normalizePotionOrder(
 	return normalized.filter((potionId) => unlockedPotions[potionId]);
 }
 
+// Validates the saved potion crafting order; falls back to the default order if the saved one is empty/invalid.
 function sanitizePotionOrder(
 	value: unknown,
 	unlockedPotions: Record<PotionId, boolean>,
@@ -261,6 +309,8 @@ function sanitizePotionOrder(
 	return normalizePotionOrder(defaultPotionOrder, unlockedPotions);
 }
 
+// Enforces the rules for farmer assignments: locked herbs get 0 farmers, counts can't be negative/fractional,
+// and if more farmers are assigned than the player owns, the excess is trimmed off herb-by-herb.
 function normalizeFarmerAssignments(
 	assignments: Record<HerbId, number>,
 	unlockedHerbs: Record<HerbId, boolean>,
@@ -292,6 +342,7 @@ function normalizeFarmerAssignments(
 	return normalized;
 }
 
+// Picks out just the fields that get saved from the live game state, lightly sanitizing a few of them on the way out.
 function buildPersistedState(state: GameStateForPersistence): PersistedGameStateV1 {
 	return {
 		herbs: state.herbs,
@@ -302,6 +353,8 @@ function buildPersistedState(state: GameStateForPersistence): PersistedGameState
 		trendRemainingMs: Math.min(60_000, sanitizeNumber(state.trendRemainingMs)),
 		unlockedPotions: state.unlockedPotions,
 		money: sanitizeNumber(state.money),
+		elapsedPlayTimeMs: sanitizeNumber(state.elapsedPlayTimeMs),
+		throneTimeMs: sanitizeThroneTimeMs(state.throneTimeMs),
 		workers: state.workers,
 		farmerAssignments: state.farmerAssignments,
 		apothecaryPreferences: state.apothecaryPreferences,
@@ -320,6 +373,8 @@ interface HydrationOptions {
 	defaultPotionOrder: PotionId[];
 }
 
+// Loads the save from localStorage and sanitizes every field, falling back to a fresh default state if there's
+// no save, the version doesn't match (see the versioning note at the top of this file), or anything fails to parse.
 export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 	createInitialGameState: () => T,
 	options: HydrationOptions,
@@ -370,6 +425,8 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 			trendRemainingMs: Math.min(60_000, sanitizeNumber(parsed.state.trendRemainingMs)),
 			unlockedPotions,
 			money: sanitizeNumber(parsed.state.money),
+			elapsedPlayTimeMs: sanitizeNumber(parsed.state.elapsedPlayTimeMs),
+			throneTimeMs: sanitizeThroneTimeMs(parsed.state.throneTimeMs),
 			workers,
 			farmerAssignments,
 			apothecaryPreferences: sanitizePotionOrder(
@@ -391,6 +448,7 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 	}
 }
 
+// Writes the current game state to localStorage as a single versioned JSON blob, overwriting any previous save.
 export function saveGameState(state: GameStateForPersistence): void {
 	if (typeof window === "undefined") {
 		return;
@@ -405,6 +463,7 @@ export function saveGameState(state: GameStateForPersistence): void {
 	window.localStorage.setItem(GAME_SAVE_KEY, JSON.stringify(payload));
 }
 
+// Deletes the save from localStorage (e.g. for a "reset game" action).
 export function clearSavedGame(): void {
 	if (typeof window === "undefined") {
 		return;

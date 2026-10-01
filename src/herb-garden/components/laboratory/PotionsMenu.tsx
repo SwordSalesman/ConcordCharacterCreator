@@ -4,7 +4,7 @@ import { Modal } from "@/components/common/Modal/Modal";
 import { POTION_IDS, PotionId, POTIONS } from "../data/potions";
 import { GameContext } from "../../context/gameContext";
 import { AquiredItem } from "../UpgradeMenu";
-import { displayNumber, potionRecipe } from "@/herb-garden/helpers/numberHelper";
+import { displayNumber, potionRecipe } from "@/herb-garden/helpers/displayValueHelper";
 
 export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 	const {

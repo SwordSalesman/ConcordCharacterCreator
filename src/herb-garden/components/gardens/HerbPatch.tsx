@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { HerbId, HERBS } from "../data/herbs";
 import { GameContext } from "../../context/gameContext";
 import { useAnimation } from "../../context/animationContext";
-import { displayNumber } from "../../helpers/numberHelper";
+import { displayNumber } from "../../helpers/displayValueHelper";
 import { GiFarmer } from "react-icons/gi";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
 import { TutorialContext } from "../../context/tutorialContext";

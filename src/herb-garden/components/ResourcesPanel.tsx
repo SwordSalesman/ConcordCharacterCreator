@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { displayNumber } from "../helpers/numberHelper";
+import { displayNumber } from "../helpers/displayValueHelper";
 import { CRYSTAL_MANA_EMOJI } from "./data/gameData";
 
 type ResourceCard = {

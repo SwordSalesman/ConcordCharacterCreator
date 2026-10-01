@@ -3,7 +3,7 @@ import { POTION_IDS, PotionId, POTIONS } from "../data/potions";
 import { useContext, type CSSProperties } from "react";
 import { GameContext } from "../../context/gameContext";
 import { useAnimation } from "../../context/animationContext";
-import { displayNumber } from "../../helpers/numberHelper";
+import { displayNumber } from "../../helpers/displayValueHelper";
 import { Button } from "@/components/common/Button/Button";
 import { MdTrendingUp } from "react-icons/md";
 import { getHighLowHue, HighLowHueTextWrapper } from "../../helpers/hueHelper";

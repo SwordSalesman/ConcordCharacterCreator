@@ -1,7 +1,7 @@
 import { Button } from "../../../components/common/Button/Button";
 import { GiSpellBook } from "react-icons/gi";
 import { GameContext } from "@/herb-garden/context/gameContext";
-import { displayNumber } from "@/herb-garden/helpers/numberHelper";
+import { displayNumber } from "@/herb-garden/helpers/displayValueHelper";
 import { useContext, useState } from "react";
 import { useAnimation } from "@/herb-garden/context/animationContext";
 import { CEREMONIES, CEREMONY_IDS } from "../data/ceremonies";
@@ -10,6 +10,7 @@ import { CeremoniesMenu } from "./CeremoniesMenu";
 import { cn } from "@/lib/utils";
 import { getHighLowHue, HighLowHueTextWrapper } from "@/herb-garden/helpers/hueHelper";
 import { NewWrapper } from "../NewWrapper";
+import { TutorialContext } from "@/herb-garden/context/tutorialContext";
 
 export default function Church() {
 	const {
@@ -24,6 +25,7 @@ export default function Church() {
 		activeCeremonyRemainingMs,
 		ceremonyDurationMs,
 	} = useContext(GameContext);
+	const { tutorialSettings } = useContext(TutorialContext);
 	const { registerAnchor } = useAnimation();
 	const [showCeremoniesMenu, setShowCeremoniesMenu] = useState(false);
 
@@ -117,7 +119,9 @@ export default function Church() {
 			</div>
 			{moreCeremoniesToLearn && (
 				<div className="flex justify-center">
-					<NewWrapper isNew={displayedCeremonyIds.length === 0}>
+					<NewWrapper
+						isNew={tutorialSettings.showTutorial && displayedCeremonyIds.length === 0}
+					>
 						<Button onClick={() => setShowCeremoniesMenu(true)} variant="outline">
 							<GiSpellBook size={60} />
 							Learn Ceremony

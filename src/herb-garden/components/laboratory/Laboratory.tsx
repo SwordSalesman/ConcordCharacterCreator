@@ -28,7 +28,7 @@ import { TutorialContext } from "../../context/tutorialContext";
 import { GiSpellBook } from "react-icons/gi";
 import { NewWrapper } from "../NewWrapper";
 import { Button } from "@/components/common/Button/Button";
-import { potionRecipe } from "@/herb-garden/helpers/numberHelper";
+import { potionRecipe } from "@/herb-garden/helpers/displayValueHelper";
 
 function SortablePotionCraftButton({
 	potionId,

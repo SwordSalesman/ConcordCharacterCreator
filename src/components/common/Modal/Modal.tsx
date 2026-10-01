@@ -26,6 +26,7 @@ export function Modal({
 		label: string;
 		onClick: () => void;
 		variant?: ButtonVariant;
+		disabled?: boolean;
 	}[];
 	body?: React.ReactNode;
 	size?: "small" | "medium" | "large";
@@ -64,6 +65,7 @@ export function Modal({
 										variant={action.variant}
 										onClick={action.onClick}
 										className={"flex-1"}
+										disabled={action.disabled}
 									>
 										{action.label}
 									</Button>

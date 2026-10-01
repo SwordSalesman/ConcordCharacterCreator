@@ -57,11 +57,15 @@ export const TutorialContext = createContext<{
 	tutorialSettings: TutorialSettingsInterface;
 	newComponents: NewComponentInterface;
 	setComponentStale: (component: keyof NewComponentInterface) => void;
+	winScreenSeen: boolean;
+	markWinScreenSeen: () => void;
 	resetTutorial: () => void;
 }>({
 	tutorialSettings: defaultTutorialSettings,
 	newComponents: defaultNewComponents,
 	setComponentStale: () => {},
+	winScreenSeen: false,
+	markWinScreenSeen: () => {},
 	resetTutorial: () => {},
 });
 
@@ -93,6 +97,7 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 			: defaultTutorialSettings,
 	);
 	const [newComponents, setNewComponents] = useState(defaultNewComponents);
+	const [winScreenSeen, setWinScreenSeen] = useState(false);
 	const [isStorageHydrated, setIsStorageHydrated] = useState(false);
 
 	function updateState({
@@ -125,6 +130,7 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 			const parsed = JSON.parse(raw) as {
 				tutorialSettings?: Partial<TutorialSettingsInterface>;
 				newComponents?: Partial<NewComponentInterface>;
+				winScreenSeen?: boolean;
 			};
 
 			if (parsed.tutorialSettings) {
@@ -133,6 +139,10 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 
 			if (parsed.newComponents) {
 				setNewComponents((prev) => ({ ...prev, ...parsed.newComponents }));
+			}
+
+			if (typeof parsed.winScreenSeen === "boolean") {
+				setWinScreenSeen(parsed.winScreenSeen);
 			}
 		} catch {
 			// Ignore malformed storage and keep defaults.
@@ -148,9 +158,9 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 
 		window.localStorage.setItem(
 			TUTORIAL_STORAGE_KEY,
-			JSON.stringify({ tutorialSettings, newComponents }),
+			JSON.stringify({ tutorialSettings, newComponents, winScreenSeen }),
 		);
-	}, [tutorialSettings, newComponents, isStorageHydrated]);
+	}, [tutorialSettings, newComponents, winScreenSeen, isStorageHydrated]);
 
 	useEffect(() => {
 		if (!TUTORIAL_MODE) {
@@ -189,16 +199,28 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 		updateState({ components: { [component]: false } });
 	}
 
+	function markWinScreenSeen() {
+		setWinScreenSeen(true);
+	}
+
 	function resetTutorial() {
 		updateState({
 			settings: defaultTutorialSettings,
 			components: defaultNewComponents,
 		});
+		setWinScreenSeen(false);
 	}
 
 	return (
 		<TutorialContext.Provider
-			value={{ tutorialSettings, newComponents, setComponentStale, resetTutorial }}
+			value={{
+				tutorialSettings,
+				newComponents,
+				setComponentStale,
+				winScreenSeen,
+				markWinScreenSeen,
+				resetTutorial,
+			}}
 		>
 			{children}
 		</TutorialContext.Provider>

@@ -26,7 +26,7 @@ export function HighLowHueTextWrapper({
 	return (
 		<span
 			className={
-				"text-[hsl(var(--value-hue)_80%_38%)] dark:text-[hsl(var(--value-hue)_75%_62%)]"
+				"text-[hsl(var(--value-hue)_85%_40%)] dark:text-[hsl(var(--value-hue)_75%_62%)]"
 			}
 			style={
 				{

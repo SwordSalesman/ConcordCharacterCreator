@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import { GameContext } from "./context/gameContext";
 import { TutorialContext } from "./context/tutorialContext";
@@ -14,7 +14,7 @@ import { FaBalanceScaleLeft, FaMortarPestle } from "react-icons/fa";
 import { GiLockedChest, GiConcentrationOrb } from "react-icons/gi";
 import { PiPlantFill } from "react-icons/pi";
 import { GiBeerStein } from "react-icons/gi";
-import { displayNumber } from "./helpers/numberHelper";
+import { displayNumber, displayTimer } from "./helpers/displayValueHelper";
 import { Gardens } from "./components/gardens/Gardens";
 import { ResourcesPanel } from "./components/ResourcesPanel";
 import { Modal } from "../components/common/Modal/Modal";
@@ -23,6 +23,8 @@ import { GiStakeHammer } from "react-icons/gi";
 import { UpgradeMenu } from "./components/UpgradeMenu";
 import { NewWrapper } from "./components/NewWrapper";
 import Church from "./components/church/Church";
+import { WinScreen } from "./components/WinScreen";
+import { GiCrown } from "react-icons/gi";
 
 export default function GameMain() {
 	const {
@@ -36,19 +38,40 @@ export default function GameMain() {
 		resetGame,
 		isUpgradePurchased,
 		crystalMana,
+		throneTimeMs,
+		elapsedPlayTimeMs,
 	} = useContext(GameContext);
 	const { active, toggleActive } = useAnimation();
-	const { tutorialSettings, newComponents, setComponentStale, resetTutorial } =
-		useContext(TutorialContext);
+	const {
+		tutorialSettings,
+		newComponents,
+		setComponentStale,
+		winScreenSeen,
+		markWinScreenSeen,
+		resetTutorial,
+	} = useContext(TutorialContext);
 	const tutorialFadeIn = `animate-in fade-in ${tutorialSettings.showTutorial ?? "duration-1500"}`;
 	const demandSelling = isUpgradePurchased("market.demand_selling");
 	const churchUnlocked = isUpgradePurchased("tavern.church");
+	const hasWonGame = throneTimeMs !== null;
 
 	const [showSettings, setShowSettings] = useState(false);
 	const [showGardenUpgradeMenu, setShowGardenUpgradeMenu] = useState(false);
 	const [showLabUpgradeMenu, setShowLabUpgradeMenu] = useState(false);
 	const [showMarketUpgradeMenu, setShowMarketUpgradeMenu] = useState(false);
 	const [showTavernUpgradeMenu, setShowTavernUpgradeMenu] = useState(false);
+	const [showWinScreen, setShowWinScreen] = useState(false);
+
+	useEffect(() => {
+		if (hasWonGame && !winScreenSeen) {
+			setShowWinScreen(true);
+		}
+	}, [hasWonGame, winScreenSeen]);
+
+	function handleCloseWinScreen() {
+		setShowWinScreen(false);
+		markWinScreenSeen();
+	}
 
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);
 	const potionTotal = Object.values(potions).reduce((sum, amount) => sum + amount, 0);
@@ -110,6 +133,12 @@ export default function GameMain() {
 		) : null;
 	}
 
+	const gameTime = (
+		<div className="font-mono text-sm pt-0.5 text-muted-foreground">
+			{displayTimer(throneTimeMs ?? elapsedPlayTimeMs)}
+		</div>
+	);
+
 	return (
 		<>
 			<ContentWrapper layout="narrow">
@@ -118,10 +147,31 @@ export default function GameMain() {
 						<div className="text-lg font-bold text-muted-foreground font-mono">
 							herb-garden
 						</div>
-						<Button onClick={() => setShowSettings(true)} size="sm" className="">
-							<MdSettings />
-						</Button>
+						<div className="flex gap-2 items-center">
+							{hasWonGame ? (
+								<Button
+									onClick={() => setShowWinScreen(true)}
+									size="sm"
+									className=""
+								>
+									<GiCrown className="size-6" />
+									{gameTime}
+								</Button>
+							) : (
+								gameTime
+							)}
+							<Button onClick={() => setShowSettings(true)} size="sm" className="">
+								<MdSettings />
+							</Button>
+						</div>
 					</div>
+					<WinScreen
+						open={showWinScreen}
+						onClose={handleCloseWinScreen}
+						throneTimeMs={throneTimeMs}
+						resetGame={handleResetGame}
+					/>
+
 					<Modal
 						open={showSettings}
 						onClose={() => setShowSettings(false)}
@@ -224,7 +274,11 @@ export default function GameMain() {
 									<div className={canHireWorker(workerId) ? "" : "opacity-50"}>
 										{WORKERS[workerId].singularName}
 									</div>
-									<NewWrapper isNew={workers[workerId] === 0}>
+									<NewWrapper
+										isNew={
+											tutorialSettings.showTutorial && workers[workerId] === 0
+										}
+									>
 										<div
 											className={
 												"flex gap-1 font-mono" +
