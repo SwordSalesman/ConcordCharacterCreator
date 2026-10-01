@@ -182,7 +182,9 @@ export default function ApothecaryAnimationProvider({ children }: { children: Re
 				continue;
 			}
 
-			const scaleModifier = (1.2 * (particle.magnitude - 1)) / 7; // Maps size 1-8 to modifier 0-1.2
+			const boundedMagnitude = Math.min(particle.magnitude, 12);
+
+			const scaleModifier = (1.2 * (boundedMagnitude - 1)) / 7; // Maps size 1-8 to modifier 0-1.2
 
 			animatedParticleIdsRef.current.add(particle.id);
 			animate(element, {

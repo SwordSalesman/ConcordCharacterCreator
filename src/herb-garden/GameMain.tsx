@@ -113,7 +113,7 @@ export default function GameMain() {
 	return (
 		<>
 			<ContentWrapper layout="narrow">
-				<div className="flex flex-col gap-6 p-1 pb-32">
+				<div className="flex flex-col gap-8 p-1 pb-20">
 					<div className="flex justify-between gap-2">
 						<div className="text-lg font-bold text-muted-foreground font-mono">
 							herb-garden

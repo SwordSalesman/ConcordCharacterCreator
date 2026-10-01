@@ -40,7 +40,7 @@ export default function Church() {
 			<button
 				ref={registerAnchor("mana")}
 				tabIndex={-1}
-				className="flex items-center gap-2 select-none border-border border-0 rounded-md py-2 px-5 mx-auto"
+				className="flex items-center gap-2 select-none pt-2 px-5 mx-auto"
 			>
 				<span>{CRYSTAL_MANA_EMOJI}</span>
 				<span className="font-mono flex">
@@ -99,7 +99,7 @@ export default function Church() {
 													{Math.ceil(activeCeremonyRemainingMs / 1000)}s
 												</span>
 											</HighLowHueTextWrapper>
-											<span className="text-muted-foreground">
+											<span className="text-muted-foreground leading-4">
 												Click to pray
 											</span>
 										</div>
