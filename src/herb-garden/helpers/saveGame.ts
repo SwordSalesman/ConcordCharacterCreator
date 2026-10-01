@@ -1,19 +1,9 @@
-import {
-	createBooleanRecord,
-	createCountRecord,
-	HERB_IDS,
-	POTIONS,
-	POTION_IDS,
-	WORKER_IDS,
-	type HerbId,
-	type PotionId,
-	type Tag,
-	type WorkerId,
-} from "../components/data/gameData";
-import {
-	UPGRADE_IDS,
-	type UpgradeId,
-} from "../components/data/upgrades";
+import { CEREMONY_IDS, type CeremonyId } from "../components/data/ceremonies";
+import { createBooleanRecord, createCountRecord } from "../components/data/gameData";
+import { HERB_IDS, type HerbId } from "../components/data/herbs";
+import { POTIONS, POTION_IDS, type PotionId, type Tag } from "../components/data/potions";
+import { WORKER_IDS, type WorkerId } from "../components/data/workers";
+import { UPGRADE_IDS, type UpgradeId } from "../components/data/upgrades";
 export const GAME_AUTOSAVE_INTERVAL_MS = 3000;
 export const GAME_SAVE_KEY = "apothecary.save.v1";
 const GAME_SAVE_VERSION = 1;
@@ -36,6 +26,10 @@ interface PersistedGameStateV1 {
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
 	purchasedUpgrades: Record<UpgradeId, boolean>;
+	crystalMana: number;
+	unlockedCeremonies: Record<CeremonyId, boolean>;
+	activeCeremonyId: CeremonyId | null;
+	activeCeremonyRemainingMs: number;
 }
 
 interface PersistedGameSave {
@@ -120,9 +114,9 @@ function sanitizeMarketTrend(value: unknown): PersistedMarketTrend | null {
 			: undefined;
 	const herbIds = Array.isArray(trend.herbIds)
 		? trend.herbIds.filter(
-			(herbId): herbId is HerbId =>
-				typeof herbId === "string" && HERB_IDS.includes(herbId as HerbId),
-		)
+				(herbId): herbId is HerbId =>
+					typeof herbId === "string" && HERB_IDS.includes(herbId as HerbId),
+			)
 		: [];
 
 	if (!tag && herbIds.length === 0) {
@@ -193,6 +187,39 @@ function sanitizePurchasedUpgrades(value: unknown): Record<UpgradeId, boolean> {
 	}
 
 	return normalized;
+}
+
+function sanitizeUnlockedCeremonies(
+	value: unknown,
+	initialUnlockedCeremonies: Record<CeremonyId, boolean>,
+): Record<CeremonyId, boolean> {
+	const normalized = { ...initialUnlockedCeremonies };
+	if (!value || typeof value !== "object") {
+		return normalized;
+	}
+
+	for (const ceremonyId of CEREMONY_IDS) {
+		normalized[ceremonyId] = Boolean(
+			(value as Partial<Record<CeremonyId, unknown>>)[ceremonyId],
+		);
+	}
+
+	return normalized;
+}
+
+function sanitizeActiveCeremonyId(
+	value: unknown,
+	unlockedCeremonies: Record<CeremonyId, boolean>,
+): CeremonyId | null {
+	if (
+		typeof value !== "string" ||
+		!CEREMONY_IDS.includes(value as CeremonyId) ||
+		!unlockedCeremonies[value as CeremonyId]
+	) {
+		return null;
+	}
+
+	return value as CeremonyId;
 }
 
 function normalizePotionOrder(
@@ -279,12 +306,17 @@ function buildPersistedState(state: GameStateForPersistence): PersistedGameState
 		farmerAssignments: state.farmerAssignments,
 		apothecaryPreferences: state.apothecaryPreferences,
 		purchasedUpgrades: state.purchasedUpgrades,
+		crystalMana: sanitizeNumber(state.crystalMana),
+		unlockedCeremonies: state.unlockedCeremonies,
+		activeCeremonyId: state.activeCeremonyId,
+		activeCeremonyRemainingMs: sanitizeNumber(state.activeCeremonyRemainingMs),
 	};
 }
 
 interface HydrationOptions {
 	initialUnlockedHerbs: Record<HerbId, boolean>;
 	initialUnlockedPotions: Record<PotionId, boolean>;
+	initialUnlockedCeremonies: Record<CeremonyId, boolean>;
 	defaultPotionOrder: PotionId[];
 }
 
@@ -323,6 +355,10 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 			unlockedHerbs,
 			workers.farmers,
 		);
+		const unlockedCeremonies = sanitizeUnlockedCeremonies(
+			parsed.state.unlockedCeremonies,
+			options.initialUnlockedCeremonies,
+		);
 
 		return {
 			...fallback,
@@ -331,10 +367,7 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 			potions: sanitizePotionCounts(parsed.state.potions),
 			potionDemand: sanitizePotionDemand(parsed.state.potionDemand),
 			activeTrend: sanitizeMarketTrend(parsed.state.activeTrend),
-			trendRemainingMs: Math.min(
-				60_000,
-				sanitizeNumber(parsed.state.trendRemainingMs),
-			),
+			trendRemainingMs: Math.min(60_000, sanitizeNumber(parsed.state.trendRemainingMs)),
 			unlockedPotions,
 			money: sanitizeNumber(parsed.state.money),
 			workers,
@@ -345,6 +378,13 @@ export function hydrateGameStateFromStorage<T extends GameStateForPersistence>(
 				options.defaultPotionOrder,
 			),
 			purchasedUpgrades: sanitizePurchasedUpgrades(parsed.state.purchasedUpgrades),
+			crystalMana: sanitizeNumber(parsed.state.crystalMana),
+			unlockedCeremonies,
+			activeCeremonyId: sanitizeActiveCeremonyId(
+				parsed.state.activeCeremonyId,
+				unlockedCeremonies,
+			),
+			activeCeremonyRemainingMs: sanitizeNumber(parsed.state.activeCeremonyRemainingMs),
 		};
 	} catch {
 		return fallback;

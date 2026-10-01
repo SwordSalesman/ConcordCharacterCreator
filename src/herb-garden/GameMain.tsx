@@ -2,15 +2,16 @@ import { useContext, useState } from "react";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import { GameContext } from "./context/gameContext";
 import { TutorialContext } from "./context/tutorialContext";
-import { getWorkerHireCost, HERB_IDS, WORKER_IDS, WORKERS } from "./components/data/gameData";
+import { HERB_IDS } from "./components/data/herbs";
+import { getWorkerHireCost, WORKER_IDS, WORKERS } from "./components/data/workers";
 import { BuildingId } from "./components/data/upgrades";
 import { Button } from "../components/common/Button/Button";
-import { useApothecaryAnimation } from "./context/animationContext";
+import { useAnimation } from "./context/animationContext";
 import { SectionWrapper } from "./components/SectionWrapper";
 import { Laboratory } from "./components/laboratory/Laboratory";
 import { Market } from "./components/market/Market";
 import { FaBalanceScaleLeft, FaMortarPestle } from "react-icons/fa";
-import { GiLockedChest } from "react-icons/gi";
+import { GiLockedChest, GiConcentrationOrb } from "react-icons/gi";
 import { PiPlantFill } from "react-icons/pi";
 import { GiBeerStein } from "react-icons/gi";
 import { displayNumber } from "./helpers/numberHelper";
@@ -21,6 +22,7 @@ import { MdSettings } from "react-icons/md";
 import { GiStakeHammer } from "react-icons/gi";
 import { UpgradeMenu } from "./components/UpgradeMenu";
 import { NewWrapper } from "./components/NewWrapper";
+import Church from "./components/church/Church";
 
 export default function GameMain() {
 	const {
@@ -33,12 +35,14 @@ export default function GameMain() {
 		hireWorker,
 		resetGame,
 		isUpgradePurchased,
+		crystalMana,
 	} = useContext(GameContext);
-	const { active, toggleActive } = useApothecaryAnimation();
+	const { active, toggleActive } = useAnimation();
 	const { tutorialSettings, newComponents, setComponentStale, resetTutorial } =
 		useContext(TutorialContext);
 	const tutorialFadeIn = `animate-in fade-in ${tutorialSettings.showTutorial ?? "duration-1500"}`;
 	const demandSelling = isUpgradePurchased("market.demand_selling");
+	const churchUnlocked = isUpgradePurchased("tavern.church");
 
 	const [showSettings, setShowSettings] = useState(false);
 	const [showGardenUpgradeMenu, setShowGardenUpgradeMenu] = useState(false);
@@ -50,6 +54,7 @@ export default function GameMain() {
 	const potionTotal = Object.values(potions).reduce((sum, amount) => sum + amount, 0);
 	const assignedFarmers = HERB_IDS.reduce((sum, herbId) => sum + farmerAssignments[herbId], 0);
 	const unassignedFarmers = Math.max(0, workers.farmers - assignedFarmers);
+	const unlockedWorkerIds = WORKER_IDS.filter((id) => id !== "priests" || churchUnlocked);
 
 	function handleResetGame() {
 		if (!window.confirm("Reset your save? This cannot be undone.")) {
@@ -108,7 +113,7 @@ export default function GameMain() {
 	return (
 		<>
 			<ContentWrapper layout="narrow">
-				<div className="flex flex-col gap-6 p-1 pb-16">
+				<div className="flex flex-col gap-6 p-1 pb-32">
 					<div className="flex justify-between gap-2">
 						<div className="text-lg font-bold text-muted-foreground font-mono">
 							herb-garden
@@ -152,7 +157,13 @@ export default function GameMain() {
 					<div className="mb-[-22px]">
 						<SectionWrapper title="Resources" icon={<GiLockedChest />} />
 					</div>
-					<ResourcesPanel money={money} herbTotal={herbTotal} potionTotal={potionTotal} />
+					<ResourcesPanel
+						money={money}
+						herbTotal={herbTotal}
+						potionTotal={potionTotal}
+						manaTotal={crystalMana}
+						showCrystalMana={churchUnlocked}
+					/>
 
 					<SectionWrapper
 						title="Gardens"
@@ -203,7 +214,7 @@ export default function GameMain() {
 						action={getUpgradeButton("tavern")}
 					>
 						<div className="grid grid-cols-1 gap-1 sm:grid-cols-3">
-							{WORKER_IDS.map((workerId) => (
+							{unlockedWorkerIds.map((workerId) => (
 								<Button
 									key={workerId}
 									onClick={() => hireWorker(workerId, 1)}
@@ -213,20 +224,33 @@ export default function GameMain() {
 									<div className={canHireWorker(workerId) ? "" : "opacity-50"}>
 										{WORKERS[workerId].singularName}
 									</div>
-									<div
-										className={
-											"font-mono" +
-											(canHireWorker(workerId) ? "" : " opacity-50")
-										}
-									>
-										{displayNumber(
-											getWorkerHireCost(workerId, workers[workerId]),
-										)}{" "}
-										🗝️
-									</div>
+									<NewWrapper isNew={workers[workerId] === 0}>
+										<div
+											className={
+												"flex gap-1 font-mono" +
+												(canHireWorker(workerId) ? "" : " opacity-50")
+											}
+										>
+											<span>
+												{displayNumber(
+													getWorkerHireCost(workerId, workers[workerId]),
+												)}
+											</span>
+											<span>🗝️</span>
+										</div>
+									</NewWrapper>
 								</Button>
 							))}
 						</div>
+					</SectionWrapper>
+
+					<SectionWrapper
+						title="Sanctified Square"
+						subtitle={`${workers.priests} Priest${workers.priests !== 1 ? "s" : ""} making crystal mana, used to cast ceremonies.`}
+						icon={<GiConcentrationOrb />}
+						hide={!churchUnlocked}
+					>
+						<Church />
 					</SectionWrapper>
 
 					<UpgradeMenu

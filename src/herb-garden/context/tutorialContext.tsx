@@ -5,7 +5,8 @@ import {
 	INITIAL_UNLOCKED_POTIONS_RECORD,
 } from "./gameContext";
 
-import { HERB_IDS, POTION_IDS } from "../components/data/gameData";
+import { HERB_IDS } from "../components/data/herbs";
+import { POTION_IDS } from "../components/data/potions";
 
 const TUTORIAL_MODE = process.env.NEXT_PUBLIC_HERB_JUMPSTART !== "true";
 const TUTORIAL_STORAGE_KEY = "apothecary:tutorial-context:v1";
@@ -65,7 +66,7 @@ export const TutorialContext = createContext<{
 });
 
 export default function TutorialContextProvider({ children }: { children: ReactNode }) {
-	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions } =
+	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions, isUpgradePurchased } =
 		useContext(GameContext);
 
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);

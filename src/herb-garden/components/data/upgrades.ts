@@ -1,23 +1,23 @@
 export const BUILDING_IDS = ["gardens", "laboratory", "market", "tavern"] as const;
 export type BuildingId = (typeof BUILDING_IDS)[number];
 
-
 export interface AggregatedUpgradeEffects {
 	farmerRateMultiplier: number;
 	apothecaryRateMultiplier: number;
 	apothecaryExtraPotionChance: number;
 	merchantRateMultiplier: number;
+	priestRateMultiplier: number;
 	potionSellValueMultiplier: number;
 	manualHerbGatherMultiplier: number;
-    manualPotionCraftMultiplier: number;
-    manualPotionSellMultiplier: number;
+	manualPotionCraftMultiplier: number;
+	manualPotionSellMultiplier: number;
 	workerRateMultiplier: number;
 	potionDemandMaxIncrease: number;
 	potionDemandRecoveryMultiplier: number;
 	potionDemandLossMultiplier: number;
 }
 
-export interface UpgradeEffect extends Partial<AggregatedUpgradeEffects> {} 
+export interface UpgradeEffect extends Partial<AggregatedUpgradeEffects> {}
 interface UpgradeDefinitionInput {
 	id: string;
 	buildingId: BuildingId;
@@ -61,7 +61,7 @@ const UPGRADE_DEFINITIONS = [
 			manualHerbGatherMultiplier: 2,
 		},
 	},
-    {
+	{
 		id: "gardens.click_multiplier_2",
 		buildingId: "gardens",
 		name: "Hartswood Shovel",
@@ -70,9 +70,9 @@ const UPGRADE_DEFINITIONS = [
 		effects: {
 			manualHerbGatherMultiplier: 2,
 		},
-        prerequisites: ["gardens.click_multiplier_1"],
+		prerequisites: ["gardens.click_multiplier_1"],
 	},
-	    {
+	{
 		id: "gardens.click_multiplier_3",
 		buildingId: "gardens",
 		name: "Thunderoak Shovel",
@@ -81,7 +81,7 @@ const UPGRADE_DEFINITIONS = [
 		effects: {
 			manualHerbGatherMultiplier: 2,
 		},
-        prerequisites: ["gardens.click_multiplier_2"],
+		prerequisites: ["gardens.click_multiplier_2"],
 	},
 	{
 		id: "gardens.faster_harvest_1",
@@ -115,7 +115,7 @@ const UPGRADE_DEFINITIONS = [
 			farmerRateMultiplier: 2,
 		},
 	},
-    {
+	{
 		id: "laboratory.click_multiplier_1",
 		buildingId: "laboratory",
 		name: "Stone Mortar",
@@ -125,27 +125,27 @@ const UPGRADE_DEFINITIONS = [
 			manualPotionCraftMultiplier: 2,
 		},
 	},
-    {
-        id: "laboratory.click_multiplier_2",
+	{
+		id: "laboratory.click_multiplier_2",
 		buildingId: "laboratory",
 		name: "Essencite Mortar",
 		description: "Each click brews four times the potions",
 		cost: 500,
 		effects: {
-            manualPotionCraftMultiplier: 2,
+			manualPotionCraftMultiplier: 2,
 		},
-        prerequisites: ["laboratory.click_multiplier_1"],
+		prerequisites: ["laboratory.click_multiplier_1"],
 	},
 	{
-        id: "laboratory.click_multiplier_3",
+		id: "laboratory.click_multiplier_3",
 		buildingId: "laboratory",
 		name: "Arcstone Mortar",
 		description: "Each click brews eight times the potions",
 		cost: 3200,
 		effects: {
-            manualPotionCraftMultiplier: 2,
+			manualPotionCraftMultiplier: 2,
 		},
-        prerequisites: ["laboratory.click_multiplier_2"],
+		prerequisites: ["laboratory.click_multiplier_2"],
 	},
 	{
 		id: "laboratory.advanced_recipes_1",
@@ -171,8 +171,8 @@ const UPGRADE_DEFINITIONS = [
 		description: "Apothecaries have a 20% chance to produce an extra potion for free.",
 		cost: 75,
 		effects: {
-			apothecaryExtraPotionChance: 0.20,
-		}
+			apothecaryExtraPotionChance: 0.2,
+		},
 	},
 	{
 		id: "laboratory.dilution_2",
@@ -182,8 +182,8 @@ const UPGRADE_DEFINITIONS = [
 		prerequisites: ["laboratory.dilution_1"],
 		cost: 350,
 		effects: {
-			apothecaryExtraPotionChance: 0.20,
-		}
+			apothecaryExtraPotionChance: 0.2,
+		},
 	},
 	{
 		id: "laboratory.dilution_3",
@@ -193,8 +193,8 @@ const UPGRADE_DEFINITIONS = [
 		prerequisites: ["laboratory.dilution_2"],
 		cost: 1700,
 		effects: {
-			apothecaryExtraPotionChance: 0.20,
-		}
+			apothecaryExtraPotionChance: 0.2,
+		},
 	},
 	// {
 	// 	id: "laboratory.merchant_driven_brewing",
@@ -229,7 +229,7 @@ const UPGRADE_DEFINITIONS = [
 	// 		apothecaryRateMultiplier: 1.50,
 	// 	},
 	// },
-    {
+	{
 		id: "market.click_multiplier_1",
 		buildingId: "market",
 		name: "Iron Scales",
@@ -239,7 +239,7 @@ const UPGRADE_DEFINITIONS = [
 			manualPotionSellMultiplier: 2,
 		},
 	},
-    {
+	{
 		id: "market.click_multiplier_2",
 		buildingId: "market",
 		name: "Forgesteel Scales",
@@ -248,7 +248,7 @@ const UPGRADE_DEFINITIONS = [
 		effects: {
 			manualPotionSellMultiplier: 2,
 		},
-        prerequisites: ["market.click_multiplier_1"],
+		prerequisites: ["market.click_multiplier_1"],
 	},
 	{
 		id: "market.click_multiplier_3",
@@ -259,7 +259,7 @@ const UPGRADE_DEFINITIONS = [
 		effects: {
 			manualPotionSellMultiplier: 2,
 		},
-        prerequisites: ["market.click_multiplier_2"],
+		prerequisites: ["market.click_multiplier_2"],
 	},
 	{
 		id: "market.demand_based_pricing",
@@ -291,7 +291,8 @@ const UPGRADE_DEFINITIONS = [
 		id: "market.trends_ingredients",
 		buildingId: "market",
 		name: "Market Trends II",
-		description: "Trends can now include ingredients. Potions matching a double trend sell for 100% more.",
+		description:
+			"Trends can now include ingredients. Potions matching a double trend sell for 100% more.",
 		cost: 2500,
 		prerequisites: ["market.trends_tags"],
 		effects: {},
@@ -319,9 +320,9 @@ const UPGRADE_DEFINITIONS = [
 		},
 	},
 	{
-		id: "market.buy_out_competitor",
+		id: "market.demand_speed_1",
 		buildingId: "market",
-		name: "Buy Out A Competitor",
+		name: "Smear the Merchant's Guild",
 		description: "Demand recovers 50% faster and falls 25% slower.",
 		cost: 300,
 		prerequisites: ["market.demand_based_pricing"],
@@ -331,12 +332,12 @@ const UPGRADE_DEFINITIONS = [
 		},
 	},
 	{
-		id: "market.sabotage_competitor",
+		id: "market.demand_speed_2",
 		buildingId: "market",
-		name: "Sabotage A Competitor",
+		name: "Sabotage the Quartermaster",
 		description: "Demand recovers another 50% faster and falls another 25% slower.",
 		cost: 1800,
-		prerequisites: ["market.buy_out_competitor"],
+		prerequisites: ["market.demand_speed_1"],
 		effects: {
 			potionDemandRecoveryMultiplier: 1.5,
 			potionDemandLossMultiplier: 0.75,
@@ -435,19 +436,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "Host private meetings for Senators. Earn their ears.",
 		cost: 1000,
 		prerequisites: ["tavern.house_special_1"],
-		effects: {
-		},
-	},
-	{
-		id: "tavern.war_1",
-		buildingId: "tavern",
-		name: "Push To Declare War",
-		description: "Use your Senate connections to declare war. Potion sell price doubles.",
-		cost: 8000,
-		prerequisites: ["tavern.senator_3"],
-		effects: {
-			potionSellValueMultiplier: 2,
-		},
+		effects: {},
 	},
 	// {
 	// 	id: "tavern.alchemy_lab",
@@ -489,8 +478,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 4000,
 		prerequisites: ["tavern.commissions_1"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_2",
@@ -499,8 +487,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 8000,
 		prerequisites: ["tavern.senator_1"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_3",
@@ -509,8 +496,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 16000,
 		prerequisites: ["tavern.senator_2"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_4",
@@ -519,8 +505,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 32000,
 		prerequisites: ["tavern.senator_3"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_5",
@@ -529,8 +514,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 64000,
 		prerequisites: ["tavern.senator_4"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_6",
@@ -539,8 +523,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 125000,
 		prerequisites: ["tavern.senator_5"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_7",
@@ -549,8 +532,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 250000,
 		prerequisites: ["tavern.senator_6"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_8",
@@ -559,7 +541,28 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 500000,
 		prerequisites: ["tavern.senator_7"],
+		effects: {},
+	},
+	{
+		id: "tavern.church",
+		buildingId: "tavern",
+		name: "Commission a Sanctified Square",
+		description: "Use your Senate connection and unlock the Sanctified Square.",
+		cost: 8000,
+		prerequisites: ["tavern.senator_1"],
 		effects: {
+			potionSellValueMultiplier: 2,
+		},
+	},
+	{
+		id: "tavern.war_1",
+		buildingId: "tavern",
+		name: "Push To Declare War",
+		description: "Use your Senate connections to declare war. Potion sell price doubles.",
+		cost: 8000,
+		prerequisites: ["tavern.senator_3"],
+		effects: {
+			potionSellValueMultiplier: 2,
 		},
 	},
 	{
@@ -569,8 +572,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "The Senate is yours to command. The Concord is yours to rule.",
 		cost: 1000000,
 		prerequisites: ["tavern.senator_8"],
-		effects: {
-		},
+		effects: {},
 	},
 ] as const satisfies readonly UpgradeDefinitionInput[];
 
@@ -596,9 +598,9 @@ export const UPGRADES: Record<UpgradeId, UpgradeDefinition> = UPGRADE_DEFINITION
 			name: upgrade.name,
 			description: upgrade.description,
 			cost: upgrade.cost,
-			prerequisites: (
-				"prerequisites" in upgrade ? [...upgrade.prerequisites] : []
-			) as UpgradeId[],
+			prerequisites: ("prerequisites" in upgrade
+				? [...upgrade.prerequisites]
+				: []) as UpgradeId[],
 			effects: ("effects" in upgrade ? upgrade.effects : {}) as UpgradeEffect,
 		};
 		return record;

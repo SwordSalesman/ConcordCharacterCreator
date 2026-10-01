@@ -91,37 +91,32 @@ export function UpgradeMenu({
 										key={upgradeId + "-purchase"}
 										className="flex w-full items-center justify-center gap-0 animate-in fade-in z-10"
 									>
-										{isUpgradePurchased(upgradeId) ? (
-											<span className="text-muted-foreground italic text-sm flex items-center gap-1">
-												{<MdCheckCircleOutline />}{" "}
-												{UPGRADES[upgradeId].name}
-											</span>
-										) : (
-											<div className="my-1 w-full">
-												<Button
-													disabled={!canPurchaseUpgrade(upgradeId)}
-													onClick={() => purchaseUpgrade(upgradeId)}
-													// size="sm"
-													className="p-2 px-3 text-md h-fit w-full"
-												>
-													{/* Purchase{" "} */}
-													<span className="flex-1 text-left">
-														<span className="flex gap-2 items-center justify-between">
-															<p>{UPGRADES[upgradeId].name}</p>
-															<span className="font-mono">
-																{displayNumber(
-																	UPGRADES[upgradeId].cost,
-																)}{" "}
-																🗝️
-															</span>
-														</span>
-														<p className="text-sm text-muted-foreground text-wrap">
-															{UPGRADES[upgradeId].description}
+										<div className="my-1 w-full">
+											<Button
+												disabled={!canPurchaseUpgrade(upgradeId)}
+												onClick={() => purchaseUpgrade(upgradeId)}
+												// size="sm"
+												className="p-2 px-3 text-md h-fit w-full"
+											>
+												{/* Purchase{" "} */}
+												<span className="flex-1 text-left">
+													<span className="flex gap-2 items-center justify-between">
+														<p className="text-wrap leading-5">
+															{UPGRADES[upgradeId].name}
 														</p>
+														<span className="font-mono">
+															{displayNumber(
+																UPGRADES[upgradeId].cost,
+															)}{" "}
+															🗝️
+														</span>
 													</span>
-												</Button>
-											</div>
-										)}
+													<p className="text-sm/4 text-muted-foreground text-wrap">
+														{UPGRADES[upgradeId].description}
+													</p>
+												</span>
+											</Button>
+										</div>
 									</div>
 								),
 							)}

@@ -17,8 +17,9 @@ import {
 	arrayMove,
 } from "@dnd-kit/sortable";
 import { GameContext } from "../../context/gameContext";
-import { HERB_IDS, HERBS, POTION_IDS, POTIONS, type PotionId } from "../data/gameData";
-import { useApothecaryAnimation } from "../../context/animationContext";
+import { HERB_IDS, HERBS } from "../data/herbs";
+import { POTION_IDS, POTIONS, type PotionId } from "../data/potions";
+import { useAnimation } from "../../context/animationContext";
 import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
 import { MdReorder } from "react-icons/md";
@@ -41,7 +42,7 @@ function SortablePotionCraftButton({
 	isActivePreference: boolean;
 	isCraftable: boolean;
 	onCraft: (potionId: PotionId) => void;
-	anchorRef: ReturnType<ReturnType<typeof useApothecaryAnimation>["registerAnchor"]>;
+	anchorRef: ReturnType<ReturnType<typeof useAnimation>["registerAnchor"]>;
 	showReorder: boolean;
 }) {
 	const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
@@ -86,7 +87,7 @@ export function Laboratory() {
 		canCraftPotion,
 		unlockedPotions,
 	} = useContext(GameContext);
-	const { registerAnchor } = useApothecaryAnimation();
+	const { registerAnchor } = useAnimation();
 	const craftAnchor = (potionId: PotionId) => registerAnchor(`craft:${potionId}`);
 	const [showPotionsMenu, setShowPotionsMenu] = useState(false);
 	const { tutorialSettings, newComponents, setComponentStale } = useContext(TutorialContext);

@@ -1,4 +1,5 @@
-import { HERBS, HERB_IDS, PotionId, POTIONS } from "../components/data/gameData";
+import { HERBS, HERB_IDS } from "../components/data/herbs";
+import { PotionId, POTIONS } from "../components/data/potions";
 
 export function displayNumber(value: number): string {
 	if (value < 10_000) {

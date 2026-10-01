@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { HerbId, HERBS } from "../data/gameData";
+import { HerbId, HERBS } from "../data/herbs";
 import { GameContext } from "../../context/gameContext";
-import { useApothecaryAnimation } from "../../context/animationContext";
+import { useAnimation } from "../../context/animationContext";
 import { displayNumber } from "../../helpers/numberHelper";
 import { GiFarmer } from "react-icons/gi";
 import { useDraggable, useDroppable } from "@dnd-kit/react";
@@ -21,7 +21,7 @@ export default function HerbPatch({
 
 	const hasFarmers = farmerAssignments[herbId] > 0;
 
-	const { registerAnchor } = useApothecaryAnimation();
+	const { registerAnchor } = useAnimation();
 	const { ref: droppableRef } = useDroppable({ id: `herb:${herbId}` });
 	const { ref: draggableRef } = useDraggable({
 		id: `farmer:${herbId}`,

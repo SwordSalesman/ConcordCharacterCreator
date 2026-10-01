@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { Modal } from "@/components/common/Modal/Modal";
-import { HERB_IDS, HERBS, POTION_IDS, PotionId, POTIONS } from "../data/gameData";
+import { POTION_IDS, PotionId, POTIONS } from "../data/potions";
 import { GameContext } from "../../context/gameContext";
 import { AquiredItem } from "../UpgradeMenu";
 import { displayNumber, potionRecipe } from "@/herb-garden/helpers/numberHelper";
@@ -44,6 +44,8 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 		return `Unable to learn Tier ${tier} potions.`;
 	}
 
+	const potionItemStyle = "border-border border-1 bg-background-raised rounded-md p-0.5 px-2";
+
 	return (
 		<Modal
 			open={open}
@@ -52,7 +54,7 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 			size="medium"
 			body={
 				<>
-					<div className="relative flex flex-col gap-6 pb-8 max-h-120 overflow-y-scroll overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+					<div className="relative flex flex-col gap-10 pb-8 max-h-120 overflow-y-scroll overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 						{tiers.map((tier) => (
 							<div key={tier} className="flex flex-col gap-2">
 								<div className="text-sm font-semibold uppercase text-center tracking-wide text-muted-foreground px-1">
@@ -70,7 +72,7 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 								</div>
 								<div className="rounded-md text-center flex flex-col gap-2">
 									{!canUnlockPotionTier(tier) && (
-										<div className="text-sm text-muted-foreground px-2 py-3 text-center">
+										<div className="text-sm text-muted-foreground text-center">
 											{getTierLockMessage(tier)}
 										</div>
 									)}
@@ -82,63 +84,73 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 													disabled={!canUnlockPotion(potionId)}
 													onClick={() => {
 														unlockPotion(potionId);
-														onClose();
 													}}
 													key={`potionButton-${potionId}`}
-													className={`flex h-fit flex-row items-center justify-between rounded-md p-2`}
+													className={`flex h-fit flex-row items-center justify-between rounded-md p-2 px-3`}
 												>
-													<span className="flex-1 text-left">
+													<span className="flex-1 text-left flex flex-col gap-1">
 														<span className="flex gap-2 items-center justify-between">
-															<p className="text-wrap">
+															<p className="text-wrap text-base">
 																{POTIONS[potionId].name}
 															</p>
-															<span>
-																Unlock{" "}
-																<span className="font-mono pl-1">
+															<span className="flex gap-1">
+																<span className="font-mono">
 																	{displayNumber(
 																		getPotionUnlockCost(
 																			potionId,
 																		),
 																	)}
-																</span>{" "}
+																</span>
 																🗝️
 															</span>
 														</span>
-														<div className="flex flex-col justify-left gap-0">
-															<span className={``}>
+														<div className="flex flex-row justify-left items-center gap-2">
+															<div
+																// className={`flex gap-2 text-sm items-center`}
+																className={potionItemStyle}
+															>
+																{/* <span className="text-muted-foreground">
+																	Sell price
+																</span> */}
+																<span className="font-mono">
+																	+
+																	{displayNumber(
+																		getEffectivePotionSellValue(
+																			potionId,
+																		),
+																	)}
+																	🗝️
+																</span>
+															</div>
+															<div
+																// className={``}
+																className={potionItemStyle}
+															>
 																<div className="flex gap-2 text-sm ">
-																	<span className="text-muted-foreground text-sm text-left">
+																	{/* <span className="text-muted-foreground text-sm text-left">
 																		Recipe
-																	</span>
+																	</span> */}
 																	<span className="font-mono">
 																		{potionRecipe(potionId)}
 																	</span>
 																</div>
-															</span>
-															<div
-																className={`flex gap-2 text-sm items-center`}
-															>
-																<span className="text-muted-foreground">
-																	Sell price
-																</span>
-																<span>
-																	{getEffectivePotionSellValue(
-																		potionId,
-																	)}{" "}
-																	🗝️
-																</span>
 															</div>
 															{tagsUnlocked ? (
 																<div
-																	className={`flex gap-2 text-sm items-center`}
+																	// className={`flex gap-2 text-sm items-center`}
+																	className={potionItemStyle}
 																>
-																	<span className="text-muted-foreground">
+																	{/* <span className="text-muted-foreground">
 																		Tags
-																	</span>
-																	<span>
-																		{POTIONS[
-																			potionId
-																		].tags.join(", ")}
+																	</span> */}
+																	<span className="text-muted-foreground italic">
+																		{POTIONS[potionId].tags
+																			.map(
+																				(t) =>
+																					t[0].toUpperCase() +
+																					t.slice(1),
+																			)
+																			.join(", ")}
 																	</span>
 																</div>
 															) : null}
@@ -149,7 +161,7 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 								</div>
 							</div>
 						))}
-						<div className="fixed bottom-4 w-full bg-gradient-to-t from-background to-transparent h-8"></div>
+						<div className="fixed bottom-4 w-full left-0 bg-gradient-to-t from-background to-transparent h-8"></div>
 					</div>
 				</>
 			}

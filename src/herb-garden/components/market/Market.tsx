@@ -1,16 +1,12 @@
-import { HERBS, POTION_IDS, PotionId, POTIONS } from "../data/gameData";
+import { HERBS } from "../data/herbs";
+import { POTION_IDS, PotionId, POTIONS } from "../data/potions";
 import { useContext, type CSSProperties } from "react";
 import { GameContext } from "../../context/gameContext";
-import { useApothecaryAnimation } from "../../context/animationContext";
+import { useAnimation } from "../../context/animationContext";
 import { displayNumber } from "../../helpers/numberHelper";
 import { Button } from "@/components/common/Button/Button";
 import { MdTrendingUp } from "react-icons/md";
-
-function getDemandHue(demand: number, minDemand: number, maxDemand: number) {
-	const demandRange = maxDemand - minDemand;
-	const normalizedDemand = demandRange > 0 ? (demand - minDemand) / demandRange : 0.5;
-	return Math.max(0, normalizedDemand) * 120;
-}
+import { getHighLowHue, HighLowHueTextWrapper } from "../../helpers/hueHelper";
 
 function TrendIcon({ className }: { className?: string }) {
 	return (
@@ -37,7 +33,7 @@ export function Market() {
 		isPotionTrending,
 		getEffectivePotionSellValue,
 	} = useContext(GameContext);
-	const { registerAnchor } = useApothecaryAnimation();
+	const { registerAnchor } = useAnimation();
 	const sellAnchor = (potionId: PotionId) => registerAnchor(`sell:${potionId}`);
 	const demandEnabled = isUpgradePurchased("market.demand_based_pricing");
 	const trendsEnabled =
@@ -82,15 +78,9 @@ export function Market() {
 					const trending = isPotionTrending(potionId);
 					const totalPotionDemand = getEffectivePotionDemand(potionId);
 
-					const demandHue = getDemandHue(
-						totalPotionDemand,
-						minPotionDemand,
-						maxPotionDemand,
-					);
-
 					return (
 						<div key={potionId} className="flex gap-2">
-							<div className="flex items-center justify-center font-mono min-w-4">
+							<div className="flex items-center justify-center font-mono min-w-4 select-none">
 								{displayNumber(potions[potionId])}
 							</div>
 							<Button
@@ -120,22 +110,19 @@ export function Market() {
 											<span>🗝️</span>
 										</span>
 										{demandEnabled && (
-											<span
-												className={
-													"text-xs text-[hsl(var(--demand-hue)_80%_38%)] dark:text-[hsl(var(--demand-hue)_75%_62%)]"
-												}
-												style={
-													{
-														"--demand-hue": demandHue,
-													} as CSSProperties
-												}
+											<HighLowHueTextWrapper
+												value={totalPotionDemand}
+												minValue={minPotionDemand}
+												maxValue={maxPotionDemand}
 											>
-												(
-												{(getEffectivePotionDemand(potionId) * 100).toFixed(
-													0,
-												)}
-												%)
-											</span>
+												<span className={"text-xs"}>
+													(
+													{(
+														getEffectivePotionDemand(potionId) * 100
+													).toFixed(0)}
+													%)
+												</span>
+											</HighLowHueTextWrapper>
 										)}
 									</span>
 								</span>
