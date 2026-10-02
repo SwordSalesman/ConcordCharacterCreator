@@ -570,7 +570,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "tavern",
 		name: "High Historian Agricultural Research",
 		description:
-			"Use your Senate connections to have the High Highstorian research Lerona Merian aggricultural history. Boring. Farmers gather 30% faster.",
+			"Use your Senate connections to have the High Historian research Lerona Merian agricultural history. Boring. Farmers gather 30% faster.",
 		cost: 8000,
 		prerequisites: ["tavern.senator_2"],
 		effects: {

@@ -6,7 +6,6 @@ import { HERB_IDS } from "./components/data/herbs";
 import { getWorkerHireCost, WORKER_IDS, WORKERS } from "./components/data/workers";
 import { BuildingId } from "./components/data/upgrades";
 import { Button } from "../components/common/Button/Button";
-import { useAnimation } from "./context/animationContext";
 import { SectionWrapper } from "./components/SectionWrapper";
 import { Laboratory } from "./components/laboratory/Laboratory";
 import { Market } from "./components/market/Market";
@@ -17,17 +16,14 @@ import { GiBeerStein } from "react-icons/gi";
 import { displayNumber, displayTimer } from "./helpers/displayValueHelper";
 import { Gardens } from "./components/gardens/Gardens";
 import { ResourcesPanel } from "./components/ResourcesPanel";
-import { Modal } from "../components/common/Modal/Modal";
 import { MdSettings } from "react-icons/md";
 import { GiStakeHammer } from "react-icons/gi";
 import { UpgradeMenu } from "./components/UpgradeMenu";
 import { NewWrapper } from "./components/NewWrapper";
 import Church from "./components/church/Church";
 import { WinScreen } from "./components/WinScreen";
-import { Leaderboard } from "./components/Leaderboard";
-import { useLeaderboard } from "./hooks/use-leaderboard";
-import useUserContext from "@/hooks/use-user-context";
 import { GiCrown } from "react-icons/gi";
+import { SettingsMenu } from "./components/SettingsMenu";
 
 export default function GameMain() {
 	const {
@@ -44,7 +40,6 @@ export default function GameMain() {
 		throneTimeMs,
 		elapsedPlayTimeMs,
 	} = useContext(GameContext);
-	const { active, toggleActive } = useAnimation();
 	const {
 		tutorialSettings,
 		newComponents,
@@ -57,7 +52,6 @@ export default function GameMain() {
 	const demandSelling = isUpgradePurchased("market.demand_selling");
 	const churchUnlocked = isUpgradePurchased("tavern.church");
 	const hasWonGame = throneTimeMs !== null;
-	const { user } = useUserContext();
 
 	const [showSettings, setShowSettings] = useState(false);
 	const [showGardenUpgradeMenu, setShowGardenUpgradeMenu] = useState(false);
@@ -65,8 +59,6 @@ export default function GameMain() {
 	const [showMarketUpgradeMenu, setShowMarketUpgradeMenu] = useState(false);
 	const [showTavernUpgradeMenu, setShowTavernUpgradeMenu] = useState(false);
 	const [showWinScreen, setShowWinScreen] = useState(false);
-	const [showLeaderboard, setShowLeaderboard] = useState(false);
-	const { top10, loading } = useLeaderboard(showLeaderboard);
 
 	useEffect(() => {
 		if (hasWonGame && !winScreenSeen) {
@@ -181,63 +173,10 @@ export default function GameMain() {
 						resetGame={handleResetGame}
 					/>
 
-					<Modal
+					<SettingsMenu
 						open={showSettings}
 						onClose={() => setShowSettings(false)}
-						// title="Settings"
-						size="small"
-						body={
-							<div className="flex flex-col items-center gap-2">
-								<Button
-									onClick={() => {
-										toggleActive();
-										setShowSettings(false);
-									}}
-									className="w-full gap-2"
-								>
-									<span>✨</span>
-									<span>Animations {active ? "ON" : "OFF"}</span>
-								</Button>
-								<Button
-									onClick={() => {
-										setShowLeaderboard(true);
-										setShowSettings(false);
-									}}
-									className="w-full gap-2"
-								>
-									<span>🏆</span>
-									<span>View Leaderboard</span>
-								</Button>
-								<Button
-									onClick={() => {
-										handleResetGame();
-										setShowSettings(false);
-									}}
-									className="w-full"
-									variant="destructive"
-								>
-									Reset Game
-								</Button>
-							</div>
-						}
-					/>
-
-					<Modal
-						open={showLeaderboard}
-						onClose={() => setShowLeaderboard(false)}
-						size="medium"
-						body={
-							<div className="flex flex-col items-center justify-center gap-4">
-								<p className="text-center text-lg font-bold">
-									Herb Garden Leaderboard
-								</p>
-								<Leaderboard
-									entries={top10}
-									highlightUid={user?.uid}
-									loading={loading}
-								/>
-							</div>
-						}
+						handleReset={handleResetGame}
 					/>
 
 					<div className="mb-[-22px]">
@@ -268,7 +207,7 @@ export default function GameMain() {
 						title="Laboratory"
 						subtitle={
 							tutorialSettings.showWorkers
-								? `${workers.apothecaries} Apothecar${workers.apothecaries !== 1 ? "ies" : "y"}. Order potions by crafting preference.`
+								? `${workers.apothecaries} Apothecar${workers.apothecaries !== 1 ? "ies" : "y"}. ${tutorialSettings.showUnlocks ? "Order potions by crafting preference." : ""}`
 								: "Click to brew potions."
 						}
 						icon={<FaMortarPestle />}
