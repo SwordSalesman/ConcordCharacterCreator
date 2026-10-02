@@ -31,7 +31,7 @@ import { UPGRADE_IDS, type UpgradeId } from "../components/data/upgrades";
 // In practice sanitizing often calls normalizing once the raw value has been made type-safe.
 export const GAME_AUTOSAVE_INTERVAL_MS = 3000;
 export const GAME_SAVE_KEY = "apothecary.save.v1";
-const GAME_SAVE_VERSION = 1;
+const GAME_SAVE_VERSION = 3;
 
 interface PersistedMarketTrend {
 	tag?: Tag;
@@ -60,7 +60,7 @@ interface PersistedGameStateV1 {
 }
 
 interface PersistedGameSave {
-	version: 1;
+	version: 3;
 	updatedAt: string;
 	state: PersistedGameStateV1;
 }
