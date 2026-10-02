@@ -9,19 +9,27 @@ import {
 	type UpgradeId,
 	AggregatedUpgradeEffects,
 } from "../components/data/upgrades";
+import { CEREMONIES, CEREMONY_IDS, type CeremonyId } from "../components/data/ceremonies";
+import { createBooleanRecord, createCountRecord } from "../components/data/gameData";
 import {
-	createBooleanRecord,
-	createCountRecord,
-	getWorkerHireTotalCost,
 	HERB_IDS,
+	type HerbId,
+	HERB_BASE_UNLOCK_COST,
+	HERB_UNLOCK_COST_SCALE,
+} from "../components/data/herbs";
+import {
 	POTIONS,
 	POTION_IDS,
-	WORKER_IDS,
-	type HerbId,
+	POTION_UNLOCK_COST_SCALE,
 	type PotionId,
+	type Tag,
+} from "../components/data/potions";
+import {
+	getWorkerHireTotalCost,
+	WORKER_IDS,
+	WORKERS,
 	type WorkerId,
-	HERB_BASE_UNLOCK_COST,
-} from "../components/data/gameData";
+} from "../components/data/workers";
 import {
 	clearSavedGame,
 	GAME_AUTOSAVE_INTERVAL_MS,
@@ -31,16 +39,34 @@ import {
 
 const GAME_CLOCK_INTERVAL_MS = 100;
 
+export interface MarketTrend {
+	tag?: Tag;
+	herbIds?: HerbId[];
+}
+
 interface GameContextInterface {
 	herbs: Record<HerbId, number>;
 	unlockedHerbs: Record<HerbId, boolean>;
 	potions: Record<PotionId, number>;
+	potionDemand: Record<PotionId, number>;
+	minPotionDemand: number;
+	maxPotionDemand: number;
+	activeTrend: MarketTrend | null;
+	trendRemainingMs: number;
 	unlockedPotions: Record<PotionId, boolean>;
 	purchasedUpgrades: Record<UpgradeId, boolean>;
 	money: number;
+	elapsedPlayTimeMs: number;
+	throneTimeMs: number | null;
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
+	crystalMana: number;
+	maxCrystalMana: number;
+	unlockedCeremonies: Record<CeremonyId, boolean>;
+	activeCeremonyId: CeremonyId | null;
+	activeCeremonyRemainingMs: number;
+	ceremonyDurationMs: number;
 	getHerbUnlockCost: () => number;
 	canUnlockHerb: () => boolean;
 	getPotionUnlockCost: (potionId: PotionId) => number;
@@ -48,8 +74,20 @@ interface GameContextInterface {
 	canUnlockPotion: (potionId: PotionId) => boolean;
 	canCraftPotion: (potionId: PotionId) => boolean;
 	canSellPotion: (potionId: PotionId) => boolean;
+	getPotionDemand: (potionId: PotionId) => number;
+	isPotionTrending: (potionId: PotionId) => boolean;
+	getPotionTrendMultiplier: (potionId: PotionId) => number;
 	getEffectivePotionSellValue: (potionId: PotionId) => number;
+	getEffectivePotionDemand: (potionId: PotionId) => number;
 	canHireWorker: (workerId: WorkerId) => boolean;
+	getCeremonyUnlockCost: (ceremonyId: CeremonyId) => number;
+	canUnlockCeremony: (ceremonyId: CeremonyId) => boolean;
+	unlockCeremony: (ceremonyId: CeremonyId) => void;
+	canCastCeremony: (ceremonyId: CeremonyId) => boolean;
+	castCeremony: (ceremonyId: CeremonyId) => void;
+	isCeremonyActive: (ceremonyId: CeremonyId) => boolean;
+	canPray: () => boolean;
+	pray: () => void;
 	getBuildingUpgrades: (buildingId: BuildingId) => UpgradeId[];
 	isUpgradePurchased: (upgradeId: UpgradeId) => boolean;
 	canPurchaseUpgrade: (upgradeId: UpgradeId) => boolean;
@@ -71,7 +109,12 @@ interface GameContextInterface {
 	resetGame: () => void;
 }
 
-export type AnimationAnchorId = `herb:${HerbId}` | `craft:${PotionId}` | `sell:${PotionId}`;
+export type AnimationAnchorId =
+	| `herb:${HerbId}`
+	| `craft:${PotionId}`
+	| `sell:${PotionId}`
+	| "mana"
+	| `pray:${CeremonyId}`;
 
 export type GameDeltaEvent =
 	| {
@@ -100,27 +143,56 @@ export type GameDeltaEvent =
 			amount: number;
 			magnitude: number;
 			source: "manual" | "passive";
+	  }
+	| {
+			id: number;
+			type: "manaGain";
+			anchorId: "mana";
+			amount: number;
+			magnitude: number;
+			source: "manual" | "passive";
+	  }
+	| {
+			id: number;
+			type: "pray";
+			anchorId: `pray:${CeremonyId}`;
+			amount: number;
+			magnitude: number;
+			text: string;
+			source: "manual" | "passive";
 	  };
 
 type GameDeltaEventInput =
 	| Omit<Extract<GameDeltaEvent, { type: "herbGain" }>, "id">
 	| Omit<Extract<GameDeltaEvent, { type: "potionCraft" }>, "id">
-	| Omit<Extract<GameDeltaEvent, { type: "potionSell" }>, "id">;
+	| Omit<Extract<GameDeltaEvent, { type: "potionSell" }>, "id">
+	| Omit<Extract<GameDeltaEvent, { type: "manaGain" }>, "id">
+	| Omit<Extract<GameDeltaEvent, { type: "pray" }>, "id">;
 
 interface GameState {
 	herbs: Record<HerbId, number>;
 	unlockedHerbs: Record<HerbId, boolean>;
 	potions: Record<PotionId, number>;
+	potionDemand: Record<PotionId, number>;
+	activeTrend: MarketTrend | null;
+	trendRemainingMs: number;
 	unlockedPotions: Record<PotionId, boolean>;
 	purchasedUpgrades: Record<UpgradeId, boolean>;
 	money: number;
+	elapsedPlayTimeMs: number;
+	throneTimeMs: number | null;
 	workers: Record<WorkerId, number>;
 	farmerAssignments: Record<HerbId, number>;
 	apothecaryPreferences: PotionId[];
+	crystalMana: number;
+	unlockedCeremonies: Record<CeremonyId, boolean>;
+	activeCeremonyId: CeremonyId | null;
+	activeCeremonyRemainingMs: number;
 	accumulators: {
 		herbProduction: Record<HerbId, number>;
 		craftAttempts: number;
 		sellAttempts: number;
+		crystalManaProduction: number;
 	};
 	deltaEvents: GameDeltaEvent[];
 	nextDeltaEventId: number;
@@ -149,6 +221,17 @@ type GameAction =
 	| {
 			type: "UNLOCK_POTION";
 			potionId: PotionId;
+	  }
+	| {
+			type: "UNLOCK_CEREMONY";
+			ceremonyId: CeremonyId;
+	  }
+	| {
+			type: "CAST_CEREMONY";
+			ceremonyId: CeremonyId;
+	  }
+	| {
+			type: "PRAY";
 	  }
 	| {
 			type: "PURCHASE_UPGRADE";
@@ -189,11 +272,21 @@ type GameAction =
 			state: GameState;
 	  };
 
-const FARMER_ACTIONS_PER_SECOND = 0.5;
-const APOTHECARY_CRAFT_ATTEMPTS_PER_SECOND = 0.3;
-const MERCHANT_SELL_ATTEMPTS_PER_SECOND = 0.3;
-const HERB_UNLOCK_COST_SCALE = 2.2;
-const POTION_UNLOCK_COST_SCALE = 1.25;
+const DEMAND_UPGRADE_ID: UpgradeId = "market.demand_based_pricing";
+const DEFAULT_POTION_DEMAND = 1;
+const MIN_POTION_DEMAND = 0.5;
+const MAX_POTION_DEMAND = 1.5;
+const DEMAND_LOSS_PER_POTION = 0.025;
+const DEMAND_RECOVERY_PER_SECOND = 0.015;
+const TAG_TREND_UPGRADE_ID: UpgradeId = "market.trends_tags";
+const INGREDIENT_TREND_UPGRADE_ID: UpgradeId = "market.trends_ingredients";
+const TREND_DURATION_MS = 30_000;
+const TREND_SELL_VALUE_MULTIPLIER = 1.5;
+const COMBINED_TREND_SELL_VALUE_MULTIPLIER = 2;
+const CEREMONY_DURATION_MS = 15_000;
+const CEREMONY_PRAY_EXTENSION_MS = 100;
+const MAX_CRYSTAL_MANA = 100;
+const THRONE_UPGRADE_ID: UpgradeId = "tavern.throne";
 
 export const INITIAL_UNLOCKED_HERBS: HerbId[] = ["GS", "TB"];
 export const INITIAL_UNLOCKED_HERBS_RECORD = HERB_IDS.reduce(
@@ -220,6 +313,8 @@ const STARTING_UNLOCKED_HERB_COUNT = HERB_IDS.filter((herbId) =>
 const STARTING_UNLOCKED_POTION_COUNT = POTION_IDS.filter((potionId) =>
 	INITIAL_UNLOCKED_POTIONS.includes(potionId),
 ).length;
+
+export const INITIAL_UNLOCKED_CEREMONIES_RECORD = createBooleanRecord(CEREMONY_IDS);
 
 const UPGRADES_BY_BUILDING: Record<BuildingId, UpgradeId[]> = BUILDING_IDS.reduce(
 	(record, buildingId) => {
@@ -308,6 +403,40 @@ function getCraftableCount(
 	return craftableCount;
 }
 
+/**
+ * Selects a craftable potion based on weighted preferences.
+ * Returns null if no craftable potion is available.
+ */
+function selectWeightedCraftablePotion(
+	herbs: Record<HerbId, number>,
+	preferences: PotionId[],
+	unlockedPotions: Record<PotionId, boolean>,
+): PotionId | null {
+	const craftablePotions = preferences.filter(
+		(potionId) => unlockedPotions[potionId] && getCraftableCount(herbs, potionId, 1) > 0,
+	);
+
+	const n = craftablePotions.length;
+	// Need to weight higher-preference potions even more heavily.
+	const weights = craftablePotions.map((_, index) => n * 0.6 ** ((4 * index) / n + 1));
+
+	const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+
+	if (totalWeight === 0) {
+		return null;
+	}
+
+	let selection = Math.random() * totalWeight;
+	for (let index = 0; index < craftablePotions.length; index++) {
+		selection -= weights[index];
+		if (selection < 0) {
+			return craftablePotions[index];
+		}
+	}
+
+	return craftablePotions[craftablePotions.length - 1];
+}
+
 function getUnlockedHerbCount(unlockedHerbs: Record<HerbId, boolean>): number {
 	return HERB_IDS.filter((herbId) => unlockedHerbs[herbId]).length;
 }
@@ -372,20 +501,44 @@ function canUnlockPotionTierForState(
 	return purchasedUpgrades[requiredUpgradeId];
 }
 
-function getUpgradeEffects(
-	purchasedUpgrades: Record<UpgradeId, boolean>,
-): AggregatedUpgradeEffects {
+function getBuffEffects({
+	purchasedUpgrades,
+	activeCeremony,
+}: {
+	purchasedUpgrades: Record<UpgradeId, boolean>;
+	activeCeremony: CeremonyId | null;
+}): AggregatedUpgradeEffects {
 	const aggregated: AggregatedUpgradeEffects = {
 		farmerRateMultiplier: 1,
 		apothecaryRateMultiplier: 1,
 		merchantRateMultiplier: 1,
+		priestRateMultiplier: 1,
 		potionSellValueMultiplier: 1,
 		manualHerbGatherMultiplier: 1,
 		manualPotionCraftMultiplier: 1,
 		manualPotionSellMultiplier: 1,
 		workerRateMultiplier: 1,
 		apothecaryExtraPotionChance: 0,
+		potionDemandMaxIncrease: 0,
+		potionDemandRecoveryMultiplier: 1,
+		potionDemandLossMultiplier: 1,
 	};
+
+	function applyEffectToAggregated(effect: UpgradeEffect) {
+		aggregated.farmerRateMultiplier *= effect.farmerRateMultiplier ?? 1;
+		aggregated.apothecaryRateMultiplier *= effect.apothecaryRateMultiplier ?? 1;
+		aggregated.merchantRateMultiplier *= effect.merchantRateMultiplier ?? 1;
+		aggregated.priestRateMultiplier *= effect.priestRateMultiplier ?? 1;
+		aggregated.potionSellValueMultiplier *= effect.potionSellValueMultiplier ?? 1;
+		aggregated.manualHerbGatherMultiplier *= effect.manualHerbGatherMultiplier ?? 1;
+		aggregated.manualPotionCraftMultiplier *= effect.manualPotionCraftMultiplier ?? 1;
+		aggregated.manualPotionSellMultiplier *= effect.manualPotionSellMultiplier ?? 1;
+		aggregated.workerRateMultiplier *= effect.workerRateMultiplier ?? 1;
+		aggregated.apothecaryExtraPotionChance += effect.apothecaryExtraPotionChance ?? 0;
+		aggregated.potionDemandMaxIncrease += effect.potionDemandMaxIncrease ?? 0;
+		aggregated.potionDemandRecoveryMultiplier *= effect.potionDemandRecoveryMultiplier ?? 1;
+		aggregated.potionDemandLossMultiplier *= effect.potionDemandLossMultiplier ?? 1;
+	}
 
 	for (const upgradeId of UPGRADE_IDS) {
 		if (!purchasedUpgrades[upgradeId]) {
@@ -393,15 +546,12 @@ function getUpgradeEffects(
 		}
 
 		const effect: UpgradeEffect = UPGRADES[upgradeId].effects;
-		aggregated.farmerRateMultiplier *= effect.farmerRateMultiplier ?? 1;
-		aggregated.apothecaryRateMultiplier *= effect.apothecaryRateMultiplier ?? 1;
-		aggregated.merchantRateMultiplier *= effect.merchantRateMultiplier ?? 1;
-		aggregated.potionSellValueMultiplier *= effect.potionSellValueMultiplier ?? 1;
-		aggregated.manualHerbGatherMultiplier *= effect.manualHerbGatherMultiplier ?? 1;
-		aggregated.manualPotionCraftMultiplier *= effect.manualPotionCraftMultiplier ?? 1;
-		aggregated.manualPotionSellMultiplier *= effect.manualPotionSellMultiplier ?? 1;
-		aggregated.workerRateMultiplier *= effect.workerRateMultiplier ?? 1;
-		aggregated.apothecaryExtraPotionChance += effect.apothecaryExtraPotionChance ?? 0;
+		applyEffectToAggregated(effect);
+	}
+
+	if (activeCeremony) {
+		const ceremonyEffect: UpgradeEffect = CEREMONIES[activeCeremony].effects;
+		applyEffectToAggregated(ceremonyEffect);
 	}
 
 	return aggregated;
@@ -432,12 +582,158 @@ function canPurchaseUpgradeForState(state: GameState, upgradeId: UpgradeId): boo
 	return state.money >= UPGRADES[upgradeId].cost;
 }
 
+// Generate all possible market trend candidates based on potion tags and ingredient combinations.
+// Run this once to generate all possible trend candidates
+function getTrendCandidates(): MarketTrend[] {
+	const tags = Array.from(new Set(POTION_IDS.flatMap((potionId) => POTIONS[potionId].tags)));
+	const candidates: MarketTrend[] = tags.map((tag) => ({ tag }));
+	const ingredientKeys = new Set<string>();
+	const combinedKeys = new Set<string>();
+
+	for (const potionId of POTION_IDS) {
+		const herbIds = HERB_IDS.filter((herbId) => (POTIONS[potionId].recipe[herbId] ?? 0) > 0);
+		for (let firstIndex = 0; firstIndex < herbIds.length; firstIndex++) {
+			for (let secondIndex = firstIndex + 1; secondIndex < herbIds.length; secondIndex++) {
+				const ingredientKey = `${herbIds[firstIndex]},${herbIds[secondIndex]}`;
+				ingredientKeys.add(ingredientKey);
+				for (const tag of POTIONS[potionId].tags) {
+					combinedKeys.add(`${tag}|${ingredientKey}`);
+				}
+			}
+		}
+	}
+	for (const key of ingredientKeys) {
+		candidates.push({ herbIds: key.split(",") as HerbId[] });
+	}
+	for (const key of combinedKeys) {
+		const [tag, ingredientKey] = key.split("|");
+		candidates.push({
+			tag: tag as Tag,
+			herbIds: ingredientKey.split(",") as HerbId[],
+		});
+	}
+
+	return candidates;
+}
+
+const ALL_TREND_CANDIDATES = getTrendCandidates();
+
+function createRandomTrend(
+	state: GameState,
+	previousTrend: MarketTrend | null = null,
+): MarketTrend | null {
+	if (!state.purchasedUpgrades[TAG_TREND_UPGRADE_ID]) {
+		return null;
+	}
+
+	// Roll to see if the trend will be just ingredients (25%), just tags (25%), or both (50%)!
+	// The player's unlocked upgrades will determine which types of trends can appear.
+	const ingredientTrendsUnlocked = state.purchasedUpgrades[INGREDIENT_TREND_UPGRADE_ID];
+	const tagTrendsUnlocked = state.purchasedUpgrades[TAG_TREND_UPGRADE_ID];
+
+	let candidates = ALL_TREND_CANDIDATES;
+	if (ingredientTrendsUnlocked && tagTrendsUnlocked) {
+		// Both types of trends are unlocked
+		const roll = Math.random();
+		if (roll < 0.25) {
+			// Just ingredients
+			candidates = candidates.filter((candidate) => !candidate.tag);
+		} else if (roll < 0.5) {
+			// Just tags
+			candidates = candidates.filter((candidate) => !candidate.herbIds);
+		} else {
+			// Both ingredients and tags
+			candidates = candidates.filter((candidate) => candidate.herbIds && candidate.tag);
+		}
+	} else if (ingredientTrendsUnlocked) {
+		// Only ingredient trends are unlocked
+		candidates = candidates.filter((candidate) => candidate.herbIds && !candidate.tag);
+	} else if (tagTrendsUnlocked) {
+		// Only tag trends are unlocked
+		candidates = candidates.filter((candidate) => candidate.tag && !candidate.herbIds);
+	} else {
+		// No trends are unlocked
+		return null;
+	}
+
+	if (candidates.length === 0) {
+		return null;
+	}
+	const previousKey = previousTrend ? JSON.stringify(previousTrend) : null;
+	const newCandidates = candidates.filter(
+		(candidate) => JSON.stringify(candidate) !== previousKey,
+	);
+	const availableCandidates = newCandidates.length > 0 ? newCandidates : candidates;
+	return availableCandidates[Math.floor(Math.random() * availableCandidates.length)];
+}
+
+function doesPotionMatchTrend(potionId: PotionId, trend: MarketTrend | null): boolean {
+	if (!trend) {
+		return false;
+	}
+	const matchesTag = !trend.tag || POTIONS[potionId].tags.includes(trend.tag);
+	const matchesIngredients =
+		!trend.herbIds ||
+		trend.herbIds.every((herbId) => (POTIONS[potionId].recipe[herbId] ?? 0) > 0);
+	return matchesTag && matchesIngredients;
+}
+
+function getTrendSellValueMultiplier(trend: MarketTrend | null): number {
+	if (!trend) {
+		return 1;
+	}
+	return trend.tag && trend.herbIds
+		? COMBINED_TREND_SELL_VALUE_MULTIPLIER
+		: TREND_SELL_VALUE_MULTIPLIER;
+}
+
+function getEffectivePotionDemandState(
+	potionId: PotionId,
+	purchasedUpgrades: Record<UpgradeId, boolean>,
+	potionDemand: Record<PotionId, number>,
+	activeTrend: MarketTrend | null,
+): number {
+	const demandBaseMultiplier = purchasedUpgrades[DEMAND_UPGRADE_ID]
+		? potionDemand[potionId]
+		: DEFAULT_POTION_DEMAND;
+	const trendMultiplier = doesPotionMatchTrend(potionId, activeTrend)
+		? getTrendSellValueMultiplier(activeTrend)
+		: 1;
+	return demandBaseMultiplier * trendMultiplier;
+}
+
 function getEffectivePotionSellValueState(
 	potionId: PotionId,
 	purchasedUpgrades: Record<UpgradeId, boolean>,
+	potionDemand: Record<PotionId, number>,
+	activeTrend: MarketTrend | null,
+	activeCeremony: CeremonyId | null,
 ): number {
-	const effects = getUpgradeEffects(purchasedUpgrades);
-	return Math.max(1, Math.ceil(POTIONS[potionId].sellValue * effects.potionSellValueMultiplier));
+	const effects = getBuffEffects({ purchasedUpgrades, activeCeremony });
+	const effectiveDemandMultiplier = getEffectivePotionDemandState(
+		potionId,
+		purchasedUpgrades,
+		potionDemand,
+		activeTrend,
+	);
+	return Math.max(
+		1,
+		Math.ceil(
+			POTIONS[potionId].sellValue *
+				effects.potionSellValueMultiplier *
+				effectiveDemandMultiplier,
+		),
+	);
+}
+
+function createPotionDemandRecord(): Record<PotionId, number> {
+	return POTION_IDS.reduce(
+		(record, potionId) => {
+			record[potionId] = DEFAULT_POTION_DEMAND;
+			return record;
+		},
+		{} as Record<PotionId, number>,
+	);
 }
 
 function createInitialGameState(): GameState {
@@ -445,16 +741,26 @@ function createInitialGameState(): GameState {
 		herbs: createCountRecord(HERB_IDS),
 		unlockedHerbs: { ...INITIAL_UNLOCKED_HERBS_RECORD },
 		potions: createCountRecord(POTION_IDS),
+		potionDemand: createPotionDemandRecord(),
+		activeTrend: null,
+		trendRemainingMs: 0,
 		unlockedPotions: { ...INITIAL_UNLOCKED_POTIONS_RECORD },
 		purchasedUpgrades: createBooleanRecord(UPGRADE_IDS),
 		money: process.env.NEXT_PUBLIC_HERB_JUMPSTART === "true" ? 100000000 : 0,
+		elapsedPlayTimeMs: 0,
+		throneTimeMs: null,
 		workers: createCountRecord(WORKER_IDS),
 		farmerAssignments: createCountRecord(HERB_IDS),
 		apothecaryPreferences: ["EV", "CS"],
+		crystalMana: 0,
+		unlockedCeremonies: { ...INITIAL_UNLOCKED_CEREMONIES_RECORD },
+		activeCeremonyId: null,
+		activeCeremonyRemainingMs: 0,
 		accumulators: {
 			herbProduction: createCountRecord(HERB_IDS),
 			craftAttempts: 0,
 			sellAttempts: 0,
+			crystalManaProduction: 0,
 		},
 		deltaEvents: [],
 		nextDeltaEventId: 1,
@@ -466,7 +772,10 @@ const initialGameState = createInitialGameState();
 function gameReducer(state: GameState, action: GameAction): GameState {
 	switch (action.type) {
 		case "GATHER_HERB": {
-			const effects = getUpgradeEffects(state.purchasedUpgrades);
+			const effects = getBuffEffects({
+				purchasedUpgrades: state.purchasedUpgrades,
+				activeCeremony: state.activeCeremonyId,
+			});
 			const gainedAmount = Math.max(
 				0,
 				Math.floor(action.amount) * effects.manualHerbGatherMultiplier,
@@ -600,19 +909,93 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				),
 			};
 		}
-		case "PURCHASE_UPGRADE": {
-			if (!canPurchaseUpgradeForState(state, action.upgradeId)) {
+		case "UNLOCK_CEREMONY": {
+			if (state.unlockedCeremonies[action.ceremonyId]) {
+				return state;
+			}
+
+			const unlockCost = CEREMONIES[action.ceremonyId].unlockCost;
+			if (state.money < unlockCost) {
 				return state;
 			}
 
 			return {
 				...state,
-				money: state.money - UPGRADES[action.upgradeId].cost,
-				purchasedUpgrades: {
-					...state.purchasedUpgrades,
-					[action.upgradeId]: true,
+				money: state.money - unlockCost,
+				unlockedCeremonies: {
+					...state.unlockedCeremonies,
+					[action.ceremonyId]: true,
 				},
 			};
+		}
+		case "CAST_CEREMONY": {
+			if (!state.unlockedCeremonies[action.ceremonyId] || state.activeCeremonyId !== null) {
+				return state;
+			}
+
+			const manaCost = CEREMONIES[action.ceremonyId].manaCost;
+			if (state.crystalMana < manaCost) {
+				return state;
+			}
+
+			return {
+				...state,
+				crystalMana: state.crystalMana - manaCost,
+				activeCeremonyId: action.ceremonyId,
+				activeCeremonyRemainingMs: CEREMONY_DURATION_MS,
+			};
+		}
+		case "PRAY": {
+			if (state.activeCeremonyId === null) {
+				return state;
+			}
+
+			const deltaEvents = [...state.deltaEvents];
+			const nextDeltaEventId = addDeltaEvent(deltaEvents, state.nextDeltaEventId, {
+				type: "pray",
+				anchorId: `pray:${state.activeCeremonyId}`,
+				amount: 1,
+				magnitude: CEREMONY_PRAY_EXTENSION_MS,
+				text: "+" + CEREMONY_PRAY_EXTENSION_MS / 1000 + "s",
+				source: "manual",
+			});
+
+			return {
+				...state,
+				activeCeremonyRemainingMs: Math.min(
+					CEREMONY_DURATION_MS,
+					state.activeCeremonyRemainingMs + CEREMONY_PRAY_EXTENSION_MS,
+				),
+				deltaEvents,
+				nextDeltaEventId,
+			};
+		}
+		case "PURCHASE_UPGRADE": {
+			if (!canPurchaseUpgradeForState(state, action.upgradeId)) {
+				return state;
+			}
+
+			const purchasedUpgrades = {
+				...state.purchasedUpgrades,
+				[action.upgradeId]: true,
+			};
+			const nextState = {
+				...state,
+				money: state.money - UPGRADES[action.upgradeId].cost,
+				purchasedUpgrades,
+				// Freeze the player's Time to Throne the moment the win upgrade is bought; playtime keeps counting afterward.
+				throneTimeMs:
+					action.upgradeId === THRONE_UPGRADE_ID && state.throneTimeMs === null
+						? state.elapsedPlayTimeMs
+						: state.throneTimeMs,
+			};
+			return action.upgradeId === TAG_TREND_UPGRADE_ID
+				? {
+						...nextState,
+						activeTrend: createRandomTrend(nextState),
+						trendRemainingMs: TREND_DURATION_MS,
+					}
+				: nextState;
 		}
 		case "SET_FARMER_HERB_ASSIGNMENT": {
 			const nextAssignments = normalizeFarmerAssignments(
@@ -636,7 +1019,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			};
 		}
 		case "CRAFT_POTION": {
-			const effects = getUpgradeEffects(state.purchasedUpgrades);
+			const effects = getBuffEffects({
+				purchasedUpgrades: state.purchasedUpgrades,
+				activeCeremony: state.activeCeremonyId,
+			});
 			const requestedAmount = Math.max(
 				0,
 				Math.floor(action.amount) * effects.manualPotionCraftMultiplier,
@@ -680,7 +1066,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			};
 		}
 		case "SELL_POTION": {
-			const effects = getUpgradeEffects(state.purchasedUpgrades);
+			const effects = getBuffEffects({
+				purchasedUpgrades: state.purchasedUpgrades,
+				activeCeremony: state.activeCeremonyId,
+			});
 			const requestedAmount = Math.max(
 				0,
 				Math.floor(action.amount) * effects.manualPotionSellMultiplier,
@@ -697,7 +1086,22 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			const sellValue = getEffectivePotionSellValueState(
 				action.potionId,
 				state.purchasedUpgrades,
+				state.potionDemand,
+				state.activeTrend,
+				state.activeCeremonyId,
 			);
+			const potionDemand = state.purchasedUpgrades[DEMAND_UPGRADE_ID]
+				? {
+						...state.potionDemand,
+						[action.potionId]: Math.max(
+							MIN_POTION_DEMAND,
+							state.potionDemand[action.potionId] -
+								sellCount *
+									DEMAND_LOSS_PER_POTION *
+									effects.potionDemandLossMultiplier,
+						),
+					}
+				: state.potionDemand;
 
 			return {
 				...state,
@@ -705,6 +1109,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					...state.potions,
 					[action.potionId]: state.potions[action.potionId] - sellCount,
 				},
+				potionDemand,
 				money: state.money + sellCount * sellValue,
 				deltaEvents: [
 					...state.deltaEvents,
@@ -728,10 +1133,47 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			}
 
 			const dtSeconds = dtMs / 1000;
-			const effects = getUpgradeEffects(state.purchasedUpgrades);
+			const effects = getBuffEffects({
+				purchasedUpgrades: state.purchasedUpgrades,
+				activeCeremony: state.activeCeremonyId,
+			});
+			let activeTrend = state.activeTrend;
+			let trendRemainingMs = state.trendRemainingMs;
+			if (state.purchasedUpgrades[TAG_TREND_UPGRADE_ID]) {
+				trendRemainingMs -= dtMs;
+				if (!activeTrend || trendRemainingMs <= 0) {
+					activeTrend = createRandomTrend(state, activeTrend);
+					trendRemainingMs = TREND_DURATION_MS;
+				}
+			}
+			let activeCeremonyId = state.activeCeremonyId;
+			let activeCeremonyRemainingMs = state.activeCeremonyRemainingMs;
+			if (activeCeremonyId !== null) {
+				activeCeremonyRemainingMs -= dtMs;
+				if (activeCeremonyRemainingMs <= 0) {
+					activeCeremonyId = null;
+					activeCeremonyRemainingMs = 0;
+				}
+			}
 			const nextHerbs = { ...state.herbs };
 			const nextPotions = { ...state.potions };
+			const nextPotionDemand = { ...state.potionDemand };
+			const demandEnabled = state.purchasedUpgrades[DEMAND_UPGRADE_ID];
+			const maxPotionDemand = MAX_POTION_DEMAND + effects.potionDemandMaxIncrease;
+			if (demandEnabled) {
+				for (const potionId of POTION_IDS) {
+					nextPotionDemand[potionId] = Math.min(
+						maxPotionDemand,
+						nextPotionDemand[potionId] +
+							DEMAND_RECOVERY_PER_SECOND *
+								effects.potionDemandRecoveryMultiplier *
+								dtSeconds,
+					);
+				}
+			}
 			const nextHerbProductionAcc = { ...state.accumulators.herbProduction };
+			let nextCrystalManaProductionAcc = state.accumulators.crystalManaProduction;
+			let nextCrystalMana = state.crystalMana;
 			let nextMoney = state.money;
 			const deltaEvents = [...state.deltaEvents];
 			let nextDeltaEventId = state.nextDeltaEventId;
@@ -748,7 +1190,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				const assignedFarmers = state.farmerAssignments[herbId];
 				const herbRatePerSecond =
 					assignedFarmers *
-					FARMER_ACTIONS_PER_SECOND *
+					WORKERS.farmers.actionsPerSecond *
 					effects.farmerRateMultiplier *
 					effects.workerRateMultiplier;
 				nextHerbProductionAcc[herbId] += herbRatePerSecond * dtSeconds;
@@ -767,10 +1209,37 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				}
 			}
 
+			const priestManaRatePerSecond =
+				state.workers.priests *
+				WORKERS.priests.actionsPerSecond *
+				effects.priestRateMultiplier *
+				effects.workerRateMultiplier;
+			nextCrystalManaProductionAcc += priestManaRatePerSecond * dtSeconds;
+			const producedMana = Math.floor(nextCrystalManaProductionAcc);
+			if (producedMana > 0) {
+				// Spent the production attempt even if storage is full, same as a failed craft attempt.
+				nextCrystalManaProductionAcc -= producedMana;
+				const grantedMana = Math.min(producedMana, MAX_CRYSTAL_MANA - nextCrystalMana);
+				if (grantedMana > 0) {
+					nextCrystalMana += grantedMana;
+					nextDeltaEventId = addDeltaEvent(deltaEvents, nextDeltaEventId, {
+						type: "manaGain",
+						anchorId: "mana",
+						amount: grantedMana,
+						magnitude: 1,
+						source: "passive",
+					});
+				}
+			}
+
+			if (nextCrystalMana >= MAX_CRYSTAL_MANA) {
+				nextCrystalMana = MAX_CRYSTAL_MANA;
+			}
+
 			let nextCraftAttemptsAcc =
 				state.accumulators.craftAttempts +
 				state.workers.apothecaries *
-					APOTHECARY_CRAFT_ATTEMPTS_PER_SECOND *
+					WORKERS.apothecaries.actionsPerSecond *
 					effects.apothecaryRateMultiplier *
 					effects.workerRateMultiplier *
 					dtSeconds;
@@ -778,47 +1247,38 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			nextCraftAttemptsAcc -= wholeCraftAttempts;
 
 			for (let i = 0; i < wholeCraftAttempts; i++) {
-				let crafted = false;
-				for (const potionId of state.apothecaryPreferences) {
-					if (!state.unlockedPotions[potionId]) {
-						continue;
-					}
-
-					if (getCraftableCount(nextHerbs, potionId, 1) === 0) {
-						continue;
-					}
-
-					const recipe = POTIONS[potionId].recipe;
-					for (const herbId of HERB_IDS) {
-						const herbCost = recipe[herbId] ?? 0;
-						if (herbCost === 0) {
-							continue;
-						}
-						nextHerbs[herbId] -= herbCost;
-					}
-
-					const doubleCraftChance = effects.apothecaryExtraPotionChance;
-					if (Math.random() < doubleCraftChance) {
-						nextPotions[potionId] += 2;
-						doubleCraftedByPotion[potionId] += 1;
-					} else {
-						nextPotions[potionId] += 1;
-						craftedByPotion[potionId] += 1;
-					}
-
-					crafted = true;
+				const potionId = selectWeightedCraftablePotion(
+					nextHerbs,
+					state.apothecaryPreferences,
+					state.unlockedPotions,
+				);
+				if (!potionId) {
 					break;
 				}
 
-				if (!crafted) {
-					break;
+				const recipe = POTIONS[potionId].recipe;
+				for (const herbId of HERB_IDS) {
+					const herbCost = recipe[herbId] ?? 0;
+					if (herbCost === 0) {
+						continue;
+					}
+					nextHerbs[herbId] -= herbCost;
+				}
+
+				const doubleCraftChance = effects.apothecaryExtraPotionChance;
+				if (Math.random() < doubleCraftChance) {
+					nextPotions[potionId] += 2;
+					doubleCraftedByPotion[potionId] += 1;
+				} else {
+					nextPotions[potionId] += 1;
+					craftedByPotion[potionId] += 1;
 				}
 			}
 
 			let nextSellAttemptsAcc =
 				state.accumulators.sellAttempts +
 				state.workers.merchants *
-					MERCHANT_SELL_ATTEMPTS_PER_SECOND *
+					WORKERS.merchants.actionsPerSecond *
 					effects.merchantRateMultiplier *
 					effects.workerRateMultiplier *
 					dtSeconds;
@@ -827,9 +1287,35 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
 			for (let i = 0; i < wholeSellAttempts; i++) {
 				let sold = false;
-				const potionsByPrice = [...POTION_IDS].sort(
-					(a, b) => POTIONS[b].sellValue - POTIONS[a].sellValue,
-				);
+				const potionsByPrice = [...POTION_IDS].sort((a, b) => {
+					return state.purchasedUpgrades["market.demand_selling"]
+						? getEffectivePotionDemandState(
+								b,
+								state.purchasedUpgrades,
+								nextPotionDemand,
+								activeTrend,
+							) -
+								getEffectivePotionDemandState(
+									a,
+									state.purchasedUpgrades,
+									nextPotionDemand,
+									activeTrend,
+								)
+						: getEffectivePotionSellValueState(
+								b,
+								state.purchasedUpgrades,
+								nextPotionDemand,
+								activeTrend,
+								state.activeCeremonyId,
+							) -
+								getEffectivePotionSellValueState(
+									a,
+									state.purchasedUpgrades,
+									nextPotionDemand,
+									activeTrend,
+									state.activeCeremonyId,
+								);
+				});
 				for (const potionId of potionsByPrice) {
 					if (!state.unlockedPotions[potionId]) {
 						continue;
@@ -843,7 +1329,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					nextMoney += getEffectivePotionSellValueState(
 						potionId,
 						state.purchasedUpgrades,
+						nextPotionDemand,
+						activeTrend,
+						state.activeCeremonyId,
 					);
+					if (demandEnabled) {
+						nextPotionDemand[potionId] = Math.max(
+							MIN_POTION_DEMAND,
+							nextPotionDemand[potionId] -
+								DEMAND_LOSS_PER_POTION * effects.potionDemandLossMultiplier,
+						);
+					}
 					soldByPotion[potionId] += 1;
 					sold = true;
 					break;
@@ -891,13 +1387,21 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				herbs: nextHerbs,
 				potions: nextPotions,
+				potionDemand: nextPotionDemand,
+				activeTrend,
+				trendRemainingMs,
+				activeCeremonyId,
+				activeCeremonyRemainingMs,
 				money: nextMoney,
+				elapsedPlayTimeMs: state.elapsedPlayTimeMs + dtMs,
+				crystalMana: nextCrystalMana,
 				deltaEvents,
 				nextDeltaEventId,
 				accumulators: {
 					herbProduction: nextHerbProductionAcc,
 					craftAttempts: nextCraftAttemptsAcc,
 					sellAttempts: nextSellAttemptsAcc,
+					crystalManaProduction: nextCrystalManaProductionAcc,
 				},
 			};
 		}
@@ -926,12 +1430,25 @@ export const GameContext = createContext<GameContextInterface>({
 	herbs: initialGameState.herbs,
 	unlockedHerbs: initialGameState.unlockedHerbs,
 	potions: initialGameState.potions,
+	potionDemand: initialGameState.potionDemand,
+	minPotionDemand: MIN_POTION_DEMAND,
+	maxPotionDemand: MAX_POTION_DEMAND,
+	activeTrend: null,
+	trendRemainingMs: 0,
 	unlockedPotions: initialGameState.unlockedPotions,
 	purchasedUpgrades: initialGameState.purchasedUpgrades,
 	money: initialGameState.money,
+	elapsedPlayTimeMs: initialGameState.elapsedPlayTimeMs,
+	throneTimeMs: initialGameState.throneTimeMs,
 	workers: initialGameState.workers,
 	farmerAssignments: initialGameState.farmerAssignments,
 	apothecaryPreferences: initialGameState.apothecaryPreferences,
+	crystalMana: initialGameState.crystalMana,
+	maxCrystalMana: MAX_CRYSTAL_MANA,
+	unlockedCeremonies: initialGameState.unlockedCeremonies,
+	activeCeremonyId: initialGameState.activeCeremonyId,
+	activeCeremonyRemainingMs: initialGameState.activeCeremonyRemainingMs,
+	ceremonyDurationMs: CEREMONY_DURATION_MS,
 	getHerbUnlockCost: () => 0,
 	canUnlockHerb: () => false,
 	getPotionUnlockCost: () => 0,
@@ -940,7 +1457,19 @@ export const GameContext = createContext<GameContextInterface>({
 	canCraftPotion: () => false,
 	canSellPotion: () => false,
 	canHireWorker: () => false,
+	getCeremonyUnlockCost: () => 0,
+	canUnlockCeremony: () => false,
+	unlockCeremony: () => {},
+	canCastCeremony: () => false,
+	castCeremony: () => {},
+	isCeremonyActive: () => false,
+	canPray: () => false,
+	pray: () => {},
+	getPotionDemand: () => DEFAULT_POTION_DEMAND,
+	isPotionTrending: () => false,
+	getPotionTrendMultiplier: () => 0,
 	getEffectivePotionSellValue: () => 0,
+	getEffectivePotionDemand: () => 0,
 	getBuildingUpgrades: () => [],
 	isUpgradePurchased: () => false,
 	upgradePrerequisitesMet: () => false,
@@ -1010,11 +1539,88 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 	}
 
 	function getEffectivePotionSellValue(potionId: PotionId) {
-		return getEffectivePotionSellValueState(potionId, gameState.purchasedUpgrades);
+		return getEffectivePotionSellValueState(
+			potionId,
+			gameState.purchasedUpgrades,
+			gameState.potionDemand,
+			gameState.activeTrend,
+			gameState.activeCeremonyId,
+		);
+	}
+
+	function getEffectivePotionDemand(potionId: PotionId) {
+		return getEffectivePotionDemandState(
+			potionId,
+			gameState.purchasedUpgrades,
+			gameState.potionDemand,
+			gameState.activeTrend,
+		);
+	}
+
+	function getPotionDemand(potionId: PotionId) {
+		return gameState.potionDemand[potionId];
+	}
+
+	function isPotionTrending(potionId: PotionId) {
+		return doesPotionMatchTrend(potionId, gameState.activeTrend);
+	}
+
+	function getPotionTrendMultiplier(potionId: PotionId) {
+		return isPotionTrending(potionId) ? getTrendSellValueMultiplier(gameState.activeTrend) : 1;
+	}
+
+	function getMaxPotionDemand() {
+		return (
+			MAX_POTION_DEMAND +
+			getBuffEffects({
+				purchasedUpgrades: gameState.purchasedUpgrades,
+				activeCeremony: gameState.activeCeremonyId,
+			}).potionDemandMaxIncrease
+		);
 	}
 
 	function canHireWorker(workerId: WorkerId) {
 		return gameState.money >= getWorkerHireTotalCost(workerId, gameState.workers[workerId], 1);
+	}
+
+	function getCeremonyUnlockCost(ceremonyId: CeremonyId) {
+		return CEREMONIES[ceremonyId].unlockCost;
+	}
+
+	function canUnlockCeremony(ceremonyId: CeremonyId) {
+		if (gameState.unlockedCeremonies[ceremonyId]) {
+			return false;
+		}
+
+		return gameState.money >= getCeremonyUnlockCost(ceremonyId);
+	}
+
+	function unlockCeremony(ceremonyId: CeremonyId) {
+		dispatch({ type: "UNLOCK_CEREMONY", ceremonyId });
+	}
+
+	function canCastCeremony(ceremonyId: CeremonyId) {
+		return (
+			gameState.unlockedCeremonies[ceremonyId] &&
+			gameState.activeCeremonyId === null &&
+			gameState.crystalMana >= CEREMONIES[ceremonyId].manaCost
+		);
+	}
+
+	function castCeremony(ceremonyId: CeremonyId) {
+		dispatch({ type: "CAST_CEREMONY", ceremonyId });
+	}
+
+	function isCeremonyActive(ceremonyId: CeremonyId) {
+		return gameState.activeCeremonyId === ceremonyId;
+	}
+
+	function canPray() {
+		return gameState.activeCeremonyId !== null;
+	}
+
+	function pray() {
+		dispatch({ type: "PRAY" });
 	}
 
 	function getBuildingUpgrades(buildingId: BuildingId) {
@@ -1115,6 +1721,7 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 			state: hydrateGameStateFromStorage(createInitialGameState, {
 				initialUnlockedHerbs: INITIAL_UNLOCKED_HERBS_RECORD,
 				initialUnlockedPotions: INITIAL_UNLOCKED_POTIONS_RECORD,
+				initialUnlockedCeremonies: INITIAL_UNLOCKED_CEREMONIES_RECORD,
 				defaultPotionOrder: ["EV", "CS"],
 			}),
 		});
@@ -1136,12 +1743,25 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		herbs: gameState.herbs,
 		unlockedHerbs: gameState.unlockedHerbs,
 		potions: gameState.potions,
+		potionDemand: gameState.potionDemand,
+		minPotionDemand: MIN_POTION_DEMAND,
+		maxPotionDemand: getMaxPotionDemand(),
+		activeTrend: gameState.activeTrend,
+		trendRemainingMs: gameState.trendRemainingMs,
 		unlockedPotions: gameState.unlockedPotions,
 		purchasedUpgrades: gameState.purchasedUpgrades,
 		money: gameState.money,
+		elapsedPlayTimeMs: gameState.elapsedPlayTimeMs,
+		throneTimeMs: gameState.throneTimeMs,
 		workers: gameState.workers,
 		farmerAssignments: gameState.farmerAssignments,
 		apothecaryPreferences: gameState.apothecaryPreferences,
+		crystalMana: gameState.crystalMana,
+		maxCrystalMana: MAX_CRYSTAL_MANA,
+		unlockedCeremonies: gameState.unlockedCeremonies,
+		activeCeremonyId: gameState.activeCeremonyId,
+		activeCeremonyRemainingMs: gameState.activeCeremonyRemainingMs,
+		ceremonyDurationMs: CEREMONY_DURATION_MS,
 		getHerbUnlockCost,
 		canUnlockHerb,
 		getPotionUnlockCost,
@@ -1150,7 +1770,19 @@ export default function GameContextProvider({ children }: { children: ReactNode 
 		canCraftPotion,
 		canSellPotion,
 		canHireWorker,
+		getCeremonyUnlockCost,
+		canUnlockCeremony,
+		unlockCeremony,
+		canCastCeremony,
+		castCeremony,
+		isCeremonyActive,
+		canPray,
+		pray,
+		getPotionDemand,
+		isPotionTrending,
+		getPotionTrendMultiplier,
 		getEffectivePotionSellValue,
+		getEffectivePotionDemand,
 		getBuildingUpgrades,
 		isUpgradePurchased,
 		upgradePrerequisitesMet,

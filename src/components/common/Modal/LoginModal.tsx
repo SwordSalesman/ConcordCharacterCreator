@@ -208,9 +208,6 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 						{isAdmin ? (
 							<div className="flex justify-between">
 								<p className="text-primary">You have admin access!</p>
-								<Link href={PATH_HERB_GARDEN} onClick={handleClose}>
-									🌱
-								</Link>
 							</div>
 						) : null}
 					</div>

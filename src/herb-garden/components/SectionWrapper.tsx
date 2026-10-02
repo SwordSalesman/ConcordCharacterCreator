@@ -22,7 +22,7 @@ export function SectionWrapper({
 		<section
 			className={cn(hide ? "hidden" : `flex animate-in fade-in`, "flex-col gap-2", className)}
 		>
-			<div className="flex justify-between items-center gap-2 border-b border-dashed">
+			<div className="flex justify-between items-center gap-2 border-b border-dashed select-none">
 				<div className="flex flex-col gap-1 p-1 px-0 pt-0">
 					<div className="flex items-center gap-1.5">
 						{icon ? icon : <></>}

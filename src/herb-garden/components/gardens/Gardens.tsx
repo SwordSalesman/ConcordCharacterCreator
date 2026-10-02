@@ -1,4 +1,4 @@
-import { HERB_IDS, HerbId } from "../data/gameData";
+import { HERB_IDS, HerbId } from "../data/herbs";
 import { useContext, useEffect, useState } from "react";
 import { TutorialContext } from "../../context/tutorialContext";
 import HerbPatch from "./HerbPatch";
