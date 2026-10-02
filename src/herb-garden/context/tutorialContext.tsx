@@ -204,11 +204,11 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 	}
 
 	function resetTutorial() {
+		setWinScreenSeen(false);
 		updateState({
 			settings: defaultTutorialSettings,
 			components: defaultNewComponents,
 		});
-		setWinScreenSeen(false);
 	}
 
 	return (

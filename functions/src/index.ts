@@ -31,57 +31,61 @@ type ApprovalStatus = (typeof APPROVAL_STATUSES)[number];
 type EmailStatus = "pending" | "sent" | "not sent" | "failed";
 
 interface Approval {
-    author: string
-    date: string
-    comment: string
-    status: ApprovalStatus
-    email: {
-        status: EmailStatus
-        sentAt: string
-        failedAt: string
-        gmailMessageId: string | null
-    }
+	author: string;
+	date: string;
+	comment: string;
+	status: ApprovalStatus;
+	email: {
+		status: EmailStatus;
+		sentAt: string;
+		failedAt: string;
+		gmailMessageId: string | null;
+	};
 }
 
 interface ApprovalInput {
-    subjectUid: string;
-    status: ApprovalStatus;
-    comment: string;
-    sendEmail: boolean;
+	subjectUid: string;
+	status: ApprovalStatus;
+	comment: string;
+	sendEmail: boolean;
 }
 
 function isApprovalInput(value: unknown): value is ApprovalInput {
-    if (!value || typeof value !== "object") return false;
+	if (!value || typeof value !== "object") return false;
 
-    const input = value as Record<string, unknown>;
-    return (
-        typeof input.subjectUid === "string" &&
-        input.subjectUid.length > 0 &&
-        typeof input.status === "string" &&
-        (APPROVAL_STATUSES as readonly string[]).includes(input.status) &&
-        typeof input.comment === "string"
-    );
+	const input = value as Record<string, unknown>;
+	return (
+		typeof input.subjectUid === "string" &&
+		input.subjectUid.length > 0 &&
+		typeof input.status === "string" &&
+		(APPROVAL_STATUSES as readonly string[]).includes(input.status) &&
+		typeof input.comment === "string"
+	);
 }
 
 function encodeMimeBody(value: string): string {
-    return Buffer.from(value, "utf8").toString("base64").match(/.{1,76}/g)?.join("\r\n") ?? "";
+	return (
+		Buffer.from(value, "utf8")
+			.toString("base64")
+			.match(/.{1,76}/g)
+			?.join("\r\n") ?? ""
+	);
 }
 
 function escapeHtml(value: string): string {
-    return value.replace(/[&<>'"]/g, (character) => {
-        const entities: Record<string, string> = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            "'": "&#39;",
-            '"': "&quot;",
-        };
-        return entities[character];
-    });
+	return value.replace(/[&<>'"]/g, (character) => {
+		const entities: Record<string, string> = {
+			"&": "&amp;",
+			"<": "&lt;",
+			">": "&gt;",
+			"'": "&#39;",
+			'"': "&quot;",
+		};
+		return entities[character];
+	});
 }
 
 function createCharacterSheetHtml(character: Record<string, unknown>): string {
-
 	function removeNewLines(input?: string): string {
 		if (!input) return "";
 		return input.replace(/(?:\r\n|\r|\n)/g, ". ").replace(/"/g, "'");
@@ -142,181 +146,282 @@ function createCharacterSheetHtml(character: Record<string, unknown>): string {
 }
 
 function createEmailMessage({
-    recipient,
-    sender,
-    character,
-    status,
-    comment,
+	recipient,
+	sender,
+	character,
+	status,
+	comment,
 }: {
-    recipient: string;
-    sender: string;
-    character: Record<string, unknown>;
-    status: ApprovalStatus;
-    comment: string;
+	recipient: string;
+	sender: string;
+	character: Record<string, unknown>;
+	status: ApprovalStatus;
+	comment: string;
 }): string {
-    let subject = 'Concord Character Submission'
-    switch (status) {
-        case "Approved":
-            subject = "Approved - Concord Character Submission";
-            break;
-        case "Denied":
-            subject = "Changes Requested - Concord Character Submission";
-            break;
-    }
+	let subject = "Concord Character Submission";
+	switch (status) {
+		case "Approved":
+			subject = "Approved - Concord Character Submission";
+			break;
+		case "Denied":
+			subject = "Changes Requested - Concord Character Submission";
+			break;
+	}
 
-    const charSheetHtml = createCharacterSheetHtml(character);
-    const commentHtml = comment ? `<p>${escapeHtml(comment).replace(/\r?\n/g, "<br>")}</p>` : "";
-    const html =
-        `${commentHtml}<p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>${charSheetHtml}`;
+	const charSheetHtml = createCharacterSheetHtml(character);
+	const commentHtml = comment ? `<p>${escapeHtml(comment).replace(/\r?\n/g, "<br>")}</p>` : "";
+	const html = `${commentHtml}<p>~~~~~~~~~</p><p>Here's the latest character you submitted:</p>${charSheetHtml}`;
 
-    const rawMessage = [
-        `To: ${recipient}`,
-        `From: Player Support Team <${sender}>`,
-        `Subject: ${subject}`,
-        "MIME-Version: 1.0",
-        'Content-Type: multipart/alternative; boundary="approval-boundary"',
-        "",
-        "--approval-boundary",
-        'Content-Type: text/html; charset="UTF-8"',
-        "Content-Transfer-Encoding: base64",
-        "",
-        encodeMimeBody(html),
-        "--approval-boundary--",
-    ].join("\r\n");
+	const rawMessage = [
+		`To: ${recipient}`,
+		`From: Player Support Team <${sender}>`,
+		`Subject: ${subject}`,
+		"MIME-Version: 1.0",
+		'Content-Type: multipart/alternative; boundary="approval-boundary"',
+		"",
+		"--approval-boundary",
+		'Content-Type: text/html; charset="UTF-8"',
+		"Content-Transfer-Encoding: base64",
+		"",
+		encodeMimeBody(html),
+		"--approval-boundary--",
+	].join("\r\n");
 
-    return Buffer.from(rawMessage).toString("base64url");
+	return Buffer.from(rawMessage).toString("base64url");
 }
 
 function getGmailErrorDetails(error: unknown): Record<string, unknown> {
-    if (!(error instanceof Error)) return { error };
+	if (!(error instanceof Error)) return { error };
 
-    const apiError = error as Error & {
-        code?: unknown;
-        response?: { status?: unknown; data?: unknown };
-    };
-    return {
-        errorMessage: error.message,
-        errorCode: apiError.code,
-        httpStatus: apiError.response?.status,
-        apiError: apiError.response?.data,
-    };
+	const apiError = error as Error & {
+		code?: unknown;
+		response?: { status?: unknown; data?: unknown };
+	};
+	return {
+		errorMessage: error.message,
+		errorCode: apiError.code,
+		httpStatus: apiError.response?.status,
+		apiError: apiError.response?.data,
+	};
 }
 
 export const submitApproval = onCall(
-    {
-        secrets: [gmailClientId, gmailClientSecret, gmailRefreshToken],
-    },
-    async (request) => {
-        // Check if the request is authenticated
-        if (!request.auth) {
-            throw new HttpsError("unauthenticated", "Sign in is required.");
-        }
-        if (!isApprovalInput(request.data)) {
-            throw new HttpsError("invalid-argument", "Invalid approval data.");
-        }
-        if (request.data.status !== "Approved" && request.data.comment.trim().length === 0) {
-            throw new HttpsError("invalid-argument", "Denied and archived approvals require a comment.");
-        }
+	{
+		secrets: [gmailClientId, gmailClientSecret, gmailRefreshToken],
+	},
+	async (request) => {
+		// Check if the request is authenticated
+		if (!request.auth) {
+			throw new HttpsError("unauthenticated", "Sign in is required.");
+		}
+		if (!isApprovalInput(request.data)) {
+			throw new HttpsError("invalid-argument", "Invalid approval data.");
+		}
+		if (request.data.status !== "Approved" && request.data.comment.trim().length === 0) {
+			throw new HttpsError(
+				"invalid-argument",
+				"Denied and archived approvals require a comment.",
+			);
+		}
 
-        // Get the Firestore database instance and the reviewer's information to check if they're aactually a reviewer
-        const database = getFirestore();
-        const reviewerSnapshot = await database.doc(`users/${request.auth.uid}`).get();
-        const reviewer = reviewerSnapshot.data();
-        if (typeof reviewer?.role !== 'number' || reviewer.role < 3) {
-            throw new HttpsError("permission-denied", "Administrator access is required.");
-        }
+		// Get the Firestore database instance and the reviewer's information to check if they're aactually a reviewer
+		const database = getFirestore();
+		const reviewerSnapshot = await database.doc(`users/${request.auth.uid}`).get();
+		const reviewer = reviewerSnapshot.data();
+		if (typeof reviewer?.role !== "number" || reviewer.role < 3) {
+			throw new HttpsError("permission-denied", "Administrator access is required.");
+		}
 
-        // Get the hero submission they're reviewing
-        const characterReference = database.doc(`characters/${request.data.subjectUid}`);
-        const approvalReference = database.doc(`approvals/${request.data.subjectUid}`);
-        const characterSnapshot = await characterReference.get();
-        if (!characterSnapshot.exists) {
-            throw new HttpsError("not-found", "Character submission not found.");
-        }
+		// Get the hero submission they're reviewing
+		const characterReference = database.doc(`characters/${request.data.subjectUid}`);
+		const approvalReference = database.doc(`approvals/${request.data.subjectUid}`);
+		const characterSnapshot = await characterReference.get();
+		if (!characterSnapshot.exists) {
+			throw new HttpsError("not-found", "Character submission not found.");
+		}
 
-        const character = characterSnapshot.data();
-        if (!character || typeof character !== "object") {
-            throw new HttpsError("not-found", "Character submission not found.");
-        }
-        if (typeof character.email !== "string" || !character.email) {
-            throw new HttpsError("failed-precondition", "Character submission has no email address.");
-        }
-        if (typeof character.heroName !== "string" || !character.heroName) {
-            throw new HttpsError("failed-precondition", "Character submission has no hero name.");
-        }
+		const character = characterSnapshot.data();
+		if (!character || typeof character !== "object") {
+			throw new HttpsError("not-found", "Character submission not found.");
+		}
+		if (typeof character.email !== "string" || !character.email) {
+			throw new HttpsError(
+				"failed-precondition",
+				"Character submission has no email address.",
+			);
+		}
+		if (typeof character.heroName !== "string" || !character.heroName) {
+			throw new HttpsError("failed-precondition", "Character submission has no hero name.");
+		}
 
-        // First we set the approval for the character submission
-        const shouldSendEmail = request.data.sendEmail;
-        const date = new Date().toISOString();
-        const approval: Approval = {
-            author: typeof reviewer.name === "string" ? reviewer.name : "Player Support Team",
-            date,
-            comment: request.data.comment,
-            status: request.data.status,
-            email: { status: shouldSendEmail ? "pending" : "not sent", sentAt: "", failedAt: "", gmailMessageId: null },
-        };
+		// First we set the approval for the character submission
+		const shouldSendEmail = request.data.sendEmail;
+		const date = new Date().toISOString();
+		const approval: Approval = {
+			author: typeof reviewer.name === "string" ? reviewer.name : "Player Support Team",
+			date,
+			comment: request.data.comment,
+			status: request.data.status,
+			email: {
+				status: shouldSendEmail ? "pending" : "not sent",
+				sentAt: "",
+				failedAt: "",
+				gmailMessageId: null,
+			},
+		};
 
-        await database.runTransaction(async (transaction) => {
-            transaction.set(approvalReference, approval);
-            transaction.update(characterReference, { changes: null });
-        });
+		await database.runTransaction(async (transaction) => {
+			transaction.set(approvalReference, approval);
+			transaction.update(characterReference, { changes: null });
+		});
 
+		if (!shouldSendEmail) {
+			return {
+				approval,
+			};
+		}
 
-        if (!shouldSendEmail) {
-            return {
-                approval
-            }
-        }
+		// Then we attempt to send the approval email to the player's email address
+		try {
+			const oauthClient = new google.auth.OAuth2(
+				gmailClientId.value(),
+				gmailClientSecret.value(),
+			);
+			oauthClient.setCredentials({ refresh_token: gmailRefreshToken.value() });
+			const gmail = google.gmail({ version: "v1", auth: oauthClient });
+			const profile = await gmail.users.getProfile({ userId: "me" });
+			const sender = profile.data.emailAddress;
+			if (!sender) throw new Error("The authorized Gmail account has no email address.");
 
-        // Then we attempt to send the approval email to the player's email address
-        try {
-            const oauthClient = new google.auth.OAuth2(
-                gmailClientId.value(),
-                gmailClientSecret.value(),
-            );
-            oauthClient.setCredentials({ refresh_token: gmailRefreshToken.value() });
-            const gmail = google.gmail({ version: "v1", auth: oauthClient });
-            const profile = await gmail.users.getProfile({ userId: "me" });
-            const sender = profile.data.emailAddress;
-            if (!sender) throw new Error("The authorized Gmail account has no email address.");
+			const result = await gmail.users.messages.send({
+				userId: "me",
+				requestBody: {
+					raw: createEmailMessage({
+						recipient: character.email,
+						sender,
+						character: character,
+						status: request.data.status,
+						comment: request.data.comment,
+					}),
+				},
+			});
 
-            const result = await gmail.users.messages.send({
-                userId: "me",
-                requestBody: {
-                    raw: createEmailMessage({
-                        recipient: character.email,
-                        sender,
-                        character: character,
-                        status: request.data.status,
-                        comment: request.data.comment,
-                    }),
-                },
-            });
-
-            const email = {
-                ...approval.email,
-                status: "sent",
-                sentAt: new Date().toISOString(),
-                gmailMessageId: result.data.id ?? null,
-            };
-            await approvalReference.update({ email });
-            return { approval: { ...approval, email } };
-        } catch (error) {
+			const email = {
+				...approval.email,
+				status: "sent",
+				sentAt: new Date().toISOString(),
+				gmailMessageId: result.data.id ?? null,
+			};
+			await approvalReference.update({ email });
+			return { approval: { ...approval, email } };
+		} catch (error) {
 			const errorDetails = getGmailErrorDetails(error);
-            logger.error("Approval email failed to send", {
+			logger.error("Approval email failed to send", {
 				subjectUid: request.data.subjectUid,
 				...errorDetails,
 			});
-            const email = {
-                ...approval.email,
-                status: "failed",
-                failedAt: new Date().toISOString(),
-            };
-            await approvalReference.update({ email });
-            return { approval: { ...approval, email } };
-        }
-    },
+			const email = {
+				...approval.email,
+				status: "failed",
+				failedAt: new Date().toISOString(),
+			};
+			await approvalReference.update({ email });
+			return { approval: { ...approval, email } };
+		}
+	},
 );
+
+const THRONE_LEADERBOARD_COLLECTION = "herbGardenScores";
+const THRONE_LEADERBOARD_CACHE_PATH = "public/herbGardenTop10";
+const THRONE_LEADERBOARD_SIZE = 10;
+// Nobody can legitimately reach the Throne faster than this; rejects garbage/obviously-spoofed submissions.
+const MIN_THRONE_TIME_MS = 30_000;
+
+interface ThroneLeaderboardEntry {
+	uid: string;
+	displayName: string;
+	timeMs: number;
+	achievedAt: string;
+}
+
+interface ClaimThroneInput {
+	timeMs: number;
+}
+
+function isClaimThroneInput(value: unknown): value is ClaimThroneInput {
+	if (!value || typeof value !== "object") return false;
+
+	const input = value as Record<string, unknown>;
+	return (
+		typeof input.timeMs === "number" &&
+		Number.isFinite(input.timeMs) &&
+		input.timeMs >= MIN_THRONE_TIME_MS
+	);
+}
+
+export const claimThrone = onCall(async (request) => {
+	if (!request.auth) {
+		throw new HttpsError("unauthenticated", "Sign in is required.");
+	}
+	if (!isClaimThroneInput(request.data)) {
+		throw new HttpsError("invalid-argument", "Invalid throne claim time.");
+	}
+
+	const uid = request.auth.uid;
+	const timeMs = Math.floor(request.data.timeMs);
+	const database = getFirestore();
+
+	// Only ever keep one entry per player: their personal best (lowest) time.
+	const scoreReference = database.doc(`${THRONE_LEADERBOARD_COLLECTION}/${uid}`);
+	const scoreSnapshot = await scoreReference.get();
+	const existingBest = scoreSnapshot.data() as ThroneLeaderboardEntry | undefined;
+	const isNewBest = !existingBest || timeMs < existingBest.timeMs;
+	const bestTimeMs = isNewBest ? timeMs : existingBest.timeMs;
+	const achievedAt = new Date().toISOString();
+
+	if (isNewBest) {
+		const userSnapshot = await database.doc(`users/${uid}`).get();
+		const userRecordName = userSnapshot.data()?.name;
+		const displayName =
+			(typeof userRecordName === "string" && userRecordName) ||
+			request.auth.token.name ||
+			"Anonymous Player";
+
+		const entry: ThroneLeaderboardEntry = { uid, displayName, timeMs, achievedAt };
+		await scoreReference.set(entry);
+	}
+
+	const betterScoresSnapshot = await database
+		.collection(THRONE_LEADERBOARD_COLLECTION)
+		.where("timeMs", "<", bestTimeMs)
+		.count()
+		.get();
+	const rank = betterScoresSnapshot.data().count + 1;
+
+	// The cached top 10 only needs recomputing when this result could plausibly change it.
+	const top10Reference = database.doc(THRONE_LEADERBOARD_CACHE_PATH);
+	const top10Snapshot = await top10Reference.get();
+	const cachedEntries = (top10Snapshot.data()?.entries ?? []) as ThroneLeaderboardEntry[];
+	const worstCachedTimeMs = cachedEntries[cachedEntries.length - 1]?.timeMs;
+	const shouldRefreshTop10 =
+		isNewBest &&
+		(cachedEntries.length < THRONE_LEADERBOARD_SIZE ||
+			worstCachedTimeMs === undefined ||
+			bestTimeMs < worstCachedTimeMs);
+
+	let top10 = cachedEntries;
+	if (shouldRefreshTop10) {
+		const leaderboardSnapshot = await database
+			.collection(THRONE_LEADERBOARD_COLLECTION)
+			.orderBy("timeMs", "asc")
+			.limit(THRONE_LEADERBOARD_SIZE)
+			.get();
+		top10 = leaderboardSnapshot.docs.map((doc) => doc.data() as ThroneLeaderboardEntry);
+		await top10Reference.set({ entries: top10, updatedAt: achievedAt });
+	}
+
+	return { rank, top10 };
+});
 
 // export const helloWorld = onRequest((request, response) => {
 //   logger.info("Hello logs!", {structuredData: true});
