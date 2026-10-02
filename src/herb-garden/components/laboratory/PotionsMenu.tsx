@@ -44,7 +44,8 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 		return `Unable to learn Tier ${tier} potions.`;
 	}
 
-	const potionItemStyle = "border-border border-1 bg-background-raised rounded-md p-0.5 px-2";
+	const potionItemStyle =
+		"border-background-300 border-1 bg-background-raised rounded-md p-0.5 px-1.5";
 
 	return (
 		<Modal
@@ -104,14 +105,8 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 																🗝️
 															</span>
 														</span>
-														<div className="flex flex-row justify-left items-center gap-2">
-															<div
-																// className={`flex gap-2 text-sm items-center`}
-																className={potionItemStyle}
-															>
-																{/* <span className="text-muted-foreground">
-																	Sell price
-																</span> */}
+														<div className="flex flex-row flex-wrap justify-left items-center gap-2">
+															<div className={potionItemStyle}>
 																<span className="font-mono">
 																	+
 																	{displayNumber(
@@ -122,27 +117,15 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 																	🗝️
 																</span>
 															</div>
-															<div
-																// className={``}
-																className={potionItemStyle}
-															>
+															<div className={potionItemStyle}>
 																<div className="flex gap-2 text-sm ">
-																	{/* <span className="text-muted-foreground text-sm text-left">
-																		Recipe
-																	</span> */}
 																	<span className="font-mono">
 																		{potionRecipe(potionId)}
 																	</span>
 																</div>
 															</div>
 															{tagsUnlocked ? (
-																<div
-																	// className={`flex gap-2 text-sm items-center`}
-																	className={potionItemStyle}
-																>
-																	{/* <span className="text-muted-foreground">
-																		Tags
-																	</span> */}
+																<div className={potionItemStyle}>
 																	<span className="text-muted-foreground italic">
 																		{POTIONS[potionId].tags
 																			.map(

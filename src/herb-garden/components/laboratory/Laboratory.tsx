@@ -17,7 +17,6 @@ import {
 	arrayMove,
 } from "@dnd-kit/sortable";
 import { GameContext } from "../../context/gameContext";
-import { HERB_IDS, HERBS } from "../data/herbs";
 import { POTION_IDS, POTIONS, type PotionId } from "../data/potions";
 import { useAnimation } from "../../context/animationContext";
 import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
@@ -54,6 +53,8 @@ function SortablePotionCraftButton({
 		transition,
 	};
 
+	const tags = POTIONS[potionId].tags.map((t) => t[0].toUpperCase() + t.slice(1)).join(", ");
+
 	return (
 		<div ref={setNodeRef} {...attributes} style={style} className="flex gap-0.5 items-center">
 			{showReorder ? (
@@ -69,10 +70,14 @@ function SortablePotionCraftButton({
 				className="flex-1 flex justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
 				disabled={!isCraftable}
 			>
-				<div className="flex items-center text-left gap-2 text-wrap">
+				<p className="flex flex-wrap items-center text-left text-wrap gap-2">
 					{POTIONS[potionId].name}
-				</div>
-				{/* {!isActivePreference && " ❌"} */}
+					{tags ? (
+						<span className="text-muted-foreground italic text-xs opacity-80 hidden sm:block">
+							{tags}
+						</span>
+					) : null}
+				</p>
 				<p className="ml-auto font-mono">{potionRecipe(potionId)}</p>
 			</Button>
 		</div>
