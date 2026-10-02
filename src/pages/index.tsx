@@ -3,9 +3,16 @@ import ContentWrapper from "@/components/layout/ContentWrapper";
 import FormContextProvider from "@/context/formContext";
 import useUserContext from "@/hooks/use-user-context";
 import { fadeStripStyle } from "@/styles/Global";
-import { PATH_APPROVALS, PATH_DOWNTIME, PATH_GROUPS, PATH_HERO } from "@/utils/constants";
+import {
+	PATH_APPROVALS,
+	PATH_DOWNTIME,
+	PATH_GROUPS,
+	PATH_HERB_GARDEN,
+	PATH_HERO,
+} from "@/utils/constants";
 import { copyText } from "@/utils/odd-jobs";
 import { getSiteSettings } from "@/utils/settings";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaStamp, FaUser, FaUsers } from "react-icons/fa";
 import { GiScrollQuill } from "react-icons/gi";
@@ -69,6 +76,12 @@ export default function Home() {
 					</div>
 				)}
 			</ContentWrapper>
+			<Link
+				href={PATH_HERB_GARDEN}
+				className="fixed bottom-4 right-4 text-md p-0.5 rounded-sm"
+			>
+				🌱
+			</Link>
 		</FormContextProvider>
 	);
 }

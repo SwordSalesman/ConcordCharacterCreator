@@ -146,16 +146,16 @@ type ApprovalStatus = (typeof APPROVAL_STATUSES)[number];
 type EmailStatus = "pending" | "sent" | "not sent" | "failed";
 
 interface Approval {
-    author: string
-    date: string
-    comment: string
-    status: ApprovalStatus
-    email: {
-        status: EmailStatus
-        sentAt: string
-        failedAt: string
-        gmailMessageId: string | null
-    }
+	author: string;
+	date: string;
+	comment: string;
+	status: ApprovalStatus;
+	email: {
+		status: EmailStatus;
+		sentAt: string;
+		failedAt: string;
+		gmailMessageId: string | null;
+	};
 }
 
 const saveApproval = async ({
@@ -237,6 +237,28 @@ const migrateUser = async (userId: string, form: Record<string, any>) => {
 };
 
 // FIRESTORE GETTING **************************************************************
+
+export interface ThroneLeaderboardEntry {
+	uid: string;
+	displayName: string;
+	timeMs: number;
+	achievedAt: string;
+}
+
+export interface ClaimThroneResult {
+	rank: number;
+	top10: ThroneLeaderboardEntry[];
+}
+
+const claimThrone = async (timeMs: number) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const submitClaim = httpsCallable<{ timeMs: number }, ClaimThroneResult>(
+		functions,
+		"claimThrone",
+	);
+	const result = await submitClaim({ timeMs });
+	return result.data;
+};
 
 const getUserForm = async () => {
 	if (!auth.currentUser) throw new Error("No authenticated user");
@@ -340,6 +362,13 @@ const getGroupList = async () => {
 	}
 };
 
+const getThroneLeaderboard = async (): Promise<ThroneLeaderboardEntry[]> => {
+	const docRef = doc(db, "public", "herbGardenTop10");
+	const docSnap = await getDoc(docRef);
+	const entries = docSnap.exists() ? docSnap.data().entries : null;
+	return Array.isArray(entries) ? (entries as ThroneLeaderboardEntry[]) : [];
+};
+
 const getCharacterList = async (): Promise<any[]> => {
 	const charactersRef = collection(db, "characters");
 	const q = query(charactersRef);
@@ -393,5 +422,7 @@ export {
 	getUserApproval,
 	getApprovalList,
 	getGroupList,
+	claimThrone,
+	getThroneLeaderboard,
 	logout,
 };

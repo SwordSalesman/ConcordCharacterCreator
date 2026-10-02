@@ -26,6 +26,7 @@ export function Modal({
 		label: string;
 		onClick: () => void;
 		variant?: ButtonVariant;
+		disabled?: boolean;
 	}[];
 	body?: React.ReactNode;
 	size?: "small" | "medium" | "large";
@@ -40,7 +41,8 @@ export function Modal({
 			<DialogContent
 				showCloseButton={false}
 				className={`${size === "small" ? "w-[300px]" : size === "large" ? "w-[700px]" : "w-[500px]"} text-left`}
-				{...(!subtitle && !title && { "aria-describedby": undefined })}
+				// {...(!subtitle && !title && { "aria-describedby": undefined })}
+				aria-describedby={undefined}
 			>
 				<div className="flex flex-col gap-4">
 					{title || subtitle ? (
@@ -63,6 +65,7 @@ export function Modal({
 										variant={action.variant}
 										onClick={action.onClick}
 										className={"flex-1"}
+										disabled={action.disabled}
 									>
 										{action.label}
 									</Button>

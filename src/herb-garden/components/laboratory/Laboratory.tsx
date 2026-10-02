@@ -17,8 +17,8 @@ import {
 	arrayMove,
 } from "@dnd-kit/sortable";
 import { GameContext } from "../../context/gameContext";
-import { HERB_IDS, HERBS, POTION_IDS, POTIONS, type PotionId } from "../data/gameData";
-import { useApothecaryAnimation } from "../../context/animationContext";
+import { POTION_IDS, POTIONS, type PotionId } from "../data/potions";
+import { useAnimation } from "../../context/animationContext";
 import { restrictToVerticalAxis, restrictToParentElement } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
 import { MdReorder } from "react-icons/md";
@@ -27,6 +27,7 @@ import { TutorialContext } from "../../context/tutorialContext";
 import { GiSpellBook } from "react-icons/gi";
 import { NewWrapper } from "../NewWrapper";
 import { Button } from "@/components/common/Button/Button";
+import { potionRecipe } from "@/herb-garden/helpers/displayValueHelper";
 
 function SortablePotionCraftButton({
 	potionId,
@@ -40,7 +41,7 @@ function SortablePotionCraftButton({
 	isActivePreference: boolean;
 	isCraftable: boolean;
 	onCraft: (potionId: PotionId) => void;
-	anchorRef: ReturnType<ReturnType<typeof useApothecaryAnimation>["registerAnchor"]>;
+	anchorRef: ReturnType<ReturnType<typeof useAnimation>["registerAnchor"]>;
 	showReorder: boolean;
 }) {
 	const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
@@ -51,6 +52,8 @@ function SortablePotionCraftButton({
 		transform: CSS.Transform.toString(transform),
 		transition,
 	};
+
+	const tags = POTIONS[potionId].tags.map((t) => t[0].toUpperCase() + t.slice(1)).join(", ");
 
 	return (
 		<div ref={setNodeRef} {...attributes} style={style} className="flex gap-0.5 items-center">
@@ -64,18 +67,18 @@ function SortablePotionCraftButton({
 				onClick={() => {
 					isCraftable && onCraft(potionId);
 				}}
-				className="flex-1 flex flex-wrap justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
+				className="flex-1 flex justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
 				disabled={!isCraftable}
 			>
-				<div className="flex items-center gap-2">{POTIONS[potionId].name}</div>
-				{/* {!isActivePreference && " ❌"} */}
-				<p className="ml-auto">
-					{Object.entries(POTIONS[potionId].recipe).map(([herbId, amount]) => (
-						<span key={herbId}>
-							{HERBS[herbId as (typeof HERB_IDS)[number]].emoji.repeat(amount)}{" "}
+				<p className="flex flex-wrap items-center text-left text-wrap gap-2">
+					{POTIONS[potionId].name}
+					{tags ? (
+						<span className="text-muted-foreground italic text-xs opacity-80 hidden sm:block">
+							{tags}
 						</span>
-					))}
+					) : null}
 				</p>
+				<p className="ml-auto font-mono">{potionRecipe(potionId)}</p>
 			</Button>
 		</div>
 	);
@@ -89,7 +92,7 @@ export function Laboratory() {
 		canCraftPotion,
 		unlockedPotions,
 	} = useContext(GameContext);
-	const { registerAnchor } = useApothecaryAnimation();
+	const { registerAnchor } = useAnimation();
 	const craftAnchor = (potionId: PotionId) => registerAnchor(`craft:${potionId}`);
 	const [showPotionsMenu, setShowPotionsMenu] = useState(false);
 	const { tutorialSettings, newComponents, setComponentStale } = useContext(TutorialContext);
@@ -104,7 +107,7 @@ export function Laboratory() {
 	const totalPotionTypes = POTION_IDS.length;
 	const unlockedPotionCount = POTION_IDS.filter((potionId) => unlockedPotions[potionId]).length;
 	const showAddPotionButton =
-		unlockedPotionCount < totalPotionTypes && tutorialSettings.showUnlocks;
+		unlockedPotionCount <= totalPotionTypes && tutorialSettings.showUnlocks;
 
 	const sensors = useSensors(
 		useSensor(MouseSensor, {

@@ -1,7 +1,7 @@
 import { Modal } from "@/components/common/Modal/Modal";
 import { GameContext } from "../../context/gameContext";
 import { useContext } from "react";
-import { HERB_IDS, HERBS } from "../data/gameData";
+import { HERB_IDS, HERBS } from "../data/herbs";
 import { Button } from "@/components/common/Button/Button";
 
 export function GardensMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -32,24 +32,22 @@ export function GardensMenu({ open, onClose }: { open: boolean; onClose: () => v
 								</div>
 							</div>
 						) : (
-							<div key={herbId}>
-								<Button
-									disabled={!canUnlockHerb()}
-									onClick={() => {
-										unlockHerb(herbId);
-										onClose();
-									}}
-									size="lg"
-									className="text-md"
-								>
-									{/* Build Garden */}
-									<div className="flex gap-1">
-										Plant
-										{herbEL}
-										<span>({cost} 🗝️)</span>
-									</div>
-								</Button>
-							</div>
+							<Button
+								disabled={!canUnlockHerb()}
+								onClick={() => {
+									unlockHerb(herbId);
+								}}
+								size="lg"
+								className="text-base flex flex-row items-center justify-between gap-6"
+								key={herbId}
+							>
+								{/* Build Garden */}
+								<div className="flex gap-1.5">
+									Plant
+									{herbEL}
+								</div>
+								<span>{cost} 🗝️</span>
+							</Button>
 						);
 					})}
 				</div>

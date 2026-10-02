@@ -1,13 +1,12 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import {
 	GameContext,
-	INITIAL_UNLOCKED_HERBS,
 	INITIAL_UNLOCKED_HERBS_RECORD,
-	INITIAL_UNLOCKED_POTIONS,
 	INITIAL_UNLOCKED_POTIONS_RECORD,
 } from "./gameContext";
 
-import { HERB_IDS, POTION_IDS } from "../components/data/gameData";
+import { HERB_IDS } from "../components/data/herbs";
+import { POTION_IDS } from "../components/data/potions";
 
 const TUTORIAL_MODE = process.env.NEXT_PUBLIC_HERB_JUMPSTART !== "true";
 const TUTORIAL_STORAGE_KEY = "apothecary:tutorial-context:v1";
@@ -25,24 +24,13 @@ interface TutorialSettingsInterface {
 
 const defaultTutorialSettings: TutorialSettingsInterface = {
 	showTutorial: TUTORIAL_MODE,
-	showTutorialSkip: false,
-	showLab: false,
-	showMarket: false,
-	showTavern: false,
-	showWorkers: false,
-	showUnlocks: false,
-	showUpgrades: false,
-};
-
-const defaultTutorialSettingsOFF: TutorialSettingsInterface = {
-	showTutorial: false,
-	showTutorialSkip: false,
-	showLab: true,
-	showMarket: true,
-	showTavern: true,
-	showWorkers: true,
-	showUnlocks: true,
-	showUpgrades: true,
+	showTutorialSkip: !TUTORIAL_MODE,
+	showLab: !TUTORIAL_MODE,
+	showMarket: !TUTORIAL_MODE,
+	showTavern: !TUTORIAL_MODE,
+	showWorkers: !TUTORIAL_MODE,
+	showUnlocks: !TUTORIAL_MODE,
+	showUpgrades: !TUTORIAL_MODE,
 };
 
 interface NewComponentInterface {
@@ -56,39 +44,33 @@ interface NewComponentInterface {
 }
 
 const defaultNewComponents: NewComponentInterface = {
-	buildGarden: true,
-	learnRecipe: true,
-	upgradeGarden: true,
-	upgradeLaboratory: true,
-	upgradeTavern: true,
-	upgradeMarket: true,
-	farmer: true,
-};
-
-const defaultNewComponentsOFF: NewComponentInterface = {
-	buildGarden: false,
-	learnRecipe: false,
-	upgradeGarden: false,
-	upgradeLaboratory: false,
-	upgradeTavern: false,
-	upgradeMarket: false,
-	farmer: false,
+	buildGarden: TUTORIAL_MODE,
+	learnRecipe: TUTORIAL_MODE,
+	upgradeGarden: TUTORIAL_MODE,
+	upgradeLaboratory: TUTORIAL_MODE,
+	upgradeTavern: TUTORIAL_MODE,
+	upgradeMarket: TUTORIAL_MODE,
+	farmer: TUTORIAL_MODE,
 };
 
 export const TutorialContext = createContext<{
 	tutorialSettings: TutorialSettingsInterface;
 	newComponents: NewComponentInterface;
 	setComponentStale: (component: keyof NewComponentInterface) => void;
+	winScreenSeen: boolean;
+	markWinScreenSeen: () => void;
 	resetTutorial: () => void;
 }>({
 	tutorialSettings: defaultTutorialSettings,
 	newComponents: defaultNewComponents,
 	setComponentStale: () => {},
+	winScreenSeen: false,
+	markWinScreenSeen: () => {},
 	resetTutorial: () => {},
 });
 
 export default function TutorialContextProvider({ children }: { children: ReactNode }) {
-	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions } =
+	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions, isUpgradePurchased } =
 		useContext(GameContext);
 
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);
@@ -112,11 +94,10 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 					showUnlocks: unlockedHerbOrPotion,
 					showUpgrades: oneOfEachWorker,
 				}
-			: defaultTutorialSettingsOFF,
+			: defaultTutorialSettings,
 	);
-	const [newComponents, setNewComponents] = useState(
-		TUTORIAL_MODE ? defaultNewComponents : defaultNewComponentsOFF,
-	);
+	const [newComponents, setNewComponents] = useState(defaultNewComponents);
+	const [winScreenSeen, setWinScreenSeen] = useState(false);
 	const [isStorageHydrated, setIsStorageHydrated] = useState(false);
 
 	function updateState({
@@ -149,6 +130,7 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 			const parsed = JSON.parse(raw) as {
 				tutorialSettings?: Partial<TutorialSettingsInterface>;
 				newComponents?: Partial<NewComponentInterface>;
+				winScreenSeen?: boolean;
 			};
 
 			if (parsed.tutorialSettings) {
@@ -157,6 +139,10 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 
 			if (parsed.newComponents) {
 				setNewComponents((prev) => ({ ...prev, ...parsed.newComponents }));
+			}
+
+			if (typeof parsed.winScreenSeen === "boolean") {
+				setWinScreenSeen(parsed.winScreenSeen);
 			}
 		} catch {
 			// Ignore malformed storage and keep defaults.
@@ -172,9 +158,9 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 
 		window.localStorage.setItem(
 			TUTORIAL_STORAGE_KEY,
-			JSON.stringify({ tutorialSettings, newComponents }),
+			JSON.stringify({ tutorialSettings, newComponents, winScreenSeen }),
 		);
-	}, [tutorialSettings, newComponents, isStorageHydrated]);
+	}, [tutorialSettings, newComponents, winScreenSeen, isStorageHydrated]);
 
 	useEffect(() => {
 		if (!TUTORIAL_MODE) {
@@ -213,7 +199,12 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 		updateState({ components: { [component]: false } });
 	}
 
+	function markWinScreenSeen() {
+		setWinScreenSeen(true);
+	}
+
 	function resetTutorial() {
+		setWinScreenSeen(false);
 		updateState({
 			settings: defaultTutorialSettings,
 			components: defaultNewComponents,
@@ -222,7 +213,14 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 
 	return (
 		<TutorialContext.Provider
-			value={{ tutorialSettings, newComponents, setComponentStale, resetTutorial }}
+			value={{
+				tutorialSettings,
+				newComponents,
+				setComponentStale,
+				winScreenSeen,
+				markWinScreenSeen,
+				resetTutorial,
+			}}
 		>
 			{children}
 		</TutorialContext.Provider>

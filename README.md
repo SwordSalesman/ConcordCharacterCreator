@@ -2,32 +2,13 @@
 
 (formerly the Concord Character Creator)
 
-## Completed Work
-
-##### Approvals
-
-- Ability to remove hero submissions in approvals window. Delete/Archive button.
-- Fix the full stop paragraph thing in approvals
-
-##### Creator
-
-- Transition animations for accordions
-- When a player submits a character after they've been approved, their approval still reads 'approved'. This is treated as 'pending' by the approval window, need to make sure this is reflected in the exported sheet. This is fixed.
-
-##### Technical
-
-- Port from create-react-app to next.js
-- Migrate from styled components to tailwind
-
 ## To Do list
 
 - Further options for characters. Bordervar common/noble/knight options.
 - Mastered Ceremonies should be managed by the church team, not the character creator
     - Fix the divine lore per sphere giving known ceremonies thing, you know the one.
-- Test firebase rules for new document types (groups, groupApprovals, public)
 - Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
     - Could save a whole copy of the hero submission under "HeroesApproved" instead of "Heroes", which is only updated when a Hero gets approved. Comparisons become a lot easier, direct 1:1
-- Automatic confirmation emails when a player submits their character
 - Make the alert banner adjustable without a deploy, make it read from firebase probably.
 - Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
     - New submission widget for groups, just like the character creator
@@ -37,7 +18,15 @@
 
 ## 🚀 Live Site
 
-https://charactercreator.concordlarp.com/
+https://waystone.concordlarp.com/
+
+### Pages:
+
+https://waystone.concordlarp.com/hero
+
+https://waystone.concordlarp.com/approvals
+
+https://waystone.concordlarp.com/herb-garden
 
 ## 🔥 Firebase
 

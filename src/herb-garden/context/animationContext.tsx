@@ -10,7 +10,8 @@ import {
 	type ReactNode,
 } from "react";
 import { GameContext, type AnimationAnchorId, type GameDeltaEvent } from "./gameContext";
-import { HERBS } from "../components/data/gameData";
+import { HERBS } from "../components/data/herbs";
+import { CRYSTAL_MANA_EMOJI, PRAY_EMOJI } from "../components/data/gameData";
 
 interface FloatingParticle {
 	id: number;
@@ -18,6 +19,7 @@ interface FloatingParticle {
 	x: number;
 	y: number;
 	magnitude: number;
+	text?: string;
 }
 
 interface AnimationContextInterface {
@@ -43,12 +45,16 @@ function getEventEmoji(event: GameDeltaEvent) {
 			return "⚗️";
 		case "potionSell":
 			return "🗝️";
+		case "manaGain":
+			return CRYSTAL_MANA_EMOJI;
+		case "pray":
+			return PRAY_EMOJI;
 		default:
 			return "✨";
 	}
 }
 
-export function useApothecaryAnimation() {
+export function useAnimation() {
 	return useContext(AnimationContext);
 }
 
@@ -146,7 +152,8 @@ export default function ApothecaryAnimationProvider({ children }: { children: Re
 				particlesToAnimate.push({
 					id: nextParticleIdRef.current++,
 					emoji,
-					magnitude: event.magnitude,
+					magnitude: event.type === "pray" ? 1 : event.magnitude,
+					text: event.type === "pray" ? event.text : undefined,
 					x: originX + jitterX,
 					y: originY + jitterY,
 				});
@@ -175,7 +182,9 @@ export default function ApothecaryAnimationProvider({ children }: { children: Re
 				continue;
 			}
 
-			const scaleModifier = (1.2 * (particle.magnitude - 1)) / 7; // Maps size 1-8 to modifier 0-1.2
+			const boundedMagnitude = Math.min(particle.magnitude, 12);
+
+			const scaleModifier = (1.2 * (boundedMagnitude - 1)) / 7; // Maps size 1-8 to modifier 0-1.2
 
 			animatedParticleIdsRef.current.add(particle.id);
 			animate(element, {
@@ -236,6 +245,9 @@ export default function ApothecaryAnimationProvider({ children }: { children: Re
 							}}
 						>
 							{particle.magnitude > 1 ? <span>{particle.magnitude}</span> : null}
+							{particle.text ? (
+								<span className="font-mono text-sm">{particle.text}</span>
+							) : null}
 							{particle.emoji}
 						</span>
 					))}

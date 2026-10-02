@@ -1,20 +1,23 @@
 export const BUILDING_IDS = ["gardens", "laboratory", "market", "tavern"] as const;
 export type BuildingId = (typeof BUILDING_IDS)[number];
 
-
 export interface AggregatedUpgradeEffects {
 	farmerRateMultiplier: number;
 	apothecaryRateMultiplier: number;
 	apothecaryExtraPotionChance: number;
 	merchantRateMultiplier: number;
+	priestRateMultiplier: number;
 	potionSellValueMultiplier: number;
 	manualHerbGatherMultiplier: number;
-    manualPotionCraftMultiplier: number;
-    manualPotionSellMultiplier: number;
+	manualPotionCraftMultiplier: number;
+	manualPotionSellMultiplier: number;
 	workerRateMultiplier: number;
+	potionDemandMaxIncrease: number;
+	potionDemandRecoveryMultiplier: number;
+	potionDemandLossMultiplier: number;
 }
 
-export interface UpgradeEffect extends Partial<AggregatedUpgradeEffects> {} 
+export interface UpgradeEffect extends Partial<AggregatedUpgradeEffects> {}
 interface UpgradeDefinitionInput {
 	id: string;
 	buildingId: BuildingId;
@@ -58,36 +61,36 @@ const UPGRADE_DEFINITIONS = [
 			manualHerbGatherMultiplier: 2,
 		},
 	},
-    {
+	{
 		id: "gardens.click_multiplier_2",
 		buildingId: "gardens",
 		name: "Hartswood Shovel",
 		description: "Each click gathers four times the herbs",
-		cost: 500,
+		cost: 550,
 		effects: {
 			manualHerbGatherMultiplier: 2,
 		},
-        prerequisites: ["gardens.click_multiplier_1"],
+		prerequisites: ["gardens.click_multiplier_1"],
 	},
-	    {
+	{
 		id: "gardens.click_multiplier_3",
 		buildingId: "gardens",
 		name: "Thunderoak Shovel",
 		description: "Each click gathers eight times the herbs",
-		cost: 3200,
+		cost: 5900,
 		effects: {
 			manualHerbGatherMultiplier: 2,
 		},
-        prerequisites: ["gardens.click_multiplier_2"],
+		prerequisites: ["gardens.click_multiplier_2"],
 	},
 	{
 		id: "gardens.faster_harvest_1",
 		buildingId: "gardens",
 		name: "Faster Harvest I",
-		description: "Farmers gather herbs 50% faster.",
+		description: "Farmers gather herbs 25% faster.",
 		cost: 75,
 		effects: {
-			farmerRateMultiplier: 1.5,
+			farmerRateMultiplier: 1.25,
 		},
 	},
 	{
@@ -95,7 +98,7 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Faster Harvest II",
 		description: "Farmers gather herbs another 50% faster.",
-		cost: 350,
+		cost: 550,
 		prerequisites: ["gardens.faster_harvest_1"],
 		effects: {
 			farmerRateMultiplier: 1.5,
@@ -106,13 +109,13 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Faster Harvest III",
 		description: "Farmers gather herbs another 50% faster.",
-		cost: 2700,
+		cost: 5100,
 		prerequisites: ["gardens.faster_harvest_2"],
 		effects: {
 			farmerRateMultiplier: 1.5,
 		},
 	},
-    {
+	{
 		id: "laboratory.click_multiplier_1",
 		buildingId: "laboratory",
 		name: "Stone Mortar",
@@ -122,27 +125,27 @@ const UPGRADE_DEFINITIONS = [
 			manualPotionCraftMultiplier: 2,
 		},
 	},
-    {
-        id: "laboratory.click_multiplier_2",
+	{
+		id: "laboratory.click_multiplier_2",
 		buildingId: "laboratory",
 		name: "Essencite Mortar",
 		description: "Each click brews four times the potions",
 		cost: 500,
 		effects: {
-            manualPotionCraftMultiplier: 2,
+			manualPotionCraftMultiplier: 2,
 		},
-        prerequisites: ["laboratory.click_multiplier_1"],
+		prerequisites: ["laboratory.click_multiplier_1"],
 	},
 	{
-        id: "laboratory.click_multiplier_3",
+		id: "laboratory.click_multiplier_3",
 		buildingId: "laboratory",
 		name: "Arcstone Mortar",
 		description: "Each click brews eight times the potions",
-		cost: 3200,
+		cost: 4200,
 		effects: {
-            manualPotionCraftMultiplier: 2,
+			manualPotionCraftMultiplier: 2,
 		},
-        prerequisites: ["laboratory.click_multiplier_2"],
+		prerequisites: ["laboratory.click_multiplier_2"],
 	},
 	{
 		id: "laboratory.advanced_recipes_1",
@@ -165,34 +168,45 @@ const UPGRADE_DEFINITIONS = [
 		id: "laboratory.dilution_1",
 		buildingId: "laboratory",
 		name: "Dilution I",
-		description: "Apothecaries have a 15% chance to produce an extra potion for free.",
+		description: "Apothecaries have a 20% chance to produce an extra potion for free.",
 		cost: 75,
 		effects: {
-			apothecaryExtraPotionChance: 0.15,
-		}
+			apothecaryExtraPotionChance: 0.2,
+		},
 	},
 	{
 		id: "laboratory.dilution_2",
 		buildingId: "laboratory",
 		name: "Dilution II",
-		description: "Apothecaries have a 30% chance to produce an extra potion for free.",
+		description: "Apothecaries have a 40% chance to produce an extra potion for free.",
 		prerequisites: ["laboratory.dilution_1"],
-		cost: 350,
+		cost: 450,
 		effects: {
-			apothecaryExtraPotionChance: 0.15,
-		}
+			apothecaryExtraPotionChance: 0.2,
+		},
 	},
-		{
+	{
 		id: "laboratory.dilution_3",
 		buildingId: "laboratory",
 		name: "Dilution III",
-		description: "Apothecaries have a 45% chance to produce an extra potion for free.",
+		description: "Apothecaries have a 60% chance to produce an extra potion for free.",
 		prerequisites: ["laboratory.dilution_2"],
-		cost: 1700,
+		cost: 2400,
 		effects: {
-			apothecaryExtraPotionChance: 0.15,
-		}
+			apothecaryExtraPotionChance: 0.2,
+		},
 	},
+	// {
+	// 	id: "laboratory.merchant_driven_brewing",
+	// 	buildingId: "laboratory",
+	// 	name: "Merchant-Driven Brewing",
+	// 	description: "Whenever a trend changes, automatically update potion preferences with matching potions on top.",
+	// 	prerequisites: ["market.trends_ingredients"],
+	// 	cost: 1700,
+	// 	effects: {
+	// 		// Not implemented yet
+	// 	}
+	// },
 	// {
 	// 	id: "laboratory.better_mortars_1",
 	// 	buildingId: "laboratory",
@@ -215,7 +229,7 @@ const UPGRADE_DEFINITIONS = [
 	// 		apothecaryRateMultiplier: 1.50,
 	// 	},
 	// },
-    {
+	{
 		id: "market.click_multiplier_1",
 		buildingId: "market",
 		name: "Iron Scales",
@@ -225,7 +239,7 @@ const UPGRADE_DEFINITIONS = [
 			manualPotionSellMultiplier: 2,
 		},
 	},
-    {
+	{
 		id: "market.click_multiplier_2",
 		buildingId: "market",
 		name: "Forgesteel Scales",
@@ -234,23 +248,23 @@ const UPGRADE_DEFINITIONS = [
 		effects: {
 			manualPotionSellMultiplier: 2,
 		},
-        prerequisites: ["market.click_multiplier_1"],
+		prerequisites: ["market.click_multiplier_1"],
 	},
 	{
 		id: "market.click_multiplier_3",
 		buildingId: "market",
 		name: "Mithril Scales",
 		description: "Each click sells eight times the potions",
-		cost: 2700,
+		cost: 5700,
 		effects: {
 			manualPotionSellMultiplier: 2,
 		},
-        prerequisites: ["market.click_multiplier_2"],
+		prerequisites: ["market.click_multiplier_2"],
 	},
 	{
 		id: "market.sale_contracts_1",
 		buildingId: "market",
-		name: "Sale Contracts I",
+		name: "Sale Contracts",
 		description: "Merchants sell potions 25% faster.",
 		cost: 75,
 		effects: {
@@ -262,56 +276,139 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "market",
 		name: "Sale Contracts II",
 		description: "Merchants sell potions another 25% faster.",
-		cost: 350,
+		cost: 550,
 		prerequisites: ["market.sale_contracts_1"],
 		effects: {
 			merchantRateMultiplier: 1.25,
-		},
-	},
-	{
-		id: "market.sale_contracts_3",
-		buildingId: "market",
-		name: "Sale Contracts III",
-		description: "Merchants sell potions another 25% faster.",
-		cost: 2400,
-		prerequisites: ["market.sale_contracts_2"],
-		effects: {
-			merchantRateMultiplier: 1.25,
-		},
-	},
-	{
-		id: "market.upselling_1",
-		buildingId: "market",
-		name: "Upselling I",
-		description: "Potions sell for 25% more.",
-		cost: 4200,
-		prerequisites: ["market.sale_contracts_1"],
-		effects: {
-			potionSellValueMultiplier: 1.25,
-		},
-	},
-		{
-		id: "market.upselling_2",
-		buildingId: "market",
-		name: "Upselling II",
-		description: "Potions sell for another 25% more.",
-		cost: 4200,
-		prerequisites: ["market.upselling_1"],
-		effects: {
-			potionSellValueMultiplier: 1.25,
 		},
 	},
 	// {
-	// 	id: "market.demand_1",
+	// 	id: "market.sale_contracts_3",
 	// 	buildingId: "market",
-	// 	name: "Demand Tracking",
-	// 	description: "Unlock demand-based potion pricing.",
-	// 	cost: 20,
-	// 	prerequisites: ["market.silver_tongues_1"],
+	// 	name: "Sale Contracts III",
+	// 	description: "Merchants sell potions another 25% faster.",
+	// 	cost: 2400,
+	// 	prerequisites: ["market.sale_contracts_2"],
 	// 	effects: {
-	// 		// potionSellValueMultiplier: 1.15,
+	// 		merchantRateMultiplier: 1.25,
 	// 	},
 	// },
+	// {
+	// 	id: "market.upselling_1",
+	// 	buildingId: "market",
+	// 	name: "Upselling I",
+	// 	description: "Potions sell for 25% more.",
+	// 	cost: 1700,
+	// 	prerequisites: ["market.sale_contracts_1"],
+	// 	effects: {
+	// 		potionSellValueMultiplier: 1.25,
+	// 	},
+	// },
+	// {
+	// 	id: "market.upselling_2",
+	// 	buildingId: "market",
+	// 	name: "Upselling II",
+	// 	description: "Potions sell for another 25% more.",
+	// 	cost: 4200,
+	// 	prerequisites: ["market.upselling_1"],
+	// 	effects: {
+	// 		potionSellValueMultiplier: 1.25,
+	// 	},
+	// },
+	// {
+	// 	id: "market.upselling_3",
+	// 	buildingId: "market",
+	// 	name: "Upselling III",
+	// 	description: "Potions sell for another 25% more.",
+	// 	cost: 11000,
+	// 	prerequisites: ["market.sale_contracts_2"],
+	// 	effects: {
+	// 		potionSellValueMultiplier: 1.25,
+	// 	},
+	// },
+	{
+		id: "market.demand_based_pricing",
+		buildingId: "market",
+		name: "Demand Based Pricing",
+		description: "Potion prices rise and fall with market demand.",
+		cost: 200,
+		effects: {},
+		prerequisites: ["market.sale_contracts_1"],
+	},
+	{
+		id: "market.demand_ceiling_1",
+		buildingId: "market",
+		name: "Advertise with Town Criers",
+		description: "Increases maximum potion demand by 50%.",
+		cost: 900,
+		prerequisites: ["market.demand_based_pricing"],
+		effects: {
+			potionDemandMaxIncrease: 0.5,
+		},
+	},
+	{
+		id: "market.demand_ceiling_2",
+		buildingId: "market",
+		name: "Advertise with Winged Messengers",
+		description: "Increases maximum potion demand by 50%.",
+		cost: 5000,
+		prerequisites: ["market.demand_ceiling_1"],
+		effects: {
+			potionDemandMaxIncrease: 0.5,
+		},
+	},
+	{
+		id: "market.demand_speed_1",
+		buildingId: "market",
+		name: "Smear the Merchant's Guild",
+		description: "Demand recovers 25% faster and falls 25% slower.",
+		cost: 1200,
+		prerequisites: ["market.demand_based_pricing"],
+		effects: {
+			potionDemandRecoveryMultiplier: 1.25,
+			potionDemandLossMultiplier: 0.75,
+		},
+	},
+	{
+		id: "market.demand_speed_2",
+		buildingId: "market",
+		name: "Sabotage the Quartermaster",
+		description: "Demand recovers another 25% faster and falls another 25% slower.",
+		cost: 6000,
+		prerequisites: ["market.demand_speed_1"],
+		effects: {
+			potionDemandRecoveryMultiplier: 1.25,
+			potionDemandLossMultiplier: 0.75,
+		},
+	},
+	{
+		id: "market.trends_tags",
+		buildingId: "market",
+		name: "Market Trends",
+		description: "Give the people what they want. Potions matching a trend sell for 50% more.",
+		cost: 500,
+		prerequisites: ["market.demand_ceiling_1"],
+		effects: {},
+	},
+	{
+		id: "market.demand_selling",
+		buildingId: "market",
+		name: "Sell While It's Hot",
+		description: "Merchants now sell highest demand potions first",
+		cost: 1100,
+		prerequisites: ["market.trends_tags"],
+		effects: {},
+	},
+	{
+		id: "market.trends_ingredients",
+		buildingId: "market",
+		name: "Market Trends II",
+		description:
+			"Trends can now include ingredients. Potions matching a double trend sell for 100% more.",
+		cost: 2500,
+		prerequisites: ["market.trends_tags"],
+		effects: {},
+	},
 	{
 		id: "tavern.house_special_1",
 		buildingId: "tavern",
@@ -340,20 +437,19 @@ const UPGRADE_DEFINITIONS = [
 		description: "Host private meetings for Senators. Earn their ears.",
 		cost: 1000,
 		prerequisites: ["tavern.house_special_1"],
-		effects: {
-		},
+		effects: {},
 	},
-	{
-		id: "tavern.war_1",
-		buildingId: "tavern",
-		name: "Push To Declare War",
-		description: "Use your Senate connections to declare war. Potion sell price doubles.",
-		cost: 8000,
-		prerequisites: ["tavern.commissions_1"],
-		effects: {
-			potionSellValueMultiplier: 2,
-		},
-	},
+	// {
+	// 	id: "tavern.alchemy_lab",
+	// 	buildingId: "tavern",
+	// 	name: "Commission Schlossmortis",
+	// 	description: "Push through a commission to research alchemy techniques. Potion crafting rate doubles.",
+	// 	cost: 12500,
+	// 	prerequisites: ["tavern.senator_5"],
+	// 	effects: {
+	// 		// potionCraftingRateMultiplier: 2,
+	// 	},
+	// },
 	// {
 	// 	id: "tavern.mercenaries_1",
 	// 	buildingId: "tavern",
@@ -383,8 +479,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 4000,
 		prerequisites: ["tavern.commissions_1"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_2",
@@ -393,8 +488,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 8000,
 		prerequisites: ["tavern.senator_1"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_3",
@@ -403,8 +497,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 16000,
 		prerequisites: ["tavern.senator_2"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_4",
@@ -413,8 +506,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 32000,
 		prerequisites: ["tavern.senator_3"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_5",
@@ -423,8 +515,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 64000,
 		prerequisites: ["tavern.senator_4"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_6",
@@ -433,8 +524,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 125000,
 		prerequisites: ["tavern.senator_5"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_7",
@@ -443,8 +533,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 250000,
 		prerequisites: ["tavern.senator_6"],
-		effects: {
-		},
+		effects: {},
 	},
 	{
 		id: "tavern.senator_8",
@@ -453,7 +542,87 @@ const UPGRADE_DEFINITIONS = [
 		description: "A guaranteed vote in the Senate.",
 		cost: 500000,
 		prerequisites: ["tavern.senator_7"],
+		effects: {},
+	},
+	{
+		id: "tavern.church",
+		buildingId: "tavern",
+		name: "Commission a Sanctified Square",
+		description: "Use your Senate connection and unlock the Sanctified Square.",
+		cost: 2100,
+		prerequisites: ["tavern.senator_1"],
+		effects: {},
+	},
+	{
+		id: "tavern.taxes",
+		buildingId: "tavern",
+		name: "Enact Tax Policy Reform",
+		description:
+			"Use your Senate connections to enact favourable tax policy for potion vendors. Potion sell value increases 40%.",
+		cost: 5000,
+		prerequisites: ["tavern.senator_2"],
 		effects: {
+			potionSellValueMultiplier: 1.4,
+		},
+	},
+	{
+		id: "tavern.research",
+		buildingId: "tavern",
+		name: "High Historian Agricultural Research",
+		description:
+			"Use your Senate connections to have the High Historian research Lerona Merian agricultural history. Boring. Farmers gather 30% faster.",
+		cost: 8000,
+		prerequisites: ["tavern.senator_2"],
+		effects: {
+			farmerRateMultiplier: 1.3,
+		},
+	},
+	{
+		id: "tavern.emergency",
+		buildingId: "tavern",
+		name: "Declare a State of Emergency",
+		description:
+			"Use your Senate connections to enact austerity measures. We must all come together in these hard times. All workers work 25% faster.",
+		cost: 11000,
+		prerequisites: ["tavern.senator_4"],
+		effects: {
+			workerRateMultiplier: 1.25,
+		},
+	},
+	{
+		id: "tavern.war",
+		buildingId: "tavern",
+		name: "Declare War on Dendarr",
+		description:
+			"Use your Senate connections to declare war. Potion demand maximum increases 100%.",
+		cost: 18000,
+		prerequisites: ["tavern.senator_5"],
+		effects: {
+			potionDemandMaxIncrease: 1,
+		},
+	},
+	{
+		id: "tavern.emergency_2",
+		buildingId: "tavern",
+		name: "End the State of Emergency",
+		description:
+			"Use your Senate connections to end the state of emergency. Suddenly everyone has more money. Potions sell 50% faster.",
+		cost: 24000,
+		prerequisites: ["tavern.senator_6"],
+		effects: {
+			merchantRateMultiplier: 1.5,
+		},
+	},
+	{
+		id: "tavern.priest_empower",
+		buildingId: "tavern",
+		name: "Fund the Church",
+		description:
+			"Use your Senate connections to give the Church access to the Senate treasury. Priests make crystal mana twice as fast.",
+		cost: 56000,
+		prerequisites: ["tavern.senator_7"],
+		effects: {
+			priestRateMultiplier: 2,
 		},
 	},
 	{
@@ -463,8 +632,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "The Senate is yours to command. The Concord is yours to rule.",
 		cost: 1000000,
 		prerequisites: ["tavern.senator_8"],
-		effects: {
-		},
+		effects: {},
 	},
 ] as const satisfies readonly UpgradeDefinitionInput[];
 
@@ -490,9 +658,9 @@ export const UPGRADES: Record<UpgradeId, UpgradeDefinition> = UPGRADE_DEFINITION
 			name: upgrade.name,
 			description: upgrade.description,
 			cost: upgrade.cost,
-			prerequisites: (
-				"prerequisites" in upgrade ? [...upgrade.prerequisites] : []
-			) as UpgradeId[],
+			prerequisites: ("prerequisites" in upgrade
+				? [...upgrade.prerequisites]
+				: []) as UpgradeId[],
 			effects: ("effects" in upgrade ? upgrade.effects : {}) as UpgradeEffect,
 		};
 		return record;
