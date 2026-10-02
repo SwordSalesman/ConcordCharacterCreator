@@ -804,7 +804,7 @@ export const ceremonies: Ceremony[] = [
 	},
 	{
 		sphere: "Panoply",
-		name: "Benevolence of the Drunken Benefactor",
+		name: "Plight of the Pained Patron",
 		type: "Curse",
 		Magnitude: 6,
 	},

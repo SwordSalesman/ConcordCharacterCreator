@@ -4,7 +4,8 @@ export type BuildingId = (typeof BUILDING_IDS)[number];
 export interface AggregatedUpgradeEffects {
 	farmerRateMultiplier: number;
 	apothecaryRateMultiplier: number;
-	apothecaryExtraPotionChance: number;
+	apothecaryExtraSinglePotionChance: number;
+	apothecaryExtraDoublePotionChance: number;
 	merchantRateMultiplier: number;
 	priestRateMultiplier: number;
 	potionSellValueMultiplier: number;
@@ -109,10 +110,32 @@ const UPGRADE_DEFINITIONS = [
 		buildingId: "gardens",
 		name: "Faster Harvest III",
 		description: "Farmers gather herbs another 50% faster.",
-		cost: 5100,
+		cost: 5_100,
 		prerequisites: ["gardens.faster_harvest_2"],
 		effects: {
 			farmerRateMultiplier: 1.5,
+		},
+	},
+	{
+		id: "gardens.faster_harvest_4",
+		buildingId: "gardens",
+		name: "Faster Harvest IV",
+		description: "Farmers gather herbs another 50% faster.",
+		cost: 61_000,
+		prerequisites: ["gardens.faster_harvest_3"],
+		effects: {
+			farmerRateMultiplier: 2,
+		},
+	},
+	{
+		id: "gardens.faster_harvest_5",
+		buildingId: "gardens",
+		name: "Faster Harvest V",
+		description: "Farmers gather herbs a full 100% faster.",
+		cost: 250_000,
+		prerequisites: ["gardens.faster_harvest_4"],
+		effects: {
+			farmerRateMultiplier: 2,
 		},
 	},
 	{
@@ -171,7 +194,7 @@ const UPGRADE_DEFINITIONS = [
 		description: "Apothecaries have a 20% chance to produce an extra potion for free.",
 		cost: 75,
 		effects: {
-			apothecaryExtraPotionChance: 0.2,
+			apothecaryExtraSinglePotionChance: 0.2,
 		},
 	},
 	{
@@ -182,7 +205,7 @@ const UPGRADE_DEFINITIONS = [
 		prerequisites: ["laboratory.dilution_1"],
 		cost: 450,
 		effects: {
-			apothecaryExtraPotionChance: 0.2,
+			apothecaryExtraSinglePotionChance: 0.2,
 		},
 	},
 	{
@@ -193,7 +216,33 @@ const UPGRADE_DEFINITIONS = [
 		prerequisites: ["laboratory.dilution_2"],
 		cost: 2400,
 		effects: {
-			apothecaryExtraPotionChance: 0.2,
+			apothecaryExtraSinglePotionChance: 0.2,
+		},
+	},
+	{
+		id: "laboratory.dilution_4",
+		buildingId: "laboratory",
+		name: "Dilution IV",
+		description:
+			"Apothecaries have an 80% chance to produce an extra potion for free, and a 20% chance to produce two extra potions for free.",
+		prerequisites: ["laboratory.dilution_3"],
+		cost: 32_000,
+		effects: {
+			apothecaryExtraSinglePotionChance: 0.2,
+			apothecaryExtraDoublePotionChance: 0.2,
+		},
+	},
+	{
+		id: "laboratory.dilution_5",
+		buildingId: "laboratory",
+		name: "Dilution V",
+		description:
+			"Apothecaries always produce an extra potion for free, and a 50% chance to produce two extra potions for free.",
+		prerequisites: ["laboratory.dilution_4"],
+		cost: 180_000,
+		effects: {
+			apothecaryExtraSinglePotionChance: 1,
+			apothecaryExtraDoublePotionChance: 0.3,
 		},
 	},
 	// {
@@ -282,17 +331,39 @@ const UPGRADE_DEFINITIONS = [
 			merchantRateMultiplier: 1.25,
 		},
 	},
-	// {
-	// 	id: "market.sale_contracts_3",
-	// 	buildingId: "market",
-	// 	name: "Sale Contracts III",
-	// 	description: "Merchants sell potions another 25% faster.",
-	// 	cost: 2400,
-	// 	prerequisites: ["market.sale_contracts_2"],
-	// 	effects: {
-	// 		merchantRateMultiplier: 1.25,
-	// 	},
-	// },
+	{
+		id: "market.sale_contracts_3",
+		buildingId: "market",
+		name: "Sale Contracts III",
+		description: "Merchants sell potions another 50% faster.",
+		cost: 6200,
+		prerequisites: ["market.sale_contracts_2"],
+		effects: {
+			merchantRateMultiplier: 1.5,
+		},
+	},
+	{
+		id: "market.sale_contracts_4",
+		buildingId: "market",
+		name: "Sale Contracts IV",
+		description: "Merchants sell potions another 50% faster.",
+		cost: 74_000,
+		prerequisites: ["market.sale_contracts_3"],
+		effects: {
+			merchantRateMultiplier: 1.5,
+		},
+	},
+	{
+		id: "market.sale_contracts_5",
+		buildingId: "market",
+		name: "Sale Contracts V",
+		description: "Merchants sell potions a full 100% faster.",
+		cost: 310_000,
+		prerequisites: ["market.sale_contracts_4"],
+		effects: {
+			merchantRateMultiplier: 2,
+		},
+	},
 	// {
 	// 	id: "market.upselling_1",
 	// 	buildingId: "market",
@@ -428,6 +499,28 @@ const UPGRADE_DEFINITIONS = [
 		prerequisites: ["tavern.house_special_1"],
 		effects: {
 			workerRateMultiplier: 1.1,
+		},
+	},
+	{
+		id: "tavern.house_special_3",
+		buildingId: "tavern",
+		name: "House Special III",
+		description: "All workers operate another 10% faster.",
+		cost: 75_000,
+		prerequisites: ["tavern.house_special_2"],
+		effects: {
+			workerRateMultiplier: 1.1,
+		},
+	},
+	{
+		id: "tavern.house_special_4",
+		buildingId: "tavern",
+		name: "House Special IV",
+		description: "All workers operate another 25% faster.",
+		cost: 450_000,
+		prerequisites: ["tavern.house_special_3"],
+		effects: {
+			workerRateMultiplier: 1.25,
 		},
 	},
 	{
@@ -568,11 +661,11 @@ const UPGRADE_DEFINITIONS = [
 	{
 		id: "tavern.research",
 		buildingId: "tavern",
-		name: "High Historian Agricultural Research",
+		name: "Fund Agricultural Research",
 		description:
-			"Use your Senate connections to have the High Historian research Lerona Merian agricultural history. Boring. Farmers gather 30% faster.",
+			"Use your Senate connections to have the High Historian research Lerona Merian agricultural history. Exciting stuff. Farmers gather 30% faster.",
 		cost: 8000,
-		prerequisites: ["tavern.senator_2"],
+		prerequisites: ["tavern.senator_3"],
 		effects: {
 			farmerRateMultiplier: 1.3,
 		},

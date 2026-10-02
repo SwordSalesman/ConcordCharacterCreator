@@ -518,7 +518,8 @@ function getBuffEffects({
 		manualPotionCraftMultiplier: 1,
 		manualPotionSellMultiplier: 1,
 		workerRateMultiplier: 1,
-		apothecaryExtraPotionChance: 0,
+		apothecaryExtraSinglePotionChance: 0,
+		apothecaryExtraDoublePotionChance: 0,
 		potionDemandMaxIncrease: 0,
 		potionDemandRecoveryMultiplier: 1,
 		potionDemandLossMultiplier: 1,
@@ -534,7 +535,10 @@ function getBuffEffects({
 		aggregated.manualPotionCraftMultiplier *= effect.manualPotionCraftMultiplier ?? 1;
 		aggregated.manualPotionSellMultiplier *= effect.manualPotionSellMultiplier ?? 1;
 		aggregated.workerRateMultiplier *= effect.workerRateMultiplier ?? 1;
-		aggregated.apothecaryExtraPotionChance += effect.apothecaryExtraPotionChance ?? 0;
+		aggregated.apothecaryExtraSinglePotionChance +=
+			effect.apothecaryExtraSinglePotionChance ?? 0;
+		aggregated.apothecaryExtraDoublePotionChance +=
+			effect.apothecaryExtraDoublePotionChance ?? 0;
 		aggregated.potionDemandMaxIncrease += effect.potionDemandMaxIncrease ?? 0;
 		aggregated.potionDemandRecoveryMultiplier *= effect.potionDemandRecoveryMultiplier ?? 1;
 		aggregated.potionDemandLossMultiplier *= effect.potionDemandLossMultiplier ?? 1;
@@ -1179,6 +1183,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			let nextDeltaEventId = state.nextDeltaEventId;
 			const craftedByPotion = createCountRecord(POTION_IDS);
 			const doubleCraftedByPotion = createCountRecord(POTION_IDS);
+			const tripleCraftedByPotion = createCountRecord(POTION_IDS);
 			const soldByPotion = createCountRecord(POTION_IDS);
 
 			for (const herbId of HERB_IDS) {
@@ -1265,8 +1270,15 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					nextHerbs[herbId] -= herbCost;
 				}
 
-				const doubleCraftChance = effects.apothecaryExtraPotionChance;
-				if (Math.random() < doubleCraftChance) {
+				const doubleCraftChance = effects.apothecaryExtraSinglePotionChance;
+				const tripleCraftChance = effects.apothecaryExtraDoublePotionChance;
+
+				const roll = Math.random();
+
+				if (roll < tripleCraftChance) {
+					nextPotions[potionId] += 3;
+					tripleCraftedByPotion[potionId] += 1;
+				} else if (roll < doubleCraftChance) {
 					nextPotions[potionId] += 2;
 					doubleCraftedByPotion[potionId] += 1;
 				} else {
@@ -1368,6 +1380,16 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 						anchorId: `craft:${potionId}`,
 						amount: doubleCraftedByPotion[potionId],
 						magnitude: 2,
+						source: "passive",
+					});
+				}
+				if (tripleCraftedByPotion[potionId] > 0) {
+					nextDeltaEventId = addDeltaEvent(deltaEvents, nextDeltaEventId, {
+						type: "potionCraft",
+						potionId,
+						anchorId: `craft:${potionId}`,
+						amount: tripleCraftedByPotion[potionId],
+						magnitude: 3,
 						source: "passive",
 					});
 				}

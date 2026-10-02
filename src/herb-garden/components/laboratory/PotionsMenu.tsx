@@ -14,10 +14,7 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 		canUnlockPotion,
 		unlockPotion,
 		getEffectivePotionSellValue,
-		isUpgradePurchased,
 	} = useContext(GameContext);
-
-	const tagsUnlocked = isUpgradePurchased("market.trends_tags");
 
 	const potionsByTier: Record<number, PotionId[]> = {};
 	POTION_IDS.forEach((potionId: PotionId) => {
@@ -124,19 +121,17 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 																	</span>
 																</div>
 															</div>
-															{tagsUnlocked ? (
-																<div className={potionItemStyle}>
-																	<span className="text-muted-foreground italic">
-																		{POTIONS[potionId].tags
-																			.map(
-																				(t) =>
-																					t[0].toUpperCase() +
-																					t.slice(1),
-																			)
-																			.join(", ")}
-																	</span>
-																</div>
-															) : null}
+															<div className={potionItemStyle}>
+																<span className="text-muted-foreground italic">
+																	{POTIONS[potionId].tags
+																		.map(
+																			(t) =>
+																				t[0].toUpperCase() +
+																				t.slice(1),
+																		)
+																		.join(", ")}
+																</span>
+															</div>
 														</div>
 													</span>
 												</Button>

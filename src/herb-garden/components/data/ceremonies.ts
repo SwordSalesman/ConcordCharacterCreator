@@ -99,7 +99,7 @@ export const CEREMONIES: Record<CeremonyId, CeremonyDefinition> = {
 		id: "TL",
 		name: "Trapped in the Labyrinth",
 		description: "Travellers can't leave until they buy a potion. Potions sell 125% faster.",
-		unlockCost: 5000,
+		unlockCost: 6_500,
 		manaCost: 90,
 		effects: {
 			merchantRateMultiplier: 2.25,
@@ -109,7 +109,7 @@ export const CEREMONIES: Record<CeremonyId, CeremonyDefinition> = {
 		id: "WF",
 		name: "Wondrous Forests of the Night",
 		description: "Herbs grow from everywhere. Herbs gather 125% faster.",
-		unlockCost: 5000,
+		unlockCost: 7_500,
 		manaCost: 100,
 		effects: {
 			farmerRateMultiplier: 2.25,
@@ -119,7 +119,7 @@ export const CEREMONIES: Record<CeremonyId, CeremonyDefinition> = {
 		id: "SS",
 		name: "Soldiers of Storm and Stone",
 		description: "They help mix the potions. Potions brewed 125% faster.",
-		unlockCost: 5000,
+		unlockCost: 7_500,
 		manaCost: 100,
 		effects: {
 			apothecaryRateMultiplier: 2.25,
@@ -129,7 +129,7 @@ export const CEREMONIES: Record<CeremonyId, CeremonyDefinition> = {
 		id: "GW",
 		name: "God of War",
 		description: "You are an army of productivity. 3x click effectiveness.",
-		unlockCost: 5000,
+		unlockCost: 7_500,
 		manaCost: 100,
 		effects: {
 			manualHerbGatherMultiplier: 3,
