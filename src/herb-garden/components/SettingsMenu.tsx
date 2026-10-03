@@ -70,7 +70,10 @@ export function SettingsMenu({
 						</>
 					) : activeScreen === "leaderboard" ? (
 						<>
-							<p className="text-center text-lg font-bold">Herb Garden Leaderboard</p>
+							<p className="text-center text-lg font-bold">
+								<span className="font-mono text-muted-foreground">herb-garden</span>{" "}
+								<span className="font-mono">leaderboard</span>
+							</p>
 							<Leaderboard
 								entries={top10}
 								highlightUid={user?.uid}
