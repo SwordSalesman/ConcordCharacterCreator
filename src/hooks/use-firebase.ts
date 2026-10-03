@@ -7,6 +7,7 @@ import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	sendPasswordResetEmail,
+	confirmPasswordReset,
 	signOut,
 	deleteUser,
 } from "firebase/auth";
@@ -115,6 +116,12 @@ const sendPasswordReset = async (email: string) => {
 	} catch (err) {
 		console.error(err);
 	}
+};
+
+// Confirms via oobCode on explicit user submit only; never auto-verify on page
+// load, since email security scanners prefetch links and burn the one-time code.
+const resetPasswordWithCode = async (oobCode: string, newPassword: string) => {
+	await confirmPasswordReset(auth, oobCode, newPassword);
 };
 
 const logout = async () => {
@@ -408,6 +415,7 @@ export {
 	logInWithEmailAndPassword,
 	registerWithEmailAndPassword,
 	sendPasswordReset,
+	resetPasswordWithCode,
 	saveUserForm,
 	getUserForm,
 	migrateUser,
