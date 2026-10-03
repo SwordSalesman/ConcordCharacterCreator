@@ -124,18 +124,18 @@ const UPGRADE_DEFINITIONS = [
 		cost: 61_000,
 		prerequisites: ["gardens.faster_harvest_3"],
 		effects: {
-			farmerRateMultiplier: 2,
+			farmerRateMultiplier: 1.5,
 		},
 	},
 	{
 		id: "gardens.faster_harvest_5",
 		buildingId: "gardens",
 		name: "Faster Harvest V",
-		description: "Farmers gather herbs a full 100% faster.",
+		description: "Farmers gather herbs another 75% faster.",
 		cost: 250_000,
 		prerequisites: ["gardens.faster_harvest_4"],
 		effects: {
-			farmerRateMultiplier: 2,
+			farmerRateMultiplier: 1.75,
 		},
 	},
 	{
@@ -345,23 +345,23 @@ const UPGRADE_DEFINITIONS = [
 	{
 		id: "market.sale_contracts_4",
 		buildingId: "market",
-		name: "Sale Contracts IV",
-		description: "Merchants sell potions another 50% faster.",
+		name: "Upselling I",
+		description: "Potion sell value increases by 50%.",
 		cost: 74_000,
 		prerequisites: ["market.sale_contracts_3"],
 		effects: {
-			merchantRateMultiplier: 1.5,
+			potionSellValueMultiplier: 1.5,
 		},
 	},
 	{
 		id: "market.sale_contracts_5",
 		buildingId: "market",
-		name: "Sale Contracts V",
-		description: "Merchants sell potions a full 100% faster.",
-		cost: 310_000,
+		name: "Upselling II",
+		description: "Potion sell value increases by 75%.",
+		cost: 290_000,
 		prerequisites: ["market.sale_contracts_4"],
 		effects: {
-			merchantRateMultiplier: 2,
+			potionSellValueMultiplier: 1.75,
 		},
 	},
 	// {
