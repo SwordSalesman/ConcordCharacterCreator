@@ -38,6 +38,7 @@ import {
 } from "../helpers/saveGame";
 
 const GAME_CLOCK_INTERVAL_MS = 100;
+const MIN_CLICK_INTERVAL_MS = 50; // This means the most clicks per second is 20
 
 export interface MarketTrend {
 	tag?: Tag;
@@ -194,6 +195,7 @@ interface GameState {
 		sellAttempts: number;
 		crystalManaProduction: number;
 	};
+	lastClick: number | null;
 	deltaEvents: GameDeltaEvent[];
 	nextDeltaEventId: number;
 }
@@ -766,6 +768,7 @@ function createInitialGameState(): GameState {
 			sellAttempts: 0,
 			crystalManaProduction: 0,
 		},
+		lastClick: null,
 		deltaEvents: [],
 		nextDeltaEventId: 1,
 	};
@@ -776,6 +779,12 @@ const initialGameState = createInitialGameState();
 function gameReducer(state: GameState, action: GameAction): GameState {
 	switch (action.type) {
 		case "GATHER_HERB": {
+			const currentTime = Date.now();
+			if (state.lastClick && currentTime - state.lastClick < MIN_CLICK_INTERVAL_MS) {
+				return state;
+			}
+			const lastClick = currentTime;
+
 			const effects = getBuffEffects({
 				purchasedUpgrades: state.purchasedUpgrades,
 				activeCeremony: state.activeCeremonyId,
@@ -804,6 +813,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					...state.herbs,
 					[action.herbId]: state.herbs[action.herbId] + gainedAmount,
 				},
+				lastClick,
 				deltaEvents,
 				nextDeltaEventId,
 			};
@@ -950,6 +960,13 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			};
 		}
 		case "PRAY": {
+			const currentTime = Date.now();
+			// Prevent click from ever raising the time left, it can only ever delay it
+			if (state.lastClick && currentTime - state.lastClick < CEREMONY_PRAY_EXTENSION_MS) {
+				return state;
+			}
+			const lastClick = currentTime;
+
 			if (state.activeCeremonyId === null) {
 				return state;
 			}
@@ -970,6 +987,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					CEREMONY_DURATION_MS,
 					state.activeCeremonyRemainingMs + CEREMONY_PRAY_EXTENSION_MS,
 				),
+				lastClick,
 				deltaEvents,
 				nextDeltaEventId,
 			};
@@ -1023,6 +1041,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			};
 		}
 		case "CRAFT_POTION": {
+			const currentTime = Date.now();
+			if (state.lastClick && currentTime - state.lastClick < MIN_CLICK_INTERVAL_MS) {
+				return state;
+			}
+			const lastClick = currentTime;
+
 			const effects = getBuffEffects({
 				purchasedUpgrades: state.purchasedUpgrades,
 				activeCeremony: state.activeCeremonyId,
@@ -1054,6 +1078,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 					...state.potions,
 					[action.potionId]: state.potions[action.potionId] + craftableCount,
 				},
+				lastClick,
 				deltaEvents: [
 					...state.deltaEvents,
 					{
@@ -1070,6 +1095,12 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 			};
 		}
 		case "SELL_POTION": {
+			const currentTime = Date.now();
+			if (state.lastClick && currentTime - state.lastClick < MIN_CLICK_INTERVAL_MS) {
+				return state;
+			}
+			const lastClick = currentTime;
+
 			const effects = getBuffEffects({
 				purchasedUpgrades: state.purchasedUpgrades,
 				activeCeremony: state.activeCeremonyId,
@@ -1115,6 +1146,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 				},
 				potionDemand,
 				money: state.money + sellCount * sellValue,
+				lastClick,
 				deltaEvents: [
 					...state.deltaEvents,
 					{

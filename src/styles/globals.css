@@ -241,7 +241,7 @@ body {
 	--secondary: #dbdfea;
 	--secondary-foreground: oklch(0.21 0.034 264.665);
 	--muted: oklch(92.408% 0.0076 260.882);
-	--muted-foreground: #364d7d;
+	--muted-foreground: #3d578f;
 	--accent: oklch(90.965% 0.01625 254.024);
 	--accent-foreground: oklch(0.21 0.034 264.665);
 	--contrast: #dea65e;
