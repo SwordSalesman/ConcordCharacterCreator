@@ -138,17 +138,17 @@ export default function ApothecaryAnimationProvider({ children }: { children: Re
 				}
 
 				const anchorRect = anchorNode.getBoundingClientRect();
-				originX = anchorRect.left - rootRect.left;
-				originY = anchorRect.top - rootRect.top;
 				originWidth = anchorRect.width;
 				originHeight = anchorRect.height;
+				originX = anchorRect.left - rootRect.left + originWidth / 2;
+				originY = anchorRect.top - rootRect.top + originHeight / 2;
 			}
 
 			const emoji = getEventEmoji(event);
 			const spawnCount = Math.max(1, Math.min(MAX_PARTICLES_PER_EVENT, event.amount));
 			for (let i = 0; i < spawnCount; i++) {
-				const jitterX = Math.random() * originWidth;
-				const jitterY = Math.random() * originHeight;
+				const jitterX = (Math.random() - 0.5) * originWidth * 0.85;
+				const jitterY = (Math.random() - 0.5) * originHeight * 0.9;
 				particlesToAnimate.push({
 					id: nextParticleIdRef.current++,
 					emoji,
