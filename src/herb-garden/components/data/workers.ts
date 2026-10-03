@@ -26,8 +26,8 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Apothecaries",
 		singularName: "Apothecary",
 		emoji: "🧪",
-		baseCost: 35,
-		costScale: 1.475,
+		baseCost: 33,
+		costScale: 1.47,
 		actionsPerSecond: 0.3,
 	},
 	merchants: {
@@ -35,8 +35,8 @@ export const WORKERS: Record<WorkerId, WorkerDefinition> = {
 		name: "Merchants",
 		singularName: "Merchant",
 		emoji: "⚖️",
-		baseCost: 32,
-		costScale: 1.475,
+		baseCost: 35,
+		costScale: 1.48,
 		actionsPerSecond: 0.3,
 	},
 	priests: {

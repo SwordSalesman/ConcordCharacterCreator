@@ -11,6 +11,7 @@ export interface CeremonyDefinition {
 
 export const CEREMONY_IDS = [
 	"BN",
+	"CN",
 	"CR",
 	"RW",
 	"CD",
@@ -33,6 +34,16 @@ export const CEREMONIES: Record<CeremonyId, CeremonyDefinition> = {
 		manaCost: 4,
 		effects: {
 			potionSellValueMultiplier: 1.15,
+		},
+	},
+	CN: {
+		id: "CN",
+		name: "Contract of Mercenary Need",
+		description: "Your merchants are sent to war. Potion sell rate DROPS by 90%.",
+		unlockCost: 500,
+		manaCost: 6,
+		effects: {
+			merchantRateMultiplier: 0.1,
 		},
 	},
 	CR: {
