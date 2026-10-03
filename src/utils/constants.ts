@@ -5,6 +5,7 @@ export const PATH_GROUPS = "/groups";
 export const PATH_DOWNTIME = "/downtime";
 export const PATH_CEREMONIES = "/ceremonies";
 export const PATH_HERB_GARDEN = "/herb-garden";
+export const PATH_RESET_PASSWORD = "/reset-password";
 export const PATH_WIKI = "https://wiki.concordlarp.com/index.php/";
 export const APPROVED = "Approved";
 export const DENIED = "Denied";
