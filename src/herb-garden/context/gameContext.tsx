@@ -38,7 +38,7 @@ import {
 } from "../helpers/saveGame";
 
 const GAME_CLOCK_INTERVAL_MS = 100;
-const MIN_CLICK_INTERVAL_MS = 50; // This means the most clicks per second is 20
+const MIN_CLICK_INTERVAL_MS = 50; // This means the most clicks per second is 1000/50 = 20
 
 export interface MarketTrend {
 	tag?: Tag;
