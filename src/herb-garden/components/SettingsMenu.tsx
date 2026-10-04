@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Leaderboard } from "./Leaderboard";
 import { useLeaderboard } from "../hooks/use-leaderboard";
 import useUserContext from "@/hooks/use-user-context";
-import { copyText } from "@/utils/odd-jobs";
+import { changelog } from "./data/changelog";
 
 export function SettingsMenu({
 	open,
@@ -16,9 +16,9 @@ export function SettingsMenu({
 	onClose: () => void;
 	handleReset: () => void;
 }) {
-	const [activeScreen, setActiveScreen] = useState<"settings" | "about" | "leaderboard">(
-		"settings",
-	);
+	const [activeScreen, setActiveScreen] = useState<
+		"settings" | "about" | "leaderboard" | "changelog"
+	>("settings");
 	const { active, toggleActive } = useAnimation();
 	const { top10, loading } = useLeaderboard(activeScreen === "leaderboard");
 	const { user } = useUserContext();
@@ -45,7 +45,7 @@ export function SettingsMenu({
 		<Modal
 			open={open}
 			onClose={handleClose}
-			size={activeScreen === "leaderboard" ? "medium" : "small"}
+			size={["leaderboard", "changelog"].includes(activeScreen) ? "medium" : "small"}
 			body={
 				<div className="flex flex-col items-center gap-3">
 					{activeScreen === "about" ? (
@@ -81,6 +81,34 @@ export function SettingsMenu({
 							/>
 							{backButton}
 						</>
+					) : activeScreen === "changelog" ? (
+						<>
+							<p className="text-center text-lg font-bold">
+								<span className="font-mono">Change Log</span>
+							</p>
+							<div>
+								{changelog
+									.sort((a, b) => b.version.localeCompare(a.version))
+									.map((entry) => (
+										<div key={entry.version} className="mb-4">
+											<p className="font-mono font-bold">
+												V{entry.version}{" "}
+												<span className="font-mono text-muted-foreground">
+													({entry.date})
+												</span>
+											</p>
+											<ul className="list-disc list-inside">
+												{entry.changes.map((change, index) => (
+													<li key={index} className="leading-5 mb-1">
+														{change}
+													</li>
+												))}
+											</ul>
+										</div>
+									))}
+							</div>
+							{backButton}
+						</>
 					) : (
 						<>
 							<Button
@@ -100,7 +128,7 @@ export function SettingsMenu({
 								variant="ghost"
 							>
 								<span>🏆</span>
-								<span>View Leaderboard</span>
+								<span>Leaderboard</span>
 							</Button>
 							<Button
 								onClick={() => {
@@ -111,6 +139,16 @@ export function SettingsMenu({
 							>
 								<span>🌱</span>
 								<span>About</span>
+							</Button>
+							<Button
+								onClick={() => {
+									setActiveScreen("changelog");
+								}}
+								className="w-full gap-2"
+								variant="ghost"
+							>
+								<span>📝</span>
+								<span>Changelog</span>
 							</Button>
 							<Button
 								onClick={() => {

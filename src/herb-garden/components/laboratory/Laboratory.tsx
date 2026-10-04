@@ -59,7 +59,7 @@ function SortablePotionCraftButton({
 		<div ref={setNodeRef} {...attributes} style={style} className="flex gap-0.5 items-center">
 			{showReorder ? (
 				<div className="rounded-xs p-0.5 cursor-move animate-in fade-in" {...listeners}>
-					<MdReorder className="size-5" />
+					<MdReorder className="size-8 sm:size-6" />
 				</div>
 			) : null}
 			<Button
