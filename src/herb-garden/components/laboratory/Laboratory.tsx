@@ -67,7 +67,7 @@ function SortablePotionCraftButton({
 				onClick={() => {
 					isCraftable && onCraft(potionId);
 				}}
-				className="flex-1 flex justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
+				className="flex-1 flex touch-manipulation justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
 				disabled={!isCraftable}
 			>
 				<p className="flex flex-wrap items-center text-left text-wrap gap-2">
