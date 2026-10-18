@@ -88,7 +88,7 @@ export function Market() {
 								onClick={() => {
 									canSellPotion(potionId) && sellPotion(potionId, 1);
 								}}
-								className="w-full flex flex-1 h-fit relative justify-between duration-100 hover:scale-103 active:scale-98 p-0 h-fit"
+								className="w-full flex flex-1 h-fit touch-manipulation relative justify-between duration-100 hover:scale-103 active:scale-98 p-0"
 								disabled={!canSellPotion(potionId)}
 							>
 								{trending && (
