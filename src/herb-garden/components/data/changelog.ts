@@ -13,4 +13,9 @@ export const changelog: { version: string; date: string; changes: string[] }[] =
 			"Laboratory potion reorder buttons made larger on mobile view.",
 		],
 	},
+	{
+		version: "1.1.1",
+		date: "2026-10-18",
+		changes: ["Prevent iPhone browsers zooming in when 'double tapping' spammable button."],
+	},
 ];
