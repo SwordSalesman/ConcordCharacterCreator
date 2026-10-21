@@ -26,7 +26,7 @@ export function PageMeta() {
 	const title = `${name ? `${name} | ` : ""}Waystone`;
 	const description = "The Portal for Concordian Heroes";
 	const image = "https://i.imgur.com/4DM5P9x.png";
-	const url = "https://charactercreator.concordlarp.com/";
+	const url = "https://waystone.concordlarp.com/";
 
 	return (
 		<Head>
