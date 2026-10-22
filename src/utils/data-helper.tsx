@@ -1,5 +1,5 @@
 import { Skill, skills } from "@/data/tables/skills";
-import { realms } from "@/data/tables/realms";
+import { CivilServiceRealm, realms } from "@/data/tables/realms";
 import { regions } from "@/data/tables/regions";
 import React, { ReactNode } from "react";
 import { Investment } from "@/data/tables/investments";
@@ -152,7 +152,7 @@ export function getNextInvestmentOption(option: string): string {
 // ########## REALMS ##########
 
 export function getRealmData(realmName: string) {
-	return realms.find((r) => r.name === realmName);
+	return [...realms, CivilServiceRealm].find((r) => r.name === realmName);
 }
 
 export function getRegionRealm(regionName: string) {

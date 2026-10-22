@@ -103,7 +103,11 @@ export function CharacterSheet({
 				</div>
 				<div className={"italic text-muted-foreground"}>
 					{realmFull ? realmFull.citizen : "Realmless"}{" "}
-					{archetype && archetype.length ? archetype : "Hero"}
+					{archetype && archetype.length
+						? archetype
+						: realm === "Civil Service"
+							? ""
+							: "Hero"}
 				</div>
 				{fullGrace && (
 					<div className="italic text-muted-foreground">

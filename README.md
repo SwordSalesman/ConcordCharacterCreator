@@ -93,3 +93,7 @@ User Authorisation levels:
 6. Viewer (Can view everything, can edit only their things)
 7. Player (Can view and edit only their own things)
 8. Guest (Can't do anything)
+
+### Civil Service Users
+
+If you're a Civil Service member, you can register your character to the Civil Service 'Realm', by going to https://waystone.concordlarp.com/hero?civilservice=true

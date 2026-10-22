@@ -4,23 +4,27 @@ import BordevarLogo from "../images/realm-logos/bordevar.png";
 import GreenwealdLogo from "../images/realm-logos/greenweald.png";
 import IronValleyLogo from "../images/realm-logos/ironvalley.png";
 import LeronaMereLogo from "../images/realm-logos/leronamere.png";
+import CivilServiceLogo from "../images/realm-logos/concord_large.png";
 
 export type Realm =
 	| "Andash"
 	| "Kingdom of Bordevar"
 	| "Greenweald Baronies"
 	| "Iron Valley"
-	| "Lerona Mere";
+	| "Lerona Mere"
+	| "Civil Service";
 
-export const realms: {
+export interface RealmData {
 	name: Realm;
 	citizen: string;
 	subtitle: string;
 	link: string;
 	image: StaticImageData;
 	desc: string;
-	archetypeLink: string;
-}[] = [
+	archetypeLink?: string;
+}
+
+export const realms: RealmData[] = [
 	{
 		name: "Andash",
 		citizen: "Andashi",
@@ -68,3 +72,12 @@ export const realms: {
 		archetypeLink: "Lerona_Mere_Archetypes",
 	},
 ];
+
+export const CivilServiceRealm: RealmData = {
+	name: "Civil Service",
+	citizen: "Civil Servant",
+	subtitle: '"Let my conduct be my witness. Let my service be my proof."',
+	link: "The_Civil_Service",
+	image: CivilServiceLogo,
+	desc: "The vast, dedicated bureaucracy that forms the most recognised face of The Concord as a government, rather than a concept, an allegiance, or a foolhardy dream.",
+};
