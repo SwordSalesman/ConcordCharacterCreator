@@ -4,17 +4,7 @@
 
 ## To Do list
 
-- Further options for characters. Bordervar common/noble/knight options.
-- Mastered Ceremonies should be managed by the church team, not the character creator
-    - Fix the divine lore per sphere giving known ceremonies thing, you know the one.
-- Improve the diffs on the admin approvals window: https://www.npmjs.com/package/fast-diff
-    - Could save a whole copy of the hero submission under "HeroesApproved" instead of "Heroes", which is only updated when a Hero gets approved. Comparisons become a lot easier, direct 1:1
-- Make the alert banner adjustable without a deploy, make it read from firebase probably.
-- Brainstorm ways to submit player groups and integrate into character submission, then build the whole thing
-    - New submission widget for groups, just like the character creator
-    - Approvals window for groups also
-    - When a group is approved, it will appear in the list of groups that players can select from a dropdown
-- 'Epithets' and 'True Name' fields. Name (Your hero's public name without following titles, may be published in Winds of the Worlds). Epithets - optional (Titles or monikers. E.g. the quoted text is all ephithets: Sir Dennis Braggard "Last of His Name, Feller of Beasts"). True Name - optional (If your public name is a fake, put your real one here. This won't be published in Winds of the World unless there's a good reason.)
+https://github.com/users/SwordSalesman/projects/1
 
 ## 🚀 Live Site
 
@@ -103,3 +93,7 @@ User Authorisation levels:
 6. Viewer (Can view everything, can edit only their things)
 7. Player (Can view and edit only their own things)
 8. Guest (Can't do anything)
+
+### Civil Service Users
+
+If you're a Civil Service member, you can register your character to the Civil Service 'Realm', by going to https://waystone.concordlarp.com/hero?civilservice=true

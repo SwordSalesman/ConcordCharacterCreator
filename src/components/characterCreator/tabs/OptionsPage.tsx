@@ -302,7 +302,7 @@ const genSelectedContent = (
 	noDisable?: boolean,
 	disableItemFunction?: (item: string) => boolean,
 ) => {
-	if (!items.length || items[0] === undefined) {
+	if (!items.length || items[0] === undefined || items[0] === "") {
 		return null;
 	}
 	return items?.map((i) => {

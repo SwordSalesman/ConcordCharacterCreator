@@ -4,7 +4,7 @@ import { APPROVED, ARCHIVED, DENIED, PENDING } from "../../utils/constants";
 import { Counts, DateType } from "./Approvals";
 import { Input } from "../common/Input/Input";
 import { useRef, useState } from "react";
-import { Realm, realms } from "@/data/tables/realms";
+import { CivilServiceRealm, Realm, realms } from "@/data/tables/realms";
 import Image from "next/image";
 import { FaArchive, FaEye, FaThumbsDown, FaThumbsUp } from "react-icons/fa";
 
@@ -85,7 +85,7 @@ function ListFilter({
 			</div>
 			{showRealmFilter && (
 				<div className="flex flex-row justify-left gap-1 ">
-					{realms.map((realm) => {
+					{[...realms, CivilServiceRealm].map((realm) => {
 						return (
 							<Button
 								variant={realm.name === realmFilter ? "primary" : "secondary"}

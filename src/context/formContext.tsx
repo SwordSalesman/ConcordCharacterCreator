@@ -174,6 +174,21 @@ function applySkillSideEffects(state: FormState): FormState {
 		skills = skills.slice(0, -1);
 	}
 
+	// If a skill has lowered the number of allowed potions/spells/crafts, trim the lists accordingly.
+	const maxPotions = calculateMaxPotions(skills, state.archetype);
+	const maxSpells = calculateMaxSpells(skills);
+	const maxCrafts = calculateMaxCrafts(skills);
+
+	if (state.potions.length > maxPotions) {
+		state.potions = state.potions.slice(0, maxPotions);
+	}
+	if (state.spells.length > maxSpells) {
+		state.spells = state.spells.slice(0, maxSpells);
+	}
+	if (state.crafts.length > maxCrafts) {
+		state.crafts = state.crafts.slice(0, maxCrafts);
+	}
+
 	// Downstream effects: certain skills gate entire sub-systems.
 	const hasMagus = skills.includes("Magus");
 	const hasArtisan = skills.includes("Artisan");
@@ -259,14 +274,6 @@ function applyOptionSideEffects(state: FormState): FormState {
 	});
 
 	return { ...state, invDiversify, invTier, invRegion, invTerritory, invOption, investment };
-}
-
-function calculateMaxPotions(skills: string[], archetype?: string): number {
-	const baseMax =
-		skills.filter((s) => s.startsWith("Apothecary")).length * 3 +
-		skills.filter((s) => s.startsWith("Extra Recipe")).length * 2 +
-		(isCrowDoktor(archetype) ? 1 : 0); // Crows get Al-Asah's Antidote for free, but it doesn't count against their max potions.
-	return baseMax;
 }
 
 function applyPotionSideEffects(state: FormState): FormState {
@@ -399,6 +406,30 @@ export const FormContext = createContext<FormContextInterface>({
 	bands: [],
 });
 
+// Calculating maximum values for various resources based on skills
+
+function calculateMaxPotions(skills: string[], archetype?: string): number {
+	const baseMax =
+		skills.filter((s) => s.startsWith("Apothecary")).length * 3 +
+		skills.filter((s) => s.startsWith("Extra Recipe")).length * 2 +
+		(isCrowDoktor(archetype) ? 1 : 0); // Crows get Al-Asah's Antidote for free, but it doesn't count against their max potions.
+	return baseMax;
+}
+
+function calculateMaxSpells(skills: string[]): number {
+	if (!skills.includes("Magus")) return 0;
+	return 2 + skills.filter((s) => s.startsWith("Additional Spell")).length * 1;
+}
+
+function calculateMaxCrafts(skills: string[]): number {
+	return (
+		skills.filter((s) => s.startsWith("Artisan")).length * 5 +
+		skills.filter((s) => s.startsWith("Extra Craft")).length * 2
+	);
+}
+
+// Form context provider component
+
 export default function FormContextProvider({ children }: { children: React.ReactNode }) {
 	const { user } = useUserContext();
 	const [loading, setLoading] = useState(true);
@@ -446,10 +477,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	const remainingXp =
 		totalXp - (fullSkills ? fullSkills.map((s) => s.cost).reduce((a, b) => a + b, 0) : 0);
 
-	const maxSpells = useMemo(() => {
-		if (!skills.includes("Magus")) return 0;
-		return 2 + skills.filter((s) => s.startsWith("Additional Spell")).length * 1;
-	}, [skills]);
+	const maxSpells = useMemo(() => calculateMaxSpells(skills), [skills]);
 	const remainingSpells = maxSpells - spells.length;
 
 	const maxCeremonies = useMemo(() => {
@@ -460,12 +488,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	}, [skills]);
 	const remainingCeremonies = maxCeremonies - ceremonies.length;
 
-	const maxCrafts = useMemo(() => {
-		return (
-			skills.filter((s) => s.startsWith("Artisan")).length * 5 +
-			skills.filter((s) => s.startsWith("Extra Craft")).length * 2
-		);
-	}, [skills]);
+	const maxCrafts = useMemo(() => calculateMaxCrafts(skills), [skills]);
 	const remainingCrafts = maxCrafts - crafts.length;
 
 	const maxPotions = useMemo(() => {

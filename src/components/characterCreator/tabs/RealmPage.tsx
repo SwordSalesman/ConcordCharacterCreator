@@ -1,15 +1,20 @@
 import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
-import { realms } from "../../../data/tables/realms";
-import React from "react";
+import { CivilServiceRealm, RealmData, realms } from "../../../data/tables/realms";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 function RealmPage() {
 	const { form, setField } = useFormContext();
+	const { query } = useRouter();
 	const { realm } = form;
-	const realmFull = realms.find((r) => r.name === realm);
 
-	const handleRealmSelect = (r: any) => {
+	const showCivilService = query.civilservice === "true";
+	const realmList: RealmData[] = showCivilService ? [CivilServiceRealm] : realms;
+
+	const realmFull = realmList.find((r) => r.name === realm);
+
+	const handleRealmSelect = (r: RealmData) => {
 		if (r === realmFull) {
 			setField("realm", undefined);
 		} else {
@@ -17,7 +22,7 @@ function RealmPage() {
 		}
 	};
 
-	const renderedLogos = realms.map((r) => {
+	const renderedLogos = realmList.map((r) => {
 		const active = realmFull?.name === r.name;
 		return (
 			<div
