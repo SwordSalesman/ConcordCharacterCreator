@@ -147,8 +147,10 @@ export default function SkillsPage() {
 				{skillsData?.length > 0 ? (
 					<SectionWrapper>{renderedSkills}</SectionWrapper>
 				) : (
-					<div className="opacity-60 italic px-10">
-						{"Select your skills from the options here"}
+					<div className="opacity-60 italic px-6">
+						Select your skills from the options{" "}
+						<span className="hidden sm:inline">on the right</span>
+						<span className="inline sm:hidden">below</span>
 					</div>
 				)}
 			</ContentPane>
