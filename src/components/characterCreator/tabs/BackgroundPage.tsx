@@ -138,7 +138,7 @@ export function BackgroundPage() {
 			),
 		},
 		{
-			label: "Alliances",
+			label: "Player Groups",
 			link: "Player_Groups",
 			content: (
 				<div className="flex flex-col gap-2 w-full my-4">

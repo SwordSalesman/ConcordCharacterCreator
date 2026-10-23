@@ -42,7 +42,7 @@ import { Chip } from "@/components/common/Chip/Chip";
 import { Button } from "@/components/common/Button/Button";
 import { investments as investmentsData } from "@/data/tables/investments";
 import { regions as regionsData } from "@/data/tables/regions";
-import { crafts as craftsData } from "@/data/tables/crafts";
+import { crafts as craftsData, CraftType } from "@/data/tables/crafts";
 import { Realm } from "@/data/tables/realms";
 import { ContentPane } from "@/components/creator/ContentPane/ContentPane";
 import { ceremonies as ceremoniesData } from "@/data/tables/ceremonies";
@@ -53,6 +53,7 @@ import { gridMirrorStyle } from "@/styles/Global";
 import { canSelectPotion, isPotionMandatoryForHero } from "@/utils/validity-helper";
 import { useState } from "react";
 import { Modal } from "@/components/common/Modal/Modal";
+import { Remaining } from "@/context/formContext";
 
 const chipIcons = true;
 
@@ -81,7 +82,7 @@ function investmentIcon(type: string) {
 	}
 }
 
-function chipIcon(type: string) {
+function chipIcon(type: CraftType) {
 	if (!chipIcons) return <></>;
 
 	switch (type) {
@@ -115,10 +116,11 @@ function chipIcon(type: string) {
 			return <GiGemNecklace />;
 		case "Talisman: Battlemages Circlet":
 			return <GiCrenelCrown />;
-		case "Banner":
+		case "Concordia: Banner":
 			return <GiTatteredBanner />;
 		case "Reliquary":
 			return <GiIncense />;
+		case "Concordia: Icon":
 		case "Special":
 			return <GiPotionBall />;
 		default:
@@ -325,7 +327,7 @@ const genSelectedContent = (
 };
 
 export function OptionsPage() {
-	const { form, toggleItem, setField, remaining } = useFormContext();
+	const { form, toggleItem, setField, remaining, maximum } = useFormContext();
 	const {
 		gamesPlayed,
 		skills,
@@ -479,14 +481,14 @@ export function OptionsPage() {
 				)}
 			</AccordionSection>
 			{investmentOptions.length > 0 && (
-				<AccordionSection title="Investment Option" align="left">
+				<AccordionSection title="Investment Variant" align="left">
 					{investmentOptions.map((item) => {
 						let selected = invOption?.includes(item.name);
 						return (
 							<Chip
 								onClick={() => toggleItem("invOption", item.name)}
 								selected={selected}
-								inactive={invTier === 0 || (!selected && !!invOption)}
+								inactive={invTier === 0 || (!selected && remaining.invOption <= 0)}
 								key={item.name}
 							>
 								{item.name}
@@ -682,13 +684,46 @@ export function OptionsPage() {
 		);
 	}
 
+	function remainingSelectionText({
+		field,
+		manual,
+		warning,
+	}: {
+		field?: keyof Remaining;
+		manual?: { remaining?: number; maximum?: number };
+		warning?: boolean;
+	}) {
+		const rem = manual?.remaining ?? (field ? remaining[field] : 0);
+		const max = manual?.maximum ?? (field ? maximum[field] : 0);
+		return (
+			<span
+				className={`duration-150 ${rem <= 0 ? "opacity-50" : warning ? "text-destructive" : ""}`}
+			>
+				{` (${max - rem}/${max})`}
+			</span>
+		);
+	}
+
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row w-full">
 			<ContentPane className="flex-4">
-				<div className="flex flex-col flex-4 gap-3">
+				<div className="flex flex-col flex-4 gap-4">
 					<div>
 						<SectionDivider>
-							Investment {!investment && invTier > 0 ? ` (1 remaining)` : ""}
+							Investment
+							<span className="text-destructive">
+								{invTier <= 0
+									? ""
+									: !investment
+										? ` (None Selected)`
+										: remaining.invOption > 0
+											? ` (Select a variant)`
+											: !invRegion
+												? "(Select a Region)"
+												: !invTerritory
+													? "(Select a Territory)"
+													: ""}
+							</span>
 						</SectionDivider>
 						{renderedInvestment || renderedInvOption || renderedInvRegion ? (
 							// Left align the right column and right align the left column
@@ -743,31 +778,37 @@ export function OptionsPage() {
 					{showSpells && (
 						<div>
 							<SectionDivider>
-								Spells
-								{remaining.spells > 0 ? ` (${remaining.spells} remaining)` : ""}
+								Spells {remainingSelectionText({ field: "spells", warning: true })}
 							</SectionDivider>
 							<SectionWrapper>{renderedSpells}</SectionWrapper>
 						</div>
 					)}
 					{showCrafts && (
-						<div>
-							<SectionDivider>
-								Crafts
-								{remaining.crafts > 0 ? ` (${remaining.crafts} remaining)` : ""}
-							</SectionDivider>
-							<SectionWrapper>{renderedCrafts}</SectionWrapper>
-							<SectionDivider>
-								Starting Item
-								{!startingItem ? ` (1 remaining)` : ""}
-							</SectionDivider>
-							<SectionWrapper>{renderedStartingItem}</SectionWrapper>
-						</div>
+						<>
+							<div>
+								<SectionDivider>
+									Crafts
+									{remainingSelectionText({ field: "crafts", warning: true })}
+								</SectionDivider>
+								<SectionWrapper>{renderedCrafts}</SectionWrapper>
+							</div>
+							<div>
+								<SectionDivider>
+									Starting Artisan Item
+									{remainingSelectionText({
+										manual: { remaining: !startingItem ? 1 : 0, maximum: 1 },
+										warning: true,
+									})}
+								</SectionDivider>
+								<SectionWrapper>{renderedStartingItem}</SectionWrapper>
+							</div>
+						</>
 					)}
 					{showPotions && (
 						<div>
 							<SectionDivider>
 								Potions
-								{remaining.potions > 0 ? ` (${remaining.potions} remaining)` : ""}
+								{remainingSelectionText({ field: "potions", warning: true })}
 							</SectionDivider>
 							<SectionWrapper>{renderedPotions}</SectionWrapper>
 						</div>
@@ -776,9 +817,7 @@ export function OptionsPage() {
 						<div>
 							<SectionDivider>
 								Mastered Ceremonies
-								{remaining.ceremonies > 0
-									? ` (${remaining.ceremonies} remaining)`
-									: ""}
+								{remainingSelectionText({ field: "ceremonies", warning: true })}
 							</SectionDivider>
 							<SectionWrapper>{renderedCeremonies}</SectionWrapper>
 						</div>

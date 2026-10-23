@@ -63,7 +63,7 @@ const tabs = [
 ];
 
 export default function SkillsPage() {
-	const { form, toggleItem, validSkillChoice, remaining } = useFormContext();
+	const { form, toggleItem, validSkillChoice, remaining, maximum } = useFormContext();
 	const { skills } = form;
 
 	const skillsData = useMemo(() => {
@@ -135,7 +135,14 @@ export default function SkillsPage() {
 	return (
 		<div className="flex gap-2 flex-col sm:flex-row w-full">
 			<ContentPane className="flex-4">
-				<SectionDivider>Remaining XP: {String(remaining.xp)}</SectionDivider>
+				<SectionDivider>
+					Selected Skills
+					<span
+						className={`duration-150 ${remaining.xp === 0 ? "opacity-50" : remaining.xp < 0 ? "text-destructive" : ""}`}
+					>
+						{` (${maximum.xp - remaining.xp}/${maximum.xp} Experience)`}
+					</span>
+				</SectionDivider>
 				{warning && <Warning>{warning}</Warning>}
 				{skillsData?.length > 0 ? (
 					<SectionWrapper>{renderedSkills}</SectionWrapper>

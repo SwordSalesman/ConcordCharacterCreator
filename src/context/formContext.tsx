@@ -84,14 +84,16 @@ export interface Approval {
 	comment: string;
 }
 
-interface Remaining {
+export interface Remaining {
 	xp: number;
 	spells: number;
 	ceremonies: number;
 	crafts: number;
 	potions: number;
+	invOption: number;
 	diversify: number;
 }
+export interface Maximum extends Remaining {}
 
 type FormStateSummary = {
 	[K in keyof FormState]: FormState[K] extends string[] ? string | undefined : FormState[K];
@@ -121,6 +123,19 @@ const initialState: FormState = {
 	changes: [],
 };
 
+function calculateMaxDiversifyOptions({
+	investment,
+	invTier,
+}: {
+	investment: string | undefined;
+	invTier: number;
+}): number {
+	const invHasDiversifyOptions = !!investments.find((i) => i.name === investment)
+		?.diversifyOptions?.length;
+	const maxDiversifyOptions = invHasDiversifyOptions ? invTier - 1 : 0;
+	return maxDiversifyOptions;
+}
+
 function calculateRemainingDiversifyOptions({
 	investment,
 	invTier,
@@ -130,12 +145,26 @@ function calculateRemainingDiversifyOptions({
 	invTier: number;
 	invDiversify: string[];
 }): number {
-	const invHasDiversifyOptions = !!investments.find((i) => i.name === investment)
-		?.diversifyOptions?.length;
-	const remainingDiversifyOptions = invHasDiversifyOptions
-		? invTier - 1 - (invDiversify?.length ?? 0)
-		: 0;
+	const maxDiversifyOptions = calculateMaxDiversifyOptions({ investment, invTier });
+	const remainingDiversifyOptions = maxDiversifyOptions - (invDiversify?.length ?? 0);
 	return remainingDiversifyOptions;
+}
+
+function calculateMaxInvOptions({ investment }: { investment: string | undefined }): number {
+	const invHasOptions = investments.find((i) => i.name === investment)?.options?.length;
+	return invHasOptions ? 1 : 0;
+}
+
+function calculateRemainingInvOptions({
+	investment,
+	invOption,
+}: {
+	investment?: string;
+	invOption?: string;
+}): number {
+	const maxInvOption = calculateMaxInvOptions({ investment });
+	const remainingInvOption = maxInvOption - (invOption ? 1 : 0);
+	return remainingInvOption;
 }
 
 // Pure helper: checks prereqs and exclusions for a single skill against a given skill list.
@@ -367,6 +396,7 @@ interface FormContextInterface {
 	toggleItem: (field: keyof FormState, item: any) => void;
 	resetForm: () => void;
 	remaining: Remaining;
+	maximum: Maximum;
 	validateForm: () => {
 		valid: boolean;
 		validRealm: boolean;
@@ -401,7 +431,16 @@ export const FormContext = createContext<FormContextInterface>({
 	}),
 	validSkillChoice: () => ({ valid: false }),
 	resetForm: () => {},
-	remaining: { xp: 0, spells: 0, ceremonies: 0, crafts: 0, potions: 0, diversify: 0 },
+	remaining: {
+		xp: 0,
+		spells: 0,
+		ceremonies: 0,
+		crafts: 0,
+		potions: 0,
+		invOption: 0,
+		diversify: 0,
+	},
+	maximum: { xp: 0, spells: 0, ceremonies: 0, crafts: 0, potions: 0, invOption: 0, diversify: 0 },
 	getFormSummary: () => ({}) as FormStateSummary,
 	bands: [],
 });
@@ -467,6 +506,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		heroName,
 		backstory,
 		invDetails,
+		invOption,
 		icGoals,
 		oocGoals,
 	} = formState;
@@ -508,7 +548,21 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		ceremonies: remainingCeremonies,
 		crafts: remainingCrafts,
 		potions: remainingPotions,
+		invOption: calculateRemainingInvOptions({
+			investment,
+			invOption: invOption,
+		}),
 		diversify: remainingDiversifyOptions,
+	};
+
+	const maximum: Maximum = {
+		xp: totalXp,
+		spells: maxSpells,
+		ceremonies: maxCeremonies,
+		crafts: maxCrafts,
+		potions: maxPotions,
+		invOption: calculateMaxInvOptions({ investment }),
+		diversify: calculateMaxDiversifyOptions({ investment, invTier }),
 	};
 
 	// Load Data
@@ -632,6 +686,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 		toggleItem,
 		resetForm,
 		remaining,
+		maximum,
 		validateForm,
 		validSkillChoice,
 		getFormSummary,
