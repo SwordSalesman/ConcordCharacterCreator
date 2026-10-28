@@ -1,99 +1,58 @@
-# ⚔️ Waystone ⚔️
+# Waystone
 
-(formerly the Concord Character Creator)
+Waystone (formerly the Concord Character Creator) is the character submission system for the Concord LARP. Players build heroes (and Band/Sect groups) in a guided wizard, and reviewers approve them. Built with Next.js 16 (static export), Tailwind CSS v4 and Firebase.
 
-## To Do list
+- **Live site:** https://waystone.concordlarp.com/
+- **To-do board:** https://github.com/users/SwordSalesman/projects/1
+- **Firebase:** [production](https://console.firebase.google.com/project/concordcharactercreator/overview) · dev project `concordcharactercreatordev`
 
-https://github.com/users/SwordSalesman/projects/1
+| Page           | Purpose                                                             |
+| -------------- | ------------------------------------------------------------------- |
+| `/hero`        | Create and submit a hero                                            |
+| `/groups`      | Band/Sect submission (built, hidden behind a feature flag)          |
+| `/approvals`   | Review submissions, email players, export CSV (Editors/Admins)      |
+| `/herb-garden` | Secret cookie-clicker minigame ([notes](src/herb-garden/readme.md)) |
 
-## 🚀 Live Site
+Civil Service members can register to the "Civil Service realm" at `/hero?civilservice=true`.
 
-https://waystone.concordlarp.com/
+> Working on this repo with an AI agent? See [AGENTS.md](AGENTS.md) for architecture and conventions.
 
-### Pages:
+## Local development
 
-https://waystone.concordlarp.com/hero
-
-https://waystone.concordlarp.com/approvals
-
-https://waystone.concordlarp.com/herb-garden
-
-## 🔥 Firebase
-
-https://console.firebase.google.com/project/concordcharactercreator/overview
-
-There is also a dev project which is very helpful for testing: **concordcharactercreatordev**
-
-Firebase is a google product which does a bunch of cool cloud stuff - we're using it for it's authentication and it's database, Firestore. We are using the 'Blaze' payment plan, which is a usage based payment plan with a small free threshold per time period. Other than the web server and the domain, this is the only ongoing cost.
-
-### 🪪 Firebase Auth
-
-Firebase handles all the user authentication for the site - which is great because we don't have to handle passwords and worry about security too much.
-
-### 🗃️ Firestore
-
-Firestore is the cloud database which goes hand in hand with Firebase Auth. We use it to store all the character data. Character data can be exported to CSV using the export button in the approvals window.
-
-#### 🔐 Firestore Access
-
-The Firestore API is public by nature of it being used by the front end. The database is protected by security rules set in the Firestore console. These rules restrict access to the database to only (1) logged in users, (2) which own the document they are accessing === malicious actors can't edit/delete documents unless they made the documents.
-
-### ✉️ Approval Emails
-
-The approval screen calls the `submitApproval` Firebase Callable Function rather than writing approvals directly from the browser. The function verifies the signed-in reviewer's role, reads the character and recipient address from Firestore, writes the approval, clears the character's `changes` value, then sends the review email through the Gmail API.
-
-The approval is written before the email is sent. Each approval records `email.status` as `pending`, `sent`, or `failed`, so a Gmail failure does not lose the review. The Gmail message is sent by the shared mailbox that authorized the OAuth application.
-
-The Cloudflare-hosted frontend never receives Gmail credentials. The function reads these Firebase Secret Manager secrets only while it runs:
-
-```text
-GMAIL_CLIENT_ID
-GMAIL_CLIENT_SECRET
-GMAIL_REFRESH_TOKEN
+```bash
+npm install
+cp .env.dev .env     # dev Firebase project (use .env.prod only deliberately)
+npm run dev
 ```
 
-These secrets are separate for the production and development Firebase projects. Do not commit their values, add them to frontend environment variables, or use a `NEXT_PUBLIC_` name for them.
+Other commands: `npm run build` (static export to `/out`), `npm run lint`. There are no automated tests.
 
-#### Function Development And Deployment
+## Deployment
 
-The `functions/` directory is source-controlled with the frontend. Build the function locally before deployment:
+Cloudflare Pages watches this repo:
 
-```sh
-npm --prefix functions run build
-```
+- Push to `development` → preview site (auto-generated Cloudflare URL), using the dev Firebase project.
+- Push to `production` → https://waystone.concordlarp.com/.
 
-Deploy to the development Firebase project first. It is the default project and is also named by the explicit `development` alias:
+Cloud Functions are deployed separately by hand. See [functions/README.md](functions/README.md).
 
-```sh
-npx -y firebase-tools@latest deploy --only functions --project development
-```
+## Firebase
 
-After testing with development data and a safe test recipient, deploy the same source to production:
+We use Firebase for authentication and database on the pay-as-you-go **Blaze** plan (small free tier). Besides hosting and the domain, it is the only ongoing cost.
 
-```sh
-npx -y firebase-tools@latest deploy --only functions --project production
-```
+- **Auth:** Google and email/password sign-in. Firebase handles passwords.
+- **Firestore:** stores users, characters, approvals and groups. Collections are drafted in [docs/firestore-schema.md](docs/firestore-schema.md).
+- **Security rules:** the Firestore API is public by nature (it's called from the browser), so protection comes entirely from security rules. These currently live in the Firebase console only (TODO: move into the repo). They limit access to signed-in users who own the document they touch.
+- **Cloud Functions:** approvals and emails, band member lookup, and the herb-garden leaderboard. See [functions/README.md](functions/README.md).
 
-Set or rotate each Gmail secret for the project being deployed. The Firebase CLI prompts for the value and stores it in Google Cloud Secret Manager:
+## User roles
 
-```sh
-npx -y firebase-tools@latest functions:secrets:set GMAIL_CLIENT_ID --project development
-npx -y firebase-tools@latest functions:secrets:set GMAIL_CLIENT_SECRET --project development
-npx -y firebase-tools@latest functions:secrets:set GMAIL_REFRESH_TOKEN --project development
-```
+Assigned manually in the Firestore console (`users/{uid}.role`).
 
-Use `--project production` instead when configuring production secrets. Deploy the function again after adding or changing a secret so the deployed function receives the updated secret version.
-
-## Notes
-
-User Authorisation levels:
-
-4. Admin (Can view everything, can edit everything)
-5. Editor (Can view everything, can edit select things)
-6. Viewer (Can view everything, can edit only their things)
-7. Player (Can view and edit only their own things)
-8. Guest (Can't do anything)
-
-### Civil Service Users
-
-If you're a Civil Service member, you can register your character to the Civil Service 'Realm', by going to https://waystone.concordlarp.com/hero?civilservice=true
+| Role | Name   | Access                                             |
+| ---- | ------ | -------------------------------------------------- |
+| 0    | Guest  | Signed out. Nothing                                |
+| 1    | Player | View and edit only their own data                  |
+| 2    | Viewer | View everything, edit only their own               |
+| 3    | Editor | View and edit everything (currently same as Admin) |
+| 4    | Admin  | Everything                                         |
