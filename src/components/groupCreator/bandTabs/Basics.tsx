@@ -11,7 +11,7 @@ export function Basics() {
 	const { form } = useFormContext();
 	const { realm } = form;
 	const { group, setField } = useGroupContext();
-	const { name, type, archetype } = group;
+	const { name, type, archetypeDetails } = group;
 
 	return (
 		<ContentPane layout="narrow" className="text-left mt-4 gap-6">
@@ -29,7 +29,10 @@ export function Basics() {
 					<WikiLink path={realmicPlayerGroupsLink(realm)} />
 				</div>
 				<div className="flex gap-1 flex-wrap">
-					<Chip onClick={() => setField("archetype", "")} selected={!archetype}>
+					<Chip
+						onClick={() => setField("archetypeDetails", "")}
+						selected={!archetypeDetails?.archetype}
+					>
 						No Archetype
 					</Chip>
 					{realmicBandArchetypes
@@ -37,8 +40,8 @@ export function Basics() {
 						.map((a) => (
 							<Chip
 								key={a.name}
-								onClick={() => setField("archetype", a.name)}
-								selected={archetype === a.name}
+								onClick={() => setField("archetypeDetails", { archetype: a.name })}
+								selected={archetypeDetails?.archetype === a.name}
 							>
 								{a.name}
 							</Chip>

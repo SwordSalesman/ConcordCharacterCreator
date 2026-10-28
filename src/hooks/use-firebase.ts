@@ -408,6 +408,14 @@ const getApprovalList = async (): Promise<any[]> => {
 	}
 };
 
+const getBandMembers = async (bandId?: string) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const authId = auth.currentUser.uid;
+	const getMembers = httpsCallable<{ bandId: string }, any>(functions, "getBandMembers");
+	const result = await getMembers({ bandId: bandId ?? authId });
+	return result.data;
+};
+
 export {
 	auth,
 	db,
@@ -432,5 +440,6 @@ export {
 	getGroupList,
 	claimThrone,
 	getThroneLeaderboard,
+	getBandMembers,
 	logout,
 };

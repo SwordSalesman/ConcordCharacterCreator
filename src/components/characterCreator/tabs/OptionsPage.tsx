@@ -762,13 +762,7 @@ export function OptionsPage() {
 								)}
 							</div>
 						) : (
-							<div
-								style={{
-									opacity: 0.7,
-									fontStyle: "italic",
-									padding: "0 20px",
-								}}
-							>
+							<div className="opacity-70 italic">
 								{invTier === 0
 									? "Your Investment is lost or destroyed"
 									: "Select your Investment, as well as any other options you may need."}
@@ -817,8 +811,12 @@ export function OptionsPage() {
 						<div>
 							<SectionDivider>
 								Mastered Ceremonies
-								{remainingSelectionText({ field: "ceremonies", warning: true })}
+								{remainingSelectionText({ field: "ceremonies", warning: false })}
 							</SectionDivider>
+							<p className="opacity-70 italic pb-2">
+								You may leave your mastered ceremonies unselected (you can master
+								them during Summit).
+							</p>
 							<SectionWrapper>{renderedCeremonies}</SectionWrapper>
 						</div>
 					)}

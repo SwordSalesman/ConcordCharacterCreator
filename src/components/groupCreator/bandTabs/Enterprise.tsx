@@ -14,7 +14,9 @@ export function Enterprise() {
 	return (
 		<ContentPane layout="narrow" className="text-left mt-4 gap-6">
 			<div>
-				<SectionDivider>{bandName}'s Enterprise</SectionDivider>
+				<SectionDivider>
+					{bandName && bandName !== "" ? bandName : "Your Band"}'s Enterprise
+				</SectionDivider>
 				<div className="flex gap-2 items-center justify-center">
 					<p className="text-sm text-muted-foreground">
 						See here for information about enterprises

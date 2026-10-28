@@ -23,6 +23,14 @@ export function Intro() {
 					<b>Band Builder</b>
 				</i>
 			</div>
+			{/* <Button
+				onClick={async () => {
+					const members = await getBandMembers();
+					console.log(members);
+				}}
+			>
+				Get Band Members
+			</Button> */}
 			{approval ? (
 				<>
 					<p>You can check the status of your submission here.</p>

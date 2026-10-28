@@ -6,7 +6,12 @@ import { Realm } from "@/data/tables/realms";
 
 export type GroupType = "Band" | "Sect";
 
-export interface KnightlyOrderDetails {
+export interface BandArchetype {
+	archetype: string;
+}
+
+export interface KnightlyOrderDetails extends BandArchetype {
+	archetype: "Knightly Order";
 	tradition?: string;
 	traditionType?: string;
 	charge?: string;
@@ -14,29 +19,34 @@ export interface KnightlyOrderDetails {
 	attitudes?: string;
 }
 
-export interface NobleHouseDetails {
+export interface NobleHouseDetails extends BandArchetype {
+	archetype: "Noble House";
 	duchy?: string;
 	traditions?: string;
 	motto?: string;
 }
 
-export interface ClanDetails {
-	type?: string;
+export interface ClanDetails extends BandArchetype {
+	archetype: "Clan";
+	category?: string;
 	fire?: string;
 	blood?: string;
 	law?: string;
 }
 
-export interface GuilderDetails {
+export interface GuilderDetails extends BandArchetype {
+	archetype: "Guilder";
 	guilderArchetype?: string;
 	guild?: string;
 }
 
-export interface HavenDetails {
+export interface HavenDetails extends BandArchetype {
+	archetype: "Haven";
 	traditions?: string;
 }
 
-export interface BoroughDetails {
+export interface BoroughDetails extends BandArchetype {
+	archetype: "Borough";
 	toil?: string;
 	vigour?: string;
 	ironclad?: string;
@@ -48,7 +58,8 @@ export type ArchetypeDetails =
 	| HavenDetails
 	| ClanDetails
 	| NobleHouseDetails
-	| KnightlyOrderDetails;
+	| KnightlyOrderDetails
+	| BoroughDetails;
 
 export const EnterpriseTypes = [
 	"Headquarters",
@@ -92,7 +103,6 @@ export interface GroupState {
 	type?: GroupType;
 	realm?: Realm;
 	name?: string;
-	archetype?: string;
 	archetypeDetails?: ArchetypeDetails;
 	visuals?: string;
 	history?: string;
@@ -126,12 +136,21 @@ type FormAction =
 
 const initialState: GroupState = {};
 
-// Currently doesn't do anything. Leaving here for future expansion ease.
-function applyFieldSideEffects(state: GroupState, field: keyof GroupState): GroupState {
-	let newState = { ...state };
-
-	if (field === "archetype") {
-		newState = { ...newState, archetypeDetails: undefined };
+function applyFieldSideEffects(
+	oldState: GroupState,
+	newState: GroupState,
+	field: keyof GroupState,
+): GroupState {
+	if (
+		field === "archetypeDetails" &&
+		oldState.archetypeDetails?.archetype !== newState.archetypeDetails?.archetype
+	) {
+		newState = {
+			...newState,
+			archetypeDetails: newState.archetypeDetails
+				? { archetype: newState.archetypeDetails.archetype }
+				: undefined,
+		};
 	}
 
 	return newState;
@@ -141,7 +160,7 @@ function formReducer(state: GroupState, action: FormAction): GroupState {
 	switch (action.type) {
 		case "SET_FIELD": {
 			const newState = { ...state, [action.field]: action.value };
-			return applyFieldSideEffects(newState, action.field);
+			return applyFieldSideEffects(state, newState, action.field);
 		}
 		case "SET_FORM":
 			return { ...initialState, ...action.payload };
@@ -161,7 +180,7 @@ function formReducer(state: GroupState, action: FormAction): GroupState {
 				newFieldValue = currentField === item ? initialState[field] : item;
 			}
 
-			return applyFieldSideEffects({ ...state, [field]: newFieldValue }, field);
+			return applyFieldSideEffects(state, { ...state, [field]: newFieldValue }, field);
 		}
 		default:
 			return state;

@@ -5,15 +5,13 @@ import { BandCreator } from "@/components/groupCreator/BandCreator";
 import { SectCreator } from "@/components/groupCreator/SectCreator";
 import ContentWrapper from "@/components/layout/ContentWrapper";
 import GroupContextProvider, { GroupType } from "@/context/groupContext";
-import { getGroupList } from "@/hooks/use-firebase";
 import useFormContext from "@/hooks/use-form-context";
 import useUserContext from "@/hooks/use-user-context";
 import { titleWrapperStyle } from "@/styles/Global";
-import { PATH_GROUPS } from "@/utils/constants";
+import { getRealmData } from "@/utils/data-helper";
 import { copyText, realmicPlayerGroupsLink } from "@/utils/odd-jobs";
 import { getSiteSettings } from "@/utils/settings";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CgArrowLeft } from "react-icons/cg";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { GiSpellBook, GiTatteredBanner } from "react-icons/gi";
@@ -21,7 +19,8 @@ import { GiSpellBook, GiTatteredBanner } from "react-icons/gi";
 export default function GroupsPage() {
 	const { user, loading: userLoading } = useUserContext();
 	const { form, loading: formLoading } = useFormContext();
-	const { realm } = form;
+	const { realm, heroName } = form;
+	const realmDetails = realm ? getRealmData(realm) : undefined;
 	const date = form.date;
 
 	const [builderType, setBuilderType] = useState<GroupType | undefined>(undefined);
@@ -61,41 +60,53 @@ export default function GroupsPage() {
 	if (!builderType) {
 		return (
 			<ContentWrapper>
-				<div className="flex flex-col gap-5">
+				<div className="flex flex-col gap-4 px-4">
 					<div className={titleWrapperStyle}>
 						<i>
-							<b>Concord Player Group Builder</b>
+							<b>Concord Player Group Submissions</b>
 						</i>
 					</div>
-					<p>
-						This form allows you to submit a player group for Concord LARP. It allows
-						the Concord team to ensure that your concept fits within the world of the
-						event and create the best story for you.
-					</p>
-					<p>
-						Only submit your group if you are the best Out of Character contact for the
-						group.
-					</p>
-					<div className="flex gap-2 items-center">
-						<p>For guidance in creating a group, check out the Wiki</p>
-						<WikiLink path="Player_Groups" />
-					</div>
-					<div className="flex gap-2 items-center">
+					<IntroParagraph header="What is this?">
 						<p>
-							For guidance in creating a group in <b>{realm}</b>, check here{" "}
+							These pages allow you to submit a player group for Concord LARP. It
+							allows the Concord team to ensure that your concept fits within the
+							world of the event and create the best story for you.
 						</p>
-						<WikiLink path={realmicPlayerGroupsLink(realm)} />
-					</div>
-					<p>
-						When in doubt, feel free to ask for help on The Concord LARP facebook page,
-						discord or by emailing{" "}
-						<b onClick={() => copyText("concordcharacters@gmail.com")}>
-							concordcharacters@gmail.com (click to copy)
-						</b>
-						.
-					</p>
-					<div className="text-left flex flex-col gap-1">
-						<b>How this works:</b>
+					</IntroParagraph>
+					<IntroParagraph header="Who should submit?">
+						<p>
+							Only the best Out of Character contact/organizer for the group should
+							submit.
+						</p>
+						<p>
+							Submit your group with the same account used for your Hero submission.{" "}
+							<i className="text-muted-foreground">
+								(This account has submitted{" "}
+								{realmDetails?.citizen ? `the ${realmDetails.citizen} Hero ` : ""}
+								{heroName})
+							</i>
+						</p>
+					</IntroParagraph>
+					<IntroParagraph header="Need help?">
+						<div className="flex gap-2 items-center">
+							<p>For guidance in creating a group, check out the Wiki</p>
+							<WikiLink path="Player_Groups" />
+						</div>
+						<div className="flex gap-2 items-center">
+							<p>
+								For guidance in creating a group in <b>{realm}</b>, check here{" "}
+							</p>
+							<WikiLink path={realmicPlayerGroupsLink(realm)} />
+						</div>
+						<p>
+							If you're still stuck, reach out by emailing{" "}
+							<b onClick={() => copyText("concordcharacters@gmail.com")}>
+								concordcharacters@gmail.com (click to copy)
+							</b>
+							.
+						</p>
+					</IntroParagraph>
+					<IntroParagraph header="How this works:">
 						<ul className="list-disc flex flex-col gap-1 ml-5">
 							<li>Submit your group here, and it will go in for review.</li>
 							<li>
@@ -104,7 +115,7 @@ export default function GroupsPage() {
 								to resubmit their hero with your group selected.
 							</li>
 						</ul>
-					</div>
+					</IntroParagraph>
 					<div
 						className={`flex flex-col gap-2 justify-center items-center text-center ${titleWrapperStyle}`}
 					>
@@ -202,6 +213,15 @@ export function PreMessage({ title, message }: { title: string; message: string 
 		<div className="mx-auto px-4 py-8 flex flex-col text-center gap-2">
 			{title && <h1 className="text-2xl">{title}</h1>}
 			<p>{message}</p>
+		</div>
+	);
+}
+
+function IntroParagraph({ header, children }: { header: string; children: React.ReactNode }) {
+	return (
+		<div className="flex flex-col text-left py-0">
+			{header && <h2 className="text-lg font-bold text-accent-foreground">{header}</h2>}
+			<div className="flex flex-col gap-3">{children}</div>
 		</div>
 	);
 }

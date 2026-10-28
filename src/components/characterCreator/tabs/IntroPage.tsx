@@ -3,11 +3,12 @@ import useFormContext from "../../../hooks/use-form-context";
 import { PiArrowBendRightDownBold } from "react-icons/pi";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { Button } from "@/components/common/Button/Button";
-import { fadeStripStyle, titleWrapperStyle } from "@/styles/Global";
+import { titleWrapperStyle } from "@/styles/Global";
+import { ApprovalReport } from "@/components/common/ApprovalReport/ApprovalReport";
 
 export function IntroPage() {
-	const { form, setField } = useFormContext();
-	const { gamesPlayed } = form;
+	const { form, setField, approval } = useFormContext();
+	const { gamesPlayed, date } = form;
 
 	const maxGames = (new Date().getFullYear() - 2019) * 2;
 
@@ -71,6 +72,9 @@ export function IntroPage() {
 					</Button>
 				</div>
 			</div>
+			{/* <div className="border rounded-lg p-3 px-4 bg-background-raised shadow-lg mt-8 mx-6">
+				<ApprovalReport approval={approval} dateSubmitted={date} />
+			</div> */}
 			<div
 				style={{
 					display: "flex",
