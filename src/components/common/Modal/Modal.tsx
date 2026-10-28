@@ -6,8 +6,9 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import React from "react";
+import React, { useRef } from "react";
 import { Button, ButtonVariant } from "../../common/Button/Button";
+import { useBlindfoldCurse } from "@/herb-garden/hooks/use-blindfold-curse";
 
 export function Modal({
 	open,
@@ -31,6 +32,9 @@ export function Modal({
 	body?: React.ReactNode;
 	size?: "small" | "medium" | "large";
 }) {
+	const contentRef = useRef<HTMLDivElement>(null);
+	useBlindfoldCurse(contentRef, open);
+
 	return (
 		<Dialog
 			open={open}
@@ -44,7 +48,7 @@ export function Modal({
 				// {...(!subtitle && !title && { "aria-describedby": undefined })}
 				aria-describedby={undefined}
 			>
-				<div className="flex flex-col gap-4">
+				<div ref={contentRef} className="flex flex-col gap-4">
 					{title || subtitle ? (
 						<DialogHeader>
 							{title && <DialogTitle>{title}</DialogTitle>}

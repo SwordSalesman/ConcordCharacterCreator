@@ -62,7 +62,7 @@ export function UpgradeMenu({
 			title={
 				<div className="text-center mt-1 flex gap-3 justify-center items-center">
 					{icon ? <span className="">{icon}</span> : null}
-					<span>{getBuildingTitle(buildingId)} Upgrades</span>
+					<p>{`${buildingId[0].toUpperCase() + buildingId.slice(1)} Upgrades`}</p>
 				</div>
 			}
 			body={

@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ContentWrapper from "../components/layout/ContentWrapper";
+import { useBlindfoldCurse } from "./hooks/use-blindfold-curse";
 import { GameContext } from "./context/gameContext";
 import { TutorialContext } from "./context/tutorialContext";
 import { HERB_IDS } from "./components/data/herbs";
@@ -24,6 +25,7 @@ import Church from "./components/church/Church";
 import { WinScreen } from "./components/WinScreen";
 import { GiCrown } from "react-icons/gi";
 import { SettingsMenu } from "./components/SettingsMenu";
+import { cn } from "@/lib/utils";
 
 export default function GameMain() {
 	const {
@@ -59,6 +61,11 @@ export default function GameMain() {
 	const [showMarketUpgradeMenu, setShowMarketUpgradeMenu] = useState(false);
 	const [showTavernUpgradeMenu, setShowTavernUpgradeMenu] = useState(false);
 	const [showWinScreen, setShowWinScreen] = useState(false);
+
+	const brainbleed = false;
+	const blindfolded = true;
+	const gameContentRef = useRef<HTMLDivElement>(null);
+	useBlindfoldCurse(gameContentRef, blindfolded);
 
 	useEffect(() => {
 		if (hasWonGame && !winScreenSeen) {
@@ -141,8 +148,14 @@ export default function GameMain() {
 
 	return (
 		<>
-			<ContentWrapper layout="narrow">
-				<div className="flex flex-col gap-8 p-1 pb-20">
+			<ContentWrapper layout="narrow" className={brainbleed ? "animate-headache" : ""}>
+				<div
+					ref={gameContentRef}
+					className={cn(
+						"flex flex-col gap-8 p-1 pb-20",
+						brainbleed ? "animate-headache-2" : "",
+					)}
+				>
 					<div className="flex justify-between gap-2">
 						<div className="text-lg font-bold text-muted-foreground font-mono">
 							herb-garden

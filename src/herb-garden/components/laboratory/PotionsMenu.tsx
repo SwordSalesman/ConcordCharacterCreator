@@ -105,13 +105,7 @@ export function PotionsMenu({ open, onClose }: { open: boolean; onClose: () => v
 														<div className="flex flex-row flex-wrap justify-left items-center gap-2">
 															<div className={potionItemStyle}>
 																<span className="font-mono">
-																	+
-																	{displayNumber(
-																		getEffectivePotionSellValue(
-																			potionId,
-																		),
-																	)}
-																	🗝️
+																	{`+${displayNumber(getEffectivePotionSellValue(potionId))}🗝️`}
 																</span>
 															</div>
 															<div className={potionItemStyle}>

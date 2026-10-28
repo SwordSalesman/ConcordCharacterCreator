@@ -162,6 +162,42 @@ body {
 		}
 	}
 
+	--animate-headache: headache 1s ease-in-out infinite;
+	@keyframes headache {
+		0%,
+		100% {
+			translate: 0px 0px;
+			filter: blur(1px);
+		}
+		30%,
+		70% {
+			translate: 0px -4px;
+			filter: blur(3px);
+		}
+		50% {
+			translate: 0px 4px;
+			filter: blur(0.5px);
+		}
+	}
+
+	--animate-headache-2: headache2 3s ease-in-out infinite;
+	@keyframes headache2 {
+		0%,
+		100% {
+			translate: 0px 0px;
+			rotate: 0deg;
+		}
+		30%,
+		70% {
+			translate: -4px 0px;
+			rotate: -1deg;
+		}
+		50% {
+			translate: 4px 0px;
+			rotate: 1deg;
+		}
+	}
+
 	--animate-wiggle: wiggle 0.5s ease-in-out infinite;
 	@keyframes wiggle {
 		0%,

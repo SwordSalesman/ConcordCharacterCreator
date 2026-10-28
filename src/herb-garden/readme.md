@@ -29,32 +29,16 @@ Event notes:
 - Should probably have a choice associated with it. Choices could be gated behind costs, like purchasing an upgrade. Choices could grant immediate windfalls, temporary buffs, or permanent buffs. Choices could also grant immediate taxes, or temporary debuffs.
 - Events could have mini story lines because your choices could be saved as upgrades, so referenced in later events
 - Event ideas:
-    -
-
-Sanctified Square
-
-- It's a new building
-- Unlocked via a Tavern purchase, 'Commission a Sanctified Square'.
-- The gameplay loop here is ceremonies provided short term buffs but cost money to activate. A trade off the player decides which buff they want active.
-- You cast a ceremony by clicking it.
-- You can unlock ceremonies for keys just like potion recipes
-    - Idea could be a new resource is unlocked: Crystal Mana, as well as hiring Priests. Priests generate crystal mana over time, you can't manually click for it. Ceremonies would cost CM instead of keys. Don't know if I love this tbh - the ceremonies are supposed to be on a timer anyway because you can only have one active, so having two timer based systems here feels odd.
-- Ceremony ideas:
-    - Blessing of New Spring (costs 4). Potions sell for 10% more.
-    - Chamber of the Restful Warrior (costs 15). Farmers gather herbs faster.
-    - Chamber of Delights (costs 15). Merchants sell potions faster.
-    - Ward of Ironclad Vigor (costs 25). Potions are made faster.
-    - Wondrous Forests of the Night (costs 100). Herbs are gathered twice as fast.
 
 Mechanic ideas:
 
 - Random events in the form of letters
-- Ceremonies as opt-in buffs to particular buildings for big up-front costs
 
 To Do:
 
-- save/load progress to your profile
-- end game screen when Throne is reached
-- leaderboard with tracked TtT (Time to Throne)
+- Random events
 - boghoffen hunting mechanic (click the treasure goblin)
-- fix 'enter on keyboard' exploit
+- fix 'enter on keyboard' exploit - get a random traumatic wound if you click too fast, lasts 10s.
+    - Shattered Hand. Can't click anything.
+    - Brainbleed. Screen goes blurry and sways side to side.
+    -
