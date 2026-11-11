@@ -333,6 +333,21 @@ const getApproval = async (uid: string) => {
 	}
 };
 
+const getGroupSubmissionMessage = async () => {
+	const docRef = doc(db, "public", "groupSubmissionMessage");
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		const data = docSnap.data();
+		return {
+			body: data.body,
+			buttonLink: data.buttonLink,
+			buttonText: data.buttonText,
+		};
+	} else {
+		return null;
+	}
+};
+
 const getGroup = async ({ type }: { type: GroupType }) => {
 	if (!auth.currentUser) throw new Error("No authenticated user");
 	const docRef = doc(db, type === "Band" ? "bands" : "sects", auth.currentUser.uid);
@@ -430,6 +445,7 @@ export {
 	getUserFormAndApproval,
 	getUserDetails,
 	getCharacterList,
+	getGroupSubmissionMessage,
 	saveApproval,
 	saveGroup,
 	saveGroupList,

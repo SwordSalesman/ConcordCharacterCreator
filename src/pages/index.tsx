@@ -6,6 +6,7 @@ import { fadeStripStyle } from "@/styles/Global";
 import {
 	PATH_APPROVALS,
 	PATH_DOWNTIME,
+	PATH_DOWNTIME_MANAGE,
 	PATH_GROUPS,
 	PATH_HERB_GARDEN,
 	PATH_HERO,
@@ -39,7 +40,7 @@ export default function Home() {
 					</i>
 					.
 				</p>
-				<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+				<div className="flex flex-col items-center justify-center gap-3">
 					<Button onClick={() => router.push(PATH_HERO)} size="lg">
 						<FaUser className="size-6" />
 						<p className="text-lg">Submit your Hero</p>
@@ -60,18 +61,22 @@ export default function Home() {
 				</div>
 				{isAdmin && !loading && (
 					<div
-						className={`flex flex-col gap-3 rounded-lg animate-in fade-in animation-duration-[300ms]`}
+						className={`flex flex-col gap-3 mt-4 rounded-lg animate-in fade-in animation-duration-[300ms]`}
 					>
-						<p
-							className={`text-sm text-center text-muted-foreground ${fadeStripStyle}`}
-						>
+						<p className={`text-sm text-center text-muted-foreground`}>
 							Team functions
 						</p>
-						<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+						<div className="flex flex-col items-center justify-center gap-3 text-muted-foreground">
 							<Button onClick={() => router.push(PATH_APPROVALS)} size="lg">
 								<FaStamp className="size-6" />
-								<p className="text-lg">Approvals</p>
+								<p className="text-lg">Hero Approvals</p>
 							</Button>
+							{siteSettings.pages.downtime && (
+								<Button onClick={() => router.push(PATH_DOWNTIME_MANAGE)} size="lg">
+									<GiScrollQuill className="size-6" />
+									<p className="text-lg">Manage Downtime</p>
+								</Button>
+							)}
 						</div>
 					</div>
 				)}

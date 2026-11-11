@@ -5,13 +5,14 @@ import { BandCreator } from "@/components/groupCreator/BandCreator";
 import { SectCreator } from "@/components/groupCreator/SectCreator";
 import ContentWrapper from "@/components/layout/ContentWrapper";
 import GroupContextProvider, { GroupType } from "@/context/groupContext";
+import { getGroupSubmissionMessage } from "@/hooks/use-firebase";
 import useFormContext from "@/hooks/use-form-context";
 import useUserContext from "@/hooks/use-user-context";
 import { titleWrapperStyle } from "@/styles/Global";
 import { getRealmData } from "@/utils/data-helper";
 import { copyText, realmicPlayerGroupsLink } from "@/utils/odd-jobs";
 import { getSiteSettings } from "@/utils/settings";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CgArrowLeft } from "react-icons/cg";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { GiSpellBook, GiTatteredBanner } from "react-icons/gi";
@@ -165,45 +166,41 @@ export default function GroupsPage() {
 function GroupSubmissionGoogleFormLink() {
 	const bandSubmissionsOpen = true;
 
+	const [groupSubmissionMessage, setGroupSubmissionMessage] = useState<{
+		body: string;
+		buttonLink: string;
+		buttonText: string;
+	} | null>(null);
+	useEffect(() => {
+		getGroupSubmissionMessage().then(setGroupSubmissionMessage);
+	}, [getGroupSubmissionMessage]);
+
 	return (
 		<div className="mx-auto px-4 py-8 max-w-[500px] flex flex-col text-center gap-5">
 			<h1 className="text-2xl font-bold">Group Submissions</h1>
-			{bandSubmissionsOpen ? (
-				<>
-					<p>
-						If you're in a band and it hasn't been submitted via the Google Form below,
-						please do so before <b className="text-destructive">September 12th</b>. Only
-						one member of your band needs to submit.
-					</p>
+			<>
+				{groupSubmissionMessage?.body && (
+					<p
+						dangerouslySetInnerHTML={{
+							__html: groupSubmissionMessage.body.replace(/\n/g, "<br>"),
+						}}
+					></p>
+				)}
+				{groupSubmissionMessage?.buttonText && groupSubmissionMessage.buttonLink && (
 					<div className="w-fit mx-auto">
 						<a
-							href="https://docs.google.com/forms/d/e/1FAIpQLSfs5PK55UuYUo6MSvzwRGFeBMerAavh61ADhYZK7oJmO2A0qw/viewform"
+							href={groupSubmissionMessage?.buttonLink}
 							target="_blank"
 							rel="noreferrer"
 						>
 							<div className="text-center px-3.5 py-1.5 rounded bg-primary text-primary-foreground flex items-center justify-center gap-2">
-								Submit your group
+								{groupSubmissionMessage?.buttonText}
 								<FaExternalLinkAlt size={15} />
 							</div>
 						</a>
 					</div>
-				</>
-			) : (
-				<>
-					<p>
-						<b>We are no long accepting submissions</b>. If you have submitted your
-						group already I will get back to you shortly! If you have any queries,
-						please email{" "}
-						<span
-							className="cursor-pointer italic"
-							onClick={() => copyText("concordcharacters@gmail.com")}
-						>
-							<u>concordcharacters@gmail.com</u>
-						</span>
-					</p>
-					<p>Thanks - Dee, Player Group Support</p>
-				</>
-			)}
+				)}
+			</>
 		</div>
 	);
 }
