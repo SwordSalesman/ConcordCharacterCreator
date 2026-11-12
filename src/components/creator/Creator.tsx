@@ -41,7 +41,7 @@ export function Creator({
 	const [showResetModal, setShowResetModal] = useState(false);
 	const [showSubmitModal, setShowSubmitModal] = useState(false);
 
-	let activeIndex = tabs.indexOf(activeTab);
+	const activeIndex = tabs.indexOf(activeTab);
 	const prevTab = activeIndex > 0 && activeIndex < tabs.length ? tabs[activeIndex - 1] : null;
 	const nextTab =
 		activeIndex >= 0 && activeIndex < tabs.length - 1 ? tabs[activeIndex + 1] : null;
@@ -58,7 +58,7 @@ export function Creator({
 		if (activeTab === tab) {
 			return;
 		}
-		let activeIndex = tabs.indexOf(activeTab);
+		const activeIndex = tabs.indexOf(activeTab);
 		if (index && index > activeIndex) {
 			setDirection("right");
 		} else {
@@ -182,7 +182,9 @@ export function Creator({
 				) : null}
 			</div>
 
-			<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+			{showLoginModal && (
+				<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+			)}
 			<Modal
 				title="Save & Submit?"
 				subtitle="You can submit multiple times."

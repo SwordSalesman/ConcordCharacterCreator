@@ -100,7 +100,7 @@ export default function GroupsPage() {
 							<WikiLink path={realmicPlayerGroupsLink(realm)} />
 						</div>
 						<p>
-							If you're still stuck, reach out by emailing{" "}
+							If you&apos;re still stuck, reach out by emailing{" "}
 							<b onClick={() => copyText("concordcharacters@gmail.com")}>
 								concordcharacters@gmail.com (click to copy)
 							</b>

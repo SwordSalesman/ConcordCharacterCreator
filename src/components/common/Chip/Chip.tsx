@@ -1,15 +1,13 @@
 import toast from "react-hot-toast";
+import type { ButtonHTMLAttributes } from "react";
 
-interface ChipProps {
-	children: React.ReactNode;
+interface ChipProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
 	onClick?: () => void;
 	selected?: boolean;
 	skillstyle?: boolean;
 	shadow?: boolean;
 	inactive?: boolean;
 	inactiveReason?: string;
-	className?: string;
-	[key: string]: any;
 }
 
 export function ChipSkillWrapper({ children }: { children: React.ReactNode }) {
@@ -36,20 +34,20 @@ export function Chip({
 	};
 
 	// Tailwind classes
-	let baseClasses =
+	const baseClasses =
 		"flex justify-center items-center gap-1 font-sans border border-solid cursor-pointer py-1 px-2 text-[0.92em] transition-colors duration-200";
-	let radius = skillstyle ? "rounded-l-[20px] rounded-r-[8px]" : "rounded-lg";
-	let shadowClass = shadow ? "shadow-md" : "";
-	let bg = selected ? "bg-primary" : "bg-card";
-	let colorClass = selected ? "text-primary-foreground" : "text-foreground";
-	let interactive = `${
+	const radius = skillstyle ? "rounded-l-[20px] rounded-r-[8px]" : "rounded-lg";
+	const shadowClass = shadow ? "shadow-md" : "";
+	const bg = selected ? "bg-primary" : "bg-card";
+	const colorClass = selected ? "text-primary-foreground" : "text-foreground";
+	const interactive = `${
 		inactive
 			? "bg-muted text-muted-foreground"
 			: "sm:hover:brightness-95 dark:hover:brightness-[120%] active:brightness-90 dark:active:brightness-[120%]"
 	}`;
 
 	// Responsive classes
-	let responsive = "sm:px-1 sm:py-0.5";
+	const responsive = "sm:px-1 sm:py-0.5";
 
 	return (
 		<button

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, startTransition, useEffect, useReducer, useState } from "react";
 import React from "react";
 import { getGroup } from "../hooks/use-firebase";
 import useUserContext from "../hooks/use-user-context";
@@ -45,6 +45,10 @@ export interface HavenDetails extends BandArchetype {
 	traditions?: string;
 }
 
+export interface CoteriaDetails extends BandArchetype {
+	archetype: "Coteria";
+}
+
 export interface BoroughDetails extends BandArchetype {
 	archetype: "Borough";
 	toil?: string;
@@ -59,6 +63,7 @@ export type ArchetypeDetails =
 	| ClanDetails
 	| NobleHouseDetails
 	| KnightlyOrderDetails
+	| CoteriaDetails
 	| BoroughDetails;
 
 export const EnterpriseTypes = [
@@ -132,7 +137,7 @@ type FormAction =
 	| { type: "RESET_FORM" }
 	| SetFieldAction<keyof GroupState>
 	| { type: "SET_FORM"; payload: Partial<GroupState> }
-	| { type: "TOGGLE_ITEM"; field: keyof GroupState; item: any };
+	| { type: "TOGGLE_ITEM"; field: keyof GroupState; item: string };
 
 const initialState: GroupState = {};
 
@@ -170,15 +175,7 @@ function formReducer(state: GroupState, action: FormAction): GroupState {
 			const { field, item } = action;
 
 			const currentField = state[field];
-			let newFieldValue: any;
-
-			if (Array.isArray(currentField)) {
-				newFieldValue = currentField.includes(item)
-					? currentField.filter((i) => i !== item)
-					: [...currentField, item];
-			} else {
-				newFieldValue = currentField === item ? initialState[field] : item;
-			}
+			const newFieldValue = currentField === item ? initialState[field] : item;
 
 			return applyFieldSideEffects(state, { ...state, [field]: newFieldValue }, field);
 		}
@@ -191,8 +188,8 @@ interface GroupContextInterface {
 	loading: boolean;
 	approval?: Approval;
 	group: GroupState;
-	setField: (field: keyof GroupState, value: any) => void;
-	toggleItem: (field: keyof GroupState, item: any) => void;
+	setField: (field: keyof GroupState, value: GroupState[keyof GroupState]) => void;
+	toggleItem: (field: keyof GroupState, item: string) => void;
 	resetForm: () => void;
 	validateForm: () => {
 		valid: boolean;
@@ -227,13 +224,13 @@ export default function GroupContextProvider({
 		...initialState,
 	});
 
-	function setField<K extends keyof GroupState>(field: K, value: GroupState[K]) {
+	function setField(field: keyof GroupState, value: GroupState[keyof GroupState]) {
 		dispatch({ type: "SET_FIELD", field, value });
 	}
 
 	// Toggles an item on or off. Works for both single-value fields (realm, archetype) and
 	// array fields (skills, spells). Side effects are handled atomically inside the reducer.
-	function toggleItem(field: keyof GroupState, item: any) {
+	function toggleItem(field: keyof GroupState, item: string) {
 		dispatch({ type: "TOGGLE_ITEM", field, item });
 	}
 
@@ -241,12 +238,22 @@ export default function GroupContextProvider({
 		dispatch({ type: "RESET_FORM" });
 	}
 
-	const { realm, name } = groupState;
+	function setFormFromSummaryData(summaryForm: GroupStateSummary) {
+		const payload: Partial<GroupState> = {};
+		Object.keys(summaryForm).forEach((k) => {
+			const key = k as keyof GroupStateSummary;
+			const value = summaryForm[key];
+			Object.assign(payload, { [key]: value ?? initialState[key] });
+		});
+		dispatch({ type: "SET_FORM", payload });
+	}
+
+	const { name } = groupState;
 
 	// Load Data
 	useEffect(() => {
 		async function downloadForm() {
-			setLoading(true);
+			startTransition(() => setLoading(true));
 			const newForm = await getGroup({ type });
 			setLoading(false);
 			if (newForm) {
@@ -260,32 +267,20 @@ export default function GroupContextProvider({
 		if (user) {
 			downloadForm();
 		} else {
-			dispatch({ type: "RESET_FORM" });
-			setApproval(undefined);
+			startTransition(() => {
+				dispatch({ type: "RESET_FORM" });
+				setApproval(undefined);
+			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
-
-	function setFormFromSummaryData(summaryForm: GroupStateSummary) {
-		const payload: Partial<GroupState> = {};
-		Object.keys(summaryForm).forEach((k) => {
-			const key = k as keyof GroupStateSummary;
-			const value = summaryForm[key];
-			if (value) {
-				(payload as any)[key] = value;
-			} else {
-				(payload as any)[key] = initialState[key];
-			}
-		});
-		dispatch({ type: "SET_FORM", payload });
-	}
 
 	function getFormSummary(): GroupStateSummary {
 		const summaryForm: GroupStateSummary = {} as GroupStateSummary;
 		Object.keys(groupState).forEach((k) => {
 			const key = k as keyof GroupStateSummary;
 			const value = groupState[key];
-			(summaryForm as any)[key] = value ?? "";
+			Object.assign(summaryForm, { [key]: value ?? "" });
 		});
 		return summaryForm;
 	}

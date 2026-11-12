@@ -33,7 +33,7 @@ export default function Home() {
 					</i>
 				</div>
 				<p className="text-center">
-					Use this site to submit your Hero and Player Groups for Concord Larp. You'll
+					Use this site to submit your Hero and Player Groups for Concord Larp. You&apos;ll
 					need to sign in to submit. If you run into an issue, get in touch at{" "}
 					<i onClick={() => copyText("concordcharacters@gmail.com")}>
 						concordcharacters@gmail.com (click to copy)

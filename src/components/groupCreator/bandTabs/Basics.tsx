@@ -30,7 +30,7 @@ export function Basics() {
 				</div>
 				<div className="flex gap-1 flex-wrap">
 					<Chip
-						onClick={() => setField("archetypeDetails", "")}
+						onClick={() => setField("archetypeDetails", undefined)}
 						selected={!archetypeDetails?.archetype}
 					>
 						No Archetype

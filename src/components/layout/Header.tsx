@@ -196,7 +196,9 @@ export function Header({
 					</div>
 				</div>
 			</div>
-			<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+			{showLoginModal && (
+				<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+			)}
 		</>
 	);
 }

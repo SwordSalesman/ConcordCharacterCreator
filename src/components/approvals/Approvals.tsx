@@ -48,7 +48,7 @@ export function Approvals() {
 		archived: 0,
 	});
 	const isDev = process.env.NEXT_PUBLIC_DEBUG_TEXT === "DevMode";
-	const [csvData, setCsvData] = useState<any[]>([]);
+	const [csvData, setCsvData] = useState<Record<string, unknown>[]>([]);
 
 	useEffect(() => {
 		async function fetchCharacters() {
@@ -56,8 +56,8 @@ export function Approvals() {
 			const apprs = await getApprovalList();
 
 			if (chars && apprs) {
-				const newChars: Character[] = chars.map((c: any) => {
-					const approval = apprs.find((a: any) => a.id === c.id);
+				const newChars: Character[] = chars.map((c) => {
+					const approval = apprs.find((a) => a.id === c.id);
 					return {
 						...c,
 						approval: approval,
@@ -66,7 +66,7 @@ export function Approvals() {
 				setCharacters(newChars);
 				calcCounts(newChars);
 
-				const newCsvData = newChars
+				const newCsvData: Record<string, unknown>[] = newChars
 					.filter((c) => c.approval?.status !== ARCHIVED)
 					.map((c) => ({
 						...c,
@@ -261,7 +261,7 @@ export function Approvals() {
 				<ApprovalPanel
 					character={selectedChar}
 					handleApproval={handleApproval}
-					key={selectedChar ? selectedChar.id : "no-char"}
+					key={selectedChar ? JSON.stringify(selectedChar) : "no-char"}
 					sendEmailOption={sendEmailOption}
 					setSendEmailOption={handleSendEmailOption}
 				/>
