@@ -37,6 +37,18 @@ Use `npm test -- src/utils/form-rules.test.ts` to run one file, or
 `npx vitest` for watch mode. UI interactions, Firebase persistence, and Cloud
 Functions are not covered by this suite.
 
+### Continuous integration
+
+[GitHub Actions](.github/workflows/ci.yml) runs separate **Lint**, **Tests**, and
+**Build** checks on pull requests targeting `production` or `development`, and on
+pushes to either branch. Each check uses Node.js 22 and installs dependencies with
+`npm ci`. The build uses `.env.dev`; it validates the static export without
+deploying it or Cloud Functions.
+
+After the workflow has run, select **Lint**, **Tests**, and **Build** as required
+status checks in the GitHub branch ruleset. The workflow reports results; the
+ruleset is what blocks merging when they fail.
+
 ## Deployment
 
 Cloudflare Pages watches this repo:
