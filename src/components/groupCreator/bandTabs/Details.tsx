@@ -18,7 +18,8 @@ import { PickOne } from "../PickOne";
 
 export function Details() {
 	const { group, setField } = useGroupContext();
-	const { archetype, goals, history, visuals, oath } = group;
+	const { archetypeDetails, goals, history, visuals, oath } = group;
+	const archetype = archetypeDetails?.archetype;
 
 	const matchingArchetype = realmicBandArchetypes.find((a) => a.name === archetype);
 	const title = matchingArchetype?.name ?? "Band";
@@ -268,17 +269,17 @@ function NobleHouseDetailsSection() {
 function ClanDetailsSection() {
 	const { group, setField } = useGroupContext();
 	const { archetypeDetails } = group;
-	const { type, fire, blood, law } = (archetypeDetails as ClanDetails) || {};
+	const { category, fire, blood, law } = (archetypeDetails as ClanDetails) || {};
 
 	return (
 		<>
 			<PickOne
 				title="Which category does your Clan fall in to?"
-				value={type}
+				value={category}
 				handleClick={(value) =>
 					setField("archetypeDetails", {
 						...archetypeDetails,
-						type: value,
+						category: value,
 					} as ClanDetails)
 				}
 				options={["Lightning Clan", "Storm Clan", "Tempest Clan"]}

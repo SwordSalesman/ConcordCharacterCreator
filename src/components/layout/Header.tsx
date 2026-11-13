@@ -2,7 +2,14 @@ import { BiAdjust } from "react-icons/bi";
 import ConcordSigil from "../../data/images/concord-logo.png";
 import { FaUserCheck, FaUserPlus } from "react-icons/fa";
 import { useState } from "react";
-import { PATH_APPROVALS, PATH_GROUPS, PATH_HERO, PATH_HOME } from "../../utils/constants";
+import {
+	PATH_APPROVALS,
+	PATH_DOWNTIME,
+	PATH_DOWNTIME_MANAGE,
+	PATH_GROUPS,
+	PATH_HERO,
+	PATH_HOME,
+} from "../../utils/constants";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import useUserContext from "@/hooks/use-user-context";
@@ -19,25 +26,35 @@ import {
 	NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { ApprovalButton } from "../common/Button/ApprovalButton";
+import { getSiteSettings } from "@/utils/settings";
+import useFormContext from "@/hooks/use-form-context";
 
-export function Header({
-	toggleTheme,
-	handleLogoClick,
-}: {
-	toggleTheme: () => void;
-	handleLogoClick?: () => void;
-}) {
+export function Header({ toggleTheme }: { toggleTheme: () => void }) {
+	const { form } = useFormContext();
+	const changes = form?.changes;
 	const { user, isAdmin, loading } = useUserContext();
 	const { pathname } = useRouter();
 
 	const [showLoginModal, setShowLoginModal] = useState(false);
 
-	function HeaderLink({ label, url, newtab }: { label: string; url: string; newtab?: boolean }) {
+	function HeaderLink({
+		label,
+		url,
+		newtab,
+		special,
+	}: {
+		label: string;
+		url: string;
+		newtab?: boolean;
+		special?: boolean;
+	}) {
 		const active = pathname === url;
+		const defaultColor = special ? "text-muted-foreground" : "text-foreground";
+
 		return (
 			<Link
 				href={url}
-				className={`flex gap-2 items-center p-0.5 ${active ? "text-special" : ""}`}
+				className={`flex gap-2 items-center p-0.5 ${active ? "text-special" : defaultColor}`}
 				target={newtab ? "_blank" : "_self"}
 				rel={newtab ? "noopener noreferrer" : undefined}
 			>
@@ -46,12 +63,34 @@ export function Header({
 		);
 	}
 
-	const headerLinksData = [
+	const showDowntime = getSiteSettings()?.pages.downtime;
+
+	const headerLinksData: { label: string; url: string; newtab?: boolean; special?: boolean }[] = [
 		{ label: "Hero", url: PATH_HERO },
 		{ label: "Groups", url: PATH_GROUPS },
-		...(isAdmin ? [{ label: "Approvals", url: PATH_APPROVALS }] : []),
-		{ label: "Wiki", url: "https://wiki.concordlarp.com/index.php/Main_Page", newtab: true },
+		...(showDowntime ? [{ label: "Downtime", url: PATH_DOWNTIME }] : []),
+		{
+			label: "Wiki",
+			url: "https://wiki.concordlarp.com/index.php/Main_Page",
+			newtab: true,
+		},
+		...(isAdmin ? [{ label: "Approvals", url: PATH_APPROVALS, special: true }] : []),
+		...(showDowntime && isAdmin
+			? [{ label: "Downtime", url: PATH_DOWNTIME_MANAGE, special: true }]
+			: []),
 	];
+
+	function handleLogoClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+		if (changes && changes.length > 0) {
+			e.preventDefault();
+			const confirmLeave = window.confirm(
+				"Leave Hero submission? Your changes will be lost.",
+			);
+			if (confirmLeave) {
+				window.location.href = PATH_HOME;
+			}
+		}
+	}
 
 	return (
 		<>
@@ -70,8 +109,8 @@ export function Header({
 							</div>
 						</div>
 					)}
-					<div className="flex items-center flex-row flex-1 gap-1">
-						<Link href={PATH_HOME}>
+					<div className="flex items-center flex-row gap-1">
+						<Link href={PATH_HOME} onClick={(e) => handleLogoClick(e)}>
 							<Image
 								src={ConcordSigil}
 								alt="Concord Logo"
@@ -88,6 +127,7 @@ export function Header({
 										label={link.label}
 										url={link.url}
 										newtab={link.newtab}
+										special={link.special}
 									/>
 								);
 							})}
@@ -115,6 +155,11 @@ export function Header({
 																		? "noopener noreferrer"
 																		: undefined
 																}
+																className={
+																	link.special
+																		? "text-muted-foreground"
+																		: ""
+																}
 															>
 																{link.label}
 															</Link>
@@ -129,7 +174,7 @@ export function Header({
 						</NavigationMenu>
 					</div>
 
-					<div className="flex items-center flex-row flex-1 gap-1 justify-end">
+					<div className="flex items-center flex-row gap-1 justify-end">
 						{pathname === PATH_HERO ? <ApprovalButton /> : null}
 						<Button
 							onClick={() => {

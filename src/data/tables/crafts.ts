@@ -1,7 +1,29 @@
+export type CraftRarity = "Journeyman" | "Expert" | "Masterwork";
+export type CraftType =
+	| "Weapon: One Handed"
+	| "Weapon: Great Weapon"
+	| "Weapon: Short Weapon"
+	| "Weapon: Polearm"
+	| "Weapon: Stave"
+	| "Weapon Pair: Short Weapon and One Handed Weapon"
+	| "Weapon Pair: One Handed"
+	| "Weapon: Bow"
+	| "Armour: Light"
+	| "Armour: Medium"
+	| "Armour: Heavy"
+	| "Armour: Clothes"
+	| "Talisman: Tool"
+	| "Talisman: Shield"
+	| "Talisman: Jewellery"
+	| "Talisman: Battlemages Circlet"
+	| "Concordia: Banner"
+	| "Concordia: Icon"
+	| "Reliquary"
+	| "Special";
 export interface Craft {
-	rarity: "Journeyman" | "Expert" | "Masterwork";
+	rarity: CraftRarity;
 	name: string;
-	type: string;
+	type: CraftType;
 }
 
 export const crafts: Craft[] = [

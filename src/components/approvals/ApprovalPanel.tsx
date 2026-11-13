@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { TextArea } from "../common/Input/Input";
 import { Button } from "../common/Button/Button";
@@ -48,6 +48,10 @@ function inlineComputedStyles(source: Element, clone: Element) {
 	}
 }
 
+const subscribeToMount = () => () => {};
+const getClientMounted = () => true;
+const getServerMounted = () => false;
+
 interface Props {
 	character: Character | null;
 	handleApproval: (approval: ApprovalRecord) => void;
@@ -58,9 +62,12 @@ interface Props {
 function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmailOption }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [copying, setCopying] = useState(false);
-	const [isMounted, setIsMounted] = useState(false);
+	const isMounted = useSyncExternalStore(
+		subscribeToMount,
+		getClientMounted,
+		getServerMounted,
+	);
 	const sheetRef = useRef<HTMLDivElement>(null);
-	useEffect(() => setIsMounted(true), []);
 
 	const [confirmModal, setConfirmModal] = useState(false);
 	const [comment, setComment] = useState("");
@@ -73,11 +80,6 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 		comment: "",
 		status: null,
 	};
-
-	useEffect(() => {
-		setComment("");
-		setStatus(null);
-	}, [character]);
 
 	const { name } = useUserContext();
 	const [validInputs, setValidInputs] = useState({

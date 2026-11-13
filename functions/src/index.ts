@@ -427,3 +427,52 @@ export const claimThrone = onCall(async (request) => {
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+export const getBandMembers = onCall(async (request) => {
+	if (!request.auth) {
+		throw new HttpsError("unauthenticated", "Sign in is required.");
+	}
+
+	const database = getFirestore();
+
+	if (!request.data.bandId) {
+		throw new HttpsError("invalid-argument", "Band ID is required.");
+	}
+
+	// Get the caller's information to check if they're actually the Band owner OR a reviewer
+	const userSnapshot = await database.doc(`users/${request.auth.uid}`).get();
+	const user = userSnapshot.data();
+	if (
+		(typeof user?.role !== "number" || user.role < 3) &&
+		request.auth.uid !== request.data.bandId
+	) {
+		throw new HttpsError("permission-denied", "Band owner or reviewer access is required.");
+	}
+
+	// Get the band submission they're reviewing
+	const bandReference = database.doc(`bands/${request.data.bandId}`);
+	const bandSnapshot = await bandReference.get();
+	if (!bandSnapshot.exists) {
+		throw new HttpsError("not-found", "Band submission not found.");
+	}
+	const band = bandSnapshot.data();
+	const bandName = band?.name;
+
+	if (!bandName) {
+		throw new HttpsError("not-found", "Band name not found.");
+	}
+
+	const charactersCollection = database.collection("characters");
+	const membersSnapshot = await charactersCollection.where("warband", "==", bandName).get();
+
+	const members = membersSnapshot.docs.map((doc) => {
+		const data = doc.data();
+		return {
+			id: doc.id,
+			player: data.player,
+			heroName: data.heroName,
+		};
+	});
+
+	return members;
+});

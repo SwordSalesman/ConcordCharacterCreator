@@ -18,7 +18,7 @@ export interface AggregatedUpgradeEffects {
 	potionDemandLossMultiplier: number;
 }
 
-export interface UpgradeEffect extends Partial<AggregatedUpgradeEffects> {}
+export type UpgradeEffect = Partial<AggregatedUpgradeEffects>;
 interface UpgradeDefinitionInput {
 	id: string;
 	buildingId: BuildingId;

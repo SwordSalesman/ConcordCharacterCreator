@@ -46,7 +46,7 @@ export default function MaintenanceScreen() {
 				<h1 className="text-lg font-bold">Under Maintenance</h1>
 				<div className="w-sm flex flex-col gap-0 leading-6">
 					<p>
-						Artisans are hard at work improving the site. Hopefully it won't take long.
+						Artisans are hard at work improving the site. Hopefully it won&apos;t take long.
 					</p>
 				</div>
 			</div>

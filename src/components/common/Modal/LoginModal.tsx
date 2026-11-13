@@ -29,15 +29,8 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 		validPassword: true,
 		validName: true,
 	});
+	const [state, setState] = useState<"login" | "register" | "forgotpassword">("login");
 	const { user, name: username, isAdmin } = useUserContext();
-
-	useEffect(() => {
-		if (open) {
-			setForm({ name: "", email: "", password: "" });
-			setValidInputs({ validEmail: true, validPassword: true, validName: true });
-			if (state === "forgotpassword") setState("login");
-		}
-	}, [open]);
 
 	useEffect(() => {
 		onClose();
@@ -57,8 +50,6 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 		setValidInputs({ validEmail, validPassword, validName });
 		return validEmail && validPassword && validName;
 	}
-
-	const [state, setState] = useState<"login" | "register" | "forgotpassword">("login");
 
 	async function handleFormSubmit() {
 		setLoading(true);
@@ -103,7 +94,7 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 
 	const loginForm = (
 		<form
-			onSubmit={(e: any) => {
+			onSubmit={(e) => {
 				e.preventDefault();
 				if (validateInputs()) {
 					handleFormSubmit();
@@ -181,7 +172,7 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 			)}
 			{state === "login" && (
 				<Button onClick={() => setState("register")} variant="ghost" size="sm">
-					Don't have an account? Register here.
+					Don&apos;t have an account? Register here.
 				</Button>
 			)}
 		</div>

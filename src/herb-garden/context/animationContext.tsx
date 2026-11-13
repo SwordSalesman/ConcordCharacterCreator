@@ -6,6 +6,7 @@ import {
 	useEffect,
 	useMemo,
 	useRef,
+	startTransition,
 	useState,
 	type ReactNode,
 } from "react";
@@ -168,7 +169,9 @@ export default function ApothecaryAnimationProvider({ children }: { children: Re
 			return;
 		}
 
-		setParticles((prev) => [...prev, ...particlesToAnimate]);
+		startTransition(() => {
+			setParticles((prev) => [...prev, ...particlesToAnimate]);
+		});
 	}, [acknowledgeDeltaEvents, deltaEvents]);
 
 	useEffect(() => {

@@ -1,12 +1,14 @@
 import WikiLink from "../../common/WikiLink/WikiLink";
 import useFormContext from "../../../hooks/use-form-context";
+import { PiArrowBendRightDownBold } from "react-icons/pi";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { Button } from "@/components/common/Button/Button";
-import { fadeStripStyle, titleWrapperStyle } from "@/styles/Global";
+import { titleWrapperStyle } from "@/styles/Global";
+import { ApprovalReport } from "@/components/common/ApprovalReport/ApprovalReport";
 
 export function IntroPage() {
-	const { form, setField } = useFormContext();
-	const { gamesPlayed } = form;
+	const { form, setField, approval } = useFormContext();
+	const { gamesPlayed, date } = form;
 
 	const maxGames = (new Date().getFullYear() - 2019) * 2;
 
@@ -31,17 +33,31 @@ export function IntroPage() {
 				</i>
 			</div>
 			<br />
-			<div className="flex justify-center gap-2">
-				<p>Click on these </p>
-				<WikiLink />
-				<p> for a relevant wiki page.</p>
+			<div className="max-w-xl">
+				<div className="flex justify-center gap-2 items-center">
+					<p className="">Click on these for a relevant wiki page</p>
+					<div className="relative pl-5 pr-3">
+						<div className="absolute top-0 -left-0 pointer-none -rotate-60">
+							<PiArrowBendRightDownBold className="size-5" />
+						</div>
+						<WikiLink className="animate-scale-pulse" />
+						<div className="absolute top-2 -right-2.5 pointer-none rotate-120">
+							<PiArrowBendRightDownBold className="size-5" />
+						</div>
+					</div>
+				</div>
+				<br />
+				<div className="flex justify-center gap-1 items-center">
+					<p className="">Need help building your character? Click here </p>
+					<WikiLink path="Character_Creation" />
+				</div>
+				<br />
+				<p>
+					Your character won&apos;t be saved or submitted until you click{" "}
+					<b>Save & Submit</b>{" "}
+					on the final step.
+				</p>
 			</div>
-			<br />
-			<p>
-				To save and submit your character to the team, you'll need to sign in on the top
-				right. Your character won't be saved or submitted until you click{" "}
-				<i>Save & Submit</i> on the final step.
-			</p>
 			<br />
 			<div className={titleWrapperStyle}>
 				<div className={"font-bold italic"}>
@@ -57,6 +73,9 @@ export function IntroPage() {
 					</Button>
 				</div>
 			</div>
+			{/* <div className="border rounded-lg p-3 px-4 bg-background-raised shadow-lg mt-8 mx-6">
+				<ApprovalReport approval={approval} dateSubmitted={date} />
+			</div> */}
 			<div
 				style={{
 					display: "flex",

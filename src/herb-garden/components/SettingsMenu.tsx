@@ -56,8 +56,8 @@ export function SettingsMenu({
 								operation in the Concord.
 								<br />
 								<br />
-								It's purely a project made for fun, and has no impact on your
-								character submission. Expect updates over time, and don't get too
+								It&apos;s purely a project made for fun, and has no impact on your
+								character submission. Expect updates over time, and don&apos;t get too
 								attached to your saved game!
 								<br />
 								<br />
