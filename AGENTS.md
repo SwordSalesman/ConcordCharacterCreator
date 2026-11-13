@@ -19,10 +19,12 @@ Audience for the code and docs: the maintainer, future devs, AI agents. The repo
 npm run dev      # Dev server (needs a .env, see below)
 npm run build    # Static export to /out
 npm run lint     # ESLint
+npm test         # Vitest game/form logic tests (one run)
 npm --prefix functions run build   # Compile Cloud Functions
 ```
 
-There is no test runner; `npm run lint` and `npm run build` are the only verification.
+Vitest tests live in `src/utils/*.test.ts` and run in Node without Firebase or a browser.
+Run `npm test` for game/form logic, and `npm run lint` and `npm run build` for linting and compilation.
 
 ### Environment
 

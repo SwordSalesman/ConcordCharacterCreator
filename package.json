@@ -8,6 +8,7 @@
 		"dev": "next dev",
 		"start": "next start",
 		"lint": "eslint",
+		"test": "vitest run",
 		"predeploy": "npm run build",
 		"env:dev": "cp .env.dev .env",
 		"env:prod": "cp .env.prod .env",
@@ -45,7 +46,7 @@
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3",
-		"@types/node": "^20",
+		"@types/node": "^22.20.5",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"eslint": "^9",
@@ -53,13 +54,8 @@
 		"firebase-tools": "^15.34.0",
 		"gh-pages": "^5.0.0",
 		"tw-animate-css": "^1.3.8",
-		"typescript": "^5"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
+		"typescript": "^5",
+		"vitest": "^5.1.0"
 	},
 	"browserslist": {
 		"production": [

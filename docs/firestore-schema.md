@@ -29,6 +29,13 @@ A player's hero submission, one per player. Flat **summary format**: list fields
 | `investment`, `invTier`, `invOption`, `invDiversify`, `invRegion`, `invTerritory`, `invDetails` | string / number | Investment choices |
 | `changes`                                        | string \| null   | Change summary on resubmission. Cleared by `submitApproval` |
 
+`skills` and `invDiversify` store only the highest selected rank per name. For
+example, diversification selections `Bloodglass (1), Bloodglass (2), Essencite (1)`
+save as `Bloodglass (2), Essencite (1)`. Loading expands diversification from rank 1
+and skills from their defined base rank. Existing uncompressed diversification
+strings are also supported. Live form arrays remain expanded for capacity checks
+and prerequisite removal; ordinary list fields are not rank-compressed.
+
 ## `approvals/{uid}`
 
 Latest review of the matching `characters/{uid}`. Written by the `submitApproval` function.

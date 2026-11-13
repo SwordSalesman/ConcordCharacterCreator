@@ -53,7 +53,8 @@ export function IntroPage() {
 				</div>
 				<br />
 				<p>
-					Your character won't be saved or submitted until you click <b>Save & Submit</b>{" "}
+					Your character won&apos;t be saved or submitted until you click{" "}
+					<b>Save & Submit</b>{" "}
 					on the final step.
 				</p>
 			</div>

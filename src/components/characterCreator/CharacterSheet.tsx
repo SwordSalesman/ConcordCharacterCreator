@@ -1,5 +1,10 @@
 import { graces } from "@/data/tables/graces";
-import { getRealmData, getSummaryFromArray, stringToNode } from "@/utils/data-helper";
+import {
+	getRealmData,
+	getRankedSummaryFromArray,
+	getSkillSummaryFromArray,
+	stringToNode,
+} from "@/utils/data-helper";
 import { FormState } from "@/context/formContext";
 
 /* The 'simple' version of these components are used for rendering the email content
@@ -36,6 +41,21 @@ export function StyledBorder() {
 
 function SimpleStyledBorder() {
 	return <></>;
+}
+
+function ReviewItemWrapper({
+	simple,
+	...props
+}: ReviewItemProps & { simple: boolean }) {
+	return (
+		<div className="my-2">
+			{simple ? <SimpleReviewItem {...props} /> : <ReviewItem {...props} />}
+		</div>
+	);
+}
+
+function StyledBorderWrapper({ simple }: { simple: boolean }) {
+	return <div className="my-2">{simple ? <SimpleStyledBorder /> : <StyledBorder />}</div>;
 }
 
 const delimiter = ", ";
@@ -83,18 +103,6 @@ export function CharacterSheet({
 		return null;
 	}
 
-	function ReviewItemWrapper(props: ReviewItemProps) {
-		return (
-			<div className="my-2">
-				{simple ? <SimpleReviewItem {...props} /> : <ReviewItem {...props} />}
-			</div>
-		);
-	}
-
-	function StyledBorderWrapper() {
-		return <div className="my-2">{simple ? <SimpleStyledBorder /> : <StyledBorder />}</div>;
-	}
-
 	return (
 		<div>
 			<div>
@@ -115,10 +123,10 @@ export function CharacterSheet({
 					</div>
 				)}
 			</div>
-			<StyledBorderWrapper />
-			<ReviewItemWrapper label="Summits attended">{gamesPlayed}</ReviewItemWrapper>
+			<StyledBorderWrapper simple={simple ?? false} />
+			<ReviewItemWrapper simple={simple ?? false} label="Summits attended">{gamesPlayed}</ReviewItemWrapper>
 			{investment && (
-				<ReviewItemWrapper label="Investment">
+				<ReviewItemWrapper simple={simple ?? false} label="Investment">
 					{`Tier ${invTier} `}
 					{invOption ? `${invOption} ` : ""}
 					{investment ? investment : ""}
@@ -127,7 +135,7 @@ export function CharacterSheet({
 					{invDiversify?.length ? (
 						<>
 							<br />
-							{`Diversifying in ${getSummaryFromArray(invDiversify)}`}
+							{`Diversifying in ${getRankedSummaryFromArray(invDiversify)}`}
 						</>
 					) : (
 						""
@@ -135,52 +143,54 @@ export function CharacterSheet({
 				</ReviewItemWrapper>
 			)}
 			{invTier === 0 ? (
-				<ReviewItemWrapper label="Investment">
+				<ReviewItemWrapper simple={simple ?? false} label="Investment">
 					<i>Lost or destroyed</i>
 				</ReviewItemWrapper>
 			) : null}
-			{(warband || sect) && <StyledBorderWrapper />}
-			{warband && <ReviewItemWrapper label="Band">{warband}</ReviewItemWrapper>}
-			{sect && <ReviewItemWrapper label="Sect">{sect}</ReviewItemWrapper>}
-			<StyledBorderWrapper />
-			<ReviewItemWrapper label="Skills">{getSummaryFromArray(skills)}</ReviewItemWrapper>
+			{(warband || sect) && <StyledBorderWrapper simple={simple ?? false} />}
+			{warband && <ReviewItemWrapper simple={simple ?? false} label="Band">{warband}</ReviewItemWrapper>}
+			{sect && <ReviewItemWrapper simple={simple ?? false} label="Sect">{sect}</ReviewItemWrapper>}
+			<StyledBorderWrapper simple={simple ?? false} />
+			<ReviewItemWrapper simple={simple ?? false} label="Skills">
+				{getSkillSummaryFromArray(skills)}
+			</ReviewItemWrapper>
 			{spells.length > 0 && (
-				<ReviewItemWrapper label="Spells">{spells.join(delimiter)}</ReviewItemWrapper>
+				<ReviewItemWrapper simple={simple ?? false} label="Spells">{spells.join(delimiter)}</ReviewItemWrapper>
 			)}
 			{crafts.length > 0 && (
-				<ReviewItemWrapper label="Crafts">{crafts.join(delimiter)}</ReviewItemWrapper>
+				<ReviewItemWrapper simple={simple ?? false} label="Crafts">{crafts.join(delimiter)}</ReviewItemWrapper>
 			)}
 			{startingItem && (
-				<ReviewItemWrapper label="Starting Item">{startingItem}</ReviewItemWrapper>
+				<ReviewItemWrapper simple={simple ?? false} label="Starting Item">{startingItem}</ReviewItemWrapper>
 			)}
 			{potions.length > 0 && (
-				<ReviewItemWrapper label="Potions">{potions.join(delimiter)}</ReviewItemWrapper>
+				<ReviewItemWrapper simple={simple ?? false} label="Potions">{potions.join(delimiter)}</ReviewItemWrapper>
 			)}
 			{ceremonies.length > 0 && (
-				<ReviewItemWrapper label="Ceremonies">
+				<ReviewItemWrapper simple={simple ?? false} label="Ceremonies">
 					{ceremonies.join(delimiter)}
 				</ReviewItemWrapper>
 			)}
 			{fullReview && (
 				<>
-					<StyledBorderWrapper />
+					<StyledBorderWrapper simple={simple ?? false} />
 					{backstory && (
-						<ReviewItemWrapper label="Backstory">
+						<ReviewItemWrapper simple={simple ?? false} label="Backstory">
 							{stringToNode(backstory)}
 						</ReviewItemWrapper>
 					)}
 					{icGoals && (
-						<ReviewItemWrapper label="IC Goals">
+						<ReviewItemWrapper simple={simple ?? false} label="IC Goals">
 							{stringToNode(icGoals)}
 						</ReviewItemWrapper>
 					)}
 					{oocGoals && (
-						<ReviewItemWrapper label="OOC Goals">
+						<ReviewItemWrapper simple={simple ?? false} label="OOC Goals">
 							{stringToNode(oocGoals)}
 						</ReviewItemWrapper>
 					)}
 					{invDetails && (
-						<ReviewItemWrapper label="Investment Details">
+						<ReviewItemWrapper simple={simple ?? false} label="Investment Details">
 							{stringToNode(invDetails)}
 						</ReviewItemWrapper>
 					)}

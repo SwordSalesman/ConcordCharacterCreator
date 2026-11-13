@@ -1,8 +1,8 @@
-import { ArchetypeDetails, GroupState } from "@/context/groupContext";
+import type { ArchetypeDetails, GroupState } from "@/context/groupContext";
 import { Realm } from "./realms";
 
 export interface BandArchetype {
-	name: string;
+	name: ArchetypeDetails["archetype"];
 	realm: Realm;
 	link: string;
 	prompts?: Partial<

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { getThroneLeaderboard, type ThroneLeaderboardEntry } from "@/hooks/use-firebase";
 
 // Fetches the cached top-10 doc lazily, once, the first time `active` becomes true (e.g. a modal opening).
@@ -24,7 +24,9 @@ export function useLeaderboard(active: boolean) {
 
 	useEffect(() => {
 		if (active && !hasLoaded) {
-			refresh();
+			startTransition(() => {
+				refresh();
+			});
 		}
 	}, [active, hasLoaded]);
 

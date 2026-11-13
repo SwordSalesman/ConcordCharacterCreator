@@ -42,15 +42,19 @@ export default function ResetPassword() {
 			await resetPasswordWithCode(oobCode, password);
 			setDone(true);
 			toast.success("Password reset successfully.");
-		} catch (err: any) {
+		} catch (err: unknown) {
+			const code =
+				err instanceof Error && "code" in err && typeof err.code === "string"
+					? err.code
+					: undefined;
 			if (
-				err.code === "auth/expired-action-code" ||
-				err.code === "auth/invalid-action-code"
+				code === "auth/expired-action-code" ||
+				code === "auth/invalid-action-code"
 			) {
 				setError(
 					"This reset link has expired or already been used. Please request a new one.",
 				);
-			} else if (err.code === "auth/weak-password") {
+			} else if (code === "auth/weak-password") {
 				setError("Password is too weak.");
 			} else {
 				setError("Something went wrong. Please try again.");
