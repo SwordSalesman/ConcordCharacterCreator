@@ -71,5 +71,8 @@
 	},
 	"overrides": {
 		"protobufjs": "7.5.5"
+	},
+	"optionalDependencies": {
+		"lightningcss-linux-x64-gnu": "1.30.1"
 	}
 }

@@ -4,13 +4,20 @@ import ContentWrapper from "@/components/layout/ContentWrapper";
 import useUserContext from "@/hooks/use-user-context";
 import { PATH_HOME } from "@/utils/constants";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function ApprovalsPage() {
 	const router = useRouter();
 	const { isAdmin, loading } = useUserContext();
+	const shouldRedirect = !loading && !isAdmin;
 
-	if (!loading && !isAdmin) {
-		router.replace(PATH_HOME);
+	useEffect(() => {
+		if (shouldRedirect) {
+			router.replace(PATH_HOME);
+		}
+	}, [router, shouldRedirect]);
+
+	if (shouldRedirect) {
 		return null;
 	}
 
