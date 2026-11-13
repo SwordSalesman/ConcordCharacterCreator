@@ -4,11 +4,13 @@ import { getGroupList, getUserFormAndApproval } from "../hooks/use-firebase";
 import useUserContext from "../hooks/use-user-context";
 import {
 	getArrayFromSummary,
-	getSkillSummaryFromArray,
+	getDiversificationFromSummary,
+	getRankedSummaryFromArray,
 	getSkillsFromSummary,
 	getSummaryFromArray,
 } from "../utils/data-helper";
 import { Realm } from "@/data/tables/realms";
+import { MAX_INVESTMENT_TIER } from "@/data/tables/investments";
 import {
 	applyFieldSideEffects,
 	calculateAllowances,
@@ -283,7 +285,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 	const investmentTier = useMemo(
 		() => ({
 			isFirstGame: formState.gamesPlayed < 1,
-			canIncrease: formState.gamesPlayed > 0 && formState.invTier < 10,
+			canIncrease: formState.gamesPlayed > 0 && formState.invTier < MAX_INVESTMENT_TIER,
 			canDecrease: formState.gamesPlayed > 0 && formState.invTier > 1,
 			needsDestroyConfirmation: formState.gamesPlayed > 0 && formState.invTier === 1,
 		}),
@@ -319,7 +321,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 			: "";
 	}, [choices.regions, formState.invRegion, formState.realm]);
 
-	// Converts stored summary strings to in-memory arrays and expands tiered skills.
+	// Expands ranked skills and diversification only at the persistence boundary.
 	function setFormFromSummaryData(summaryForm: FormStateSummary) {
 		const payload: Partial<FormState> = {};
 		Object.keys(summaryForm).forEach((keyString) => {
@@ -327,6 +329,8 @@ export default function FormContextProvider({ children }: { children: React.Reac
 			const value = summaryForm[key];
 			if (key === "skills" && typeof value === "string") {
 				payload.skills = getSkillsFromSummary(value);
+			} else if (key === "invDiversify" && typeof value === "string") {
+				payload.invDiversify = getDiversificationFromSummary(value);
 			} else if (
 				value !== undefined &&
 				value !== null &&
@@ -375,8 +379,8 @@ export default function FormContextProvider({ children }: { children: React.Reac
 			const value = formState[key];
 			if (Array.isArray(value)) {
 				(summaryForm as Record<string, unknown>)[key] =
-					key === "skills"
-						? getSkillSummaryFromArray(value)
+					key === "skills" || key === "invDiversify"
+						? getRankedSummaryFromArray(value)
 						: (getSummaryFromArray(value) ?? "");
 			} else {
 				(summaryForm as Record<string, unknown>)[key] = value ?? "";

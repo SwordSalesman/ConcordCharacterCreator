@@ -1,6 +1,7 @@
 import { Skill, skills } from "@/data/tables/skills";
 import { CivilServiceRealm, realms } from "@/data/tables/realms";
 import { regions } from "@/data/tables/regions";
+import { investments, MAX_INVESTMENT_TIER } from "@/data/tables/investments";
 import React, { ReactNode } from "react";
 
 // ########## FORM DATA ##########
@@ -21,15 +22,20 @@ export function formatRankedName(name: string, rank: number): string {
 	return `${name} (${rank})`;
 }
 
-export function getSkillSummaryFromArray(a: string[]): string | undefined {
+export function getRankedSummaryFromArray(a: string[]): string | undefined {
 	if (!a) return undefined;
-	return a
+	return [...new Set(a)]
 		.filter((item) => {
 			const { name, rank } = parseRankedName(item);
-			return !rank || !a.includes(formatRankedName(name, rank + 1));
+			return !rank || !a.some((other) => {
+				const parsed = parseRankedName(other);
+				return parsed.name === name && parsed.rank !== undefined && parsed.rank > rank;
+			});
 		})
 		.join(", ");
 }
+
+export const getSkillSummaryFromArray = getRankedSummaryFromArray;
 
 export function getArrayFromSummary(s: string): string[] {
 	if (!s || s === "") return [];
@@ -38,6 +44,21 @@ export function getArrayFromSummary(s: string): string[] {
 
 export function getSkillsFromSummary(s: string): string[] {
 	return getArrayFromSummary(s).flatMap(getSkillListFromSummary);
+}
+
+export function getDiversificationFromSummary(s: string): string[] {
+	const expanded = getArrayFromSummary(s).flatMap((selection) => {
+		const { name, rank } = parseRankedName(selection);
+		const known = investments.some((investment) =>
+			investment.diversifyOptions?.some((option) => option.name === name),
+		);
+		// Leave invalid entries for form normalization; never expand unbounded stored ranks.
+		if (!known || rank === undefined || rank < 1 || rank >= MAX_INVESTMENT_TIER) {
+			return [selection];
+		}
+		return Array.from({ length: rank }, (_, index) => formatRankedName(name, index + 1));
+	});
+	return [...new Set(expanded)];
 }
 
 export function stringToNode(s: string): ReactNode {

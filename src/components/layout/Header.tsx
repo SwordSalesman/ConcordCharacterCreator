@@ -27,14 +27,11 @@ import {
 } from "../ui/navigation-menu";
 import { ApprovalButton } from "../common/Button/ApprovalButton";
 import { getSiteSettings } from "@/utils/settings";
+import useFormContext from "@/hooks/use-form-context";
 
-export function Header({
-	toggleTheme,
-	handleLogoClick,
-}: {
-	toggleTheme: () => void;
-	handleLogoClick?: () => void;
-}) {
+export function Header({ toggleTheme }: { toggleTheme: () => void }) {
+	const { form } = useFormContext();
+	const changes = form?.changes;
 	const { user, isAdmin, loading } = useUserContext();
 	const { pathname } = useRouter();
 
@@ -83,6 +80,18 @@ export function Header({
 			: []),
 	];
 
+	function handleLogoClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+		if (changes && changes.length > 0) {
+			e.preventDefault();
+			const confirmLeave = window.confirm(
+				"Leave Hero submission? Your changes will be lost.",
+			);
+			if (confirmLeave) {
+				window.location.href = PATH_HOME;
+			}
+		}
+	}
+
 	return (
 		<>
 			<div className={"h-12 w-full z-100"}>
@@ -101,7 +110,7 @@ export function Header({
 						</div>
 					)}
 					<div className="flex items-center flex-row gap-1">
-						<Link href={PATH_HOME}>
+						<Link href={PATH_HOME} onClick={(e) => handleLogoClick(e)}>
 							<Image
 								src={ConcordSigil}
 								alt="Concord Logo"
@@ -196,9 +205,7 @@ export function Header({
 					</div>
 				</div>
 			</div>
-			{showLoginModal && (
-				<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
-			)}
+			<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
 		</>
 	);
 }

@@ -1,6 +1,6 @@
 import { Ceremony, ceremonies } from "@/data/tables/ceremonies";
 import { Craft, crafts } from "@/data/tables/crafts";
-import { Investment, investments } from "@/data/tables/investments";
+import { Investment, investments, MAX_INVESTMENT_TIER } from "@/data/tables/investments";
 import { Potion, potions } from "@/data/tables/potions";
 import { Realm } from "@/data/tables/realms";
 import { Region, regions } from "@/data/tables/regions";
@@ -295,7 +295,7 @@ function normalizeSkills(state: FormState): string[] {
 // 📖 Investment tier is 1 before a first game, 0 when destroyed, and capped at 10 afterward; dependent selections must match.
 function normalizeInvestment(state: FormState): FormState {
 	let invTier = Number.isFinite(state.invTier) ? Math.trunc(state.invTier) : 1;
-	invTier = state.gamesPlayed === 0 ? 1 : Math.max(0, Math.min(10, invTier));
+	invTier = state.gamesPlayed === 0 ? 1 : Math.max(0, Math.min(MAX_INVESTMENT_TIER, invTier));
 
 	let { investment, invOption, invRegion, invTerritory } = state;
 	let invDiversify = [...new Set(state.invDiversify)];

@@ -25,7 +25,17 @@ cp .env.dev .env     # dev Firebase project (use .env.prod only deliberately)
 npm run dev
 ```
 
-Other commands: `npm run build` (static export to `/out`), `npm run lint`. There are no automated tests.
+Other commands: `npm run build` (static export to `/out`), `npm run lint`, `npm test`.
+
+### Tests
+
+`npm test` runs the Vitest suite once. Tests live beside the helpers in
+`src/utils/*.test.ts` and cover hero rules, form field side effects, and saved-character
+conversions. They run in Node without Firebase credentials or a browser.
+
+Use `npm test -- src/utils/form-rules.test.ts` to run one file, or
+`npx vitest` for watch mode. UI interactions, Firebase persistence, and Cloud
+Functions are not covered by this suite.
 
 ## Deployment
 

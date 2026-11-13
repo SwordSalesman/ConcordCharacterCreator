@@ -1,8 +1,8 @@
 import { graces } from "@/data/tables/graces";
 import {
 	getRealmData,
+	getRankedSummaryFromArray,
 	getSkillSummaryFromArray,
-	getSummaryFromArray,
 	stringToNode,
 } from "@/utils/data-helper";
 import { FormState } from "@/context/formContext";
@@ -135,7 +135,7 @@ export function CharacterSheet({
 					{invDiversify?.length ? (
 						<>
 							<br />
-							{`Diversifying in ${getSummaryFromArray(invDiversify)}`}
+							{`Diversifying in ${getRankedSummaryFromArray(invDiversify)}`}
 						</>
 					) : (
 						""

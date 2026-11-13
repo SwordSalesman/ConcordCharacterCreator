@@ -134,14 +134,7 @@ const genTabContent = (params: {
 	subSectionTitle?: "type" | "rarity" | "sphere";
 	comment?: string;
 }) => {
-	const {
-		label,
-		link,
-		allItems,
-		toggleFunction,
-		subSectionTitle,
-		comment,
-	} = params;
+	const { label, link, allItems, toggleFunction, subSectionTitle, comment } = params;
 
 	const sections =
 		label === "Artisan Crafts"
@@ -163,14 +156,12 @@ const genTabContent = (params: {
 					{comment ? <i>{comment}</i> : null}
 					{sections.map((s) => {
 						return (
-							<AccordionSection
-								title={s}
-								key={s}
-								align="left"
-							>
+							<AccordionSection title={s} key={s} align="left">
 								{allItems
 									.filter((choice) =>
-										subSectionTitle ? choice.value[subSectionTitle] === s : true,
+										subSectionTitle
+											? choice.value[subSectionTitle] === s
+											: true,
 									)
 									.map((choice) => {
 										const item = choice.value;
@@ -179,7 +170,9 @@ const genTabContent = (params: {
 												onClick={() => toggleFunction(item.name)}
 												selected={choice.selected}
 												inactive={
-													choice.selected ? !choice.canRemove : !choice.canSelect
+													choice.selected
+														? !choice.canRemove
+														: !choice.canSelect
 												}
 												inactiveReason={
 													choice.selected
@@ -210,27 +203,22 @@ const genTabContent = (params: {
 			<div className="flex w-full flex-col gap-3 py-2">
 				{comment ? <i>{comment}</i> : null}
 				<AccordionSectionSkeleton>
-					{allItems
-						.map((choice) => {
-							const item = choice.value;
-							return (
-								<Chip
-									onClick={() => toggleFunction(item.name)}
-									selected={choice.selected}
-									inactive={
-										choice.selected ? !choice.canRemove : !choice.canSelect
-									}
-									inactiveReason={
-										choice.selected
-											? choice.removeReason
-											: choice.selectReason
-									}
-									key={item.name}
-								>
-									{item.name}
-								</Chip>
-							);
-						})}
+					{allItems.map((choice) => {
+						const item = choice.value;
+						return (
+							<Chip
+								onClick={() => toggleFunction(item.name)}
+								selected={choice.selected}
+								inactive={choice.selected ? !choice.canRemove : !choice.canSelect}
+								inactiveReason={
+									choice.selected ? choice.removeReason : choice.selectReason
+								}
+								key={item.name}
+							>
+								{item.name}
+							</Chip>
+						);
+					})}
 				</AccordionSectionSkeleton>
 			</div>
 		),
@@ -273,9 +261,7 @@ export function OptionsPage() {
 		investmentStatus,
 		investmentRegionWarning,
 	} = useFormContext();
-	const {
-		invTier,
-	} = form;
+	const { invTier } = form;
 
 	const showSpells = choices.spells.length > 0;
 	const showCrafts = choices.crafts.length > 0;
@@ -325,9 +311,7 @@ export function OptionsPage() {
 						<Chip
 							onClick={() => toggleItem("investment", item.name)}
 							selected={choice.selected}
-							inactive={
-								choice.selected ? !choice.canRemove : !choice.canSelect
-							}
+							inactive={choice.selected ? !choice.canRemove : !choice.canSelect}
 							inactiveReason={
 								choice.selected ? choice.removeReason : choice.selectReason
 							}
@@ -454,11 +438,7 @@ export function OptionsPage() {
 					);
 				})}
 			</AccordionSection>
-			<AccordionSection
-				title="Investment Territory"
-				link={selectedRegion?.link}
-				align="left"
-			>
+			<AccordionSection title="Investment Territory" link={selectedRegion?.link} align="left">
 				{selectedRegion ? (
 					choices.territories.map((choice) => {
 						const territory = choice.value;
@@ -518,7 +498,7 @@ export function OptionsPage() {
 		content: investmentTabContent,
 		// link: "Investments",
 	});
-	showSpells &&
+	if (showSpells) {
 		renderedTabs.push(
 			genTabContent({
 				label: "Spells",
@@ -528,7 +508,8 @@ export function OptionsPage() {
 				subSectionTitle: "type",
 			}),
 		);
-	showCrafts &&
+	}
+	if (showCrafts) {
 		renderedTabs.push(
 			genTabContent({
 				label: "Artisan Crafts",
@@ -538,7 +519,8 @@ export function OptionsPage() {
 				subSectionTitle: "rarity",
 			}),
 		);
-	showCrafts &&
+	}
+	if (showCrafts) {
 		renderedTabs.push(
 			genTabContent({
 				label: "Starting Item",
@@ -549,7 +531,8 @@ export function OptionsPage() {
 				comment: "If you're a new Artisan, select your starting Journeyman item.",
 			}),
 		);
-	showPotions &&
+	}
+	if (showPotions) {
 		renderedTabs.push(
 			genTabContent({
 				label: "Potion Recipes",
@@ -559,6 +542,7 @@ export function OptionsPage() {
 				subSectionTitle: "type",
 			}),
 		);
+	}
 	if (showCeremonies) {
 		renderedTabs.push(
 			genTabContent({
@@ -596,9 +580,7 @@ export function OptionsPage() {
 					<div>
 						<SectionDivider>
 							Investment
-							<span className="text-destructive">
-								{investmentStatus.warning}
-							</span>
+							<span className="text-destructive">{investmentStatus.warning}</span>
 						</SectionDivider>
 						{renderedInvestment || renderedInvOption || renderedInvRegion ? (
 							// Left align the right column and right align the left column
@@ -619,7 +601,7 @@ export function OptionsPage() {
 								)}
 								{renderedInvDiversify && (
 									<>
-										<p>Diversify</p>
+										<p>Diversification</p>
 										<SectionWrapper>{renderedInvDiversify}</SectionWrapper>
 									</>
 								)}
@@ -637,9 +619,7 @@ export function OptionsPage() {
 								)}
 							</div>
 						) : (
-							<div className="opacity-70 italic">
-								{investmentStatus.emptyMessage}
-							</div>
+							<div className="opacity-70 italic">{investmentStatus.emptyMessage}</div>
 						)}
 					</div>
 					{showSpells && (
@@ -662,7 +642,10 @@ export function OptionsPage() {
 							<div>
 								<SectionDivider>
 									Starting Artisan Item
-									{remainingSelectionText({ field: "startingItem", warning: true })}
+									{remainingSelectionText({
+										field: "startingItem",
+										warning: true,
+									})}
 								</SectionDivider>
 								<SectionWrapper>{renderedStartingItem}</SectionWrapper>
 							</div>
