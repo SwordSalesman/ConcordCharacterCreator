@@ -107,7 +107,7 @@ function calculateMaxInvestmentOptions(state: FormState): number {
 
 // 📖 The XP allowance starts at 8 and increases by 1 for each game played.
 function calculateMaxExperience(state: FormState): number {
-	return 4 + state.gamesPlayed;
+	return 8 + state.gamesPlayed;
 }
 
 // Calculates all display and enforcement allowances from one form snapshot.
