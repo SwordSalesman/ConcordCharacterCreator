@@ -6,7 +6,12 @@ import useUserContext from "@/hooks/use-user-context";
 import { Button } from "./Button";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 
-export function ApprovalButton() {
+interface ApprovalButtonProps {
+	border?: boolean;
+}
+
+export function ApprovalButton(props: ApprovalButtonProps) {
+	const { border } = props;
 	const { user } = useUserContext();
 	const { approval, form, loading: formLoading } = useFormContext();
 	const { date } = form;
@@ -24,10 +29,10 @@ export function ApprovalButton() {
 				<Button
 					onClick={() => setShowApprovalModal(true)}
 					spinner={formLoading}
-					className="animate-in fade-in"
+					className={`animate-in fade-in ${border ? `border border-${tickColorClass}` : ""}`}
 					variant="ghost"
 				>
-					<div className={`flex gap-2 items-center ${tickColorClass}`}>
+					<div className={`flex gap-2 items-center text-${tickColorClass}`}>
 						<p>{submissionStatus}</p>
 						<BiSolidBadgeCheck />
 					</div>

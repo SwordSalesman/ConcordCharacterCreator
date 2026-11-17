@@ -9,6 +9,7 @@ import { getGroupSubmissionMessage } from "@/hooks/use-firebase";
 import useFormContext from "@/hooks/use-form-context";
 import useUserContext from "@/hooks/use-user-context";
 import { titleWrapperStyle } from "@/styles/Global";
+import { PST_EMAIL } from "@/utils/constants";
 import { getRealmData } from "@/utils/data-helper";
 import { copyText, realmicPlayerGroupsLink } from "@/utils/odd-jobs";
 import { getSiteSettings } from "@/utils/settings";
@@ -101,10 +102,7 @@ export default function GroupsPage() {
 						</div>
 						<p>
 							If you&apos;re still stuck, reach out by emailing{" "}
-							<b onClick={() => copyText("concordcharacters@gmail.com")}>
-								concordcharacters@gmail.com (click to copy)
-							</b>
-							.
+							<b onClick={() => copyText(PST_EMAIL)}>{PST_EMAIL} (click to copy)</b>.
 						</p>
 					</IntroParagraph>
 					<IntroParagraph header="How this works:">

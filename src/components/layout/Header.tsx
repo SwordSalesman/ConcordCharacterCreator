@@ -29,6 +29,34 @@ import { ApprovalButton } from "../common/Button/ApprovalButton";
 import { getSiteSettings } from "@/utils/settings";
 import useFormContext from "@/hooks/use-form-context";
 
+function HeaderLink({
+	label,
+	url,
+	newtab,
+	special,
+}: {
+	label: string;
+	url: string;
+	newtab?: boolean;
+	special?: boolean;
+}) {
+	const { pathname } = useRouter();
+	const active = pathname === url;
+	const defaultColor = special ? "text-muted-foreground" : "text-foreground";
+
+	return (
+		<Link
+			href={url}
+			key={url}
+			className={`flex gap-2 items-center p-0.5 ${special ? "animate-in fade-in animation-duration-[300ms]" : ""} ${active ? "text-special" : defaultColor}`}
+			target={newtab ? "_blank" : "_self"}
+			rel={newtab ? "noopener noreferrer" : undefined}
+		>
+			<p>{label}</p>
+		</Link>
+	);
+}
+
 export function Header({ toggleTheme }: { toggleTheme: () => void }) {
 	const { form } = useFormContext();
 	const changes = form?.changes;
@@ -36,32 +64,6 @@ export function Header({ toggleTheme }: { toggleTheme: () => void }) {
 	const { pathname } = useRouter();
 
 	const [showLoginModal, setShowLoginModal] = useState(false);
-
-	function HeaderLink({
-		label,
-		url,
-		newtab,
-		special,
-	}: {
-		label: string;
-		url: string;
-		newtab?: boolean;
-		special?: boolean;
-	}) {
-		const active = pathname === url;
-		const defaultColor = special ? "text-muted-foreground" : "text-foreground";
-
-		return (
-			<Link
-				href={url}
-				className={`flex gap-2 items-center p-0.5 ${active ? "text-special" : defaultColor}`}
-				target={newtab ? "_blank" : "_self"}
-				rel={newtab ? "noopener noreferrer" : undefined}
-			>
-				<p>{label}</p>
-			</Link>
-		);
-	}
 
 	const showDowntime = getSiteSettings()?.pages.downtime;
 

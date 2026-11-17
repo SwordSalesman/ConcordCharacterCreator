@@ -12,3 +12,4 @@ export const APPROVED = "Approved";
 export const DENIED = "Denied";
 export const PENDING = "Pending";
 export const ARCHIVED = "Archived";
+export const PST_EMAIL = "concordcharacters@gmail.com";

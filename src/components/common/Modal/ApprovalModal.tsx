@@ -10,7 +10,7 @@ export function ApprovalModal({ open, onClose }: { open: boolean; onClose: () =>
 
 	return (
 		<Modal
-			body={<ApprovalReport approval={approval} dateSubmitted={date} />}
+			body={<ApprovalReport approval={approval} dateSubmitted={date} showInfo={true} />}
 			open={open}
 			onClose={onClose}
 		/>

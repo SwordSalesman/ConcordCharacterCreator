@@ -62,11 +62,7 @@ interface Props {
 function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmailOption }: Props) {
 	const [loading, setLoading] = useState(false);
 	const [copying, setCopying] = useState(false);
-	const isMounted = useSyncExternalStore(
-		subscribeToMount,
-		getClientMounted,
-		getServerMounted,
-	);
+	const isMounted = useSyncExternalStore(subscribeToMount, getClientMounted, getServerMounted);
 	const sheetRef = useRef<HTMLDivElement>(null);
 
 	const [confirmModal, setConfirmModal] = useState(false);

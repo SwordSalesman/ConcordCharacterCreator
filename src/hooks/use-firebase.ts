@@ -26,7 +26,7 @@ import {
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getCurrentDate } from "../utils/date-helper";
 import { GroupType } from "@/context/groupContext";
-import type { Character, ApprovalRecord } from "@/components/approvals/types";
+import type { Character, ApprovalRecord, ApprovalStatus } from "@/components/approvals/types";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -158,8 +158,6 @@ const saveUserForm = async (
 	return fullForm;
 };
 
-const APPROVAL_STATUSES = ["Approved", "Denied", "Archived"] as const;
-type ApprovalStatus = (typeof APPROVAL_STATUSES)[number];
 type EmailStatus = "pending" | "sent" | "not sent" | "failed";
 
 interface Approval {

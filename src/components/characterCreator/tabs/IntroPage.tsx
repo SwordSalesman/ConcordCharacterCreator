@@ -4,11 +4,10 @@ import { PiArrowBendRightDownBold } from "react-icons/pi";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { Button } from "@/components/common/Button/Button";
 import { titleWrapperStyle } from "@/styles/Global";
-import { ApprovalReport } from "@/components/common/ApprovalReport/ApprovalReport";
 
 export function IntroPage() {
-	const { form, setField, approval } = useFormContext();
-	const { gamesPlayed, date } = form;
+	const { form, setField } = useFormContext();
+	const { gamesPlayed } = form;
 
 	const maxGames = (new Date().getFullYear() - 2019) * 2;
 
@@ -33,7 +32,7 @@ export function IntroPage() {
 				</i>
 			</div>
 			<br />
-			<div className="max-w-xl">
+			<div className="max-w-xl mx-auto">
 				<div className="flex justify-center gap-2 items-center">
 					<p className="">Click on these for a relevant wiki page</p>
 					<div className="relative pl-5 pr-3">
@@ -54,8 +53,7 @@ export function IntroPage() {
 				<br />
 				<p>
 					Your character won&apos;t be saved or submitted until you click{" "}
-					<b>Save & Submit</b>{" "}
-					on the final step.
+					<b>Save & Submit</b> on the final step.
 				</p>
 			</div>
 			<br />
@@ -73,16 +71,6 @@ export function IntroPage() {
 					</Button>
 				</div>
 			</div>
-			{/* <div className="border rounded-lg p-3 px-4 bg-background-raised shadow-lg mt-8 mx-6">
-				<ApprovalReport approval={approval} dateSubmitted={date} />
-			</div> */}
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "right",
-					marginTop: "60px",
-				}}
-			></div>
 		</div>
 	);
 }

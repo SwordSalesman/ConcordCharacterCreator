@@ -10,6 +10,7 @@ import {
 	PATH_GROUPS,
 	PATH_HERB_GARDEN,
 	PATH_HERO,
+	PST_EMAIL,
 } from "@/utils/constants";
 import { copyText } from "@/utils/odd-jobs";
 import { getSiteSettings } from "@/utils/settings";
@@ -33,12 +34,9 @@ export default function Home() {
 					</i>
 				</div>
 				<p className="text-center">
-					Use this site to submit your Hero and Player Groups for Concord Larp. You&apos;ll
-					need to sign in to submit. If you run into an issue, get in touch at{" "}
-					<i onClick={() => copyText("concordcharacters@gmail.com")}>
-						concordcharacters@gmail.com (click to copy)
-					</i>
-					.
+					Use this site to submit your Hero and Player Groups for Concord Larp.
+					You&apos;ll need to sign in to submit. If you run into an issue, get in touch at{" "}
+					<i onClick={() => copyText(PST_EMAIL)}>{PST_EMAIL} (click to copy)</i>.
 				</p>
 				<div className="flex flex-col items-center justify-center gap-3">
 					<Button onClick={() => router.push(PATH_HERO)} size="lg">
