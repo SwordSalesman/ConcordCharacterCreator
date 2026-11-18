@@ -16,7 +16,7 @@ export default function HerbPatch({
 	dragOverId: string | null;
 }) {
 	const { herbs, farmerAssignments, gatherHerb } = useContext(GameContext);
-	const { tutorialSettings, newComponents, setComponentStale } = useContext(TutorialContext);
+	const { tutorialSettings, newComponents } = useContext(TutorialContext);
 	const showFarmers = tutorialSettings.showWorkers;
 
 	const hasFarmers = farmerAssignments[herbId] > 0;
@@ -50,7 +50,7 @@ export default function HerbPatch({
 			</button>
 			<div
 				ref={draggableRef}
-				className={`${showFarmers ? "" : "hidden"} absolute top-[-18px] w-18 h-12 bg-background border-1 rounded-md duration-100 touch-none select-none ${hasFarmers ? "cursor-grab hover:scale-105 hover:bg-background-raised" : ""}`}
+				className={`${showFarmers ? "" : "hidden"} absolute -top-4.5 w-18 h-12 bg-background border rounded-md duration-100 touch-none select-none ${hasFarmers ? "cursor-grab hover:scale-105 hover:bg-background-raised" : ""}`}
 			>
 				<div className=" w-full h-full flex justify-center gap-1 items-center p-1 touch-none">
 					<div

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import { GameContext } from "./context/gameContext";
 import { TutorialContext } from "./context/tutorialContext";
@@ -58,17 +58,12 @@ export default function GameMain() {
 	const [showLabUpgradeMenu, setShowLabUpgradeMenu] = useState(false);
 	const [showMarketUpgradeMenu, setShowMarketUpgradeMenu] = useState(false);
 	const [showTavernUpgradeMenu, setShowTavernUpgradeMenu] = useState(false);
-	const [showWinScreen, setShowWinScreen] = useState(false);
-
-	useEffect(() => {
-		if (hasWonGame && !winScreenSeen) {
-			setShowTavernUpgradeMenu(false);
-			setShowWinScreen(true);
-		}
-	}, [hasWonGame, winScreenSeen]);
+	const [reopenWinScreen, setReopenWinScreen] = useState(false);
+	const showWinScreen = hasWonGame && (!winScreenSeen || reopenWinScreen);
 
 	function handleCloseWinScreen() {
-		setShowWinScreen(false);
+		setReopenWinScreen(false);
+		setShowTavernUpgradeMenu(false);
 		markWinScreenSeen();
 	}
 
@@ -82,7 +77,7 @@ export default function GameMain() {
 		if (!window.confirm("Reset your save? This cannot be undone.")) {
 			return;
 		}
-		setShowWinScreen(false);
+		setReopenWinScreen(false);
 		resetGame();
 		resetTutorial();
 	}
@@ -150,7 +145,7 @@ export default function GameMain() {
 						<div className="flex gap-2 items-center">
 							{hasWonGame ? (
 								<Button
-									onClick={() => setShowWinScreen(true)}
+									onClick={() => setReopenWinScreen(true)}
 									size="sm"
 									className=""
 								>
@@ -179,7 +174,7 @@ export default function GameMain() {
 						handleReset={handleResetGame}
 					/>
 
-					<div className="mb-[-22px]">
+					<div className="-mb-5.5">
 						<SectionWrapper title="Resources" icon={<GiLockedChest />} />
 					</div>
 					<ResourcesPanel

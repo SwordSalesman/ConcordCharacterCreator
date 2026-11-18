@@ -1,6 +1,12 @@
-import {APPROVED, DENIED, ARCHIVED} from '../../utils/constants'
+import { APPROVED, DENIED, ARCHIVED, PENDING } from "../../utils/constants";
 
-export type ApprovalStatus = typeof APPROVED | typeof DENIED | typeof ARCHIVED
+export type ApprovalStatus = typeof APPROVED | typeof DENIED | typeof PENDING | typeof ARCHIVED;
+export type SubmissionStatus =
+	| "Not Submitted"
+	| "Awaiting Review"
+	| "Changes Requested"
+	| "Approved"
+	| "Archived";
 
 export interface ApprovalRecord {
 	id?: string;
@@ -13,7 +19,7 @@ export interface ApprovalRecord {
 		sentAt: string;
 		gmailMessageId: string | null;
 		failedAt: string;
-	}
+	};
 }
 
 export interface Character {

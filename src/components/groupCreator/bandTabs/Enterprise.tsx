@@ -14,7 +14,9 @@ export function Enterprise() {
 	return (
 		<ContentPane layout="narrow" className="text-left mt-4 gap-6">
 			<div>
-				<SectionDivider>{bandName}'s Enterprise</SectionDivider>
+				<SectionDivider>
+					{bandName && bandName !== "" ? bandName : "Your Band"}&apos;s Enterprise
+				</SectionDivider>
 				<div className="flex gap-2 items-center justify-center">
 					<p className="text-sm text-muted-foreground">
 						See here for information about enterprises
@@ -33,10 +35,11 @@ export function Enterprise() {
 				options={EnterpriseTypes.map((t) => t)}
 				value={type}
 				handleClick={(option) => {
-					if (!option) return;
+					const enterpriseType = EnterpriseTypes.find((candidate) => candidate === option);
+					if (!enterpriseType) return;
 					setField("enterprise", {
 						...enterprise,
-						type: option,
+						type: enterpriseType,
 					});
 				}}
 			/>

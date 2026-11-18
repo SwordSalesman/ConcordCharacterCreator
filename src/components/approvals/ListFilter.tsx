@@ -1,4 +1,3 @@
-import { BiChevronDown } from "react-icons/bi";
 import { Button } from "../common/Button/Button";
 import { APPROVED, ARCHIVED, DENIED, PENDING } from "../../utils/constants";
 import { Counts, DateType } from "./Approvals";

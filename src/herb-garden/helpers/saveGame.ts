@@ -65,7 +65,7 @@ interface PersistedGameSave {
 	state: PersistedGameStateV1;
 }
 
-interface GameStateForPersistence extends PersistedGameStateV1 {}
+type GameStateForPersistence = PersistedGameStateV1;
 
 // Coerces any value into a non-negative whole number, defaulting to 0 if it isn't a usable number.
 function sanitizeNumber(value: unknown): number {

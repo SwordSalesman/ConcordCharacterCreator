@@ -31,14 +31,12 @@ import { potionRecipe } from "@/herb-garden/helpers/displayValueHelper";
 
 function SortablePotionCraftButton({
 	potionId,
-	isActivePreference,
 	isCraftable,
 	onCraft,
 	anchorRef,
 	showReorder,
 }: {
 	potionId: PotionId;
-	isActivePreference: boolean;
 	isCraftable: boolean;
 	onCraft: (potionId: PotionId) => void;
 	anchorRef: ReturnType<ReturnType<typeof useAnimation>["registerAnchor"]>;
@@ -65,7 +63,7 @@ function SortablePotionCraftButton({
 			<Button
 				ref={anchorRef}
 				onClick={() => {
-					isCraftable && onCraft(potionId);
+					if (isCraftable) onCraft(potionId);
 				}}
 				className="flex-1 flex touch-manipulation justify-between duration-100 hover:scale-103 active:scale-98 select-none h-fit min-h-9"
 				disabled={!isCraftable}
@@ -147,13 +145,11 @@ export function Laboratory() {
 				<SortableContext items={displayedPotionIds} strategy={verticalListSortingStrategy}>
 					<div className="flex gap-1 flex-col flex-wrap">
 						{displayedPotionIds.map((potionId) => {
-							const isActivePreference =
-								apothecaryPreferences.indexOf(potionId) !== -1;
+							// const isActivePreference = apothecaryPreferences.indexOf(potionId) !== -1;
 							return (
 								<SortablePotionCraftButton
 									key={potionId}
 									potionId={potionId}
-									isActivePreference={isActivePreference}
 									isCraftable={canCraftPotion(potionId)}
 									onCraft={(id) => craftPotion(id, 1)}
 									anchorRef={craftAnchor(potionId)}

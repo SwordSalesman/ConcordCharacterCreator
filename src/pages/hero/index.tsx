@@ -7,7 +7,7 @@ import { PreMessage } from "../groups";
 
 export default function HeroPage() {
 	const { user, loading: userLoading } = useUserContext();
-	const { form, loading: formLoading } = useFormContext();
+	const { loading: formLoading } = useFormContext();
 
 	if (userLoading || (user && formLoading)) {
 		return (

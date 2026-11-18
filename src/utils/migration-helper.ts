@@ -4,7 +4,7 @@ import regionMigrationData from "../data/tables/old/regionMigration.json";
 interface MigratableCharacter {
 	id: string;
 	invTerritory?: string;
-	[key: string]: any;
+	[key: string]: unknown;
 }
 
 export async function handleMigrateInvestments(characters: MigratableCharacter[]) {

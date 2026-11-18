@@ -1,3 +1,4 @@
+import { SubmissionStatus } from "@/components/approvals/types";
 import { APPROVED, ARCHIVED, DENIED } from "./constants";
 
 export function getApprovalStatus({
@@ -9,22 +10,23 @@ export function getApprovalStatus({
 	submissionDate?: string;
 	approvalDate?: string;
 }) {
-	let tickColorClass = "text-muted-foreground";
-	let submissionStatus = "Not Submitted";
+	let tickColorClass = "muted-foreground";
+	let submissionStatus: SubmissionStatus = "Not Submitted";
+
 	if (submissionDate && (!approvalDate || approvalDate < submissionDate)) {
-		tickColorClass = "text-muted-foreground";
+		tickColorClass = "muted-foreground";
 		submissionStatus = "Awaiting Review";
 	} else if (status === DENIED) {
-		tickColorClass = "text-destructive";
+		tickColorClass = "destructive";
 		submissionStatus = "Changes Requested";
 	} else if (status === APPROVED) {
-		tickColorClass = "text-success";
+		tickColorClass = "success";
 		submissionStatus = "Approved";
 	} else if (status === ARCHIVED) {
-		tickColorClass = "text-muted-foreground";
+		tickColorClass = "muted-foreground";
 		submissionStatus = "Archived";
 	} else if (!submissionDate) {
-		tickColorClass = "text-muted-foreground";
+		tickColorClass = "muted-foreground";
 	}
 
 	return { submissionStatus, tickColorClass };

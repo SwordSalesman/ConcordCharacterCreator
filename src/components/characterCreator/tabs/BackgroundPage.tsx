@@ -41,10 +41,10 @@ export function BackgroundPage() {
 
 	const renderedArchetype = useMemo(() => {
 		if (realm) {
-			let newRender = archetypes
+			const newRender = archetypes
 				.filter((a) => a.realm === realm)
 				.map((a) => {
-					let selected = archetype === a.name;
+					const selected = archetype === a.name;
 					return (
 						<Chip
 							onClick={() => toggleItem("archetype", a.name)}
@@ -75,9 +75,9 @@ export function BackgroundPage() {
 	}, [realm, archetype]);
 
 	const renderedGrace = useMemo(() => {
-		var newRender = null;
+		let newRender = null;
 		newRender = graces.map((g) => {
-			let selected = grace === g.name;
+			const selected = grace === g.name;
 			return (
 				<Chip
 					onClick={() => toggleItem("grace", g.name)}
@@ -138,7 +138,7 @@ export function BackgroundPage() {
 			),
 		},
 		{
-			label: "Alliances",
+			label: "Player Groups",
 			link: "Player_Groups",
 			content: (
 				<div className="flex flex-col gap-2 w-full my-4">

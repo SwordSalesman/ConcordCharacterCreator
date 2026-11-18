@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, startTransition, useContext, useEffect, useState } from "react";
 import {
 	GameContext,
 	INITIAL_UNLOCKED_HERBS_RECORD,
@@ -70,7 +70,7 @@ export const TutorialContext = createContext<{
 });
 
 export default function TutorialContextProvider({ children }: { children: ReactNode }) {
-	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions, isUpgradePurchased } =
+	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions } =
 		useContext(GameContext);
 
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);
@@ -123,7 +123,7 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 		try {
 			const raw = window.localStorage.getItem(TUTORIAL_STORAGE_KEY);
 			if (!raw) {
-				setIsStorageHydrated(true);
+				startTransition(() => setIsStorageHydrated(true));
 				return;
 			}
 
@@ -133,22 +133,24 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 				winScreenSeen?: boolean;
 			};
 
-			if (parsed.tutorialSettings) {
-				setTutorialSettings((prev) => ({ ...prev, ...parsed.tutorialSettings }));
-			}
+			startTransition(() => {
+				if (parsed.tutorialSettings) {
+					setTutorialSettings((prev) => ({ ...prev, ...parsed.tutorialSettings }));
+				}
 
-			if (parsed.newComponents) {
-				setNewComponents((prev) => ({ ...prev, ...parsed.newComponents }));
-			}
+				if (parsed.newComponents) {
+					setNewComponents((prev) => ({ ...prev, ...parsed.newComponents }));
+				}
 
-			if (typeof parsed.winScreenSeen === "boolean") {
-				setWinScreenSeen(parsed.winScreenSeen);
-			}
+				if (typeof parsed.winScreenSeen === "boolean") {
+					setWinScreenSeen(parsed.winScreenSeen);
+				}
+			});
 		} catch {
 			// Ignore malformed storage and keep defaults.
 		}
 
-		setIsStorageHydrated(true);
+		startTransition(() => setIsStorageHydrated(true));
 	}, []);
 
 	useEffect(() => {
@@ -167,24 +169,27 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 			return;
 		}
 
-		if (herbTotal > 0 && !tutorialSettings.showLab) {
-			updateState({ settings: { showLab: true } });
-		}
-		if (potionTotal > 0 && !tutorialSettings.showMarket) {
-			updateState({ settings: { showMarket: true } });
-		}
-		if (money > 0 && !tutorialSettings.showTavern) {
-			updateState({ settings: { showTavern: true } });
-		}
-		if (workerTotal > 0 && !tutorialSettings.showWorkers) {
-			updateState({ settings: { showWorkers: true } });
-		}
-		if (oneOfEachWorker && !tutorialSettings.showUnlocks) {
-			updateState({ settings: { showUnlocks: true } });
-		}
-		if (unlockedHerbOrPotion && !tutorialSettings.showUpgrades) {
-			updateState({ settings: { showUpgrades: true } });
-		}
+		startTransition(() => {
+			if (herbTotal > 0 && !tutorialSettings.showLab) {
+				updateState({ settings: { showLab: true } });
+			}
+			if (potionTotal > 0 && !tutorialSettings.showMarket) {
+				updateState({ settings: { showMarket: true } });
+			}
+			if (money > 0 && !tutorialSettings.showTavern) {
+				updateState({ settings: { showTavern: true } });
+			}
+			if (workerTotal > 0 && !tutorialSettings.showWorkers) {
+				updateState({ settings: { showWorkers: true } });
+			}
+			if (oneOfEachWorker && !tutorialSettings.showUnlocks) {
+				updateState({ settings: { showUnlocks: true } });
+			}
+			if (unlockedHerbOrPotion && !tutorialSettings.showUpgrades) {
+				updateState({ settings: { showUpgrades: true } });
+			}
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		herbTotal,
 		potionTotal,

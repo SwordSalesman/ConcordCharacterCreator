@@ -23,8 +23,8 @@ export function StyledBorder() {
 
 export function Review() {
 	const { group } = useGroupContext();
-	const { name, realm, archetype, enterprise, archetypeDetails, history, visuals, oath, goals } =
-		group;
+	const { name, realm, enterprise, archetypeDetails, history, visuals, oath, goals } = group;
+	const archetype = archetypeDetails?.archetype;
 
 	/*
 		archetype?: string;	
@@ -43,7 +43,7 @@ export function Review() {
 			<div>
 				<h2 className="text-xl">{name}</h2>
 				<div className="italic text-muted-foreground">
-					{`${realmicTitle} ${archetype ? archetype : "Band"}`}
+					{`${realmicTitle} ${archetypeDetails?.archetype ? archetypeDetails.archetype : "Band"}`}
 				</div>
 			</div>
 			{

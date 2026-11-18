@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, startTransition, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, getUserDetails } from "../hooks/use-firebase";
 import React from "react";
@@ -42,11 +42,15 @@ export default function UserContextProvider({ children }: { children: React.Reac
 
 	useEffect(() => {
 		if (user) {
-			updateUserDetails();
+			startTransition(() => {
+				updateUserDetails();
+			});
 		} else {
-			setName("");
-			setRole(DEFAULT_ROLE);
-			setIsAdmin(false);
+			startTransition(() => {
+				setName("");
+				setRole(DEFAULT_ROLE);
+				setIsAdmin(false);
+			});
 		}
 	}, [user]);
 

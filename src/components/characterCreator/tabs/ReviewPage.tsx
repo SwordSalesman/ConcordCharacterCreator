@@ -17,6 +17,7 @@ export function ReviewPage() {
 		validInvDetails,
 		validIcGoals,
 		validOocGoals,
+		missingSelections,
 	} = validateForm();
 
 	// This simple check avoids the page crashing during a log in form reset
@@ -40,6 +41,7 @@ export function ReviewPage() {
 	if (!validInvDetails) requiredFields.push("Investment Details");
 	if (!validIcGoals) requiredFields.push("IC Goals");
 	if (!validOocGoals) requiredFields.push("OOC Goals");
+	requiredFields.push(...missingSelections);
 
 	return (
 		<ContentPane layout="narrow">

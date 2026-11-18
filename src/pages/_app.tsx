@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	const toggleTheme = () => {
 		const next = themeName === "light" ? "dark" : "light";
-		typeof window !== "undefined" && window.localStorage.setItem("theme", next);
+		if (typeof window !== "undefined") window.localStorage.setItem("theme", next);
 		setThemeName(next);
 	};
 

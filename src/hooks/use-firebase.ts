@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { FirebaseError } from "firebase/app";
 import { initializeApp } from "firebase/app";
 import {
 	GoogleAuthProvider,
@@ -20,11 +21,11 @@ import {
 	getDoc,
 	doc,
 	setDoc,
-	updateDoc,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getCurrentDate } from "../utils/date-helper";
 import { GroupType } from "@/context/groupContext";
+import type { Character, ApprovalRecord, ApprovalStatus } from "@/components/approvals/types";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -43,6 +44,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const functions = getFunctions(app);
+
+function getErrorCode(error: unknown): string | undefined {
+	return error instanceof FirebaseError ? error.code : undefined;
+}
+
+function getErrorMessage(error: unknown): string {
+	return error instanceof Error ? error.message : String(error);
+}
 
 // FIREBASE AUTH **************************************************************
 
@@ -69,11 +78,11 @@ const signInWithGoogle = async () => {
 const logInWithEmailAndPassword = async (email: string, password: string) => {
 	try {
 		await signInWithEmailAndPassword(auth, email, password);
-	} catch (err: any) {
-		if (err.code === "auth/wrong-password") {
+	} catch (err: unknown) {
+		if (getErrorCode(err) === "auth/wrong-password") {
 			throw new Error("incorrect password");
 		} else {
-			throw new Error(err.message);
+			throw new Error(getErrorMessage(err));
 		}
 	}
 };
@@ -82,11 +91,11 @@ const registerWithEmailAndPassword = async (name: string, email: string, passwor
 	let res;
 	try {
 		res = await createUserWithEmailAndPassword(auth, email, password);
-	} catch (err: any) {
-		if (err.code === "auth/email-already-in-use") {
+	} catch (err: unknown) {
+		if (getErrorCode(err) === "auth/email-already-in-use") {
 			throw new Error("Email already in use");
 		} else {
-			throw new Error(err.message);
+			throw new Error(getErrorMessage(err));
 		}
 	}
 	try {
@@ -99,13 +108,13 @@ const registerWithEmailAndPassword = async (name: string, email: string, passwor
 			role: 1,
 		});
 		return;
-	} catch (err: any) {
+	} catch (err: unknown) {
 		// Delete the auth user in the case that the doc rules were violated but the auth ones weren't
-		deleteUser(res.user);
-		if (err.code === "auth/email-already-in-use") {
+		await deleteUser(res.user);
+		if (getErrorCode(err) === "auth/email-already-in-use") {
 			throw new Error("Email already in used");
 		} else {
-			throw new Error(err.message);
+			throw new Error(getErrorMessage(err));
 		}
 	}
 };
@@ -131,13 +140,13 @@ const logout = async () => {
 // FIRESTORE PUTTING **************************************************************
 
 const saveUserForm = async (
-	form: Record<string, any>,
+	form: Record<string, unknown>,
 	setSubmissionDate: (date: string) => void,
 	name: string,
 ) => {
 	const date = getCurrentDate();
 	if (!auth.currentUser) throw new Error("No authenticated user");
-	let fullForm = {
+	const fullForm = {
 		player: name,
 		email: auth.currentUser.email,
 		...form,
@@ -148,8 +157,6 @@ const saveUserForm = async (
 	return fullForm;
 };
 
-const APPROVAL_STATUSES = ["Approved", "Denied", "Archived"] as const;
-type ApprovalStatus = (typeof APPROVAL_STATUSES)[number];
 type EmailStatus = "pending" | "sent" | "not sent" | "failed";
 
 interface Approval {
@@ -166,13 +173,11 @@ interface Approval {
 }
 
 const saveApproval = async ({
-	name,
 	comment,
 	status,
 	subjectUid,
 	sendEmail,
 }: {
-	name: string;
 	comment: string;
 	status: ApprovalStatus;
 	subjectUid: string;
@@ -186,7 +191,7 @@ const saveApproval = async ({
 	return result.data;
 };
 
-const saveGroup = async ({ group, type }: { group: Record<string, any>; type: GroupType }) => {
+const saveGroup = async ({ group, type }: { group: object; type: GroupType }) => {
 	if (!auth.currentUser) throw new Error("No authenticated user");
 	const date = getCurrentDate();
 
@@ -197,12 +202,13 @@ const saveGroup = async ({ group, type }: { group: Record<string, any>; type: Gr
 	return;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const saveGroupApproval = async ({
 	approval,
 	type,
 	subjectUid,
 }: {
-	approval: Record<string, any>;
+	approval: Record<string, unknown>;
 	type: GroupType;
 	subjectUid: string;
 }) => {
@@ -238,7 +244,7 @@ const saveGroupList = async ({ list }: { list: GroupListType }) => {
 };
 
 // Used in admin commands to update users without updating their submission date
-const migrateUser = async (userId: string, form: Record<string, any>) => {
+const migrateUser = async (userId: string, form: Record<string, unknown>) => {
 	await setDoc(doc(db, "characters", userId), form);
 	return form;
 };
@@ -333,6 +339,21 @@ const getApproval = async (uid: string) => {
 	}
 };
 
+const getGroupSubmissionMessage = async () => {
+	const docRef = doc(db, "public", "groupSubmissionMessage");
+	const docSnap = await getDoc(docRef);
+	if (docSnap.exists()) {
+		const data = docSnap.data();
+		return {
+			body: data.body,
+			buttonLink: data.buttonLink,
+			buttonText: data.buttonText,
+		};
+	} else {
+		return null;
+	}
+};
+
 const getGroup = async ({ type }: { type: GroupType }) => {
 	if (!auth.currentUser) throw new Error("No authenticated user");
 	const docRef = doc(db, type === "Band" ? "bands" : "sects", auth.currentUser.uid);
@@ -344,6 +365,7 @@ const getGroup = async ({ type }: { type: GroupType }) => {
 	}
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getGroupApproval = async ({ type }: { type: GroupType }) => {
 	if (!auth.currentUser) throw new Error("No authenticated user");
 	const docRef = doc(
@@ -376,14 +398,14 @@ const getThroneLeaderboard = async (): Promise<ThroneLeaderboardEntry[]> => {
 	return Array.isArray(entries) ? (entries as ThroneLeaderboardEntry[]) : [];
 };
 
-const getCharacterList = async (): Promise<any[]> => {
+const getCharacterList = async (): Promise<Character[]> => {
 	const charactersRef = collection(db, "characters");
 	const q = query(charactersRef);
 	try {
 		const querySnap = await getDocs(q);
-		let list: any[] = [];
+		const list: Character[] = [];
 		querySnap.forEach((doc) => {
-			list.push({ id: doc.id, ...doc.data() });
+			list.push({ ...doc.data(), id: doc.id } as Character);
 		});
 		return list;
 	} catch (err) {
@@ -392,20 +414,31 @@ const getCharacterList = async (): Promise<any[]> => {
 	}
 };
 
-const getApprovalList = async (): Promise<any[]> => {
+const getApprovalList = async (): Promise<ApprovalRecord[]> => {
 	const approvalsRef = collection(db, "approvals");
 	const q = query(approvalsRef);
 	try {
 		const querySnap = await getDocs(q);
-		let list: any[] = [];
+		const list: ApprovalRecord[] = [];
 		querySnap.forEach((doc) => {
-			list.push({ id: doc.id, ...doc.data() });
+			list.push({ ...doc.data(), id: doc.id } as ApprovalRecord);
 		});
 		return list;
 	} catch (err) {
 		console.error(err);
 		return [];
 	}
+};
+
+const getBandMembers = async (bandId?: string) => {
+	if (!auth.currentUser) throw new Error("No authenticated user");
+	const authId = auth.currentUser.uid;
+	const getMembers = httpsCallable<
+		{ bandId: string },
+		{ id: string; player: string; heroName: string }[]
+	>(functions, "getBandMembers");
+	const result = await getMembers({ bandId: bandId ?? authId });
+	return result.data;
 };
 
 export {
@@ -422,6 +455,7 @@ export {
 	getUserFormAndApproval,
 	getUserDetails,
 	getCharacterList,
+	getGroupSubmissionMessage,
 	saveApproval,
 	saveGroup,
 	saveGroupList,
@@ -432,5 +466,6 @@ export {
 	getGroupList,
 	claimThrone,
 	getThroneLeaderboard,
+	getBandMembers,
 	logout,
 };

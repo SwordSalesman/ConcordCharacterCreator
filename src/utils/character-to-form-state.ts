@@ -1,6 +1,10 @@
 import { FormState } from "@/context/formContext";
 import { Character } from "@/components/approvals/types";
-import { getArrayFromSummary } from "@/utils/data-helper";
+import {
+	getArrayFromSummary,
+	getDiversificationFromSummary,
+	getSkillsFromSummary,
+} from "@/utils/data-helper";
 import { Realm } from "@/data/tables/realms";
 
 /**
@@ -20,10 +24,10 @@ export function characterToFormState(character: Character): FormState {
 		investment: character.investment,
 		invTier: Number(character.invTier ?? 1),
 		invOption: character.invOption,
-		invDiversify: getArrayFromSummary(character.invDiversify ?? ""),
+		invDiversify: getDiversificationFromSummary(character.invDiversify ?? ""),
 		invRegion: character.invRegion,
 		invTerritory: character.invTerritory,
-		skills: getArrayFromSummary(character.skills ?? ""),
+		skills: getSkillsFromSummary(character.skills ?? ""),
 		spells: getArrayFromSummary(character.spells ?? ""),
 		crafts: getArrayFromSummary(character.crafts ?? ""),
 		potions: getArrayFromSummary(character.potions ?? ""),

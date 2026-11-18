@@ -6,7 +6,7 @@ import { displayTimer } from "@/herb-garden/helpers/displayValueHelper";
 import { useLeaderboard } from "@/herb-garden/hooks/use-leaderboard";
 import useUserContext from "@/hooks/use-user-context";
 import { claimThrone } from "@/hooks/use-firebase";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { GiCrown } from "react-icons/gi";
 
 export function WinScreen({
@@ -24,7 +24,7 @@ export function WinScreen({
 	const { top10, setTop10, loading } = useLeaderboard(open);
 	const [closable, setClosable] = useState(false);
 	const [showLoginModal, setShowLoginModal] = useState(false);
-	const [pendingSubmit, setPendingSubmit] = useState(false);
+	const pendingSubmitRef = useRef(false);
 	const [submitting, setSubmitting] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
 	const [rank, setRank] = useState<number | null>(null);
@@ -38,7 +38,8 @@ export function WinScreen({
 		setTimeout(() => setClosable(true), 2000);
 	}, []);
 
-	async function submitScore() {
+	const submitScore = useCallback(async () => {
+		console.log("yippee");
 		if (throneTimeMs === null || submitting || rank !== null) {
 			return;
 		}
@@ -54,18 +55,18 @@ export function WinScreen({
 		} finally {
 			setSubmitting(false);
 		}
-	}
+	}, [throneTimeMs, submitting, rank, setTop10]);
 
 	// Once sign-in succeeds after "Sign in to Submit Score" is clicked, continue the submission automatically.
 	useEffect(() => {
-		if (user && pendingSubmit) {
-			setPendingSubmit(false);
+		if (user && pendingSubmitRef.current) {
+			pendingSubmitRef.current = false;
 			submitScore();
 		}
-	}, [user, pendingSubmit]);
+	}, [submitScore, user]);
 
 	function handleSignInAndSubmit() {
-		setPendingSubmit(true);
+		pendingSubmitRef.current = true;
 		setShowLoginModal(true);
 	}
 
@@ -146,7 +147,9 @@ export function WinScreen({
 					},
 				]}
 			/>
-			<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+			{showLoginModal && (
+				<LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+			)}
 		</>
 	);
 }

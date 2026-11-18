@@ -4,7 +4,6 @@ import {
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import React from "react";
 import { Button, ButtonVariant } from "../../common/Button/Button";
@@ -40,7 +39,7 @@ export function Modal({
 		>
 			<DialogContent
 				showCloseButton={false}
-				className={`${size === "small" ? "w-[300px]" : size === "large" ? "w-[700px]" : "w-[500px]"} text-left`}
+				className={`${size === "small" ? "w-75" : size === "large" ? "w-175" : "w-125"} text-left`}
 				// {...(!subtitle && !title && { "aria-describedby": undefined })}
 				aria-describedby={undefined}
 			>

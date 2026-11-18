@@ -4,6 +4,8 @@ export interface Investment {
 	options?: { name: string }[];
 }
 
+export const MAX_INVESTMENT_TIER = 10;
+
 const wildernessOptions = [
 	{ name: "Hartwood" },
 	{ name: "Beastbone" },

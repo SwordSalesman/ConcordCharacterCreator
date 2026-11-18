@@ -14,7 +14,7 @@ export function Intro() {
 	useEffect(() => {
 		setField("type", "Band");
 		if (realm) setField("realm", realm);
-	}, [realm]);
+	}, [realm, setField]);
 
 	return (
 		<ContentPane layout="narrow" className="gap-4 mt-4">
@@ -23,6 +23,14 @@ export function Intro() {
 					<b>Band Builder</b>
 				</i>
 			</div>
+			{/* <Button
+				onClick={async () => {
+					const members = await getBandMembers();
+					console.log(members);
+				}}
+			>
+				Get Band Members
+			</Button> */}
 			{approval ? (
 				<>
 					<p>You can check the status of your submission here.</p>
