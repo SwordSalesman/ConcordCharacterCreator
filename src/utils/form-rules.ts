@@ -2,7 +2,6 @@ import { Ceremony, ceremonies } from "@/data/tables/ceremonies";
 import { Craft, crafts } from "@/data/tables/crafts";
 import { Investment, investments, MAX_INVESTMENT_TIER } from "@/data/tables/investments";
 import { Potion, potions } from "@/data/tables/potions";
-import { Realm } from "@/data/tables/realms";
 import { Region, regions } from "@/data/tables/regions";
 import { Skill, skills } from "@/data/tables/skills";
 import { Spell, spells } from "@/data/tables/spells";

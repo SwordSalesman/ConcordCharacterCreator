@@ -67,7 +67,7 @@ export function ApprovalReport({
 	const submitDateString = dateSubmitted ? new Date(dateSubmitted).toLocaleDateString() : null;
 	const approvalDateString = approvalDate ? new Date(approvalDate).toLocaleDateString() : null;
 
-	const { submissionStatus, tickColorClass } = getApprovalStatus({
+	const { submissionStatus } = getApprovalStatus({
 		status: status,
 		submissionDate: dateSubmitted,
 		approvalDate: approval?.date,

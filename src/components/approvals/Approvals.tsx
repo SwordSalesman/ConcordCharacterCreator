@@ -47,7 +47,6 @@ export function Approvals() {
 		total: 0,
 		archived: 0,
 	});
-	const isDev = process.env.NEXT_PUBLIC_DEBUG_TEXT === "DevMode";
 	const [csvData, setCsvData] = useState<Record<string, unknown>[]>([]);
 
 	useEffect(() => {
@@ -201,8 +200,8 @@ export function Approvals() {
 	}
 
 	return (
-		<div className="mx-auto mt-2 flex flex-col sm:flex-row gap-2 sm:h-[90vh] min-h-[600px] max-w-[1400px] w-[100%] font-[Arial,sans-serif]">
-			<div className="flex flex-col items-center justify-center gap-1.5 h-[400px] sm:flex-1 flex-none sm:h-full">
+		<div className="mx-auto mt-2 flex flex-col sm:flex-row gap-2 sm:h-[90vh] min-h-150 max-w-350 w-full font-[Arial,sans-serif]">
+			<div className="flex flex-col items-center justify-center gap-1.5 h-100 sm:flex-1 flex-none sm:h-full">
 				<CSVLink
 					data={csvData}
 					filename={`character-export-${now}.csv`}
@@ -216,17 +215,17 @@ export function Approvals() {
 					</Button>
 				</CSVLink>
 				{/* <UploadGroupList /> */}
-				<div className="border border-border rounded-tl-lg rounded-tr-lg flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+				<div className="border border-border rounded-tl-lg rounded-tr-lg flex-1 w-full relative overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
 					{getSiteSettings().features.groupSubmissions && (
 						<div className="flex justify-around">
 							<Button
-								className="flex-1 border-none rounded-[0px] bg-background-raised"
+								className="flex-1 border-none rounded-none bg-background-raised"
 								variant="ghost"
 							>
 								Heroes
 							</Button>
 							<Button
-								className="flex-1 border-none rounded-[0px] bg-background-raised"
+								className="flex-1 border-none rounded-none bg-background-raised"
 								variant="ghost"
 							>
 								Bands
@@ -256,7 +255,7 @@ export function Approvals() {
 					/>
 				</div>
 			</div>
-			<div className="flex-2 flex flex-col justify-between max-h-[100%]">
+			<div className="flex-2 flex flex-col justify-between max-h-full">
 				<CharacterCard character={selectedChar} />
 				<ApprovalPanel
 					character={selectedChar}

@@ -21,7 +21,6 @@ import {
 	getDoc,
 	doc,
 	setDoc,
-	updateDoc,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { getCurrentDate } from "../utils/date-helper";
@@ -174,13 +173,11 @@ interface Approval {
 }
 
 const saveApproval = async ({
-	name,
 	comment,
 	status,
 	subjectUid,
 	sendEmail,
 }: {
-	name: string;
 	comment: string;
 	status: ApprovalStatus;
 	subjectUid: string;
@@ -205,6 +202,7 @@ const saveGroup = async ({ group, type }: { group: object; type: GroupType }) =>
 	return;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const saveGroupApproval = async ({
 	approval,
 	type,
@@ -367,6 +365,7 @@ const getGroup = async ({ type }: { type: GroupType }) => {
 	}
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getGroupApproval = async ({ type }: { type: GroupType }) => {
 	if (!auth.currentUser) throw new Error("No authenticated user");
 	const docRef = doc(

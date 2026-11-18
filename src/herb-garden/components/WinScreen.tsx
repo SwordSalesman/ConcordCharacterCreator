@@ -6,7 +6,7 @@ import { displayTimer } from "@/herb-garden/helpers/displayValueHelper";
 import { useLeaderboard } from "@/herb-garden/hooks/use-leaderboard";
 import useUserContext from "@/hooks/use-user-context";
 import { claimThrone } from "@/hooks/use-firebase";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { GiCrown } from "react-icons/gi";
 
 export function WinScreen({
@@ -38,7 +38,8 @@ export function WinScreen({
 		setTimeout(() => setClosable(true), 2000);
 	}, []);
 
-	async function submitScore() {
+	const submitScore = useCallback(async () => {
+		console.log("yippee");
 		if (throneTimeMs === null || submitting || rank !== null) {
 			return;
 		}
@@ -54,7 +55,7 @@ export function WinScreen({
 		} finally {
 			setSubmitting(false);
 		}
-	}
+	}, [throneTimeMs, submitting, rank, setTop10]);
 
 	// Once sign-in succeeds after "Sign in to Submit Score" is clicked, continue the submission automatically.
 	useEffect(() => {
@@ -62,7 +63,7 @@ export function WinScreen({
 			pendingSubmitRef.current = false;
 			submitScore();
 		}
-	}, [user]);
+	}, [submitScore, user]);
 
 	function handleSignInAndSubmit() {
 		pendingSubmitRef.current = true;

@@ -1,10 +1,10 @@
 import { HERB_IDS, HerbId } from "../data/herbs";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { TutorialContext } from "../../context/tutorialContext";
 import HerbPatch from "./HerbPatch";
 import { DragDropProvider, DragOverlay, PointerSensor } from "@dnd-kit/react";
 import { Feedback, PointerActivationConstraints } from "@dnd-kit/dom";
-import { GameContext, INITIAL_UNLOCKED_HERBS } from "../../context/gameContext";
+import { GameContext } from "../../context/gameContext";
 import { GiFarmer } from "react-icons/gi";
 import { GardensMenu } from "./GardensMenu";
 import { Button } from "@/components/common/Button/Button";
@@ -15,7 +15,6 @@ export function Gardens() {
 	const { farmerAssignments, setFarmerHerbAssignment, unlockedHerbs } = useContext(GameContext);
 	const { tutorialSettings, newComponents, setComponentStale } = useContext(TutorialContext);
 
-	const [draggedId, setDraggedId] = useState<string | null>(null);
 	const [dragOverId, setDragOverId] = useState<string | null>(null);
 	const [showGardensMenu, setShowGardensMenu] = useState(false);
 
@@ -43,12 +42,10 @@ export function Gardens() {
 					}),
 				]}
 				plugins={(defaults) => [...defaults, Feedback.configure({ dropAnimation: null })]}
-				onDragStart={({ operation }) => {
-					setDraggedId(operation.source?.id?.toString() ?? null);
+				onDragStart={() => {
 					setComponentStale("farmer");
 				}}
 				onDragEnd={({ operation }) => {
-					setDraggedId(null);
 					setDragOverId(null);
 
 					if (!operation.source || !operation.target) {
@@ -118,7 +115,7 @@ export function Gardens() {
 									<div className="hidden sm:inline animate-wiggle">
 										<GiFarmer size={60} />
 									</div>
-									<div className="inline sm:hidden absolute top-[-50px] left-[-40px] animate-wiggle">
+									<div className="inline sm:hidden absolute -top-12.5 -left-10 animate-wiggle">
 										<GiFarmer size={90} />
 									</div>
 								</div>

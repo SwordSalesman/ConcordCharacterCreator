@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import ContentWrapper from "../components/layout/ContentWrapper";
 import { GameContext } from "./context/gameContext";
 import { TutorialContext } from "./context/tutorialContext";
@@ -174,7 +174,7 @@ export default function GameMain() {
 						handleReset={handleResetGame}
 					/>
 
-					<div className="mb-[-22px]">
+					<div className="-mb-5.5">
 						<SectionWrapper title="Resources" icon={<GiLockedChest />} />
 					</div>
 					<ResourcesPanel

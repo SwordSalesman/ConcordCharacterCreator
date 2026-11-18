@@ -83,7 +83,6 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 		validComment: true,
 	});
 	const disabled = !character || loading;
-	const [archiveConfirm, setArchiveConfirm] = useState(false);
 
 	async function handleSubmit() {
 		const valid = validateInputs();
@@ -93,7 +92,6 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 		setLoading(true);
 		toast.promise(
 			saveApproval({
-				name,
 				comment,
 				status: status,
 				subjectUid: character!.id,
@@ -269,7 +267,7 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 					<div
 						ref={sheetRef}
 						aria-hidden
-						className="fixed top-0 left-0 w-[480px] p-3 max-w-[480px] text-xs pointer-events-none border-1 rounded-xl"
+						className="fixed top-0 left-0 w-120 p-3 max-w-120 text-xs pointer-events-none border rounded-xl"
 						style={{ opacity: 0, zIndex: -1 }}
 					>
 						<CharacterSheet data={sheetData} full simple />
@@ -278,12 +276,12 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 				)}
 			{/* Gradient fade effect above the panel */}
 
-			<div className="w-full h-10 absolute -top-8 bg-gradient-to-t from-background-raised to-transparent" />
+			<div className="w-full h-10 absolute -top-8 bg-linear-to-t from-background-raised to-transparent" />
 
 			<div
-				className="border rounded-tl-lg rounded-tr-lg h-[100%] sm:max-h-[450px] relative overflow-scroll
+				className="border rounded-tl-lg rounded-tr-lg h-full sm:max-h-112.5 relative overflow-scroll
 			text-sm p-3 flex flex-col gap-5 z-1 bg-background
-			[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+			[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none"
 			>
 				{author && date ? (
 					<div>
@@ -298,7 +296,7 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 								by {author} on {prettifyDate(date)}
 							</p>
 							<blockquote
-								className={`pl-2 border-l-4 border-primary italic text-wrap break-words`}
+								className={`pl-2 border-l-4 border-primary italic text-wrap wrap-break-word`}
 							>
 								{previousComment ? (
 									stringToNode(previousComment)
@@ -330,7 +328,7 @@ function ApprovalPanel({ character, handleApproval, sendEmailOption, setSendEmai
 						<div
 							className={cn(
 								"flex flex-col items-left sm:flex-row sm:justify-between gap-1 rounded-md",
-								!validInputs.validStatus ? "p-1 border-1 border-destructive" : "",
+								!validInputs.validStatus ? "p-1 border border-destructive" : "",
 							)}
 						>
 							<div className="flex flex-row gap-1">

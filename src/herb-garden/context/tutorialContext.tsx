@@ -1,11 +1,4 @@
-import {
-	createContext,
-	ReactNode,
-	startTransition,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { createContext, ReactNode, startTransition, useContext, useEffect, useState } from "react";
 import {
 	GameContext,
 	INITIAL_UNLOCKED_HERBS_RECORD,
@@ -77,7 +70,7 @@ export const TutorialContext = createContext<{
 });
 
 export default function TutorialContextProvider({ children }: { children: ReactNode }) {
-	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions, isUpgradePurchased } =
+	const { herbs, potions, money, workers, unlockedHerbs, unlockedPotions } =
 		useContext(GameContext);
 
 	const herbTotal = Object.values(herbs).reduce((sum, amount) => sum + amount, 0);
@@ -196,6 +189,7 @@ export default function TutorialContextProvider({ children }: { children: ReactN
 				updateState({ settings: { showUpgrades: true } });
 			}
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		herbTotal,
 		potionTotal,

@@ -9,7 +9,6 @@ import { fadeStripStyle } from "@/styles/Global.ts";
 import Image from "next/image";
 import { getRealmData } from "@/utils/data-helper.tsx";
 import useFormContext from "@/hooks/use-form-context.ts";
-import { Banner } from "../common/Banner/Banner.tsx";
 
 export interface Tab {
 	name: string;
@@ -77,11 +76,11 @@ export function Creator({
 					handleClickTab(tab, index);
 				}}
 				className={cn(
-					"border-b-[3px] border-transparent mt-[2px] h-[30px] transition flex-1 opacity-50 text-base sm:cursor-pointer",
+					"border-b-[3px] border-transparent mt-0.5 h-7.5 transition flex-1 opacity-50 text-base sm:cursor-pointer",
 					`${fadeStripStyle} sm:bg-none`,
 					active ? "border-primary text-strong opacity-100" : "text-text",
 					active
-						? "max-sm:block max-sm:border-0 max-sm:m-0 max-sm:text-[1.1rem] max-sm:h-[45px]"
+						? "max-sm:block max-sm:border-0 max-sm:m-0 max-sm:text-[1.1rem] max-sm:h-11.25"
 						: "max-sm:hidden",
 				)}
 			>
@@ -113,9 +112,9 @@ export function Creator({
 
 			<div
 				className={cn(
-					"relative overflow-hidden min-w-[300px] w-full flex flex-col items-center m-auto mb-[65px] mt-1",
+					"relative overflow-hidden min-w-75 w-full flex flex-col items-center m-auto mb-16.25 mt-1",
 					"border-2 border-solid border-secondary rounded-t-xl",
-					"max-sm:rounded-t-none max-sm:h-full max-sm:w-full max-sm:border-0 max-sm:mt-[10px]",
+					"max-sm:rounded-t-none max-sm:h-full max-sm:w-full max-sm:border-0 max-sm:mt-2.5",
 				)}
 			>
 				{/* Tabs */}
@@ -128,7 +127,7 @@ export function Creator({
 					{renderedTabs}
 				</div>
 				{/* Content */}
-				<div className="relative flex justify-center text-center items-start min-h-[300px] mb-[40px] px-3 sm:min-h-[500px] w-full">
+				<div className="relative flex justify-center text-center items-start min-h-75 mb-10 px-3 sm:min-h-125 w-full">
 					{renderedContent}
 				</div>
 				{/* Navigation Buttons */}
@@ -175,7 +174,7 @@ export function Creator({
 				{realmImage ? (
 					<Image
 						src={realmImage}
-						className={`sm:absolute fixed w-[500px] z-[-1] pointer-events-none bottom-[-80px] left-[-80px]
+						className={`sm:absolute fixed w-125 z-[-1] pointer-events-none -bottom-20 -left-20
 							select-none blur-[2px] opacity-10 dark:opacity-35 animate-realm-logo-in`}
 						alt="Realm Background"
 					/>

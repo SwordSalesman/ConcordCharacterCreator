@@ -162,19 +162,18 @@ export default function GroupsPage() {
 }
 
 function GroupSubmissionGoogleFormLink() {
-	const bandSubmissionsOpen = true;
-
 	const [groupSubmissionMessage, setGroupSubmissionMessage] = useState<{
 		body: string;
 		buttonLink: string;
 		buttonText: string;
 	} | null>(null);
+
 	useEffect(() => {
 		getGroupSubmissionMessage().then(setGroupSubmissionMessage);
-	}, [getGroupSubmissionMessage]);
+	}, []);
 
 	return (
-		<div className="mx-auto px-4 py-8 max-w-[500px] flex flex-col text-center gap-5">
+		<div className="mx-auto px-4 py-8 max-w-125 flex flex-col text-center gap-5">
 			<h1 className="text-2xl font-bold">Group Submissions</h1>
 			<>
 				{groupSubmissionMessage?.body && (

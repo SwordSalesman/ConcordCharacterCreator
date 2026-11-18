@@ -172,7 +172,7 @@ export default function ApothecaryAnimationProvider({ children }: { children: Re
 		startTransition(() => {
 			setParticles((prev) => [...prev, ...particlesToAnimate]);
 		});
-	}, [acknowledgeDeltaEvents, deltaEvents]);
+	}, [acknowledgeDeltaEvents, deltaEvents, animationsActive]);
 
 	useEffect(() => {
 		for (const particle of particles) {

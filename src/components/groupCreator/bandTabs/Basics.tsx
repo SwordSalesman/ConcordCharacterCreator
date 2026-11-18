@@ -11,7 +11,7 @@ export function Basics() {
 	const { form } = useFormContext();
 	const { realm } = form;
 	const { group, setField } = useGroupContext();
-	const { name, type, archetypeDetails } = group;
+	const { name, archetypeDetails } = group;
 
 	return (
 		<ContentPane layout="narrow" className="text-left mt-4 gap-6">

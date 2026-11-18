@@ -1,12 +1,12 @@
 import { HERBS } from "../data/herbs";
 import { POTION_IDS, PotionId, POTIONS } from "../data/potions";
-import { useContext, type CSSProperties } from "react";
+import { useContext } from "react";
 import { GameContext } from "../../context/gameContext";
 import { useAnimation } from "../../context/animationContext";
 import { displayNumber } from "../../helpers/displayValueHelper";
 import { Button } from "@/components/common/Button/Button";
 import { MdTrendingUp } from "react-icons/md";
-import { getHighLowHue, HighLowHueTextWrapper } from "../../helpers/hueHelper";
+import { HighLowHueTextWrapper } from "../../helpers/hueHelper";
 
 function TrendIcon({ className }: { className?: string }) {
 	return (
@@ -86,7 +86,9 @@ export function Market() {
 							<Button
 								ref={sellAnchor(potionId)}
 								onClick={() => {
-									canSellPotion(potionId) && sellPotion(potionId, 1);
+									if (canSellPotion(potionId)) {
+										sellPotion(potionId, 1);
+									}
 								}}
 								className="w-full flex flex-1 h-fit touch-manipulation relative justify-between duration-100 hover:scale-103 active:scale-98 p-0"
 								disabled={!canSellPotion(potionId)}

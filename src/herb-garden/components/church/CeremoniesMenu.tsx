@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { Modal } from "@/components/common/Modal/Modal";
-import { CEREMONY_IDS, CeremonyId, CEREMONIES } from "../data/ceremonies";
+import { CEREMONY_IDS, CEREMONIES } from "../data/ceremonies";
 import { CRYSTAL_MANA_EMOJI } from "../data/gameData";
 import { GameContext } from "../../context/gameContext";
 import { AquiredItem } from "../UpgradeMenu";
@@ -19,7 +19,7 @@ export function CeremoniesMenu({ open, onClose }: { open: boolean; onClose: () =
 			size="medium"
 			body={
 				<>
-					<div className="relative flex flex-col gap-10 pb-8 max-h-120 overflow-y-scroll overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+					<div className="relative flex flex-col gap-10 pb-8 max-h-120 overflow-y-scroll overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
 						<div className="flex flex-col gap-2">
 							<div className="flex flex-wrap mb-2 justify-center z-2">
 								{CEREMONY_IDS.filter(
@@ -71,7 +71,7 @@ export function CeremoniesMenu({ open, onClose }: { open: boolean; onClose: () =
 								))}
 							</div>
 						</div>
-						<div className="fixed bottom-4 w-full left-0 bg-gradient-to-t from-background to-transparent h-8"></div>
+						<div className="fixed bottom-4 w-full left-0 bg-linear-to-t from-background to-transparent h-8"></div>
 					</div>
 				</>
 			}

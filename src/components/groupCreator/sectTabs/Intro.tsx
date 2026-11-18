@@ -14,7 +14,7 @@ export function Intro() {
 	useEffect(() => {
 		setField("type", "Sect");
 		if (realm) setField("realm", realm);
-	}, [realm]);
+	}, [realm, setField]);
 
 	return (
 		<ContentPane layout="narrow" className="gap-4 mt-4">

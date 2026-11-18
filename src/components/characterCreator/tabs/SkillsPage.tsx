@@ -74,7 +74,7 @@ export default function SkillsPage() {
 	};
 
 	// tabs of the Accordion (on the right)
-	const renderedTabs = tabs.map((tab, index: number) => {
+	const renderedTabs = tabs.map((tab) => {
 		const renderedSkills = (
 			<div className="flex flex-wrap gap-1 p-1">
 				{choices.skills
@@ -89,9 +89,7 @@ export default function SkillsPage() {
 								selected={choice.selected}
 								valid={choice.selected ? choice.canRemove : choice.canSelect}
 								key={skill.name}
-								reason={
-									choice.selected ? choice.removeReason : choice.selectReason
-								}
+								reason={choice.selected ? choice.removeReason : choice.selectReason}
 								onClick={() => handleClickSkill(skill)}
 							/>
 						);

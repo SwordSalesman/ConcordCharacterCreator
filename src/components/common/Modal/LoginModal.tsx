@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Modal } from "./Modal";
 import useUserContext from "@/hooks/use-user-context";
-import { Input, TextArea } from "../Input/Input";
+import { Input } from "../Input/Input";
 import { Button } from "../Button/Button";
 import {
 	logInWithEmailAndPassword,
@@ -10,8 +10,6 @@ import {
 	sendPasswordReset,
 } from "@/hooks/use-firebase";
 import toast from "react-hot-toast";
-import { PATH_HERB_GARDEN } from "@/utils/constants";
-import Link from "next/link";
 
 export default function LoginModal({ open, onClose }: { open: boolean; onClose: () => void }) {
 	const [loading, setLoading] = useState(false);
@@ -34,7 +32,7 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 
 	useEffect(() => {
 		onClose();
-	}, [user]);
+	}, [user, onClose]);
 
 	function handleClose() {
 		if (!loading) {
