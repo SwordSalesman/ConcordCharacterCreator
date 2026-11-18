@@ -1,4 +1,5 @@
-import { APPROVED, ARCHIVED, DENIED, SubmissionStatus } from "./constants";
+import { SubmissionStatus } from "@/components/approvals/types";
+import { APPROVED, ARCHIVED, DENIED } from "./constants";
 
 export function getApprovalStatus({
 	status,

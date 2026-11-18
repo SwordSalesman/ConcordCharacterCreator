@@ -6,6 +6,7 @@ import {
 	calculateAllowances,
 	getChoiceForField,
 	getHeroChoices,
+	getUnspentRequiredSelections,
 	normalizeFormState,
 } from "@/utils/form-rules";
 
@@ -71,6 +72,17 @@ describe("allowances", () => {
 		expect(calculateAllowances(state).remaining).toMatchObject({
 			spells: 1, crafts: 4, potions: 3,
 		});
+	});
+
+	it("requires all spell, craft and potion selections but leaves ceremonies optional", () => {
+		expect(getUnspentRequiredSelections({
+			xp: 0, spells: 1, crafts: 2, potions: 1, ceremonies: 4,
+			invOption: 0, diversify: 0, startingItem: 0,
+		})).toEqual(["Spells", "Crafts", "Potions"]);
+		expect(getUnspentRequiredSelections({
+			xp: 0, spells: 0, crafts: 0, potions: 0, ceremonies: 4,
+			invOption: 0, diversify: 0, startingItem: 0,
+		})).toEqual([]);
 	});
 
 	it("allows one investment variant and one diversification per tier above the first", () => {

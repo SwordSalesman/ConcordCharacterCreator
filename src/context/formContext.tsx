@@ -16,6 +16,7 @@ import {
 	calculateAllowances,
 	getChoiceForField,
 	getHeroChoices,
+	getUnspentRequiredSelections,
 	Maximum,
 	Remaining,
 	normalizeFormState,
@@ -185,6 +186,7 @@ interface FormContextInterface {
 		validInvDetails: boolean;
 		validIcGoals: boolean;
 		validOocGoals: boolean;
+		missingSelections: string[];
 	};
 	getFormSummary: () => FormStateSummary;
 	bands: { realm: string; name: string }[];
@@ -250,6 +252,7 @@ export const FormContext = createContext<FormContextInterface>({
 		validInvDetails: false,
 		validIcGoals: false,
 		validOocGoals: false,
+		missingSelections: [],
 	}),
 	getFormSummary: () => ({}) as FormStateSummary,
 	bands: [],
@@ -402,6 +405,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 			(!!formState.invDetails && formState.invDetails.trim() !== "");
 		const validIcGoals = !!formState.icGoals && formState.icGoals.trim() !== "";
 		const validOocGoals = !!formState.oocGoals && formState.oocGoals.trim() !== "";
+		const missingSelections = getUnspentRequiredSelections(remaining);
 		const valid =
 			validRealm &&
 			validName &&
@@ -409,7 +413,8 @@ export default function FormContextProvider({ children }: { children: React.Reac
 			validBackstory &&
 			validInvDetails &&
 			validIcGoals &&
-			validOocGoals;
+			validOocGoals &&
+			missingSelections.length === 0;
 		return {
 			valid,
 			validRealm,
@@ -419,6 +424,7 @@ export default function FormContextProvider({ children }: { children: React.Reac
 			validInvDetails,
 			validIcGoals,
 			validOocGoals,
+			missingSelections,
 		};
 	};
 

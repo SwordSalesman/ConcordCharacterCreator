@@ -136,6 +136,14 @@ export function calculateAllowances(state: FormState): Allowances {
 	return { maximum, remaining };
 }
 
+export function getUnspentRequiredSelections(remaining: Remaining): string[] {
+	return [
+		...(remaining.spells > 0 ? ["Spells"] : []),
+		...(remaining.crafts > 0 ? ["Crafts"] : []),
+		...(remaining.potions > 0 ? ["Potions"] : []),
+	];
+}
+
 const eligible: Eligibility = { eligible: true };
 
 function ineligible(reason: string): Eligibility {

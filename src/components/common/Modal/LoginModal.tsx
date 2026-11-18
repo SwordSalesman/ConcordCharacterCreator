@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal } from "./Modal";
 import useUserContext from "@/hooks/use-user-context";
 import { Input } from "../Input/Input";
@@ -29,9 +29,11 @@ export default function LoginModal({ open, onClose }: { open: boolean; onClose: 
 	});
 	const [state, setState] = useState<"login" | "register" | "forgotpassword">("login");
 	const { user, name: username, isAdmin } = useUserContext();
+	const previousUser = useRef(user);
 
 	useEffect(() => {
-		onClose();
+		if (!previousUser.current && user) onClose();
+		previousUser.current = user;
 	}, [user, onClose]);
 
 	function handleClose() {

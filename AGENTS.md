@@ -41,10 +41,10 @@ Firebase config comes from `NEXT_PUBLIC_*` vars in `.env`. Copy `.env.dev` (dev 
 
 Cloudflare Pages auto-deploys from git:
 
-| Branch        | Result                                         | Firebase project               |
-| ------------- | ---------------------------------------------- | ------------------------------ |
-| `development` | Preview site, auto-generated Cloudflare URL    | `concordcharactercreatordev`   |
-| `production`  | https://waystone.concordlarp.com/              | `concordcharactercreator`      |
+| Branch        | Result                                      | Firebase project             |
+| ------------- | ------------------------------------------- | ---------------------------- |
+| `development` | Preview site, auto-generated Cloudflare URL | `concordcharactercreatordev` |
+| `production`  | https://waystone.concordlarp.com/           | `concordcharactercreator`    |
 
 Cloud Functions are deployed manually with the Firebase CLI. See [functions/README.md](functions/README.md). `.firebaserc` aliases: `development` (default) and `production`.
 
@@ -62,14 +62,14 @@ Cloud Functions are deployed manually with the Firebase CLI. See [functions/READ
 
 ### Routes
 
-| Route               | File                           | Notes                                                              |
-| ------------------- | ------------------------------ | ------------------------------------------------------------------ |
-| `/`                 | `pages/index.tsx`              | Navigation gated by site settings and role                         |
-| `/hero`             | `pages/hero/index.tsx`         | `?civilservice=true` unlocks the semi-secret Civil Service realm   |
-| `/groups`           | `pages/groups/index.tsx`       | Needs sign-in + submitted hero; gated by `features.groupSubmissions` |
-| `/approvals`        | `pages/approvals/index.tsx`    | Editors/Admins (`isAdmin`)                                         |
-| `/herb-garden`      | `pages/herb-garden.tsx`        | Minigame; code in `src/herb-garden/`                               |
-| `/reset-password`, `/maintenance`, `404` | `pages/`  |                                                                    |
+| Route                                    | File                        | Notes                                                                |
+| ---------------------------------------- | --------------------------- | -------------------------------------------------------------------- |
+| `/`                                      | `pages/index.tsx`           | Navigation gated by site settings and role                           |
+| `/hero`                                  | `pages/hero/index.tsx`      | `?civilservice=true` unlocks the semi-secret Civil Service realm     |
+| `/groups`                                | `pages/groups/index.tsx`    | Needs sign-in + submitted hero; gated by `features.groupSubmissions` |
+| `/approvals`                             | `pages/approvals/index.tsx` | Editors/Admins (`isAdmin`)                                           |
+| `/herb-garden`                           | `pages/herb-garden.tsx`     | Minigame; code in `src/herb-garden/`                                 |
+| `/reset-password`, `/maintenance`, `404` | `pages/`                    |                                                                      |
 
 Route/status constants: `src/utils/constants.ts`.
 
@@ -91,21 +91,21 @@ Route/status constants: `src/utils/constants.ts`.
 - Collections and document shapes are drafted in [docs/firestore-schema.md](docs/firestore-schema.md). **There is no enforced schema.** Check and update that file when changing stored data.
 - **Firestore security rules currently live only in the Firebase web console**, not in this repo. TODO: export to `firestore.rules` and add to `firebase.json`. Treat any change to data access patterns as needing a matching console rule change.
 - Cloud Functions (`functions/src/index.ts`):
-  - `submitApproval`: reviewer (role >= 3) writes an approval, clears the character's `changes`, and optionally sends a Gmail email.
-  - `getBandMembers`: returns `{ id, player, heroName }` for heroes whose `warband` matches the band. Callable by the band owner or role >= 3.
-  - `claimThrone`: herb-garden win. Any signed-in user can call it. It maintains the leaderboard.
+    - `submitApproval`: reviewer (role >= 3) writes an approval, clears the character's `changes`, and optionally sends a Gmail email.
+    - `getBandMembers`: returns `{ id, player, heroName }` for heroes whose `warband` matches the band. Callable by the band owner or role >= 3.
+    - `claimThrone`: herb-garden win. Any signed-in user can call it. It maintains the leaderboard.
 
 ## Roles
 
 Assigned manually in the Firestore console on `users/{uid}.role`. New email sign-ups get `1`.
 
-| Value | Role                    | Notes                                              |
-| ----- | ----------------------- | -------------------------------------------------- |
-| 0     | Guest (unauthenticated) |                                                    |
-| 1     | Player                  | Own data only                                      |
-| 2     | Viewer                  |                                                    |
-| 3     | Editor                  | Treated as Admin for all current purposes          |
-| 4     | Admin                   | `isAdmin` is `role >= 3`, so Editor passes it too  |
+| Value | Role                    | Notes                                             |
+| ----- | ----------------------- | ------------------------------------------------- |
+| 0     | Guest (unauthenticated) |                                                   |
+| 1     | Player                  | Own data only                                     |
+| 2     | Viewer                  |                                                   |
+| 3     | Editor                  | Treated as Admin for all current purposes         |
+| 4     | Admin                   | `isAdmin` is `role >= 3`, so Editor passes it too |
 
 ## Game data
 
@@ -130,3 +130,8 @@ Static, hand-edited TypeScript in `src/data/tables/` (skills, realms, spells, cr
 - `@headlessui/react` and `react-router-dom` are in `package.json` but appear unused in `src/`. `next.config.ts` still references `@chakra-ui/react` in `optimizePackageImports`.
 - `dist/output.css` is tracked in git, and `src/components/downtime/` is empty (downtime is not built).
 - TODO: Firestore rules in code, an enforced schema, a package script to switch `.env.dev` / `.env.prod`.
+
+## Agent Behaviour
+
+- Use the `ponytail` skill as a default
+- Do not run the full test suite for every request. Only run the full test suite for what you consider to be significant changes. If you are unsure if you should run tests or not, ask the user.
